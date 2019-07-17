@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>Test Send HTML form as JSON data</title>
+    <script type="text/javascript">
+function sendJSONData() {
+// collect the form data while iterating over the inputs
+      var form = document.getElementById('myform');
+      var data = {};
+      for (var i = 0, ii = form.length; i < ii; ++i) {
+          var input = form[i];
+          if (input.name) {
+             data[input.name] = input.value;
+           }
+      }
+
+ // construct an HTTP request
+    var xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action, true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+ // send the collected data as JSON
+    alert('Stringified JSON: ' + JSON.stringify(data));
+    xhr.send(JSON.stringify(data));
+
+    xhr.onloadend = function () {
+ // done
+    };
+    return true;
+}
+</script>
+  </head>
+  <body>
+    <h1>Test consume_json.php</h1>
+    <form id="myform" name="myform" type=POST action="https://jwooten37830.com/patti/consume_json.php" onsubmit="return sendJSONData();">
+      User Name:&nbsp;<input type="text" name="userName" /><br />
+      Password:&nbsp;<input type="password" name="password" /><br />
+      Email Provider:&nbsp;<input type="text" name="emailProvider" /><br />
+      <p />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
