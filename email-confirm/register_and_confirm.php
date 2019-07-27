@@ -6,9 +6,24 @@
 
 // BRING IN OUR COMMON CODE
 require_once('register_and_confirm_common.php');
-
-$testing=0;
-
+// This function will display the die message with logo, and styled
+function die_msg( $msg ) {
+echo "<head>";
+echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://jwooten37830.com/patti/styles/example.css\">";
+echo "</head><body>";
+echo "<center>";
+  echo '<img src="https://jwooten37830.com/patti/images/green_logo.gif" style="width:100px;height:100px"><br /><br /><br />';
+  echo "</center>";
+echo "<div id=\"content\"><center>";
+echo "<div id=\"label\">";
+  echo $msg;
+echo "</div>";
+echo "</center></div>";
+echo "</body>";
+echo "</html>";
+  die();
+}
+//   die_msg("THIS IS A TEST!");
 // PART ONE - IF THIS IS A POST-METHOD REQUEST FOR CONFIRMATION
 if
 ( (!empty($_GET["q"]))
@@ -42,17 +57,14 @@ if
     }
 
     // DID THE UPDATE AFFECT A ROW?
-    if ( $mysqli->affected_rows ) die("THANK YOU - YOUR ACTIVATION IS COMPLETE");
+    if ( $mysqli->affected_rows ) die_msg("THANK YOU - YOUR ACTIVATION IS COMPLETE");
 
     // SHOW ERROR RESPONSE
-    die("SORRY - YOUR ACTIVATION CODE OR EMAIL ADDRESS WAS NOT FOUND");
+    die_msg("SORRY - YOUR ACTIVATION CODE OR EMAIL ADDRESS WAS NOT FOUND");
 }
 
 
 // PART TWO - IF THIS IS A GET-METHOD REQUEST FOR CONFIRMATION
-if( $testing == 1 ) {
-  $_GET["q"] = "06347fb7dab2fc3d1c0936a7349afe5f";
-}
 if
 (  (!empty($_GET["q"]))
 && (is_string($_GET["q"]))
@@ -78,7 +90,7 @@ if
         ;
         trigger_error($err, E_USER_ERROR);
     }
-    if ( $res->num_rows == 0 ) die("SORRY - YOUR ACTIVATION CODE WAS NOT FOUND");
+    if ( $res->num_rows == 0 ) die_msg("SORRY - YOUR ACTIVATION CODE WAS NOT FOUND");
 
     // SET UP THE EMAIL ADDRESS HINT - billy@gmail.com HINTS bill? gmail com
     $row = $res->fetch_assoc();
@@ -179,7 +191,7 @@ if
             $sql = "SELECT activate_code FROM userTable WHERE email_address = '$safe_email_address' AND activated_yes = 0 LIMIT 1";
             $res = $mysqli->query($sql);
             $num = $res->num_rows;
-            if ($num == 0) die("THANK YOU - YOU ARE ALREADY REGISTERED AND CONFIRMED");
+            if ($num == 0) die_msg("THANK YOU - YOU ARE ALREADY REGISTERED AND CONFIRMED");
 
             $row = $res->fetch_assoc();
             $activate_code = $row["activate_code"];
@@ -197,7 +209,7 @@ if
     )
     ;
     // TELL THE CLIENT TO CHECK HER EMAIL
-    die("PLEASE CHECK YOUR EMAIL FOR A CONFIRMATION LINK");
+    die_msg("PLEASE CHECK YOUR EMAIL FOR A CONFIRMATION LINK");
 }
 
 
