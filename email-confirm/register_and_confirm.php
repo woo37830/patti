@@ -6,23 +6,6 @@
 
 // BRING IN OUR COMMON CODE
 require_once('register_and_confirm_common.php');
-// This function will display the die message with logo, and styled
-function die_msg( $msg ) {
-echo "<head>";
-echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://jwooten37830.com/patti/styles/example.css\">";
-echo "</head><body>";
-echo "<center>";
-  echo '<img src="https://jwooten37830.com/patti/images/green_logo.gif" style="width:100px;height:100px"><br /><br /><br />';
-  echo "</center>";
-echo "<div id=\"content\"><center>";
-echo "<div id=\"label\">";
-  echo $msg;
-echo "</div>";
-echo "</center></div>";
-echo "</body>";
-echo "</html>";
-  die();
-}
 //   die_msg("THIS IS A TEST!");
 // PART ONE - IF THIS IS A POST-METHOD REQUEST FOR CONFIRMATION
 if
@@ -129,6 +112,7 @@ echo "<div id=\"content\">";
     echo '</center>';
     echo '</form>';
     echo '</div>';
+    echo footer();
     echo '</body>';
     echo '</html>';
     die();
@@ -233,5 +217,6 @@ $form = <<<ENDFORM
 ENDFORM;
 echo $form;
 echo "</div>";
+echo footer();
 echo "</body>";
 ?>

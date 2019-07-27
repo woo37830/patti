@@ -64,4 +64,27 @@ function check_valid_email($email)
     // EMAIL NOT ROUTABLE
     return FALSE;
 }
+// This function will display the die message with logo, and styled
+    function die_msg( $msg ) {
+    echo "<head>";
+    echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://jwooten37830.com/patti/styles/example.css\">";
+    echo "</head><body>";
+    echo "<center>";
+    echo '<img src="https://jwooten37830.com/patti/images/green_logo.gif" style="width:100px;height:100px"><br /><br /><br />';
+    echo "</center>";
+    echo "<div id=\"content\"><center>";
+    echo "<div id=\"label\">";
+    echo $msg;
+    echo "</div>";
+    echo "</center></div>";
+    echo footer();
+    echo "</body>";
+    echo "</html>";
+    die();
+}
+function footer() {
+   $rev = exec('git rev-parse --short HEAD');
+   $branch = exec('git rev-parse --abbrev-ref HEAD');
+   echo "<footer><hr />Commit: $rev, Branch: $branch</footer>";
+}
 ?>
