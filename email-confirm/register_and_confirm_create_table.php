@@ -1,11 +1,11 @@
-<?php // RAY_register_and_confirm_create_table.php
+<?php // register_and_confirm_create_table.php
 
 
 // SET UP THE DATA BASE TABLE FOR THE REGISTER-AND-CONFIRM PROCESS
 
 
 // BRING IN OUR COMMON CODE
-require_once('RAY_register_and_confirm_common.php');
+require_once('register_and_confirm_common.php');
 
 // REMOVE THE OLD VERSION OF userTable
 $res = $mysqli->query('DROP TABLE userTable');

@@ -1,4 +1,4 @@
-<?php // RAY_register_and_confirm_common.php
+<?php // register_and_confirm_common.php
 
 
 // COMMON CODE AVAILABLE TO ALL OUR REGISTER-AND-CONFIRM SCRIPTS

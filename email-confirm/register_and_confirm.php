@@ -1,11 +1,11 @@
-<?php // RAY_register_and_confirm.php
+<?php // register_and_confirm.php
 
 
 // HANDLE THE REGISTER-AND-CONFIRM PROCESS
 
 
 // BRING IN OUR COMMON CODE
-require_once('RAY_register_and_confirm_common.php');
+require_once('register_and_confirm_common.php');
 
 $testing=0;
 
@@ -81,7 +81,7 @@ if
     if ( $res->num_rows == 0 ) die("SORRY - YOUR ACTIVATION CODE WAS NOT FOUND");
 
     // SET UP THE EMAIL ADDRESS HINT - billy@gmail.com HINTS bill? gmail com
-    $row = mysql_fetch_assoc($res);
+    $row = $res->fetch_assoc();
     $arr = explode('@', $row["email_address"]);
     $uid = $arr[0];
     $dmn = $arr[1];
@@ -97,12 +97,28 @@ if
     ;
 
     // SHOW THE CONFIRMATION FORM WITH THE EMAIL ADDRESS HINT
+echo "<head>";
+echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://jwooten37830.com/patti/styles/example.css\">";
+echo "</head><body>";
+echo "<div id=\"content\">";
     echo '<form method="post" action="' . $_SERVER["REQUEST_URI"] . '">' . PHP_EOL;
+   echo '<center>';
+   echo '<img src="https://jwooten37830.com/patti/images/green_logo.gif" style="width:100px;height:100px"><br /><br /><br />';
+   echo '</center>';
+    echo '<center><div id="label">';
     echo 'TO CONFIRM REGISTRATION, ENTER YOUR EMAIL ADDRESS HERE:' . PHP_EOL;
+    
     echo "<br/>HINT: IT LOOKS LIKE $email_hint" . PHP_EOL;
-    echo '<input name="e" />' . PHP_EOL;
-    echo '<input type="submit" />' . PHP_EOL;
+    echo "</div>";
+    echo '</center>';
+    echo '<center>';
+    echo '<input id="email_field" name="e" /><br />' . PHP_EOL;
+    echo '<input id="submit" type="submit" />' . PHP_EOL;
+    echo '</center>';
     echo '</form>';
+    echo '</div>';
+    echo '</body>';
+    echo '</html>';
     die();
 }
 

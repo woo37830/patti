@@ -1,14 +1,14 @@
-<?php // RAY_register_and_confirm_admin.php
+<?php // register_and_confirm_admin.php
 
 
 // ADMINISTRATOR SCRIPT FOR A VIEW OF THE REGISTER-AND-CONFIRM PROCESS
 
 
 // BRING IN OUR COMMON CODE
-require_once('RAY_register_and_confirm_common.php');
+require_once('register_and_confirm_common.php');
 
 // SET THE URL OF THE CONFIRMATION PAGE HERE:
-$confirm_page = $db_host . '/patti/email-confirm' . '/RAY_register_and_confirm.php';
+$confirm_page = $db_host . '/patti/email-confirm' . '/register_and_confirm.php';
 
 
 // GATHER INFORMATION ABOUT THE SUCCESSFUL REGISTRATIONS
