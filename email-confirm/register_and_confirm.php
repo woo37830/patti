@@ -203,7 +203,6 @@ echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://jwooten37830.com
 echo "</head><body>";
 echo "<div id=\"content\">";
 $form = <<<ENDFORM
-
 <form method="post">
 <center>
 <img src="https://jwooten37830.com/patti/images/green_logo.gif" style="width:100px;height:100px"><br /><br /><br />
