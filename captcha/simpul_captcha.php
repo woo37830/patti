@@ -27,33 +27,41 @@ function simpul_captcha() {
           $operator = "+";
           }
    printf ("<input id=\"hidden\" type=\"hidden\" name=\"result\" value=\"" . $value . "\" />");
-   $expression = "<br/>Enter the result of: " . $num1 . " " . $operator . " " . $num2 ;
+   $expression = "<div id=\"enter\" <br/>Enter the result of: " . $num1 . " " . $operator . " " . $num2 . "</div>";
    return $expression;
 }
 
 function check_result_script() {
   $script = <<< 'EOS'
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js" ></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.4.3.min.js" ></script>
 
   <script type="text/javascript">
       $(document).ready(function(){
           $("#welcome").hide();
           $("#email_field").hide();
           $("#robotQ").show();
+          $("#enter").show();
+          $("#begone").hide();
           $("#submit").attr('disabled',true);
+          $("#txt_field").focus();
 
-          $("#txt_name").blur(function(){
+          $("#txt_name").blur(function(event){
               if( parseInt($(this).val()) == parseInt($('#hidden').val()) ) {
-                $("#email_field").show();
+                event.preventDefault();
+                $("#robotQ").hide(); // This statement causes a submit or at least removes the entire form
+                $("#enter").hide();
                 $("#txt_name").hide();
-        //        $("#robotQ").hide(); // This statement causes a submit or at least removes the entire form
+                $("#email_field").show();
+                $("#email").focus();
         //        Here I would like to put the focus on the input field for my-email.
                 $("#welcome").show();
                 $("input[type=submit]").attr('disabled',false);
           } else {
                 $("input[type=submit]").attr('disabled','disabled');
-                alert("Begone robot!");
                 $("#txt_name").val("");
+//                alert("Begone robot!");
+                 $("#begone").show(); 
+                 $("#begone").fadeOut(5000);
               }
           })
      });
