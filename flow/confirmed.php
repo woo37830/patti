@@ -24,7 +24,7 @@ When the submit button is pressed, the account will be created using the informa
 </table>
 <input type="submit" id="submit_id" name="submit" value="Submit" disabled="disabled"/>
 </form>
-<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
 
  <script>
     $(document).ready(function(){
