@@ -1,12 +1,22 @@
 <?php
 function page_header()
 {
+  $server = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+  $url = $server;
+  $path = parse_url($url, PHP_URL_PATH);
+  $parent = dirname($path, 2);
+  $styles = $parent . "/styles/";
+  $stylesheet = $styles . "example.css";
+  $images = $parent . "/images/";
+  $logo = $images . "green_logo.gif";
+  $logo_size = "style=\"width:100px;height:100px\"";
+
   $script = "<head>" . 
-  "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://jwooten37830.com/patti/styles/example.css\"/>" .
+  "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $stylesheet . "\"/>" .
  "</head><body>" .
  "<div id=\"content\">" .
  "<center>" .
- "<img src=\"https://jwooten37830.com/patti/images/green_logo.gif\" style=\"width:100px;height:100px\"/>" .
+ "<img src=\"" . $logo . "\"" .  $logo_size . "\"/>" .
  "<br /><br /><br />" .
  "</center>";
  return $script;
