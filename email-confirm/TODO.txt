@@ -1,0 +1,8 @@
+1)  Factor git_footer, page_header into common.php.
+2)  Put page_header and git_footer into admin page and other result pages.
+3)  Add the path to the choice of payment plan.
+4)  in register_and_confirm.php, add the simpul_captcha like in the 
+    test-captcha.php page.  Use register_and_confirm as the start where
+    we first verify they are not a robot, then take the email, then
+    go for payment choices and add the user to AllClients in proper group.
+    Then send an email with login information to their account.
