@@ -5,9 +5,9 @@ function page_header()
   $url = $server;
   $path = parse_url($url, PHP_URL_PATH);
   $parent = dirname($path, 2);
-  $styles = $parent . "/styles/";
+  $styles = ".." . $parent . "/styles/";
   $stylesheet = $styles . "example.css";
-  $images = $parent . "/images/";
+  $images = ".." . $parent . "/images/";
   $logo = $images . "green_logo.gif";
   $logo_size = "style=\"width:100px;height:100px\"";
 
