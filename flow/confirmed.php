@@ -1,14 +1,11 @@
 <?php
+require("header_footer.php");
 $email = $_GET["email"];
 $form = <<<EOS
-<html>
  <style>
     #form label{float:left; width:140px;}
     #error_msg{color:red; font-weight:bold;}
  </style>
-<head>
-</head>
-<body>
 <h1>Your email is confirmed.  Please complete the form</h1>
 <hr />
 When the submit button is pressed, the account will be created using the information from the form and the master api key to add the account to the trial group.  At the end of the addition, the user will be redirected to EngageMoreCRM to login.
@@ -74,7 +71,9 @@ When the submit button is pressed, the account will be created using the informa
     });
   </script>
 EOS;
+ echo page_header();
   echo $form;
+  echo git_footer();
   echo "</body>";
   echo "</html>";
-
+?>
