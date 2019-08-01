@@ -1,0 +1,8 @@
+TODO 
+
+1.  Get Thrive Cart account and api key.
+2.  Add page that takes the rate and connects to Thrive cart with the accountid, email, and plan.
+3.  Get response from Thrive Cart and move the account from the trial group to the paid group on AllClients.
+4.  Redirect the user to the signin page at EngageMoreCRM.
+5.  Write the create trial user in EngageMoreCRM page using the
+  master api key and retrieving the accountId.
