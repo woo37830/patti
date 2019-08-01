@@ -1,4 +1,5 @@
 <?php
+session_start(); // Start a session for storing things
 require("header_footer.php");
 $email = $_GET["email"];
 $form = <<<EOS
