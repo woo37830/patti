@@ -3,13 +3,13 @@ require('header_footer.php');
 require('simpul_captcha.php');
 
 echo page_header();
-
+$server = $_SERVER['SERVER_NAME'];
 echo '<center><div id="label">';
    if( empty($_GET['result']) ) {
      echo "Hello there<br />";
   } else {
        echo "You entered " . $_GET['result'] . "<br />With email: " . $_GET['email'] . ".<br /> You are NOT a robot!<br />";
-       echo "<br /><a href=\"https://jwooten37830.com/patti/captcha/test-captcha.php\" />Back</a>";
+       echo "<br /><a href=\"/patti/captcha/test-captcha.php\" />Back</a>";
        echo "</center></div>";
        echo git_footer();
        echo "</body></html>";

@@ -39,11 +39,11 @@ function check_result_script() {
       $(document).ready(function(){
           $("#welcome").hide();
           $("#email_field").hide();
+          $("#txt_field").focus();
           $("#robotQ").show();
           $("#enter").show();
           $("#begone").hide();
           $("#submit").attr('disabled',true);
-          $("#txt_field").focus();
 
           $("#txt_name").blur(function(event){
               if( parseInt($(this).val()) == parseInt($('#hidden').val()) ) {
