@@ -11,7 +11,8 @@ function page_header()
   $logo = $images . "green_logo.gif";
   $logo_size = "style=\"width:100px;height:100px\"";
 
-  $script = "<head>" . 
+  $script = "<?php header('Access-Control-Allow-Origin: *'); ?>" .
+  "<head>" . 
   "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $stylesheet . "\"/>" .
  "</head><body>" .
  "<div id=\"content\">" .
