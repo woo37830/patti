@@ -31,7 +31,7 @@ $num = $res->num_rows;
 echo "<br/>$num CONFIRMED REGISTRATIONS:" . PHP_EOL;
 
 // SHOW WHO IS CONFIRMED
-while ($row = $res->fetch_assoc($res))
+while ($row = $res->fetch_assoc())
 {
     $email_address = $row["email_address"];
     $uri
