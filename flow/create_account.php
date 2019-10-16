@@ -1,26 +1,28 @@
 <?php
+require("header_footer.php");
 $first = $_GET["first"];
 $last = $_GET["last"];
+$email = $_GET["email"];
 $passwd = $_GET["password"];
-
+$_SESSION["email"] = $email;
+$_SESSION["password"] = $passwd;
 $form = <<<EOT
-<html>
-<head>
-</head>
-<body>
-<h1>Here we are in the page which will create the account</h1>
-<h2>With the following values</h2>
-<br/>First Name: $first 
-<br/>Last Name: $last
-<br/>Password: $passwd
-<h2>This page will be processed automagically and redirect the user to the EngageMoreCRM page to sign in</h2>
-</body>
-</html>
+<h1>Here we are in the page which will create the account. It will not be visible.</h1>
+<form id="form" method="POST" action="https://secure.engagemorecrm.com/api/2/AddAccount.aspx" >
+<input type="hidden" name="response_type" value="json" />
+<input type="text" name="email" value="$email" />
+<input type="password" name="password" value="$passwd" />
+<input type="hidden" name="apipassword" value="ie6n85dF826iYe5npA" />
+<input type="hidden" name="apiusername" value="4K9vV0InIxP5znCa7d" />
+<input type="hidden" name="group" value="RE FreeTrial" />
+<input type="hidden" name="affiliatecode" value="1001" />
+<input type="submit" name="submit" id="submit" value="Submit" />
+</form>
 EOT;
 
-//$form = str_replace('%first%',$first,$form_str);
-//$form = str_replace('%last%', $last,$form);
-//$form = str_replace('%password%', $password, $form);
-
+echo page_header();
 echo $form;
+echo git_footer();
+echo "</body>";
+echo "</html>";
 ?>
