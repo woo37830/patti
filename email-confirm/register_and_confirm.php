@@ -88,8 +88,10 @@ if
     . ' '
     . substr($dmn, 0, $poz)
     . ' '
-    . end(explode('.', $dmn))
-    ;
+     ;
+
+    $tmp =  explode('.', $dmn);
+    $hint = end($tmp);
 
     // SHOW THE CONFIRMATION FORM WITH THE EMAIL ADDRESS HINT
 echo "<head>";
