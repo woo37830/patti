@@ -1,0 +1,6 @@
+
+{
+    "thrivecart_secret": "amazinglysecurekey",
+    "event": "order.success",
+    "customer": "abc,xyz,pdq"
+}
