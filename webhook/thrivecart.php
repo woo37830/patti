@@ -1,38 +1,44 @@
 <?php
-require('DumpHTTPRequestToFile.php');
+//
 
 /**
  * AllClients Account ID and API Key.
  */
 $account_id   = '4K9vV0InIxP5znCa7d';
 $api_key      = 'ie6n85dF826iYe5npA';
-
+$group_name = 'RE - BUZZ ($69)';
+$product_name = '9';
 /**
  * The API endpoint and time zone.
  */
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 $api_timezone = new DateTimeZone('America/New_York');
-
+$myFile = "response.txt";
+$fh = fopen($myFile, 'w');
+fwrite($fh, "Started\n");
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
-if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != "IEYDASLZ8FR7" ){
+if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != 'IEYDASLZ8FR7' ){
  dump_response("Key Failure");
  http_response_code(403);
+ fclose($fh);
  die();
 }
 
-$myFile = "response.txt";
-$fh = fopen($myFile, 'w');
+fwrite($fh,"Check for event and customer\n");
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( $_REQUEST['event'] == "order.success" && ! empty( $_REQUEST['customer'] ) ){
-  dump_response();
   //process_response();
 } else {
-  fwrite($fh,"Invalid event.{$nl}");
-  fclose($fh);
+  dump_response("Invalid event.{$nl}");
   http_response_code(418);
+  fclose($fh);
   die();
   //dump_response("Invalid event");
 }
+
+if( !empty($_REQUEST['base_product'] ) && $_REQUEST['base_product'] == $product_name ) {
+fwrite($fh,"Have item_identifier '%s'\n",$product_name);
+
 /**
  * The contact information to insert.
  *
@@ -41,6 +47,9 @@ if( $_REQUEST['event'] == "order.success" && ! empty( $_REQUEST['customer'] ) ){
 $account = array(
 	'email' => $_REQUEST['customer']['email'],
 	'password'  => '123123',
+  'first_name' => $_REQUEST['customer']['firstname'],
+  'last_name' => $_REQUEST['customer']['lastname'],
+  'mailmerge_fullname' => $_REQUEST['customer']['name'],
 );
 
 /**
@@ -57,6 +66,7 @@ $data = array(
 	'apipassword'    => $api_key,
 	'email' => $account['email'],
 	'password'  => $account['password'],
+  'group' => $group_name,
 );
 
 /**
@@ -122,6 +132,10 @@ fwrite($fh,"Added account for '%s' with $account_id '%d'{$nl}", $data['email'], 
 
 fwrite($fh,"This email '%s' can be added to the $_SESSION and saved in database, etc.{$nl}", $data['email']);
 
+} else {
+  fwrite($fh,"Error: Invalid Product information, see error.txt\n");
+  dump_response("Received invalid product information" );
+}
 /**
  * Post data to URL with cURL and return result XML string.
  *
@@ -162,7 +176,9 @@ function post_api_url($url, array $data = array()) {
 		// It is important to close the cURL session after curl_error()
 		fwrite($fh,"cURL returned an error: %s{$nl}", curl_error($ch));
 		curl_close($ch);
-		exit;
+    fclose($fh);
+    http_response_code(400);
+    exit;
 	}
 
 	// Close the cURL session
@@ -180,33 +196,17 @@ function pretty_dump($mixed = null) {
   return $content;
 }
 
-function var_dump_pre($mixed = null) {
-  echo '<pre>';
-  var_dump($mixed);
-  echo '</pre>';
-  return null;
-}
-
-function var_dump_ret($mixed = null) {
-  ob_start();
-  var_dump($mixed);
-  $content = ob_get_contents();
-  ob_end_clean();
-  return $content;
-}
 //file_put_contents($file, var_dump_ret($_REQUEST));
 function dump_response($msg = null) {
-  $myFile = "response.txt";
-  $fh = fopen($myFile, 'w');
-  fwrite($fh, $msg."\n");
-  fwrite($fh, pretty_dump($_REQUEST));
-  fwrite($fh,"\n");
-  //$json=json_encode($_REQUEST);
-  //$obj=json_decode($json);
-  //fwrite($fh,"Email: ".$obj->{"customer"}->{"email"});
-  //fwrite($fh,"\n");
-  fwrite($fh,"Email: ".$_REQUEST['customer']['email']);
-  fclose($fh);
+  $eFile = "error.txt";
+  $err = fopen($eFile, 'w');
+  fwrite($err, $msg."\n");
+  fwrite($err,"JSON DUMP\n");
+  fwrite($err, pretty_dump($_REQUEST));
+  fwrite($err,"\nEND OF DUMP\n");
+  fwrite($err,"\n");
+  fclose($err);
+  return;
 }
 fclose($fh);
 http_response_code(200);
