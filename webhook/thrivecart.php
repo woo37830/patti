@@ -1,13 +1,17 @@
 <?php
 //
-require('post_api_url');
+require 'post_api_url.php' ;
 /**
  * AllClients Account ID and API Key.
  */
 $account_id   = '4K9vV0InIxP5znCa7d';
 $api_key      = 'ie6n85dF826iYe5npA';
 $group_name = 'RE - BUZZ ($69)';
-$product_name = 'product-9';
+$product_name = 'product_9';
+
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
 /**
  * The API endpoint and time zone.
  */
@@ -36,33 +40,34 @@ if(  ! empty( $_REQUEST['customer'] ) ){
   fclose($fh);
   die();
 }
-if( empty($_REQUEST['order']) ) {
-  fwrite($fh,"No order data provided");
-  dump_response("No order data provided");
-  fclose($fh);
-  die();
-}
-$order = $_REQUEST['order'];
-if( empty($order['charges'] ) ) {
-  fwrite($fh,"No charges data provided");
-  dump_response("No charge data provided");
-  fclose($fh);
-  die();
-}
-$charges = $order['charges'];
+//if( empty($_REQUEST['order']) ) {
+//  fwrite($fh,"No order data provided");
+//  dump_response("No order data provided");
+//  fclose($fh);
+//  die();
+//}
+//$order = $_REQUEST['order'];
+//if( empty($order['charges'] ) ) {
+//  fwrite($fh,"No charge data provided");
+//  dump_response("No charge data provided");
+//  fclose($fh);
+//  die();
+//}
+//$charges = $order['charges'];
 $data = $_REQUEST['subscriptions'];
-fwrite($fh,"data:".$data."\n");
+fwrite($fh,"data:".json_encode($data)."\n");
 if( empty($data) ) {
   fwrite($fh,"No subscription provided");
   dump_response("No subscription provided");
   fclose($fh);
   die();
 }
-$item_id = array_keys($data)[0];
-  fwrite($fh,"\nThe item_identifier is '%s'\n",$item_id);
 
-if( $product_name === $item_id ) { // Here is where we check that we have the correct product
-  fwrite($fh,"\nProcessing item_identifier: '%s'\n",$item_id);
+$product = "product_2";
+  fwrite($fh,"\nThe item_identifier is '$product'\n");
+
+if( $product_name === $product ) { // Here is where we check that we have the correct product
+  fwrite($fh,"\nProcessing item_identifier: '$product'\n");
 /**
  * The contact information to insert.
  *
@@ -139,7 +144,7 @@ fwrite($fh,"\ncURL command has been issued and results received\n");
  *   </results>
  */
 if (isset($results_xml->error)) {
-	fwrite($fh,"\nAllClients API returned an error: %s\n", $results_xml->error);
+	fwrite($fh,"\nAllClients API returned an error: $results_xml->error\n");
 	fclose($fh);
   http_response_code(400);
   exit;
@@ -151,12 +156,12 @@ if (isset($results_xml->error)) {
  */
 $accountid = (int) $results_xml->account_id;
 
-fwrite($fh,"\nAdded account for '%s' with $account_id '%d'\n", $data['email'], $accountid);
+fwrite($fh,"\nAdded account for '".$data['email']."' with $account_id '".$accountid."'\n" );
 
-fwrite($fh,"\nThis email '%s' can be added to the $_SESSION and saved in database, etc.\n", $data['email']);
+fwrite($fh,"\nThis email '".$data['email']."' can be added to the $_SESSION and saved in database, etc.\n");
 
 } else {
-  fwrite($fh,"\nError: Invalid Product information, product_name='%s' and item_id='%s'\n",$product_name, $item_id);
+  fwrite($fh,"\nError: Invalid Product information, expected item_id ='".$product_name."' and got item_id='".$product."'\n");
 }
 
 function pretty_dump($mixed = null) {

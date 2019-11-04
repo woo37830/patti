@@ -1,3 +1,4 @@
+<?php
 /**
  * Post data to URL with cURL and return result XML string.
  *
@@ -49,3 +50,4 @@ function post_api_url($url, array $data = array()) {
 	// Return response
 	return $output;
 }
+?>
