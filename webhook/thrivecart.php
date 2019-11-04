@@ -7,7 +7,7 @@ require 'post_api_url.php' ;
 $account_id   = '4K9vV0InIxP5znCa7d';
 $api_key      = 'ie6n85dF826iYe5npA';
 $group_name = 'RE - BUZZ ($69)';
-$product_name = 'product_9';
+$product_name = 'product-9';
 
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
@@ -22,6 +22,7 @@ $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n");
 }
+fwrite($fh,"REQUEST_URI: ".$_SERVER['REQUEST_URI']."\n");
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != 'IEYDASLZ8FR7' ){
  fwrite($fh, "Key Failure\n");
@@ -63,11 +64,18 @@ if( empty($data) ) {
   die();
 }
 
-$product = "product_2";
-  fwrite($fh,"\nThe item_identifier is '$product'\n");
+$datastr = json_encode($data);
+fwrite($fh, "datastr: '".$datastr."\n");
+$product = "Unknown";
+$pos = strpos($datastr, ':');
+if ($pos !== false) {
+
+  $product = substr($datastr, 2, $pos-3);
+} // here we put other choices and set the product
+  fwrite($fh,"\nThe item_identifier is '".$product."'\n");
 
 if( $product_name === $product ) { // Here is where we check that we have the correct product
-  fwrite($fh,"\nProcessing item_identifier: '$product'\n");
+  fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
 /**
  * The contact information to insert.
  *
@@ -94,7 +102,7 @@ $data = array(
 	'apipassword'    => $api_key,
 	'email' => $account['email'],
 	'password'  => $account['password'],
-  'group' => $group_name,
+  'group' => $group_name, // Here we set the group name depending upon the product
 );
 
 /**
@@ -144,7 +152,7 @@ fwrite($fh,"\ncURL command has been issued and results received\n");
  *   </results>
  */
 if (isset($results_xml->error)) {
-	fwrite($fh,"\nAllClients API returned an error: $results_xml->error\n");
+	fwrite($fh,"\nAllClients API returned an error: ".$results_xml->error."\n");
 	fclose($fh);
   http_response_code(400);
   exit;
