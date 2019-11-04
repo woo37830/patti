@@ -22,7 +22,6 @@ $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n");
 }
-fwrite($fh,"REQUEST_URI: ".$_SERVER['REQUEST_URI']."\n");
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != 'IEYDASLZ8FR7' ){
  fwrite($fh, "Key Failure\n");
@@ -33,6 +32,19 @@ if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] !=
 // Message seems to be from ThriveCart so log it.
 //fwrite($fh, pretty_dump($_REQUEST));
 // Look for the order.success webhook event. Make sure the response is complete before processing.
+if( empty( $_REQUEST['event'] ) ) {
+   fwrite($fh," No event provided. \n");
+   http_response_code(403);
+   fclose($fh);
+   die();
+}
+$event = $_REQUEST['event'];
+if( $event != 'order.success' ) {
+  fwrite($fh, "Invalid event '".$event."'\n");
+  http_response_code(200);
+  fclose($fh);
+  die();
+}
 if(  ! empty( $_REQUEST['customer'] ) ){
  fwrite($fh, "\nWe have a customer order!\n");
 } else {
