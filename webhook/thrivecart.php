@@ -1,6 +1,7 @@
 <?php
 //
-require 'post_api_url.php' ;
+require 'post_api_url.php';
+require 'mysql_common.php';
 /**
  * AllClients Account ID and API Key.
  */
@@ -50,6 +51,11 @@ if(  ! empty( $_REQUEST['customer'] ) ){
   fclose($fh);
   die();
 }
+
+// Here we log the entire json stream using logit in mysql_common.
+// Get the email, first and last name for the logit.
+// $_REQUEST['customer']['email']
+// logit($_REQUEST['customer']['email'], json_encode($_REQUEST), $status);
 //if( empty($_REQUEST['order']) ) {
 //  fwrite($fh,"No order data provided");
 //  dump_response("No order data provided");
@@ -85,6 +91,8 @@ if ($pos !== false) {
 
 if( $product_name === $product ) { // Here is where we check that we have the correct product
   fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
+  $thrivecartid = $_REQUEST['customer_id'];
+  fwrite($fh,"\nThrivecart customer_id is: ".$thrivecartid."\n");
 /**
  * The contact information to insert.
  *
@@ -92,7 +100,7 @@ if( $product_name === $product ) { // Here is where we check that we have the co
  */
 $account = array(
 	'email' => $_REQUEST['customer']['email'],
-	'password'  => '123123',
+	'password'  => 'engage123',
   'first_name' => $_REQUEST['customer']['firstname'],
   'last_name' => $_REQUEST['customer']['lastname'],
 );
@@ -176,10 +184,16 @@ $accountid = (int) $results_xml->account_id;
 fwrite($fh,"\nAdded account for '".$data['email']."' with $account_id '".$accountid."'\n" );
 
 fwrite($fh,"\nThis email '".$data['email']."' can be added to the $_SESSION and saved in database, etc.\n");
+// Here I write the account information using addUser in mysql_common.php
+addUser($data['email'],   $thrivecartid, $account_id);
+logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "success");
 
 } else {
-  fwrite($fh,"\nError: Invalid Product information, expected item_id ='".$product_name."' and got item_id='".$product."'\n");
+  logit($_REQUEST['customer']['email'],"Error: Invalid Product information, expected item_id ='".$product_name."' and got item_id='".$product."'", "failure");
+  logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure");
 }
+// Log this failure using logit
+
 
 function pretty_dump($mixed = null) {
   ob_start();
