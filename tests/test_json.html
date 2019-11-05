@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<title>jQuery Ajax Example with JSON Response</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+ 
+<!-- Write Javascript code here -->
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#submit').on('click', function() { // This event fires when a button is clicked
+      var form_data = {};
+    $('#form').serializeArray().map(function(n){form_data[n.name] = n.value;});
+
+    $.ajax({ // ajax call starts
+      url: 'https://secure.engagemorecrm.com/api/2/AddAccount.aspx', // JQuery loads serverside.php
+      type: 'GET',
+      data: {
+        form_data: form_data
+    },
+      dataType: 'json', // Choosing a JSON datatype
+    })
+    .done(function(data) { // Variable data contains the data we get from serverside
+      $('#wines').html(''); // Clear #wines div
+
+    });
+    return false; // keeps the page from not refreshing
+  });
+});
+</script>
+ 
+</head>
+ 
+<body>
+  <form method="get" action="">
+  <input type="hidden" name="response_type" value="json" />
+<input type="text" name="email" value="xxx@yyy" />
+<input type="password" name="password" value="123456" />
+<input type="hidden" name="apipassword" value="ie6n85dF826iYe5npA" />
+<input type="hidden" name="apiusername" value="4K9vV0InIxP5znCa7d" />
+<input type="hidden" name="group" value="RE FreeTrial" />
+<input type="hidden" name="affiliatecode" value="1001" />
+<input type="button" name="submit" id="submit" value="Submit" />
+  </form>
+	
+  <div id="wines">
+  <!-- Javascript will print data in here when we have finished the page -->
+  </div>
+ 
+</body>
+</html>
