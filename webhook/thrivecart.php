@@ -9,9 +9,6 @@ $api_key      = 'ie6n85dF826iYe5npA';
 $group_name = 'RE - BUZZ ($69)';
 $product_name = 'product-9';
 
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
-
 /**
  * The API endpoint and time zone.
  */
@@ -68,13 +65,13 @@ if(  ! empty( $_REQUEST['customer'] ) ){
 //}
 //$charges = $order['charges'];
 $data = $_REQUEST['subscriptions'];
-fwrite($fh,"data:".json_encode($data)."\n");
 if( empty($data) ) {
   fwrite($fh,"No subscription provided");
   dump_response("No subscription provided");
   fclose($fh);
   die();
 }
+fwrite($fh,"data:".json_encode($data)."\n");
 
 $datastr = json_encode($data);
 fwrite($fh, "datastr: '".$datastr."\n");
