@@ -7,6 +7,9 @@ require 'mysql_common.php';
  */
 $account_id   = '4K9vV0InIxP5znCa7d';
 $api_key      = 'ie6n85dF826iYe5npA';
+
+$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
+$products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X");
 $group_name = 'RE - BUZZ ($69)';
 $product_name = 'product-9';
 
@@ -37,7 +40,7 @@ if( empty( $_REQUEST['event'] ) ) {
    die();
 }
 $event = $_REQUEST['event'];
-if( $event != 'order.success' ) {
+if( !in_array($event, $events) ) {
   fwrite($fh, "Invalid event '".$event."'\n");
   http_response_code(200);
   fclose($fh);
@@ -52,23 +55,6 @@ if(  ! empty( $_REQUEST['customer'] ) ){
   die();
 }
 
-// Here we log the entire json stream using logit in mysql_common.
-// Get the email, first and last name for the logit.
-// $_REQUEST['customer']['email']
-// logit($_REQUEST['customer']['email'], json_encode($_REQUEST), $status);
-//if( empty($_REQUEST['order']) ) {
-//  fwrite($fh,"No order data provided");
-//  dump_response("No order data provided");
-//  fclose($fh);
-//  die();
-//}
-//$order = $_REQUEST['order'];
-//if( empty($order['charges'] ) ) {
-//  fwrite($fh,"No charge data provided");
-//  dump_response("No charge data provided");
-//  fclose($fh);
-//  die();
-//}
 //$charges = $order['charges'];
 $data = $_REQUEST['subscriptions'];
 if( empty($data) ) {
@@ -89,10 +75,12 @@ if ($pos !== false) {
 } // here we put other choices and set the product
   fwrite($fh,"\nThe item_identifier is '".$product."'\n");
 
-if( $product_name === $product ) { // Here is where we check that we have the correct product
-  fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
+if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
   $thrivecartid = $_REQUEST['customer_id'];
   fwrite($fh,"\nThrivecart customer_id is: ".$thrivecartid."\n");
+  fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
+  $group_name = $products[$product];
+  fwrite($fh, "\nThe group will be: ".$group_name."\m");
 /**
  * The contact information to insert.
  *
@@ -170,6 +158,7 @@ fwrite($fh,"\ncURL command has been issued and results received\n");
  */
 if (isset($results_xml->error)) {
 	fwrite($fh,"\nAllClients API returned an error: ".$results_xml->error."\n");
+  logit($data['email'],$results_xml->error, "failure" );
 	fclose($fh);
   http_response_code(400);
   exit;
