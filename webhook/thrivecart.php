@@ -111,6 +111,29 @@ $data = array(
 );
 
 $results_xml = thrivecart_api($url, $data);
+if ($results_xml === false) {
+	fwrite($fh,"\nError parsing XML\n");
+  fclose($fh);
+  http_response_code(400);
+	exit;
+}
+fwrite($fh,"\ncURL command has been issued and results received\n");
+/**
+ * If an API error has occurred, the results object will contain a child 'error'
+ * SimpleXMLElement parsed from the error response:
+ *
+ *   <?xml version="1.0"?>
+ *   <results>
+ *     <error>Authentication failed</error>
+ *   </results>
+ */
+if (isset($results_xml->error)) {
+	fwrite($fh,"\nAllClients API returned an error: ".$results_xml->error."\n");
+  logit($data['email'],$results_xml->error, "failure" );
+	fclose($fh);
+  http_response_code(400);
+  exit;
+}
 /**
  * If no error was returned, the AddContact results object will contain a
  * 'contactid' child SimpleXMLElement, which can be cast to an integer.

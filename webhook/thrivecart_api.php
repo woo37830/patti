@@ -37,29 +37,6 @@ $result_xml_string = post_api_url($url, $data);
  * @var SimpleXMLElement $results_xml
  */
 $results_xml = simplexml_load_string($result_xml_string);
-if ($results_xml === false) {
-	fwrite($fh,"\nError parsing XML\n");
-  fclose($fh);
-  http_response_code(400);
-	exit;
-}
-fwrite($fh,"\ncURL command has been issued and results received\n");
-/**
- * If an API error has occurred, the results object will contain a child 'error'
- * SimpleXMLElement parsed from the error response:
- *
- *   <?xml version="1.0"?>
- *   <results>
- *     <error>Authentication failed</error>
- *   </results>
- */
-if (isset($results_xml->error)) {
-	fwrite($fh,"\nAllClients API returned an error: ".$results_xml->error."\n");
-  logit($data['email'],$results_xml->error, "failure" );
-	fclose($fh);
-  http_response_code(400);
-  exit;
-}
 
 return $results_xml;
 }
