@@ -37,7 +37,7 @@ function logit($user, $json, $my_status)
   if( $conn = connect("users_db") )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $sql = "INSERT INTO webhook_log
+      $sql = "INSERT INTO logs
       ( received
       , email
       , request_json
