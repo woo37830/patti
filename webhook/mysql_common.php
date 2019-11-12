@@ -76,7 +76,7 @@ function addUser($user, $thrivecartid, $engagemoreid)
   if( $conn = connect("users_db") )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $sql = "INSERT INTO thrivecartUsers
+      $sql = "INSERT INTO users
       ( added
       , email
       , thrivecartid
