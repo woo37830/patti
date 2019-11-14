@@ -18,9 +18,8 @@ $data = array(
 );
 fwrite($fh,"data array established\n");
 $results_xml = thrivecart_api($url, $data, $fh);
-fwrite($fh,"\nresults_xml = " . simplexml_load_string($results_xml) . "\n");
 if ($results_xml === false) {
-	logit(simplexml_load_string($results_xml), "\nError parsing XML", "failure");
+	logit($results_xml, "\nError parsing XML", "failure");
   http_response_code(400);
 	exit;
 }
@@ -33,6 +32,8 @@ if ($results_xml === false) {
  *     <error>Authentication failed</error>
  *   </results>
  */
+ $xml = simplexml_load_string($results_xml);
+
 if (isset($results_xml->error)) {
   logit($data['email'],$results_xml->error, "failure" );
   http_response_code(400);
@@ -42,7 +43,7 @@ if (isset($results_xml->error)) {
  * If no error was returned, the AddContact results object will contain a
  * 'contactid' child SimpleXMLElement, which can be cast to an integer.
  */
-$accountid = (int) $results_xml->account_id;
+ $account_id = (string)$xml->accountid;
 
 
 // Here I write the account information using addUser in mysql_common.php
