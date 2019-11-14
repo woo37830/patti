@@ -1,9 +1,7 @@
 <?php
 //
-require 'thrivecart_api.php';
 require 'mysql_common.php';
-require 'add_account.php';
-require 'cancel_account.php';
+require 'thrivecart_api.php';
 /**
  * AllClients Account ID and API Key.
  */
@@ -15,16 +13,16 @@ $products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X")
 $group_name = 'RE - BUZZ ($69)';
 $product_name = 'product-9';
 
+/**
+ * The API endpoint and time zone.
+ */
+$api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
+$api_timezone = new DateTimeZone('America/New_York');
 $myFile = "response.txt";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n");
 }
-
-/**
- * The API endpoint and time zone.
- */
-$api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != 'IEYDASLZ8FR7' ){
  fwrite($fh, "Key Failure\n");
@@ -32,7 +30,6 @@ if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] !=
  fclose($fh);
  die();
 }
-
 // Message seems to be from ThriveCart so log it.
 //fwrite($fh, pretty_dump($_REQUEST));
 // Look for the order.success webhook event. Make sure the response is complete before processing.
@@ -43,7 +40,14 @@ if( empty( $_REQUEST['event'] ) ) {
    die();
 }
 
-
+if(  ! empty( $_REQUEST['customer'] ) ){
+ fwrite($fh, "\nWe have a customer!\n");
+} else {
+  fwrite($fh, "No customer data!\n");
+  http_response_code(418);
+  fclose($fh);
+  die();
+}
 $event = $_REQUEST['event'];
 if( !in_array($event, $events) ) {
   logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "Invalid event");
@@ -76,7 +80,7 @@ if( array_key_exists($product, $products) ) { // Here is where we check that we 
   fwrite($fh,"\nThrivecart customer_id is: ".$thrivecartid."\n");
   fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
   $group_name = $products[$product];
-  fwrite($fh, "\nThe group will be: ".$group_name."\n");
+  fwrite($fh, "\nThe group will be: ".$group_name."\m");
 /**
  * The contact information to insert.
  *
@@ -94,15 +98,54 @@ $account = array(
  */
 $nl = php_sapi_name() === 'cli' ? "\n" : "<br>";
 
-$api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
+/**
+ * Specify URL and form fields for AddContact API function.
+ */
+$url = $api_endpoint . 'AddAccount.aspx';
+$data = array(
+	'apiusername' => $account_id,
+	'apipassword'    => $api_key,
+	'email' => $account['email'],
+	'password'  => $account['password'],
+  'group' => $group_name, // Here we set the group name depending upon the product
+);
 
-if( $event == "order.success") {
-  fwrite($fh, "\nProcessing order.success\n");
-  add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $thrivecartid);
-} else if( $event == "order.subscription_cancelled") {
-  fwrite($fh, "\nProcessing subscription_cancelled\n");
-  cancel_account($api_endpoint);
+$results_xml = thrivecart_api($url, $data);
+if ($results_xml === false) {
+	fwrite($fh,"\nError parsing XML\n");
+  fclose($fh);
+  http_response_code(400);
+	exit;
 }
+fwrite($fh,"\ncURL command has been issued and results received\n");
+/**
+ * If an API error has occurred, the results object will contain a child 'error'
+ * SimpleXMLElement parsed from the error response:
+ *
+ *   <?xml version="1.0"?>
+ *   <results>
+ *     <error>Authentication failed</error>
+ *   </results>
+ */
+if (isset($results_xml->error)) {
+	fwrite($fh,"\nAllClients API returned an error: ".$results_xml->error."\n");
+  logit($data['email'],$results_xml->error, "failure" );
+	fclose($fh);
+  http_response_code(400);
+  exit;
+}
+/**
+ * If no error was returned, the AddContact results object will contain a
+ * 'contactid' child SimpleXMLElement, which can be cast to an integer.
+ */
+$accountid = (int) $results_xml->account_id;
+
+fwrite($fh,"\nAdded account for '".$data['email']."' with $account_id '".$accountid."'\n" );
+
+fwrite($fh,"\nThis email '".$data['email']."' can be added to the $_SESSION and saved in database, etc.\n");
+// Here I write the account information using addUser in mysql_common.php
+addUser($data['email'],   $thrivecartid, $account_id);
+logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "success");
 
 } else {
   logit($_REQUEST['customer']['email'],"Error: Invalid Product information, expected item_id ='".$product_name."' and got item_id='".$product."'", "failure");

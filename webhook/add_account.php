@@ -1,21 +1,26 @@
 <?php
 
-function add_account($api_endpoint) {
+function add_account($api_endpoint, $account_id, $api_key, $account,
+ $group_name, $thrivecartid) {
 /**
  * Specify URL and form fields for AddContact API function.
  */
 $url = $api_endpoint . 'AddAccount.aspx';
+$myFile = "add_account.txt";
+$fh = fopen($myFile, 'a');
+
 $data = array(
 	'apiusername' => $account_id,
 	'apipassword'    => $api_key,
 	'email' => $account['email'],
 	'password'  => $account['password'],
-  'group' => $group_name, // Here we set the group name depending upon the product
+        'group' => $group_name,
 );
-
-$results_xml = thrivecart_api($url, $data);
+fwrite($fh,"data array established\n");
+$results_xml = thrivecart_api($url, $data, $fh);
+fwrite($fh,"\nresults_xml = " . simplexml_load_string($results_xml) . "\n");
 if ($results_xml === false) {
-	logit($results_xml, "\nError parsing XML", "failure");
+	logit(simplexml_load_string($results_xml), "\nError parsing XML", "failure");
   http_response_code(400);
 	exit;
 }
@@ -43,6 +48,6 @@ $accountid = (int) $results_xml->account_id;
 // Here I write the account information using addUser in mysql_common.php
 addUser($data['email'],   $thrivecartid, $account_id);
 logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "success");
-
+fclose($fh);
 }
 ?>
