@@ -1,4 +1,0 @@
-Add using the returned phone number called to look up the client and get
-their id.  Then use the AddNote call to add a note about sending the call
-to the rest-form.php and about the response to the reply php file.  Test.
-

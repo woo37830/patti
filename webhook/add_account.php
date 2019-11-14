@@ -43,7 +43,7 @@ if (isset($results_xml->error)) {
  * If no error was returned, the AddContact results object will contain a
  * 'contactid' child SimpleXMLElement, which can be cast to an integer.
  */
- $account_id = (string)$xml->accountid;
+ $account_id = (string)$xml->account_id;
 
 
 // Here I write the account information using addUser in mysql_common.php
