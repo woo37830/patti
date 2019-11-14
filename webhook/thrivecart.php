@@ -3,6 +3,7 @@
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
+require 'cancel_account.php';
 /**
  * AllClients Account ID and API Key.
  */
@@ -42,14 +43,7 @@ if( empty( $_REQUEST['event'] ) ) {
    die();
 }
 
-if(  ! empty( $_REQUEST['customer'] ) ){
- fwrite($fh, "\nWe have a customer!\n");
-} else {
-  fwrite($fh, "No customer data!\n");
-  http_response_code(418);
-  fclose($fh);
-  die();
-}
+
 $event = $_REQUEST['event'];
 if( !in_array($event, $events) ) {
   logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "Invalid event");
@@ -102,7 +96,11 @@ $nl = php_sapi_name() === 'cli' ? "\n" : "<br>";
 
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
-add_account($api_endpoint);
+if( $event === "order.success") {
+  add_account($api_endpoint);
+} else if( $event === "order.subscription_cancelled") {
+  cancel_account($api_endpoint);
+}
 
 } else {
   logit($_REQUEST['customer']['email'],"Error: Invalid Product information, expected item_id ='".$product_name."' and got item_id='".$product."'", "failure");
