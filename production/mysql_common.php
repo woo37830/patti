@@ -108,39 +108,4 @@ function addUser($user, $thrivecartid, $engagemoreid)
        }
      }
 }
-
-function cancelUser($user)
-{ // Set the status in the users table to show it is inactive.
-
-}
-
-function getAllClientsUser($user, $thrivecartid)
-{ // Get the Engagemore(AllClients) engagemoreid from the users database
-  // given the email or the thrivecart id
-  if( $conn = connect("users_db") )
-    {
-      $datetime = date_create()->format('Y-m-d H:i:s');
-      $sql = "SELECT engagemoreid FROM users WHERE email = " . $user;
-
-      if (!$res = $conn->query($sql))
-      {
-                 $err
-              = "QUERY FAIL: "
-              . $sql
-              . ' ERRNO: '
-              . $mysqli->errno
-              . ' ERROR: '
-              . $mysqli->error
-              ;
-              mysqli_close($conn);
-              trigger_error($err, E_USER_ERROR);
-       }
-       else
-       {
-          mysqli_close($conn);
-          return;
-       }
-     }
-
-}
 ?>
