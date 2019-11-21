@@ -25,8 +25,8 @@ fwrite($fh, "\n-----------------".$date."-----------------------------------\n")
 $api_timezone = new DateTimeZone('America/New_York');
 
 
-$event = 'order.success';
-
+$event = 'order.subscription_cancelled';
+$thrivecartid = 13118877;
 
   $product = 'product-9';
   fwrite($fh,"\nThe item_identifier is '".$product."'\n");
@@ -52,7 +52,7 @@ if( $event == "order.success") {
   add_account($api_endpoint,$account_id, $api_key, $account, $group_name, '123');
 } else if( $event == "order.subscription_cancelled") {
   fwrite($fh, "\nProcessing subscription_cancelled\n");
-  cancel_account($api_endpoint);
+  cancel_account($api_endpoint, $account_id, $api_key, $thrivecartid);
 }
 
 } else {
