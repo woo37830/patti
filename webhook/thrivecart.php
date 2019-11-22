@@ -7,13 +7,11 @@ require 'cancel_account.php';
 /**
  * AllClients Account ID and API Key.
  */
-$account_id   = '4K9vV0InIxP5znCa7d';
-$api_key      = 'ie6n85dF826iYe5npA';
+$account_id   = $_ENV['MSG_USER'];
+$api_key      = $_ENV['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X");
-$group_name = 'RE - BUZZ ($69)';
-$product_name = 'product-9';
 
 $myFile = "response.txt";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
@@ -26,7 +24,7 @@ fwrite($fh, "\n-----------------".$date."-----------------------------------\n")
  */
 $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
-if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != 'IEYDASLZ8FR7' ){
+if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $_ENV['THRIVECART_SECRET'] ){
  fwrite($fh, "Key Failure\n");
  http_response_code(403);
  fclose($fh);
@@ -101,11 +99,11 @@ if( $event == "order.success") {
   add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $thrivecartid);
 } else if( $event == "order.subscription_cancelled") {
   fwrite($fh, "\nProcessing subscription_cancelled\n");
-  cancel_account($api_endpoint);
+  $result = cancel_account($api_endpoint,$account_id, $api_key, $thrivecartid);
+  fwrite($fh, $resut . "\n");
 }
 
 } else {
-  logit($_REQUEST['customer']['email'],"Error: Invalid Product information, expected item_id ='".$product_name."' and got item_id='".$product."'", "failure");
   logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure - Invalid product");
 }
 // Log this failure using logit

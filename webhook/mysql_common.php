@@ -13,7 +13,7 @@ function connect($db) {
 $db_host = "jwooten37830.com"; // PROBABLY THIS IS OK
 $db_name = $db;        // GET THESE FROM YOUR HOSTING COMPANY
 $db_user = "root";
-$db_word = "random1";
+$db_word = $_ENV['RAILS_PASSWORD'];
 
 // OPEN A CONNECTION TO THE DATA BASE SERVER AND SELECT THE DB
 $mysqli = new mysqli($db_host, $db_user, $db_word, $db_name);
@@ -155,6 +155,12 @@ function getAccountId($thrivecartid)
 
      $result = mysqli_query( $conn, $query);
      $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
+     if( empty( $table[0] ) )
+     {
+       $result -> close();
+       $conn->close();
+       return -1;
+     }
      $result -> close();
      $conn->close();
      return (int)$table[0]['engagemoreid'];

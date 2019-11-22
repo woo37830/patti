@@ -11,6 +11,11 @@ $url = $api_endpoint . 'SetAccountStatus.aspx';
  * 'contactid' child SimpleXMLElement, which can be cast to an integer.
  */
 $accountid = (int) getAccountId($thrivecartid);
+if( $accountid == -1 )
+{
+	logit($thrivecartid,"accountid not found for cancellation", "failure" );
+	return 'Failed to find accountid for ' . $thrivecartid;
+}
 $url = $api_endpoint . 'SetAccountStatus.aspx';
 $data = array(
 	'apiusername' => $account_id,
@@ -22,13 +27,12 @@ $result_xml_string = post_api_url($url, $data);
 $results_xml = simplexml_load_string($result_xml_string);
 
 if (isset($results_xml->error)) {
-  fwrite($fh,"An error occurred $fesults_xml->error\n");
-  logit($data['email'],$results_xml->error, "failure" );
-  return 'Failed';
+  logit($thrivecartid,$results_xml->error, "failure - cancellation error" );
+  return 'Failed with error ' . $results_xml->error;
 }
 // Here I write the account information using addUser in mysql_common.php
 $status = updateAccountStatus($accountid, 'inactive');
-logit($accountid, json_encode($_REQUEST), "success - set account inactive");
-
+logit($accountid, "Cancellation for thrivecartid: ".$thrivecartid, "success - set account inactive");
+return $status;
 }
 ?>

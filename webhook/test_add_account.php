@@ -7,8 +7,8 @@ require 'cancel_account.php';
 /**
  * AllClients Account ID and API Key.
  */
-$account_id   = '4K9vV0InIxP5znCa7d';
-$api_key      = 'ie6n85dF826iYe5npA';
+$account_id   = $_ENV['MSG_USER'];
+$api_key      = $_ENV['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X");
@@ -27,6 +27,7 @@ $api_timezone = new DateTimeZone('America/New_York');
 
 $event = 'order.subscription_cancelled';
 $thrivecartid = 13118877;
+//$thrivecartid = 225; // Bad id
 
   $product = 'product-9';
   fwrite($fh,"\nThe item_identifier is '".$product."'\n");
@@ -52,7 +53,9 @@ if( $event == "order.success") {
   add_account($api_endpoint,$account_id, $api_key, $account, $group_name, '123');
 } else if( $event == "order.subscription_cancelled") {
   fwrite($fh, "\nProcessing subscription_cancelled\n");
-  cancel_account($api_endpoint, $account_id, $api_key, $thrivecartid);
+  $status = cancel_account($api_endpoint, $account_id, $api_key, $thrivecartid);
+  fwrite($fh, $status . "\n");
+
 }
 
 } else {
