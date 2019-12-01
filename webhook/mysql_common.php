@@ -142,7 +142,7 @@ function getStatusFor( $accountid ) {
      $conn->close();
      return $table[0]['status'];
      }
-    return 'Failed';
+    return 'inactive';
 }
 
 function getAccountId($thrivecartid)
@@ -166,5 +166,8 @@ function getAccountId($thrivecartid)
      return (int)$table[0]['engagemoreid'];
      }
     return -1;
+}
+function getProductFor( $thrivecartid ) {
+  return "product-9";
 }
 ?>

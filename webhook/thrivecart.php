@@ -75,17 +75,7 @@ if( array_key_exists($product, $products) ) { // Here is where we check that we 
   fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
   $group_name = $products[$product];
   fwrite($fh, "\nThe group will be: ".$group_name."\n");
-/**
- * The contact information to insert.
- *
- * Information will be added to your AllClients contacts!
- */
-$account = array(
-	'email' => $_REQUEST['customer']['email'],
-	'password'  => 'engage123',
-  'first_name' => $_REQUEST['customer']['firstname'],
-  'last_name' => $_REQUEST['customer']['lastname'],
-);
+
 
 /**
  * Newline character, to support browser or CLI output.
@@ -93,22 +83,75 @@ $account = array(
 $nl = php_sapi_name() === 'cli' ? "\n" : "<br>";
 
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
+$email = $REQUEST['customer']['email'];
 
-if( $event == "order.success") {
-  fwrite($fh, "\nProcessing order.success\n");
-  add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $thrivecartid);
-} else if( $event == "order.subscription_cancelled") {
-  fwrite($fh, "\nProcessing subscription_cancelled\n");
-  $result = cancel_account($api_endpoint,$account_id, $api_key, $thrivecartid);
-  fwrite($fh, $resut . "\n");
+if( $event == "order.success")
+{
+  if( account_exists($fh) )
+  {
+    if( account_isInactive($fh) )
+    {
+    // reactivate account
+    reactivate_account($fh);
+    }
+    else
+    {
+      // account is active
+      if( product_isTheSame($fh) )
+      {
+        // It is a payment and just let it go.
+      }
+      else
+      {
+        // different product, then cnange the group for the account
+        change_account_group($fh);
+      }
+    }
+  }
+  else
+  {
+    /**
+     * The contact information to insert.
+     *
+     * Information will be added to your AllClients contacts!
+     */
+    $account = array(
+      	'email' => $email,
+      	'password'  => 'engage123',
+      );
+      add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $thrivecartid, $email);
+  }
+  else if( $event == "order.subscription_cancelled")
+    {
+      fwrite($fh, "\nProcessing subscription_cancelled\n");
+      $result = cancel_account($api_endpoint,$account_id, $api_key, $thrivecartid);
+      fwrite($fh, $resut . "\n");
+    }
 }
-
-} else {
+else
+{
   logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure - Invalid product");
 }
 // Log this failure using logit
 
-
+function account_exists($fh) {
+  fwrite($fh, "\nProcessing order.success\n");
+}
+function account_isInactive($fh) {
+  fwrite($fh, "\nAccount already exists\n");
+}
+function reactive_account($fh) {
+  fwrite($fh, "\nAccount needs to be re-activated\n");
+}
+function change_account_group($fh) {
+  fwrite($fh, "\nDifferent product, so change group\n");
+}
+function product_isTheSame($fh) {
+  fwrite($fh, "\nAccount is active, and event is for payment to same product\n");
+}
+function change_account_group($fh) {
+  fwrite($fh, "\nChange account group\n");
+}
 function pretty_dump($mixed = null) {
   ob_start();
   echo json_encode($_REQUEST, JSON_PRETTY_PRINT);

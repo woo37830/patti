@@ -7,15 +7,7 @@
 require 'post_api_url.php';
 
 function thrivecart_api($url, $data, $fh) {
-/**
- * Exit if contact information is not specified.
- */
-if (empty($data['email']) || empty($data['password'])) {
-	fwrite($fh,"\nEmail and password must be specified at top of file to run.\n");
-	fclose($fh);
-  http_response_code(422);
-  exit;
-}
+
 
 /**
  * Insert the account and get the response as XML string:
