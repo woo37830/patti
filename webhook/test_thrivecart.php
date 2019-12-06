@@ -1,5 +1,6 @@
 <?php
 //
+require 'config.ini.php';
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
@@ -9,8 +10,8 @@ require 'upgrade_account.php';
 /**
  * AllClients Account ID and API Key.
  */
-$account_id   = $_ENV['MSG_USER'];
-$api_key      = $_ENV['MSG_PASSWORD'];
+$account_id   = $config['MSG_USER'];
+$api_key      = $config['MSG_PASSWORD'];
 
 $email = 'jwooten37830@icloud.com';
 
@@ -27,6 +28,7 @@ $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n");
 }
+fwrite($fh, "\naccount_id = '" . $account_id . "'\n");
 $email = 'test@example.com';
 $customer_id='13118877';
 foreach( $tests as $key => $value ) {

@@ -9,11 +9,11 @@ error_reporting(E_ALL);
 date_default_timezone_set('America/New_York');
 
 function connect($db) {
-// CONNECTION AND SELECTION VARIABLES FOR THE DATABASE
+  require 'config.ini.php';
 $db_host = "jwooten37830.com"; // PROBABLY THIS IS OK
 $db_name = $db;        // GET THESE FROM YOUR HOSTING COMPANY
 $db_user = "root";
-$db_word = $_ENV['RAILS_PASSWORD'];
+$db_word = $config['RAILS_PASSWORD'];
 
 // OPEN A CONNECTION TO THE DATA BASE SERVER AND SELECT THE DB
 $mysqli = new mysqli($db_host, $db_user, $db_word, $db_name);

@@ -1,14 +1,16 @@
 <?php
 //
+require 'config.ini.php';
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
 require 'cancel_account.php';
+require 'upgrade_account.php';
 /**
  * AllClients Account ID and API Key.
  */
-$account_id   = $_ENV['MSG_USER'];
-$api_key      = $_ENV['MSG_PASSWORD'];
+$account_id   = $config['MSG_USER'];
+$api_key      = $config['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X");
@@ -24,7 +26,7 @@ fwrite($fh,"account_id = '" . $account_id . "'\n");
  */
 $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
-if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $_ENV['THRIVECART_SECRET'] ){
+if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
  fwrite($fh, "Key Failure\n");
  http_response_code(403);
  fclose($fh);

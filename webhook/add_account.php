@@ -5,6 +5,7 @@ function add_account($api_endpoint, $account_id, $api_key, $account,
 /**
  * Specify URL and form fields for AddContact API function.
  */
+
 $url = $api_endpoint . 'AddAccount.aspx';
 $myFile = "add_account.txt";
 $fh = fopen($myFile, 'a');

@@ -1,5 +1,6 @@
 <?php
 //
+require 'config.ini.php';
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
@@ -7,8 +8,8 @@ require 'cancel_account.php';
 /**
  * AllClients Account ID and API Key.
  */
-$account_id   = $_ENV['MSG_USER'];
-$api_key      = $_ENV['MSG_PASSWORD'];
+$account_id   = $config['MSG_USER'];
+$api_key      = $config['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X");

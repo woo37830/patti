@@ -2,7 +2,7 @@
 // test the common mysql code
 
 //
-require 'thrivecart_api.php';
+require 'config.ini.php';
 require 'mysql_common.php';
 require 'add_account.php';
 require 'cancel_account.php';
