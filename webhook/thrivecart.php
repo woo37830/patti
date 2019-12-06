@@ -70,87 +70,108 @@ if ($pos !== false) {
   fwrite($fh,"\nThe item_identifier is '".$product."'\n");
 
 if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
-  $thrivecartid = $_REQUEST['customer_id'];
+  $thrivecartid = (int)$_REQUEST['customer_id'];
   fwrite($fh,"\nThrivecart customer_id is: ".$thrivecartid."\n");
   fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
   $group_name = $products[$product];
   fwrite($fh, "\nThe group will be: ".$group_name."\n");
 
-
-/**
- * Newline character, to support browser or CLI output.
- */
-$nl = php_sapi_name() === 'cli' ? "\n" : "<br>";
-
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
-$email = $REQUEST['customer']['email'];
 
 if( $event == "order.success")
 {
-  if( account_exists($fh) )
+  if( account_exists($fh, $value, $thrivecartid) )
   {
-    if( account_isInactive($fh) )
+    if( account_isInactive($fh, $value, $thrivecartid) )
     {
-    // reactivate account
-    reactivate_account($fh);
+      // reactivate account
+      reactivate_account($fh, $thrivecartid);
     }
     else
     {
       // account is active
-      if( product_isTheSame($fh) )
+      if( product_isTheSame($fh, $thrivecartid, $product) )
       {
         // It is a payment and just let it go.
+        fwrite($fh, "\nThis is just a payment, let it go.\n");
       }
       else
       {
         // different product, then cnange the group for the account
-        change_account_group($fh);
+        $account = array(
+            'email' => 'jwooten37830@icloud.com',
+            'password'  => 'engage123',
+          );
+
+        $result = change_account_group($fh, $thrivecartid, $api_endpoint, $account_id, $api_key,
+         $group_name, $product, $email);
+        fwrite($fh, $result . "\n");
       }
     }
   }
   else
-  {
+  { // account does not exist
     /**
      * The contact information to insert.
      *
      * Information will be added to your AllClients contacts!
      */
     $account = array(
-      	'email' => $email,
+      	'email' => 'jwooten37830@icloud.com',
       	'password'  => 'engage123',
       );
       add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $thrivecartid, $email);
   }
+}
   else if( $event == "order.subscription_cancelled")
-    {
-      fwrite($fh, "\nProcessing subscription_cancelled\n");
-      $result = cancel_account($api_endpoint,$account_id, $api_key, $thrivecartid);
-      fwrite($fh, $resut . "\n");
-    }
+  {
+    fwrite($fh, "\nProcessing subscription_cancelled\n");
+    $result = cancel_account($api_endpoint,$account_id, $api_key, $thrivecartid);
+    fwrite($fh, $result . "\n");
+  }
 }
 else
-{
-  logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure - Invalid product");
-}
+  {
+    fwrite($fh, "\nInvalid product '" . $product . "'\n");
+    //logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure - Invalid product");
+  }
+
+fwrite($fh,"\n------------------All Done!-----------------\n");
+
+
 // Log this failure using logit
 
-function account_exists($fh) {
+function account_exists($fh, $value, $thrivecartid) {
   fwrite($fh, "\nProcessing order.success\n");
+  //return $value['account_exists'];
+  $acct_id = getAccountId( $thrivecartid );
+  return $acct_id != -1;
 }
-function account_isInactive($fh) {
-  fwrite($fh, "\nAccount already exists\n");
+function account_isInactive($fh, $value, $thrivecartid) {
+  fwrite($fh, "\nChecking account status\n");
+  $id = getAccountId($thrivecartid);
+  echo "Obtained engagemoreid = '" . $id . "'\n";
+
+  $saved_status = getStatusFor($id);
+
+  //  return $value['account_isInactive'];
+  fwrite($fh, "\ngetStatusFor returned '" . $saved_status . "'\n");
+  return $saved_status == 'inactive';
 }
-function reactive_account($fh) {
-  fwrite($fh, "\nAccount needs to be re-activated\n");
+function reactivate_account($fh, $thrivecartid) {
+  $accountid = getAccountId( $thrivecartid );
+  fwrite($fh, "\nUse SetStatus API to set status of EngagemoreCRM account to active\n");
+  updateAccountStatus($accountid, "active");
 }
-function change_account_group($fh) {
-  fwrite($fh, "\nDifferent product, so change group\n");
+function change_account_group($fh, $thrivecartid, $api_endpoint, $account_id, $api_key, $group_name, $productid, $email) {
+  $accountid = getAccountId( $thrivecartid );
+  fwrite($fh, "\nUse SetAccountGroup API to set account group of EngagemoreCRM account\n");
+  upgrade_account($api_endpoint, $account_id, $api_key, $accountid,
+   $group_name, $productid, $email);
 }
-function product_isTheSame($fh) {
-  fwrite($fh, "\nAccount is active, and event is for payment to same product\n");
-}
-function change_account_group($fh) {
-  fwrite($fh, "\nChange account group\n");
+function product_isTheSame($fh, $thrivecartid, $product) {
+  $saved_product = getProductFor( $thrivecartid );
+  return $product == $saved_product;
 }
 function pretty_dump($mixed = null) {
   ob_start();

@@ -19,7 +19,7 @@ $products = array( "product-9" => "RE - BUZZ ($69)", "product-11" => "GROUP-X");
 $first_time = array( "event" => "order.success", "account_exists" => false, "product" => "product-9");
 $cancel = array("event" => "order.subscription_cancelled", "account_exists" => true, "account_isInactive" => false, "product" => "product-9");
 $reactivate = array("event" => "order.success", "account_exists" => true, "account_isInactive" => true, "product" => "product-9");
-$upgrade = array("event" => "order.success", "account_exists" => true, "account_isInactive" => true, "product" => "product-11");
+$upgrade = array("event" => "order.success", "account_exists" => true, "account_isInactive" => true, "product" => "product-9");
 //$tests = array("first_time" => $first_time, "cancel" => $cancel, "re-activate" => $reactivate);
 $tests = array("re-activate" => $reactivate, "upgrade" => $upgrade);
 $myFile = "response.txt";
@@ -135,7 +135,7 @@ function account_exists($fh, $value, $thrivecartid) {
 function account_isInactive($fh, $value, $thrivecartid) {
   fwrite($fh, "\nChecking account status\n");
   $id = getAccountId($thrivecartid);
-  echo "Obtained engagemoreid = '" . $id . ".\n";
+  echo "Obtained engagemoreid = '" . $id . "'\n";
 
   $saved_status = getStatusFor($id);
 
