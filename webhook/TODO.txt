@@ -1,0 +1,13 @@
+Handle cases of:
+
+  1)  Thrivecart subscription with productid, but no engagemoreid
+  2)  Thrivecart subscription with productid, and engagemoreid active
+  3)  Thrivecart subscription with productid, and engagemoreid inactive
+  4)  Thrivecart subscription with new productid, and engagemoreid
+  5)  Thrivecart cancel with engagemoreid
+  6)  Thrivecart event other than order.success or order.subscription.cancelled.
+
+  To do so, need to add productid to users table
+  and check that productid matches.  
+
+
