@@ -18,7 +18,7 @@ $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n");
 }
-
+fwrite($fh,"account_id = '" . $account_id . "'\n");
 /**
  * The API endpoint and time zone.
  */
