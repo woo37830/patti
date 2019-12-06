@@ -4,7 +4,7 @@ require 'config.ini.php';
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
-require 'cancel_account.php';
+require 'change_account_status.php';
 require 'upgrade_account.php';
 
 /**
@@ -72,7 +72,7 @@ if( $event == "order.success")
     if( account_isInactive($fh, $value, $thrivecartid) )
     {
       // reactivate account
-      reactivate_account($fh, $thrivecartid);
+      reactivate_account($fh, $thrivecartid, $api_endpoint, $account_id, $api_key);
     }
     else
     {
@@ -113,7 +113,7 @@ if( $event == "order.success")
   else if( $event == "order.subscription_cancelled")
   {
     fwrite($fh, "\nProcessing subscription_cancelled\n");
-    $result = cancel_account($api_endpoint,$account_id, $api_key, $thrivecartid);
+    $result = change_account_status($fh, $api_endpoint,$account_id, $api_key, $thrivecartid,0);
     fwrite($fh, $result . "\n");
   }
 }
@@ -145,10 +145,9 @@ function account_isInactive($fh, $value, $thrivecartid) {
   fwrite($fh, "\ngetStatusFor returned '" . $saved_status . "'\n");
   return $saved_status == 'inactive';
 }
-function reactivate_account($fh, $thrivecartid) {
+function reactivate_account($fh, $thrivecartid, $api_endpoint, $account_id, $api_key) {
   $accountid = getAccountId( $thrivecartid );
-  fwrite($fh, "\nUse SetStatus API to set status of EngagemoreCRM account to active\n");
-  updateAccountStatus($accountid, "active");
+  change_account_status($fh, $api_endpoint,$account_id, $api_key, $thrivecartid,1);
 }
 function change_account_group($fh, $thrivecartid, $api_endpoint, $account_id, $api_key, $group_name, $productid, $email) {
   $accountid = getAccountId( $thrivecartid );

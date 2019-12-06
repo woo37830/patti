@@ -1,6 +1,6 @@
 <?php
 
-function cancel_account($api_endpoint, $account_id, $api_key, $thrivecartid) {
+function change_account_status($fh, $api_endpoint, $account_id, $api_key, $thrivecartid, $new_status) {
 $url = $api_endpoint . 'SetAccountStatus.aspx';
 // Get the account id from thrivecart, and then look up
 // the accountid for AllClients and use it.
@@ -13,7 +13,7 @@ $url = $api_endpoint . 'SetAccountStatus.aspx';
 $accountid = (int) getAccountId($thrivecartid);
 if( $accountid == -1 )
 {
-	logit($thrivecartid,"accountid not found for cancellation", "failure" );
+	logit($thrivecartid,"accountid not found to change", "failure" );
 	return 'Failed to find accountid for ' . $thrivecartid;
 }
 $url = $api_endpoint . 'SetAccountStatus.aspx';
@@ -21,18 +21,24 @@ $data = array(
 	'apiusername' => $account_id,
 	'apipassword'    => $api_key,
 	'accountid' => $accountid,
-	'status'  => 0,
+	'status'  => (int)$new_status,
 );
 $result_xml_string = post_api_url($url, $data);
 $results_xml = simplexml_load_string($result_xml_string);
 
 if (isset($results_xml->error)) {
-  logit($thrivecartid,$results_xml->error, "failure - cancellation error" );
+  logit($thrivecartid,$results_xml->error, "failure - changing status error" );
   return 'Failed with error ' . $results_xml->error;
 }
 // Here I write the account information using addUser in mysql_common.php
-$status = updateAccountStatus($accountid, 'inactive');
-logit($accountid, "Cancellation for thrivecartid: ".$thrivecartid, "success - set account inactive");
+$status = "inactive";
+if( $new_status == 0 ) {
+	$status = updateAccountStatus($accountid, 'inactive');
+	logit($accountid, "Change status for thrivecartid: ".$thrivecartid, "success - set account inactive");
+} else {
+	$status = updateAccountStatus($accountid, 'active');
+	logit($accountid, "Change status for thrivecartid: ".$thrivecartid, "success - set account active");
+}
 return $status;
 }
 ?>

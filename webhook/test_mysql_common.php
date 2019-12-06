@@ -5,7 +5,7 @@
 require 'config.ini.php';
 require 'mysql_common.php';
 require 'add_account.php';
-require 'cancel_account.php';
+require 'change_account_status.php';
 
 $inactive = 'inactive';
 $active = 'active';

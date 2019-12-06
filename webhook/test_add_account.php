@@ -4,7 +4,7 @@ require 'config.ini.php';
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
-require 'cancel_account.php';
+require 'change_account_status.php';
 /**
  * AllClients Account ID and API Key.
  */
@@ -54,7 +54,7 @@ if( $event == "order.success") {
   add_account($api_endpoint,$account_id, $api_key, $account, $group_name, '123');
 } else if( $event == "order.subscription_cancelled") {
   fwrite($fh, "\nProcessing subscription_cancelled\n");
-  $status = cancel_account($api_endpoint, $account_id, $api_key, $thrivecartid);
+  $status = change_account_status($fh, $api_endpoint, $account_id, $api_key, $thrivecartid,0);
   fwrite($fh, $status . "\n");
 
 }

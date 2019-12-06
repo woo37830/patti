@@ -37,7 +37,6 @@ function post_api_url($url, array $data = array()) {
 	// Exit on cURL error.
 	if ($output === false) {
 		// It is important to close the cURL session after curl_error()
-		fwrite($fh,"\ncURL returned an error: %s\n", curl_error($ch));
 		curl_close($ch);
     fclose($fh);
     http_response_code(400);
