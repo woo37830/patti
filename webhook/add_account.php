@@ -51,7 +51,7 @@ fwrite($fh,"account_id is '$account_id'\n");
 
 // Here I write the account information using addUser in mysql_common.php
 addUser($data['email'],   $thrivecartid, $account_id);
-logit($email, json_encode($_REQUEST), "success");
+logit($account_id, json_encode($_REQUEST), "success - added account for email: ".$data['email']);
 fclose($fh);
 }
 ?>
