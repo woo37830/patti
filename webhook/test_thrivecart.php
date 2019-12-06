@@ -6,77 +6,62 @@ require 'mysql_common.php';
 require 'add_account.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
+
 /**
  * AllClients Account ID and API Key.
  */
 $account_id   = $config['MSG_USER'];
 $api_key      = $config['MSG_PASSWORD'];
 
-$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
-$products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X");
+$email = 'jwooten37830@icloud.com';
 
+$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
+$products = array( "product-9" => "RE - BUZZ ($69)", "product-11" => "GROUP-X");
+$first_time = array( "event" => "order.success", "account_exists" => false, "product" => "product-9");
+$cancel = array("event" => "order.subscription_cancelled", "account_exists" => true, "account_isInactive" => false, "product" => "product-9");
+$reactivate = array("event" => "order.success", "account_exists" => true, "account_isInactive" => true, "product" => "product-9");
+$upgrade = array("event" => "order.success", "account_exists" => true, "account_isInactive" => true, "product" => "product-9");
+//$tests = array("first_time" => $first_time, "cancel" => $cancel, "re-activate" => $reactivate);
+$tests = array("re-activate" => $reactivate, "upgrade" => $upgrade);
 $myFile = "response.txt";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n");
 }
-fwrite($fh,"account_id = '" . $account_id . "'\n");
-/**
- * The API endpoint and time zone.
- */
-$api_timezone = new DateTimeZone('America/New_York');
-// Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
-if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
- fwrite($fh, "Key Failure\n");
- http_response_code(403);
- fclose($fh);
- die();
-}
-
-// Message seems to be from ThriveCart so log it.
-//fwrite($fh, pretty_dump($_REQUEST));
-// Look for the order.success webhook event. Make sure the response is complete before processing.
-if( empty( $_REQUEST['event'] ) ) {
-   fwrite($fh," No event provided. \n");
-   http_response_code(403);
-   fclose($fh);
-   die();
-}
-
-
-$event = $_REQUEST['event'];
+fwrite($fh, "\naccount_id = '" . $account_id . "'\n");
+$email = 'test@example.com';
+$customer_id='13118877';
+foreach( $tests as $key => $value ) {
+  $event = $value['event'];
+  fwrite($fh, "\n------------Test case - " . $key . " -----------------------\n");
 if( !in_array($event, $events) ) {
-  logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "Invalid event");
-  http_response_code(200);
+  fwrite($fh, "event is " . $event . "\n");
+  logit($email, $event, "Invalid event");
   fclose($fh);
   die();
 }
 
 //$charges = $order['charges'];
-$data = $_REQUEST['subscriptions'];
+$data = $value['product'];
 if( empty($data) ) {
-  logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "No subscriptions");
+  logit($email, "", "No subscriptions");
   fclose($fh);
   die();
 }
-fwrite($fh,"data:".json_encode($data)."\n");
+fwrite($fh,"data:".$data."\n");
 
-$datastr = json_encode($data);
-fwrite($fh, "datastr: '".$datastr."\n");
-$product = "Unknown";
-$pos = strpos($datastr, ':');
-if ($pos !== false) {
 
-  $product = substr($datastr, 2, $pos-3);
-} // here we put other choices and set the product
+  $product = $data;
+ // here we put other choices and set the product
   fwrite($fh,"\nThe item_identifier is '".$product."'\n");
 
 if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
-  $thrivecartid = (int)$_REQUEST['customer_id'];
+  $thrivecartid = (int)$customer_id;
   fwrite($fh,"\nThrivecart customer_id is: ".$thrivecartid."\n");
   fwrite($fh,"\nProcessing item_identifier: '".$product."'\n");
   $group_name = $products[$product];
   fwrite($fh, "\nThe group will be: ".$group_name."\n");
+
 
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
@@ -100,6 +85,10 @@ if( $event == "order.success")
       else
       {
         // different product, then cnange the group for the account
+        $account = array(
+            'email' => 'jwooten37830@icloud.com',
+            'password'  => 'engage123',
+          );
 
         $result = change_account_group($fh, $thrivecartid, $api_endpoint, $account_id, $api_key,
          $group_name, $product, $email);
@@ -115,7 +104,7 @@ if( $event == "order.success")
      * Information will be added to your AllClients contacts!
      */
     $account = array(
-      	'email' => $_REQUEST['customer']['email'],
+      	'email' => 'jwooten37830@icloud.com',
       	'password'  => 'engage123',
       );
       add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $thrivecartid, $email);
@@ -133,7 +122,7 @@ else
     fwrite($fh, "\nInvalid product '" . $product . "'\n");
     //logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure - Invalid product");
   }
-
+}
 fwrite($fh,"\n------------------All Done!-----------------\n");
 
 

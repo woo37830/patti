@@ -1,0 +1,111 @@
+\documentclass[final,letterpaper,12pt]{article}
+% if you use "report", you get a separate title page
+%\documentclass[final,letterpaper,twoside,12pt]{report}
+%
+
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+%\usepackage(hyperref}
+%
+% set the version number
+%
+\newtoks\versionnumber
+\versionnumber ={1\_0}
+
+
+
+\author{John~Wooten~Ph.D.\\
+}
+\date{\today \\
+%br\input{rights}
+}
+\title{EngagemoreCRM Software Technical Report		}
+\makeindex
+\restylefloat{figure}
+
+\begin{document}
+\maketitle
+
+\begin {abstract}
+\noindent The technical description of a database and web application
+for tracking and managing EngagemoreCRM customers and their payments.
+The Thrivecart application is used to allow customers to sign up for various
+subscription options.  Their signups result in a webhook notification being sent to
+the thrivecart.php webhook.  This processes their action and creates or modifies
+the customers EngagemoreCRM account.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+
+\newpage
+\section{Track Changes}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|l|c|} \hline
+$ Date $ & $Editor$ & $Comment$ & $Version$ \\
+\hline
+191125 & J. Wooten & Initial Draft & 0.1  \\
+
+\hline
+\end{tabular}
+\end{center}
+\caption {Table of Changes}
+\label{tab:cqdata0}
+\end{table}
+
+\newpage
+\section{Introduction}
+\noindent Customers who desire to utilize the EngagemoreCRM services, are directed
+to a Thrivecart site where they enter their subscription information, which Thrivecart manages.
+Upon completion of their signup, a webhook notication is sent to the webhook 'thrivecart.php' on
+a server used by EngagemoreCRM.  That webhook, updates the customer information stored in a mysql
+database called user-db/users, which keeps the thrivecartID and after adding the user to EngagemoreCRM,
+the engagemoreId and the status.  A web-app is available to examine the users database table, and also
+the the logs database table. The logs database table contains the logs of each transaction received
+from Thrivecart.
+
+
+\section{Approach}
+\noindent In order to process thrivecart events that are related to EngagemoreCRM users, we must connect
+the thrivecardid which is sent by Thrivecart when a user is added to the resulting EngagemoreCRM id that
+occurs when a new user is created within EngagemoreCRM.  This allows us to manage future Thrivecart
+notifications about cancellation of their subscription and possible upgrades in their subscription.
+
+\section{Database Tables}
+\noindent There are two database tables, users, and logs that are used by the webhook.  Their structures are:
+\smallskip
+\begin{table}[ht]
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Name&Type&Null&Default&Extra\\ \hline
+id&int(11)&No&None&Auto Increment\\
+added&datetime&No&None&\\
+email&varchar(128)&No&None&\\
+thrivecartid&varchar(64)&No&None&\\
+engagemoreid&varchar(64)&No&None&\\
+status&varchar(256)&No&None&\\
+\hline
+\end{tabular}
+\caption{\label{tab:users}users table.}
+\end{table}
+\newpage
+\noindent and:
+\begin{table}[ht]
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Name&Type&Null&Default&Extra\\ \hline
+id&int(11)&No&None&AutoIncrement\\
+received&datetime&No&None&\\
+email&varchar(128)&No&None&\\
+request\_json&varchar(16000)&No&None&\\
+status&varchar(128)&No&None&\\
+\hline
+\end{tabular}
+\caption{\label{tab:logs}logs table.}
+\end{table}
+\end{document}

@@ -9,11 +9,11 @@ error_reporting(E_ALL);
 date_default_timezone_set('America/New_York');
 
 function connect($db) {
-// CONNECTION AND SELECTION VARIABLES FOR THE DATABASE
+  require 'config.ini.php';
 $db_host = "jwooten37830.com"; // PROBABLY THIS IS OK
 $db_name = $db;        // GET THESE FROM YOUR HOSTING COMPANY
 $db_user = "root";
-$db_word = "random1";
+$db_word = $config['RAILS_PASSWORD'];
 
 // OPEN A CONNECTION TO THE DATA BASE SERVER AND SELECT THE DB
 $mysqli = new mysqli($db_host, $db_user, $db_word, $db_name);
@@ -109,38 +109,65 @@ function addUser($user, $thrivecartid, $engagemoreid)
      }
 }
 
-function cancelUser($user)
-{ // Set the status in the users table to show it is inactive.
-
+function updateAccountStatus($accountid, $new_status)
+{ // Set the status in the users table to show it is inactive for the $accountid.
+  $sql = " UPDATE users SET status='" . $new_status . "' WHERE engagemoreid = " . $accountid ;
+  $status = 'Failed';
+  if( $conn = connect("users_db") )
+  {
+    echo "Got connection\n";
+    if (mysqli_query($conn, $sql))
+    {
+      echo "Update was successful\n";
+      $status = 'Succeeded';
+    }
+    else
+    {
+      echo "Error updating record: " . mysqli_error($conn);
+    }
+    mysqli_close($conn);
+  }
+  return $status;
 }
 
-function getAllClientsUser($user, $thrivecartid)
+function getStatusFor( $accountid ) {
+  if( $conn = connect("users_db") )
+    {
+      $datetime = date_create()->format('Y-m-d H:i:s');
+      $query = "SELECT status FROM users WHERE engagemoreid = " . $accountid;
+
+     $result = mysqli_query( $conn, $query);
+     $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
+     $result -> close();
+     $conn->close();
+     return $table[0]['status'];
+     }
+    return 'inactive';
+}
+
+function getAccountId($thrivecartid)
 { // Get the Engagemore(AllClients) engagemoreid from the users database
   // given the email or the thrivecart id
   if( $conn = connect("users_db") )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $sql = "SELECT engagemoreid FROM users WHERE email = " . $user;
+      $query = "SELECT engagemoreid FROM users WHERE thrivecartid = " . $thrivecartid;
 
-      if (!$res = $conn->query($sql))
-      {
-                 $err
-              = "QUERY FAIL: "
-              . $sql
-              . ' ERRNO: '
-              . $mysqli->errno
-              . ' ERROR: '
-              . $mysqli->error
-              ;
-              mysqli_close($conn);
-              trigger_error($err, E_USER_ERROR);
-       }
-       else
-       {
-          mysqli_close($conn);
-          return;
-       }
+     $result = mysqli_query( $conn, $query);
+     $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
+     if( empty( $table[0] ) )
+     {
+       $result -> close();
+       $conn->close();
+       return -1;
      }
-
+     $result -> close();
+     $conn->close();
+     return (int)$table[0]['engagemoreid'];
+     }
+    return -1;
+}
+function getProductFor( $thrivecartid ) {
+  return "product-9";
 }
 ?>
