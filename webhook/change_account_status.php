@@ -13,6 +13,7 @@ $url = $api_endpoint . 'SetAccountStatus.aspx';
 $accountid = (int) getAccountId($thrivecartid);
 if( $accountid == -1 )
 {
+	fwrite($fh,"\n"accountid not found to change for thrivecartid = " . $thrivecartid . "\n");
 	logit($thrivecartid,"accountid not found to change", "failure" );
 	return 'Failed to find accountid for ' . $thrivecartid;
 }
@@ -27,6 +28,7 @@ $result_xml_string = post_api_url($url, $data);
 $results_xml = simplexml_load_string($result_xml_string);
 
 if (isset($results_xml->error)) {
+	$fwrite($fh,"\nfailure changing status: " . $results_xml->error . "\n");
   logit($thrivecartid,$results_xml->error, "failure - changing status error" );
   return 'Failed with error ' . $results_xml->error;
 }
