@@ -1,5 +1,6 @@
 textmagic-rest-php/
 webhook/config.ini.php
+.DS_Store
 *.response.txt
 *.DS_Store
 *.log
