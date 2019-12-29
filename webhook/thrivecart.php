@@ -13,14 +13,16 @@ $account_id   = $config['MSG_USER'];
 $api_key      = $config['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
-$products = array( "product-9" => "RE - BUZZ ($69)", "product-X')" => "GROUP-X");
-
+$products = array( "product-9" => "RE - BUZZ ($69)", "product-13" => "RE - IMPACT ($99)",
+                   "product-12" => "RE - BUZZ ($69)", "product-14" => "RE - IMPACT ($99)");
 $myFile = "response.log";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 $fh = fopen($myFile, 'a');
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n" );
 
 fwrite($fh, "\naccount_id = '" . $account_id . "'");
+logit("RECEIVED", json_encode($_REQUEST), "Processing");
+
 /**
  * The API endpoint and time zone.
  */
@@ -28,6 +30,7 @@ $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
  fwrite($fh,  "\nKey Failure\n");
+ logit("FAILURE", json_encode($_REQUEST), "Key failure");
  http_response_code(403);
  fclose($fh);
  die();
@@ -38,6 +41,7 @@ if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] !=
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( empty( $_REQUEST['event'] ) ) {
    fwrite($fh, "\nNo event provided.\n");
+   logit("FAILURE", json_encode($_REQUEST), "No event provided");
    http_response_code(403);
    fclose($fh);
    die();
@@ -46,7 +50,7 @@ if( empty( $_REQUEST['event'] ) ) {
 
 $event = $_REQUEST['event'];
 if( !in_array($event, $events) ) {
-  logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "Invalid event");
+  logit("FAILURE", json_encode($_REQUEST), "Invalid event");
   fwrite($fh, "\nInvalid event " . $event . "\n");
   http_response_code(200);
   fclose($fh);
@@ -56,7 +60,7 @@ if( !in_array($event, $events) ) {
 //$charges = $order['charges'];
 $data = $_REQUEST['subscriptions'];
 if( empty($data) ) {
-  logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "No subscriptions");
+  logit("FAILURE", json_encode($_REQUEST), "No subscriptions");
   fwrite($fh, "\nNo subscriptions\n" );
   fclose($fh);
   die();
@@ -133,7 +137,7 @@ if( $event == "order.success")
 else
   {
     fwrite($fh, "\nInvalid product '" . $product . "'");
-    //logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure - Invalid product");
+    logit("INVALID", json_encode($_REQUEST), "failure - Invalid product");
   }
 
 fwrite($fh,"\n------------------All Done!-----------------\n");

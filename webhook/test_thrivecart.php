@@ -13,7 +13,7 @@ require 'upgrade_account.php';
 $account_id   = $config['MSG_USER'];
 $api_key      = $config['MSG_PASSWORD'];
 
-$email = 'jwooten37830@icloud.com';
+$email = 'ralph@cloud.com';
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $products = array( "product-9" => "RE - BUZZ ($69)", "product-11" => "GROUP-X");
@@ -21,8 +21,8 @@ $first_time = array( "event" => "order.success", "account_exists" => false, "pro
 $cancel = array("event" => "order.subscription_cancelled", "account_exists" => true, "account_isInactive" => false, "product" => "product-9");
 $reactivate = array("event" => "order.success", "account_exists" => true, "account_isInactive" => true, "product" => "product-9");
 $upgrade = array("event" => "order.success", "account_exists" => true, "account_isInactive" => true, "product" => "product-9");
-//$tests = array("first_time" => $first_time, "cancel" => $cancel, "re-activate" => $reactivate);
-$tests = array("re-activate" => $reactivate, "upgrade" => $upgrade);
+$tests = array("first_time" => $first_time, "cancel" => $cancel, "re-activate" => $reactivate);
+//$tests = array("re-activate" => $reactivate, "upgrade" => $upgrade);
 $myFile = "response.txt";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {

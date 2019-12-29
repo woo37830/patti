@@ -13,7 +13,7 @@ $url = $api_endpoint . 'SetAccountStatus.aspx';
 $accountid = (int) getAccountId($thrivecartid);
 if( $accountid == -1 )
 {
-	fwrite($fh,"\n"accountid not found to change for thrivecartid = " . $thrivecartid . "\n");
+	fwrite($fh,"\naccountid not found to change for thrivecartid = " . $thrivecartid . "\n");
 	logit($thrivecartid,"accountid not found to change", "failure" );
 	return 'Failed to find accountid for ' . $thrivecartid;
 }
