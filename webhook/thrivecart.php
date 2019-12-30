@@ -90,10 +90,13 @@ if( $event == "order.success")
 {
   if( account_exists($fh, $value, $thrivecartid) )
   {
+    logit("Thrivecart account: " . $thrivecartid . " exists", json_encode($_REQUEST), "Status");
     if( account_isInactive($fh, $value, $thrivecartid) )
     {
+    logit("Thrivecart account: " . $thrivecartid . " is inactive", json_encode($_REQUEST), "Status");
       // reactivate account
       reactivate_account($fh, $thrivecartid, $api_endpoint, $account_id, $api_key);
+    logit("Thrivecart account: " . $thrivecartid . " is reactivated", json_encode($_REQUEST), "Status");
     }
     else
     {
@@ -102,14 +105,16 @@ if( $event == "order.success")
       {
         // It is a payment and just let it go.
         fwrite($fh, "\nThis is just a payment, let it go.");
+        logit("Thrivecart account: " . $thrivecartid . " made payment on same product", json_encode($_REQUEST), "Status");
       }
       else
       {
         // different product, then cnange the group for the account
-
+        logit("Thrivecart account: " . $thrivecartid . " made payment for different product, upgrade them", json_encode($_REQUEST), "Status");
         $result = change_account_group($fh, $thrivecartid, $api_endpoint, $account_id, $api_key,
          $group_name, $product, $email);
         fwrite($fh, "\n" . $result );
+        logit("Thrivecart account: " . $thrivecartid, " result of change group was", $result);
       }
     }
   }
@@ -120,6 +125,7 @@ if( $event == "order.success")
      *
      * Information will be added to your AllClients contacts!
      */
+    logit("Thrivecart id: " . $thrivecartid . " does not exist in users table", json_encode($_REQUEST), "Attempt to add as an Engagemore user");
     $account = array(
       	'email' => $_REQUEST['customer']['email'],
       	'password'  => 'engage123',
@@ -130,8 +136,10 @@ if( $event == "order.success")
   else if( $event == "order.subscription_cancelled")
   {
     fwrite($fh, "\nProcessing subscription_cancelled");
+    logit("Thrivecart id: " . $thrivecartid . " is cancelling", json_encode($_REQUEST), "Status");
     $result = change_account_status($fh, $api_endpoint,$account_id, $api_key, $thrivecartid,0);
     fwrite($fh, "\n" . $result );
+    logit("Thrivecart id: " . $thrivecartid . " status change result", json_encode($_REQUEST), $result);
   }
 }
 else
