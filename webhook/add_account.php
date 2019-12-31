@@ -1,7 +1,7 @@
 <?php
 
 function add_account($api_endpoint, $account_id, $api_key, $account,
- $group_name, $thrivecartid, $email) {
+ $group_name, $email) {
 /**
  * Specify URL and form fields for AddContact API function.
  */
@@ -13,7 +13,7 @@ $fh = fopen($myFile, 'a');
 $data = array(
 	'apiusername' => $account_id,
 	'apipassword'    => $api_key,
-	'email' => $account['email'],
+	'email' => $email,
 	'password'  => $account['password'],
         'group' => $group_name,
 );
@@ -45,7 +45,7 @@ if (isset($results_xml->error)) {
  $account_id = (int)$results_xml->accountid;
 
 // Here I write the account information using addUser in mysql_common.php
-addUser($data['email'],   $thrivecartid, $account_id);
+addUser($data['email'],   $account_id);
 logit($account_id, json_encode($_REQUEST), "success - added account for email: ".$data['email']);
 fclose($fh);
 }

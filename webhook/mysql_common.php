@@ -71,7 +71,7 @@ function logit($user, $json, $my_status)
      }
 }
 
-function addUser($user, $thrivecartid, $engagemoreid)
+function addUser($user, $engagemoreid)
 {
   if( $conn = connect("users_db") )
     {
@@ -79,12 +79,10 @@ function addUser($user, $thrivecartid, $engagemoreid)
       $sql = "INSERT INTO users
       ( added
       , email
-      , thrivecartid
       , engagemoreid
       ) VALUES
       ( '$datetime'
       , '$user'
-      , '$thrivecartid'
       , '$engagemoreid'
       )";
 
@@ -115,10 +113,8 @@ function updateAccountStatus($accountid, $new_status)
   $status = 'Failed';
   if( $conn = connect("users_db") )
   {
-    echo "Got connection\n";
     if (mysqli_query($conn, $sql))
     {
-      echo "Update was successful\n";
       $status = 'Succeeded';
     }
     else
@@ -145,29 +141,66 @@ function getStatusFor( $accountid ) {
     return 'inactive';
 }
 
-function getAccountId($thrivecartid)
+function getAccountId($email)
 { // Get the Engagemore(AllClients) engagemoreid from the users database
   // given the email or the thrivecart id
+  $value = -1;
   if( $conn = connect("users_db") )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $query = "SELECT engagemoreid FROM users WHERE thrivecartid = " . $thrivecartid;
+      $query = "SELECT engagemoreid FROM users WHERE email = '$email' ";
 
-     $result = mysqli_query( $conn, $query);
-     $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
-     if( empty( $table[0] ) )
-     {
+       $result = mysqli_query( $conn, $query);
+       $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
+       if( !empty( $table[0] ) )
+       {
+         $value = (int)$table[0]['engagemoreid'];
+       }
        $result -> close();
        $conn->close();
-       return -1;
      }
-     $result -> close();
-     $conn->close();
-     return (int)$table[0]['engagemoreid'];
+     echo "\nreturning $value as engagemore accountid\n";
+    return $value;
+}
+function getProductFor( $email ) {
+  $value = -1;
+  if( $conn = connect("users_db") )
+    {
+      $datetime = date_create()->format('Y-m-d H:i:s');
+      $query = "SELECT product FROM users WHERE email = '$email' ";
+      echo "\nquery = '$query'\n";
+
+       $result = mysqli_query( $conn, $query);
+       $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
+       if( !empty( $table[0] ) )
+       {
+         $value = $table[0]['product'];
+         echo "\nvalue = $value\n";
+       }
+       $result -> close();
+       $conn->close();
      }
-    return -1;
+    return $value;
 }
-function getProductFor( $thrivecartid ) {
-  return "product-9";
+
+function updateProduct($accountid, $new_product)
+{ // Set the status in the users table to show it is inactive for the $accountid.
+  $sql = " UPDATE users SET product = '" . $new_product . "' WHERE engagemoreid = " . $accountid ;
+  $status = 'Failed';
+  if( $conn = connect("users_db") )
+  {
+    if (mysqli_query($conn, $sql))
+    {
+      $status = 'Succeeded';
+    }
+    else
+    {
+      echo "\nError updating record: " . mysqli_error($conn);
+    }
+    mysqli_close($conn);
+  }
+  echo "\nUpdated product for $accountid to $new_product\n";
+  return $status;
 }
+
 ?>
