@@ -19,7 +19,7 @@ $results_xml = thrivecart_api($url, $data, $fh); // returns simplexml_load_strin
 if ($results_xml === false) {
   fwrite($fh,"results_xml = $results_xml->message\n");
   echo "\nError parsing xml $results_xml->message";
-	logit($results_xml, "\nError parsing XML", "failure");
+	logit($email, "\nError parsing XML", "failure: ".$results_xml);
   http_response_code(400);
 	exit;
 }
@@ -40,7 +40,7 @@ if (isset($results_xml->message)) {
 if (isset($results_xml->error)) {
   echo "\nAn error occurred during upgrade: $results_xml->error";
   fwrite($fh,"An error occurred: $results_xml->error\n");
-  logit($account,$results_xml->error, "failure" );
+  logit($email,$results_xml->error, "failure" );
   http_response_code(400);
   exit;
 }

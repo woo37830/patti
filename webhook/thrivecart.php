@@ -22,7 +22,7 @@ $fh = fopen($myFile, 'a');
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n" );
 
 fwrite($fh, "\naccount_id = '" . $account_id . "'");
-logit("RECEIVED", json_encode($_REQUEST), "Processing");
+logit("", json_encode($_REQUEST), "Processing");
 
 /**
  * The API endpoint and time zone.
@@ -31,18 +31,32 @@ $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
  fwrite($fh,  "\nKey Failure\n");
- logit("FAILURE", json_encode($_REQUEST), "Key failure");
+ logit("", json_encode($_REQUEST), "Key failure");
  http_response_code(403);
  fclose($fh);
  die();
 }
 
+if( empty ( $_REQUEST['customer'] ) )
+{
+  logit("",json_encode($_REQUEST),"No customer information");
+  http_response_code(400);
+  fclose($fh);
+  die();
+} else if( empty( $_REQUEST['customer']['email'] ) )
+{
+  logit("", json_encode($_REQUEST),"No customer email provided");
+  http_response_code(400);
+  fclose($fh);
+  die();
+}
+$email = $_REQUEST['customer']['email'];
 // Message seems to be from ThriveCart so log it.
 //fwrite($fh, pretty_dump($_REQUEST));
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( empty( $_REQUEST['event'] ) ) {
    fwrite($fh, "\nNo event provided.\n");
-   logit("FAILURE", json_encode($_REQUEST), "No event provided");
+   logit("", json_encode($_REQUEST), "No event provided");
    http_response_code(403);
    fclose($fh);
    die();
@@ -51,7 +65,7 @@ if( empty( $_REQUEST['event'] ) ) {
 
 $event = $_REQUEST['event'];
 if( !in_array($event, $events) ) {
-  logit("FAILURE", json_encode($_REQUEST), "Invalid event");
+  logit("", json_encode($_REQUEST), "Invalid event");
   fwrite($fh, "\nInvalid event " . $event . "\n");
   http_response_code(200);
   fclose($fh);
@@ -61,12 +75,14 @@ if( !in_array($event, $events) ) {
 //$charges = $order['charges'];
 $data = $_REQUEST['subscriptions'];
 if( empty($data) ) {
-  logit("FAILURE", json_encode($_REQUEST), "No subscriptions");
+  logit("", json_encode($_REQUEST), "No subscriptions");
   fwrite($fh, "\nNo subscriptions\n" );
   http_response_code(200);
   fclose($fh);
   die();
 }
+$pmf = $_REQUEST['purchase_map_flat'];
+logit($email, $pmf, "purchage_map_flat");
 fwrite($fh, "\ndata:".json_encode($data));
 
 $datastr = json_encode($data);
@@ -145,7 +161,7 @@ if ($pos !== false) {
       fwrite($fh, "\nInvalid product '" . $product . "'\n");
       //logit($_REQUEST['customer']['email'], json_encode($_REQUEST), "failure - Invalid product");
     }
-    
+
 fwrite($fh,"\n------------------All Done!-----------------\n");
 fclose($fh);
 

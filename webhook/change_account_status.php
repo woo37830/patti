@@ -36,10 +36,10 @@ if (isset($results_xml->error)) {
 $status = "inactive";
 if( $new_status == 0 ) {
 	$status = updateAccountStatus($accountid, 'inactive');
-	logit($accountid, "Change status for thrivecartid: ".$thrivecartid, "success - set account inactive");
+	logit($thrivecartid, "Change status for accountid: ".$accountid, "success - set account inactive");
 } else {
 	$status = updateAccountStatus($accountid, 'active');
-	logit($accountid, "Change status for thrivecartid: ".$thrivecartid, "success - set account active");
+	logit($thrivecartid, "Change status for accountid: ".$accountid, "success - set account active");
 }
 return $status;
 }
