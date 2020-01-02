@@ -72,15 +72,7 @@ if( !in_array($event, $events) ) {
   die();
 }
 
-//$charges = $order['charges'];
-$data = $_REQUEST['subscriptions'];
-if( empty($data) ) {
-  logit("", json_encode($_REQUEST), "No subscriptions");
-  fwrite($fh, "\nNo subscriptions\n" );
-  http_response_code(200);
-  fclose($fh);
-  die();
-}
+
 $pmf = $_REQUEST['purchase_map_flat'];
 logit($email, $pmf, "purchage_map_flat");
 fwrite($fh, "\ndata:".json_encode($data));
