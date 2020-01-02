@@ -74,17 +74,11 @@ if( !in_array($event, $events) ) {
 
 
 $pmf = $_REQUEST['purchase_map_flat'];
-logit($email, $pmf, "purchage_map_flat");
-fwrite($fh, "\ndata:".json_encode($data));
+logit($email, $pmf, "purchase_map_flat");
 
-$datastr = json_encode($data);
-fwrite($fh, "\ndatastr: '".$datastr);
-$product = "Unknown";
-$pos = strpos($datastr, ':');
-if ($pos !== false) {
 
-  $product = substr($datastr, 2, $pos-3);
-} // here we put other choices and set the product
+  $product = $pmg;
+ // here we put other choices and set the product
   fwrite($fh,"\nThe item_identifier is '".$product."'");
 
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
