@@ -77,7 +77,7 @@ $pmf = $_REQUEST['purchase_map_flat'];
 logit($email, $pmf, "purchase_map_flat");
 
 
-  $product = $pmg;
+  $product = $pmf;
  // here we put other choices and set the product
   fwrite($fh,"\nThe item_identifier is '".$product."'");
 
