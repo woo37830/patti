@@ -15,7 +15,8 @@ $api_key      = $config['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $products = array( "product-9" => "RE - BUZZ ($69)", "product-13" => "RE - IMPACT ($99)",
-                   "product-12" => "RE - BUZZ ($69)", "product-14" => "RE - IMPACT ($99)");
+                   "product-12" => "RE - BUZZ ($69)", "product-14" => "RE - IMPACT ($99)",
+                   "product-15" => "RE - IMPACT ($99)");
 $myFile = "response.log";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 $fh = fopen($myFile, 'a');
@@ -133,6 +134,10 @@ logit($email, $pmf, "purchase_map_flat");
         	'password'  => 'engage123',
         );
         add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $thrivecartid, $email);
+        if( $product == "product-15") {
+          logit($email, $product, "One month free/$99 mo. added");
+
+        }
     }
   }
     else if( $event == "order.subscription_cancelled")
