@@ -6,7 +6,7 @@
 
 require 'post_api_url.php';
 
-function thrivecart_api($url, $data, $fh) {
+function thrivecart_api($url, $data) {
 
 
 /**

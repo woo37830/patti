@@ -159,7 +159,6 @@ function getAccountId($email)
        $result -> close();
        $conn->close();
      }
-     echo "\nreturning $value as engagemore accountid\n";
     return $value;
 }
 function getProductFor( $email ) {

@@ -7,19 +7,17 @@ function add_account($api_endpoint, $account_id, $api_key, $account,
  */
 
 $url = $api_endpoint . 'AddAccount.aspx';
-$myFile = "add_account.txt";
-$fh = fopen($myFile, 'a');
 
 $data = array(
 	'apiusername' => $account_id,
 	'apipassword'    => $api_key,
 	'email' => $email,
 	'password'  => $account['password'],
-        'group' => $group_name,
+  'group' => $group_name,
 );
-$results_xml = thrivecart_api($url, $data, $fh); // returns simplexml_load_string object representation
+$results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 if ($results_xml === false) {
-	logit($email, "Error parsing XML", "failure");
+	logit($email, "Error parsing XML", "FAILURE");
   http_response_code(400);
 	exit;
 }
@@ -34,7 +32,7 @@ if ($results_xml === false) {
  */
 
 if (isset($results_xml->error)) {
-  logit($data['email'],$results_xml->error, "failure" );
+  logit($email,$results_xml->error, "FAILURE" );
   http_response_code(400);
   exit;
 }
@@ -45,8 +43,7 @@ if (isset($results_xml->error)) {
  $account_id = (int)$results_xml->accountid;
 
 // Here I write the account information using addUser in mysql_common.php
-addUser($data['email'],   $account_id);
-logit($data['email'], $group_name, "success - added account");
-fclose($fh);
+addUser($email,   $account_id);
+logit($email, $group_name, "success - added account");
 }
 ?>
