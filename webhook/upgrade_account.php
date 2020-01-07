@@ -40,5 +40,5 @@ if (isset($results_xml->error)) {
 // Here I write the account information using addUser in mysql_common.php
 updateProduct($account, $productid);
 logit($email, "", "success upgraded account");
-
+}
 ?>
