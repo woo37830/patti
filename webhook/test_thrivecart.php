@@ -23,7 +23,7 @@ $reactivate = array("event" => "order.success", "account_exists" => true, "accou
 $upgrade = array("event" => "order.success", "account_exists" => true, "account_isInactive" => false, "product" => "product-13");
 $tests = array("first_time" => $first_time, "cancel" => $cancel, "re-activate" => $reactivate, "upgrade" => $upgrade);
 //$tests = array("re-activate" => $reactivate, "upgrade" => $upgrade);
-$myFile = "response.txt";
+$myFile = "test.txt";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 if( $fh = fopen($myFile, 'a') ) {
 fwrite($fh, "\n-----------------".$date."-----------------------------------\n");
@@ -68,17 +68,17 @@ $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
 if( $event == "order.success")
 {
-  if( account_exists($fh, $value, $thrivecartid) )
+  if( account_exists($value, $thrivecartid) )
   {
-    if( account_isInactive($fh, $value, $thrivecartid) )
+    if( account_isInactive($value, $thrivecartid) )
     {
       // reactivate account
-      reactivate_account($fh, $thrivecartid, $api_endpoint, $account_id, $api_key);
+      reactivate_account($thrivecartid, $api_endpoint, $account_id, $api_key);
     }
     else
     {
       // account is active
-      if( product_isTheSame($fh, $thrivecartid, $product) )
+      if( product_isTheSame($thrivecartid, $product) )
       {
         // It is a payment and just let it go.
         fwrite($fh, "\nThis is just a payment, let it go.\n");
@@ -90,7 +90,7 @@ if( $event == "order.success")
             'password'  => 'engage123',
           );
         echo "\nProduct needs to be changed to $product\n";
-        $result = change_account_group($fh, $thrivecartid, $api_endpoint, $account_id, $api_key,
+        $result = change_account_group($thrivecartid, $api_endpoint, $account_id, $api_key,
          $group_name, $product);
         fwrite($fh, $result . "\n");
       }
@@ -112,7 +112,7 @@ if( $event == "order.success")
   else if( $event == "order.subscription_cancelled")
   {
     fwrite($fh, "\nProcessing subscription_cancelled\n");
-    $result = change_account_status($fh, $api_endpoint,$account_id, $api_key, $thrivecartid,0);
+    $result = change_account_status($api_endpoint,$account_id, $api_key, $thrivecartid,0);
     fwrite($fh, $result . "\n");
   }
 }

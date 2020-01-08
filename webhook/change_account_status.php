@@ -2,7 +2,7 @@
 /**
  * thrivecartid is the same as $email
  */
-function change_account_status($fh, $api_endpoint, $account_id, $api_key, $thrivecartid, $new_status) {
+function change_account_status($api_endpoint, $account_id, $api_key, $thrivecartid, $new_status) {
 $url = $api_endpoint . 'SetAccountStatus.aspx';
 // Get the account id from thrivecart, and then look up
 // the accountid for AllClients and use it.

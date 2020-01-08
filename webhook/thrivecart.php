@@ -19,8 +19,6 @@ $products = array( "product-9" => "RE - BUZZ ($69)", "product-13" => "RE - IMPAC
                    "product-15" => "RE - IMPACT ($99)");
 $myFile = "response.log";
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
-$fh = fopen($myFile, 'a');
-fwrite($fh, "\n-----------------".$date."-----------------------------------\n" );
 
 $json_data = json_encode($_REQUEST);
 logit("", $json_data, "Processing: $date");
@@ -32,9 +30,7 @@ $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
  logit("INVALID", "", "Key failure: $date");
- fwrite($fh,"\nKey Failure\n");
  http_response_code(403);
- fclose($fh);
  die();
 }
 
@@ -42,18 +38,15 @@ if( empty ( $_REQUEST['customer'] ) || empty( $_REQUEST['customer']['email'] ) )
 {
   logit("INVALID","","No customer information: $date");
   http_response_code(400);
-  fclose($fh);
   die();
 }
 
 $email = $_REQUEST['customer']['email'];
 // Message seems to be from ThriveCart so log it.
-//fwrite($fh, pretty_dump($_REQUEST));
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( empty( $_REQUEST['event'] ) ) {
    logit($email, "", "No event provided: $date");
    http_response_code(403);
-   fclose($fh);
    die();
 }
 
@@ -62,7 +55,6 @@ $event = $_REQUEST['event'];
 if( !in_array($event, $events) ) {
   logit($email, "", "Invalid event( $event): $date");
   http_response_code(200);
-  fclose($fh);
   die();
 }
 
@@ -81,17 +73,17 @@ logit($email, $pmf, "purchase_map_flat: $date");
 
   if( $event == "order.success")
   {
-    if( account_exists($fh, $value, $email) )
+    if( account_exists($value, $email) )
     {
-      if( account_isInactive($fh, $value, $email) )
+      if( account_isInactive($value, $email) )
       {
         // reactivate account
-        reactivate_account($fh, $email, $api_endpoint, $account_id, $api_key);
+        reactivate_account($email, $api_endpoint, $account_id, $api_key);
       }
       else
       {
         // account is active
-        if( product_isTheSame($fh, $email, $product) )
+        if( product_isTheSame($email, $product) )
         {
           // It is a payment and just let it go.
           logit( $email, "", "Payment was received for product: $product, $date");
@@ -102,9 +94,9 @@ logit($email, $pmf, "purchase_map_flat: $date");
           $account = array(
               'password'  => 'engage123', // standard default password
             );
-          $result = change_account_group($fh, $email, $api_endpoint, $account_id, $api_key,
+          change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
-          logit($email, "",  "Change product resulted in: $result, $date");
+          logit($email, "",  "SUCCESS: Changed product to $product, $date");
         }
       }
     }
@@ -127,7 +119,7 @@ logit($email, $pmf, "purchase_map_flat: $date");
   }
     else if( $event == "order.subscription_cancelled")
     {
-        $result = change_account_status($fh, $api_endpoint,$account_id, $api_key, $email,0);
+        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
         logit($email,"", "Subscription_cancelled resulted in $result, $date");
     }
   }
@@ -135,9 +127,6 @@ logit($email, $pmf, "purchase_map_flat: $date");
   {
     logit($email, "", "Invalid product '" . $product . "', $date");
   }
-
-fwrite($fh,"\n------------------All Done!-----------------\n");
-fclose($fh);
 
 http_response_code(200);
 //die();
