@@ -1,7 +1,7 @@
 <?php
 
 function add_account($api_endpoint, $account_id, $api_key, $account,
- $group_name, $email) {
+ $group_name, $email, $product) {
 /**
  * Specify URL and form fields for AddContact API function.
  */
@@ -43,7 +43,7 @@ if (isset($results_xml->error)) {
  $account_id = (int)$results_xml->accountid;
 
 // Here I write the account information using addUser in mysql_common.php
-addUser($email,   $account_id);
-logit($email, "", "SUCCESS: Added to account: $group_name");
+addUser($email,   $account_id, $product);
+logit($email, "", "SUCCESS: Added to account: $group_name, with productid: $product");
 }
 ?>

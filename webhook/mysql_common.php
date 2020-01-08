@@ -71,7 +71,7 @@ function logit($user, $json, $my_status)
      }
 }
 
-function addUser($user, $engagemoreid)
+function addUser($user, $engagemoreid, $productid)
 {
   if( $conn = connect("users_db") )
     {
@@ -80,10 +80,12 @@ function addUser($user, $engagemoreid)
       ( added
       , email
       , engagemoreid
+      , product
       ) VALUES
       ( '$datetime'
       , '$user'
       , '$engagemoreid'
+      , '$productid'
       )";
 
       if (!$res = $conn->query($sql))

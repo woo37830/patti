@@ -110,7 +110,7 @@ logit($email, $pmf, "purchase_map_flat: $date");
       $account = array(
         	'password'  => 'engage123',
         );
-        add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email);
+        add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
         if( $product == "product-15") {
           logit($email, "", "One month free/$99 mo. added, $product");
 
