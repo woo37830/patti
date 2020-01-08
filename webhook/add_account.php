@@ -17,7 +17,7 @@ $data = array(
 );
 $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 if ($results_xml === false) {
-	logit($email, "Error parsing XML", "FAILURE");
+	logit($email, "", "FAILURE: Error parsing XML");
   http_response_code(400);
 	exit;
 }
@@ -32,7 +32,7 @@ if ($results_xml === false) {
  */
 
 if (isset($results_xml->error)) {
-  logit($email,$results_xml->error, "FAILURE" );
+  logit($email,"", "FAILURE: $results_xml->error" );
   http_response_code(400);
   exit;
 }
@@ -44,6 +44,6 @@ if (isset($results_xml->error)) {
 
 // Here I write the account information using addUser in mysql_common.php
 addUser($email,   $account_id);
-logit($email, $group_name, "success - added account");
+logit($email, "", "SUCCESS: Added to account: $group_name");
 }
 ?>
