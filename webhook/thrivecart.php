@@ -14,10 +14,11 @@ $account_id   = $config['MSG_USER'];
 $api_key      = $config['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
-$products = array( "product-9" => "RE - BUZZ ($69)", "product-13" => "RE - IMPACT ($99)",
-                   "product-12" => "RE - BUZZ ($69)", "product-14" => "RE - IMPACT ($99)",
-                   "product-15" => "RE - IMPACT ($99)");
-$myFile = "response.log";
+$products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPACT ($69)",
+                   "product-13" => "RE - BUZZ ($99)", "product-14" => "RE - IMPACT ($99)",
+                   "product-15" => "RE - IMPACT ($99)", "product-16" => "RE - IMPACT ($99)",
+                   "product-17" => "RE - IMPACT ($99)");
+
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 
 $json_data = json_encode($_REQUEST);
@@ -111,10 +112,16 @@ logit($email, $pmf, "purchase_map_flat: $date");
         	'password'  => 'engage123',
         );
         add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
-        if( $product == "product-15") {
+        if( $product == "product-15") { // One month free for Impact product
           logit($email, "", "One month free/$99 mo. added, $product");
-
         }
+        if( $product == "product-16") { // 2 months free and discounted rate
+          logit($email, "", "Special $990/yr. added for $690/yr. - $product");
+        }
+        if( $product == "product-17") { // discounted rate
+          logit($email, "", "Special $99/mo. added for $69/mo. - $product");
+        }
+
     }
   }
     else if( $event == "order.subscription_cancelled")
@@ -125,7 +132,7 @@ logit($email, $pmf, "purchase_map_flat: $date");
   }
   else
   {
-    logit($email, "", "Invalid product '" . $product . "', $date");
+    logit($email, "", "Invalid product: $product - $date");
   }
 
 http_response_code(200);
