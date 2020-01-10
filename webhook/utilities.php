@@ -34,6 +34,7 @@ function change_account_group($thrivecartid, $api_endpoint, $account_id, $api_ke
    } else {
      logit($thrivecartid, "","FAILURE in change_account_group: Did not find email for $thrivecartid");
    }
+   return $accountid;
 }
 function product_isTheSame($thrivecartid, $product) {
   $saved_product = getProductFor( $thrivecartid );

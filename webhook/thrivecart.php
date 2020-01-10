@@ -6,6 +6,7 @@ require 'mysql_common.php';
 require 'add_account.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
+require 'adjust_email_limits.php';
 require 'utilities.php';
 /**
  * AllClients Account ID and API Key.
@@ -18,6 +19,9 @@ $products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPAC
                    "product-13" => "RE - BUZZ ($99)", "product-14" => "RE - IMPACT ($99)",
                    "product-15" => "RE - IMPACT ($99)", "product-16" => "RE - IMPACT ($99)",
                    "product-17" => "RE - IMPACT ($99)");
+$email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
+                      "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
+                      "product-17" => 10000);
 
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 
@@ -95,9 +99,12 @@ logit($email, $pmf, "purchase_map_flat: $date");
           $account = array(
               'password'  => 'engage123', // standard default password
             );
-          change_account_group($email, $api_endpoint, $account_id, $api_key,
+          $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
-          logit($email, "",  "SUCCESS: Changed product to $product, $date");
+           if( $engagemoreacct != -1 ) {
+            logit($email, "",  "SUCCESS: Changed product to $product, $date");
+            adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
+          }
         }
       }
     }
@@ -111,18 +118,20 @@ logit($email, $pmf, "purchase_map_flat: $date");
       $account = array(
         	'password'  => 'engage123',
         );
-        add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
-        if( $product == "product-15") { // One month free for Impact product
-          logit($email, "", "One month free/$99 mo. added, $product");
-        }
-        if( $product == "product-16") { // 2 months free and discounted rate
-          logit($email, "", "Special $990/yr. added for $690/yr. - $product");
-        }
-        if( $product == "product-17") { // discounted rate
-          logit($email, "", "Special $99/mo. added for $69/mo. - $product");
-        }
-
-    }
+        $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
+        if( $engagemoreacct != -1 ) {
+          if( $product == "product-15") { // One month free for Impact product
+            logit($email, "", "One month free/$99 mo. added, $product");
+          }
+          if( $product == "product-16") { // 2 months free and discounted rate
+            logit($email, "", "Special $990/yr. added for $690/yr. - $product");
+          }
+          if( $product == "product-17") { // discounted rate
+            logit($email, "", "Special $99/mo. added for $69/mo. - $product");
+          }
+        adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
+      } // end not invalid engagemoreid, so it was created.
+    } // end account does not exist - create it
   }
     else if( $event == "order.subscription_cancelled")
     {
