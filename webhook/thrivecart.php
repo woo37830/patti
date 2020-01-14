@@ -26,7 +26,6 @@ $email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" =>
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
 
 $json_data = json_encode($_REQUEST);
-logit("", $json_data, "Processing: $date");
 
 /**
  * The API endpoint and time zone.
@@ -34,14 +33,14 @@ logit("", $json_data, "Processing: $date");
 $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
- logit("INVALID", "", "Key failure: $date");
+// logit("INVALID", "", "Key failure: $date");
  http_response_code(403);
  die();
 }
 
 if( empty ( $_REQUEST['customer'] ) || empty( $_REQUEST['customer']['email'] ) )
 {
-  logit("INVALID","","No customer information: $date");
+//  logit("INVALID","","No customer information: $date");
   http_response_code(400);
   die();
 }
@@ -50,7 +49,7 @@ $email = $_REQUEST['customer']['email'];
 // Message seems to be from ThriveCart so log it.
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( empty( $_REQUEST['event'] ) ) {
-   logit($email, "", "No event provided: $date");
+//   logit($email, "", "No event provided: $date");
    http_response_code(403);
    die();
 }
@@ -58,14 +57,17 @@ if( empty( $_REQUEST['event'] ) ) {
 
 $event = $_REQUEST['event'];
 if( !in_array($event, $events) ) {
-  logit($email, "", "Invalid event( $event): $date");
+  logit($email, "", "Invalid event- '$event'");
   http_response_code(200);
   die();
 }
 
 
 $pmf = $_REQUEST['purchase_map_flat'];
-logit($email, $pmf, "purchase_map_flat: $date");
+//logit($email, $pmf, "purchase_map_flat: $date");
+if( empty($pmf) ) {
+  $pmf = $_REQUEST['purchase_map'][0];
+}
 
 
   $product = $pmf;
@@ -91,7 +93,7 @@ logit($email, $pmf, "purchase_map_flat: $date");
         if( product_isTheSame($email, $product) )
         {
           // It is a payment and just let it go.
-          logit( $email, "", "Payment was received for product: $product, $date");
+          logit( $email, $json_data, "Payment was received for product: '$product'");
         }
         else
         {
@@ -102,8 +104,8 @@ logit($email, $pmf, "purchase_map_flat: $date");
           $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
            if( $engagemoreacct != -1 ) {
-            logit($email, "",  "SUCCESS: Changed product to $product, $date");
-            adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
+            logit($email, $json_data,  "SUCCESS: Changed product to '$product'");
+            //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
           }
         }
       }
@@ -118,30 +120,33 @@ logit($email, $pmf, "purchase_map_flat: $date");
       $account = array(
         	'password'  => 'engage123',
         );
+        $message = " with productid: '$product'";
         $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product
-            logit($email, "", "One month free/$99 mo. added, $product");
+            $message = " - One month free/$99 mo. for product $product";
           }
           if( $product == "product-16") { // 2 months free and discounted rate
-            logit($email, "", "Special $990/yr. added for $690/yr. - $product");
+            $message = " - Special $990/yr. for $690/yr. product $product";
           }
           if( $product == "product-17") { // discounted rate
-            logit($email, "", "Special $99/mo. added for $69/mo. - $product");
+            $message = " - Special $99/mo. for $69/mo. product $product";
           }
-        adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
+          logit($email, $json_data, "SUCCESS: Added to account: $group_name, $message");
+
+        //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
       } // end not invalid engagemoreid, so it was created.
     } // end account does not exist - create it
   }
     else if( $event == "order.subscription_cancelled")
     {
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
-        logit($email,"", "Subscription_cancelled resulted in $result, $date");
+        logit($email,$json_data, "Subscription_cancelled, result: $result");
     }
   }
   else
   {
-    logit($email, "", "Invalid product: $product - $date");
+    logit($email, $json_data, "Invalid product: '$product'");
   }
 
 http_response_code(200);

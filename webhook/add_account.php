@@ -42,7 +42,6 @@ if (isset($results_xml->error)) {
 
   // Here I write the account information using addUser in mysql_common.php
   addUser($email,   $account_id, $product);
-  logit($email, "", "SUCCESS: Added to account: $group_name, with productid: $product");
   return $account_id;
 }
 ?>
