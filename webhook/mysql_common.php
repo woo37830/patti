@@ -36,18 +36,25 @@ function logit($user, $json, $my_status)
 {
   if( $conn = connect("users_db") )
     {
+      $rev = exec('git rev-parse --short HEAD');
+      $branch = exec('git rev-parse --abbrev-ref HEAD');
+
       $datetime = date_create()->format('Y-m-d H:i:s');
       $sql = "INSERT INTO logs
       ( received
       , email
       , request_json
       , status
+      , commit_hash
+      , branch
 
       ) VALUES
       ( '$datetime'
       , '$user'
       , '$json'
       , '$my_status'
+      , '$rev'
+      , '$branch'
       )";
 
       if (!$res = $conn->query($sql))
