@@ -63,14 +63,11 @@ if( !in_array($event, $events) ) {
 }
 
 
-$pmf = $_REQUEST['purchase_map_flat'];
-//logit($email, $pmf, "purchase_map_flat: $date");
-if( empty($pmf) ) {
-  $pmf = $_REQUEST['purchase_map'][0];
-}
+$pmf = (int)$_REQUEST['base_product'];
 
 
-  $product = $pmf;
+
+  $product = "product-$pmf";
 
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
     $group_name = $products[$product];
@@ -120,7 +117,7 @@ if( empty($pmf) ) {
       $account = array(
         	'password'  => 'engage123',
         );
-        $message = " with productid: '$product'";
+        $message = " with productid: $product";
         $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product
@@ -146,7 +143,7 @@ if( empty($pmf) ) {
   }
   else
   {
-    logit($email, $json_data, "Invalid product: '$product'");
+    logit($email, $json_data, "Invalid product: $product");
   }
 
 http_response_code(200);
