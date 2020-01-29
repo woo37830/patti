@@ -33,14 +33,14 @@ $json_data = json_encode($_REQUEST);
 $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
-// logit("INVALID", "", "Key failure: $date");
+logit("INVALID", $json_data, "Key failure");
  http_response_code(403);
  die();
 }
 
 if( empty ( $_REQUEST['customer'] ) || empty( $_REQUEST['customer']['email'] ) )
 {
-//  logit("INVALID","","No customer information: $date");
+  logit("INVALID",$json_data,"No customer information");
   http_response_code(400);
   die();
 }
@@ -49,7 +49,7 @@ $email = $_REQUEST['customer']['email'];
 // Message seems to be from ThriveCart so log it.
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( empty( $_REQUEST['event'] ) ) {
-//   logit($email, "", "No event provided: $date");
+  logit($email, $json_data, "No event provided");
    http_response_code(403);
    die();
 }
@@ -57,7 +57,7 @@ if( empty( $_REQUEST['event'] ) ) {
 
 $event = $_REQUEST['event'];
 if( !in_array($event, $events) ) {
-  logit($email, "", "Invalid event- '$event'");
+  logit($email, $json_data, "Invalid event- $event");
   http_response_code(200);
   die();
 }
