@@ -15,8 +15,10 @@ $account_id   = $config['MSG_USER'];
 $api_key      = $config['MSG_PASSWORD'];
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
+$affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
+
 $products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPACT ($69)",
-                   "product-13" => "RE - BUZZ ($99)", "product-14" => "RE - IMPACT ($99)",
+                   "product-13" => "RE - IMPACT ($99)", "product-14" => "RE - IMPACT ($99)",
                    "product-15" => "RE - IMPACT ($99)", "product-16" => "RE - IMPACT ($99)",
                    "product-17" => "RE - IMPACT ($99)");
 $email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
@@ -37,25 +39,33 @@ logit("INVALID", $json_data, "Key failure");
  http_response_code(403);
  die();
 }
-
-if( empty ( $_REQUEST['customer'] ) || empty( $_REQUEST['customer']['email'] ) )
-{
-  logit("INVALID",$json_data,"No customer information");
-  http_response_code(400);
-  die();
-}
-
-$email = $_REQUEST['customer']['email'];
+$event = $_REQUEST['event'];
 // Message seems to be from ThriveCart so log it.
 // Look for the order.success webhook event. Make sure the response is complete before processing.
-if( empty( $_REQUEST['event'] ) ) {
-  logit($email, $json_data, "No event provided");
+if( empty( $event ) ) {
+  logit("INVALID", $json_data, "No event provided");
    http_response_code(403);
    die();
 }
 
+if( empty ( $_REQUEST['customer'] ) || empty( $_REQUEST['customer']['email'] ) )
+{
+  if( !in_array($event, $affiliate_events) ) {
+    logit("INVALID",$json_data,"Not an affiliate event and no customer information");
+    http_response_code(400);
+    die();
+  }
+  else {
+    logit($event, $json_data, "NO identification about affiliate account provided by API");
+    http_response_code(200);
+    die();
+  }
+}
 
-$event = $_REQUEST['event'];
+$email = $_REQUEST['customer']['email'];
+
+
+
 if( !in_array($event, $events) ) {
   logit($email, $json_data, "Invalid event- $event");
   http_response_code(200);
@@ -134,7 +144,7 @@ $pmf = (int)$_REQUEST['base_product'];
         //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
       } // end not invalid engagemoreid, so it was created.
     } // end account does not exist - create it
-  }
+  } // end event = order.success
     else if( $event == "order.subscription_cancelled")
     {
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
