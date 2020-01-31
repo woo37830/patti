@@ -15,7 +15,6 @@ $url = $api_endpoint . 'SetAccountStatus.aspx';
 $accountid = (int) getAccountId($thrivecartid);
 if( $accountid == -1 )
 {
-	logit($thrivecartid,"", "FAILURE accountid not found to change" );
 	return 'Failed to find accountid for ' . $thrivecartid;
 }
 $url = $api_endpoint . 'SetAccountStatus.aspx';
@@ -29,17 +28,14 @@ $result_xml_string = post_api_url($url, $data);
 $results_xml = simplexml_load_string($result_xml_string);
 
 if (isset($results_xml->error)) {
-  logit($thrivecartid,"", "FAILURE ". $results_xml->error );
   return 'Failed with error ' . $results_xml->error;
 }
 // Here I write the account information using addUser in mysql_common.php
 $status = "inactive";
 if( $new_status == 0 ) {
 	$status = updateAccountStatus($accountid, 'inactive');
-	logit($thrivecartid, "Change status for accountid: ".$accountid, "success - set account inactive");
 } else {
 	$status = updateAccountStatus($accountid, 'active');
-	logit($thrivecartid, "Change status for accountid: ".$accountid, "success - set account active");
 }
 return $status;
 }

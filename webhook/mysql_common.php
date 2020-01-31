@@ -37,6 +37,9 @@ function logit($user, $json, $my_status)
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
+      $rev = exec('git rev-parse --short HEAD');
+      $branch = exec('git rev-parse --abbrev-ref HEAD');
+
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
       $sql = "INSERT INTO $table
@@ -44,12 +47,16 @@ function logit($user, $json, $my_status)
       , email
       , request_json
       , status
+      , commit_hash
+      , branch
 
       ) VALUES
       ( '$datetime'
       , '$user'
       , '$json'
       , '$my_status'
+      , '$rev'
+      , '$branch'
       )";
 
       if (!$res = $conn->query($sql))
