@@ -34,6 +34,8 @@ return $mysqli;
 
 function logit($user, $json, $my_status)
 {
+  require 'config.ini.php';
+
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
@@ -82,6 +84,8 @@ function logit($user, $json, $my_status)
 
 function addUser($user, $engagemoreid, $productid)
 {
+  require 'config.ini.php';
+
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
@@ -122,6 +126,8 @@ function addUser($user, $engagemoreid, $productid)
 
 function updateAccountStatus($accountid, $new_status)
 { // Set the status in the users table to show it is inactive for the $accountid.
+  require 'config.ini.php';
+
   $table = $config['PATTI_USERS_TABLE'];
 
   $sql = " UPDATE $table SET status='" . $new_status . "' WHERE engagemoreid = " . $accountid ;
@@ -144,6 +150,8 @@ function updateAccountStatus($accountid, $new_status)
 }
 
 function getStatusFor( $accountid ) {
+  require 'config.ini.php';
+
   $dbase = $config['PATTI_DATABASE'];
 
   if( $conn = connect($dbase) )
@@ -165,6 +173,8 @@ function getStatusFor( $accountid ) {
 function getAccountId($email)
 { // Get the Engagemore(AllClients) engagemoreid from the users database
   // given the email or the thrivecart id
+  require 'config.ini.php';
+
   $value = -1;
   $dbase = $config['PATTI_DATABASE'];
 
@@ -188,6 +198,8 @@ function getAccountId($email)
 }
 function getProductFor( $email ) {
   $value = -1;
+  require 'config.ini.php';
+
   $dbase = $config['PATTI_DATABASE'];
 
   if( $conn = connect($dbase) )
@@ -213,6 +225,8 @@ function getProductFor( $email ) {
 
 function updateProduct($accountid, $new_product)
 { // Set the status in the users table to show it is inactive for the $accountid.
+  require 'config.ini.php';
+
   $table = $config['PATTI_USERS_TABLE'];
 
   $sql = " UPDATE $table SET product = '" . $new_product . "' WHERE engagemoreid = " . $accountid ;
@@ -227,7 +241,7 @@ function updateProduct($accountid, $new_product)
     }
     else
     {
-      status =  "FAILED: " . mysqli_error($conn);
+      $status =  "FAILED: " . mysqli_error($conn);
     }
     mysqli_close($conn);
   }
