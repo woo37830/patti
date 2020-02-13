@@ -4,4 +4,3 @@ webhook/config.ini.php
 *.response.txt
 *.DS_Store
 *.log
-*.pdf
