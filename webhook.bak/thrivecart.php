@@ -23,7 +23,7 @@ $products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPAC
 $email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
                       "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
                       "product-17" => 10000);
-echo "<html><head></head><body><h1>OK</h1></body></html>";
+echo "<html><head></head><body><h1>OK</h1></body></html>"; 
 $json_data = json_encode($_REQUEST);
 
 /**
@@ -78,9 +78,9 @@ $pmf = (int)$_REQUEST['base_product'];
 
   if( $event == "order.success")
   {
-    if( account_exists($email) )
+    if( account_exists($value, $email) )
     {
-      if( account_isInactive($email) )
+      if( account_isInactive($value, $email) )
       {
         // reactivate account
         reactivate_account($email, $api_endpoint, $account_id, $api_key);
@@ -91,7 +91,7 @@ $pmf = (int)$_REQUEST['base_product'];
         if( product_isTheSame($email, $product) )
         {
           // It is a payment and just let it go.
-          logit( $email, $json_data, "Payment was received for product: $product");
+          logit( $email, $json_data, "Payment was received for product: '$product'");
         }
         else
         {
@@ -102,7 +102,7 @@ $pmf = (int)$_REQUEST['base_product'];
           $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
            if( $engagemoreacct != -1 ) {
-            logit($email, $json_data,  "SUCCESS: Changed product to $product");
+            logit($email, $json_data,  "SUCCESS: Changed product to '$product'");
             //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
           }
         }
@@ -139,7 +139,6 @@ $pmf = (int)$_REQUEST['base_product'];
     else if( $event == "order.subscription_cancelled")
     {
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
-        
         logit($email,$json_data, "Subscription_cancelled, result: $result");
     }
   }
