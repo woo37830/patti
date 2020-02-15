@@ -4,4 +4,10 @@ webhook/config.ini.php
 *.response.txt
 *.DS_Store
 *.log
-*.pdf
+*.lof
+*.lot
+*.idx
+*.aux
+*.log
+*.gz
+*.toc

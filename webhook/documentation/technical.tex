@@ -24,7 +24,7 @@
 \begin{document}
 \maketitle
 \begin{center}
-Version:~1.1
+Version:~1.2
 \end{center}
 
 \begin {abstract}
@@ -50,6 +50,7 @@ $ Date $ & $Editor$ & $Comment$ & $Version$ \\
 \hline
 191125 & J. Wooten & Initial Draft & 1.0  \\
 200109 & J. Wooten & Expand on Operation & 1.1 \\
+200214 & J. Wooten & Update Table Definitions & 1.2 \\
 
 \hline
 \end{tabular}
@@ -60,27 +61,28 @@ $ Date $ & $Editor$ & $Comment$ & $Version$ \\
 
 \newpage
 \section{Introduction}
-\noindent Customers who desire to utilize the {\bf EngagemoreCRM} services, are directed from a webpage
+\noindent Customers who desire to utilize the {\bf EngagemoreCRM\footnote{Provide url to engagemorecrm}} services, are directed from a webpage
 where the description of the EngagemoreCRM site is found along with a comparison of various offerings
-to a {\bf Thrivecart} site where they enter their subscription information including their {\bf email} and their credit card information, which Thrivecart manages.
-Upon completion of their signup, a webhook notication is sent to the webhook {\it thrivecart.php} on
+to a {\bf Thrivecart\footnote{Provide url to Thrivecart}} site where they enter their subscription information including their {\it email} and their credit card information, which Thrivecart manages.
+Upon completion of their signup, a webhook notication is sent to the webhook {\bf thrivecart.php} on
 a server used by EngagemoreCRM.  That webhook, updates the customer information stored in a mysql
-database called {\bf user-db/users}, which keeps the customers {\bf email} and after adding the user to EngagemoreCRM,
-their engagemoreId and the status, either {\it active} or {\it in-active}.  A web-app is available to examine the users database table, and also
-the logs database table. The logs database table contains the logs of each transaction received
+database called {\bf user\_db/users}, which keeps the customers {\it email} and after adding the user to EngagemoreCRM,
+their {\it engagemoreId} and the status, either {\it active} or {\it in-active}.  A web-app is available to examine the users database table, and also
+the logs database table. The logs database table {\bf user\_db/logs} contains the logs of each transaction received
 from Thrivecart.
 
 
 \section{Approach}
 \noindent In order to process thrivecart events that are related to EngagemoreCRM users, we must connect
-the {\bf email} which is sent by Thrivecart when a user is added to the EngagemoreCRM  id that
+the {\it email} which is sent by Thrivecart when a user is added to the EngagemoreCRM  id that
 occurs when a new user is created within EngagemoreCRM.  This allows us to manage future Thrivecart
-notifications about cancellation of their subscription and possible upgrades in their subscription.
+notifications about cancellation of their subscription and possible upgrades in their subscription, as well as use various API's and Zapier\footnote{Provide a url to Zapier} notificatons to add contacts to a users account.
 
 \newpage
 \section{Database Tables}
 \noindent There are two database tables, users, and logs that are used by the webhook.  Their structures are:
 \smallskip
+
 \begin{table}[ht]
 \begin{tabular}{|l|l|l|l|l|}
 \hline
@@ -91,10 +93,12 @@ email&varchar(128)&No&None&\\
 thrivecartid&varchar(64)&No&None&\\
 engagemoreid&varchar(64)&No&None&\\
 status&varchar(256)&No&None&\\
+product&varchar(255)&No&None&\\
 \hline
 \end{tabular}
 \caption{\label{tab:users}users table.}
 \end{table}
+
 \newpage
 \noindent and:
 \begin{table}[ht]
@@ -106,8 +110,23 @@ received&datetime&No&None&\\
 email&varchar(128)&No&None&\\
 request\_json&varchar(16000)&No&None&\\
 status&varchar(128)&No&None&\\
+commit\_hash&varchar(64)&Yes&NULL&None\\
+branch&varchar(64)&Yes&NULL&None\\
 \hline
 \end{tabular}
 \caption{\label{tab:logs}logs table.}
 \end{table}
+
+\newpage
+\section{Code}
+\noindent In the directory patti/webhook on the web server there several files that comprise the thrivecart webhook.
+\subsection{config.ini.php}
+\subsection{mysql\_common.php}
+\subsection{thrivecart\_api.php}
+\subsection{thrivecart.php}
+\subsection{utilities.php}
+\subsection{add\_account.php}
+\subsection{change\_account\_status.php}
+\subsection{post\_api\_url.php}
+\subsection{upgrade\_account.php}
 \end{document}
