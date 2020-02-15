@@ -24,9 +24,8 @@ $products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPAC
 $email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
                       "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
                       "product-17" => 10000);
-
+echo json_encode(array());
 $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
-
 $json_data = json_encode($_REQUEST);
 
 /**
@@ -35,30 +34,26 @@ $json_data = json_encode($_REQUEST);
 $api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
-logit("INVALID", $json_data, "Key failure");
- http_response_code(403);
- die();
+logit("INVALID", $json_data, "No key supplied");
+ die('Invalid request, no key supplied');
 }
 $event = $_REQUEST['event'];
 // Message seems to be from ThriveCart so log it.
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( empty( $event ) ) {
   logit("INVALID", $json_data, "No event provided");
-   http_response_code(403);
-   die();
+   die('No event provided');
 }
 
 if( empty ( $_REQUEST['customer'] ) || empty( $_REQUEST['customer']['email'] ) )
 {
   if( !in_array($event, $affiliate_events) ) {
     logit("INVALID",$json_data,"Not an affiliate event and no customer information");
-    http_response_code(400);
-    die();
+    die('Not affiliate and not customer information');
   }
   else {
     logit($event, $json_data, "NO identification about affiliate account provided by API");
-    http_response_code(200);
-    die();
+    die('No id about affiliate account');
   }
 }
 
@@ -68,8 +63,7 @@ $email = $_REQUEST['customer']['email'];
 
 if( !in_array($event, $events) ) {
   logit($email, $json_data, "Invalid event- $event");
-  http_response_code(200);
-  die();
+  die("Invalid event - $event");
 }
 
 
@@ -156,8 +150,6 @@ $pmf = (int)$_REQUEST['base_product'];
     logit($email, $json_data, "Invalid product: $product");
   }
 
-http_response_code(200);
-//die();
 
 
 
