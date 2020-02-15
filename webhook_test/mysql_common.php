@@ -68,9 +68,9 @@ function logit($user, $json, $my_status)
               = "QUERY FAIL: "
               . $sql
               . ' ERRNO: '
-              . $mysqli->errno
+              . $conn->errno
               . ' ERROR: '
-              . $mysqli->error
+              . $conn->error
               ;
               mysqli_close($conn);
               trigger_error($err, E_USER_ERROR);
@@ -110,9 +110,9 @@ function addUser($user, $engagemoreid, $productid)
               = "QUERY FAIL: "
               . $sql
               . ' ERRNO: '
-              . $mysqli->errno
+              . $conn->errno
               . ' ERROR: '
-              . $mysqli->error
+              . $conn->error
               ;
               mysqli_close($conn);
               trigger_error($err, E_USER_ERROR);
@@ -137,13 +137,13 @@ function updateAccountStatus($accountid, $new_status)
 
   if( $conn = connect($dbase) )
   {
-    if (mysqli_query($conn, $sql))
+    if ($conn->query($sql))
     {
       $status = 'Succeeded';
     }
     else
     {
-      echo "Error updating record: " . mysqli_error($conn);
+      logit($accountid,"","Error updating record: " . $conn->mysqli_error);
     }
     mysqli_close($conn);
   }
@@ -161,12 +161,18 @@ function getStatusFor( $accountid ) {
       $table = $config['PATTI_USERS_TABLE'];
 
       $query = "SELECT status FROM $table WHERE engagemoreid = " . $accountid;
-
-     $result = mysqli_query( $conn, $query);
-     $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
+     $results_array = array();
+     $result = $conn->query($query);
+     while( $row = $result->fetch_assoc() ) {
+        $results_array[] = $row;
+     }
+     if( !empty( $results_array[0] ) )
+     {
+       $value = $results_array[0]['status'];
+     }
      $result -> close();
      $conn->close();
-     return $table[0]['status'];
+     return $value;
      }
     return 'inactive';
 }
@@ -188,7 +194,6 @@ function getAccountId($email)
        $results_array = array();
        $result = $conn->query($query);
        while( $row = $result->fetch_assoc() ) {
-          die("after fetch_assoc");
           $results_array[] = $row;
        }
        if( !empty( $results_array[0] ) )
@@ -212,14 +217,15 @@ function getProductFor( $email ) {
       $table = $config['PATTI_USERS_TABLE'];
 
       $query = "SELECT product FROM $table WHERE email = '$email' ";
-      echo "\nquery = '$query'\n";
 
-       $result = mysqli_query( $conn, $query);
-       $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
-       if( !empty( $table[0] ) )
+       $results_array = array();
+       $result = $conn->query($query);
+       while( $row = $result->fetch_assoc() ) {
+          $results_array[] = $row;
+       }
+       if( !empty( $results_array[0] ) )
        {
-         $value = $table[0]['product'];
-         echo "\nvalue = $value\n";
+         $value = $results_array[0]['product'];
        }
        $result -> close();
        $conn->close();
@@ -239,7 +245,7 @@ function updateProduct($accountid, $new_product)
 
   if( $conn = connect($dbase) )
   {
-    if (mysqli_query($conn, $sql))
+    if ($conn->query($sql))
     {
       $status = 'Succeeded';
     }

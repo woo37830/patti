@@ -7,7 +7,6 @@ $url = $api_endpoint . 'SetAccountStatus.aspx';
 // Get the account id from thrivecart, and then look up
 // the accountid for AllClients and use it.
 
-
 /**
  * If no error was returned, the AddContact results object will contain a
  * 'contactid' child SimpleXMLElement, which can be cast to an integer.
