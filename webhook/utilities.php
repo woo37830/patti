@@ -41,27 +41,4 @@ function product_isTheSame($thrivecartid, $product) {
   return $product == $saved_product;
 }
 
-function pretty_dump($mixed = null) {
-  ob_start();
-  echo json_encode($_REQUEST, JSON_PRETTY_PRINT);
-  $content = ob_get_contents();
-  ob_end_clean();
-  return $content;
-}
-
-//file_put_contents($file, var_dump_ret($_REQUEST));
-function dump_response($msg = null) {
-  $eFile = "error.txt";
-  $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
-  if( $err = fopen($eFile, 'a') ) {
-	  fwrite($err, "\n-----------------".$date."-----------------------------------\n");
-	  fwrite($err, $msg."\n");
-	  fwrite($err,"JSON DUMP\n");
-	  fwrite($err, pretty_dump($_REQUEST));
-	  fwrite($err,"\nEND OF DUMP\n");
-	  fclose($err);
-	}
-  return;
-}
-
 ?>

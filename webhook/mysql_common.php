@@ -21,6 +21,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_word, $db_name);
 // DID THE CONNECT/SELECT WORK OR FAIL?
 if ($mysqli->connect_errno)
 {
+//    die("mysql connect error: $mysqli->connect_error");
     $err
     = "CONNECT FAIL: "
     . $mysqli->connect_errno
@@ -184,12 +185,15 @@ function getAccountId($email)
       $table = $config['PATTI_USERS_TABLE'];
 
       $query = "SELECT engagemoreid FROM $table WHERE email = '$email' ";
-
-       $result = mysqli_query( $conn, $query);
-       $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
-       if( !empty( $table[0] ) )
+       $results_array = array();
+       $result = $conn->query($query);
+       while( $row = $result->fetch_assoc() ) {
+          die("after fetch_assoc");
+          $results_array[] = $row;
+       }
+       if( !empty( $results_array[0] ) )
        {
-         $value = (int)$table[0]['engagemoreid'];
+         $value = (int)$results_array[0]['engagemoreid'];
        }
        $result -> close();
        $conn->close();

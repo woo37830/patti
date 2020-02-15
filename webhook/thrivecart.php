@@ -6,7 +6,6 @@ require 'mysql_common.php';
 require 'add_account.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
-require 'adjust_email_limits.php';
 require 'utilities.php';
 /**
  * AllClients Account ID and API Key.
@@ -24,14 +23,12 @@ $products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPAC
 $email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
                       "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
                       "product-17" => 10000);
-echo json_encode(array());
-$date = (new DateTime('NOW'))->format("y:m:d h:i:s");
+echo "<html><head></head><body><h1>OK</h1></body></html>"; 
 $json_data = json_encode($_REQUEST);
 
 /**
  * The API endpoint and time zone.
  */
-$api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
 if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
 logit("INVALID", $json_data, "No key supplied");
