@@ -4,13 +4,13 @@
  * A set of functions used in tests and in the main thrivecart.php application
  */
 
-function account_exists($value, $thrivecartid) {
+function account_exists($thrivecartid) {
   //return $value['account_exists'];
   $acct_id = getAccountId( $thrivecartid );
   return $acct_id != -1;
 }
 
-function account_isInactive($value, $thrivecartid) {
+function account_isInactive($thrivecartid) {
   $id = getAccountId($thrivecartid);
   $saved_status = getStatusFor($id);
   //  return $value['account_isInactive'];
