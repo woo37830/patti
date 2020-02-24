@@ -6,23 +6,26 @@ class DumpHTTPRequestToFile {
 	public function execute($targetFile) {
 
 		$data = sprintf(
-			"%s %s %s\n\nHTTP headers:\n",
+			"%s %s %s\n\nHTTP headers:<br />",
 			$_SERVER['REQUEST_METHOD'],
 			$_SERVER['REQUEST_URI'],
 			$_SERVER['SERVER_PROTOCOL']
 		);
 
 		foreach ($this->getHeaderList() as $name => $value) {
-			$data .= $name . ': ' . $value . "\n";
+			$data .= $name . ': ' . $value . "<br />";
 		}
 
-		$data .= "\nRequest body:\n";
+		$data .= "<br />Request body:<br />";
 
+		if( $targetFile != "") {
 		file_put_contents(
 			$targetFile,
-			$data . file_get_contents('php://input') . "\n"
+			$data . file_get_contents('php://input') . "<br />"
 		);
-
+	} else {
+		echo $data . file_get_contents('php://input') . "<br />";
+	}
 		echo("Done!\n\n");
 	}
 
