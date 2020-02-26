@@ -33,10 +33,12 @@ logit("INVALID", $json_data, "No key supplied");
  die('Invalid request, no key supplied');
 }
 */
-$event = $_REQUEST['event'];
 $email = 'Undefined';
-if( isset($_REQUEST['customer'] ) ) {
-  $email = $_REQUEST['customer']['email'];
+if( isset( $_REQUEST['event'] ) ) {
+  $event = $_REQUEST['event'];
+  if( isset($_REQUEST['customer'] ) ) {
+    $email = $_REQUEST['customer']['email'];
+  }
 }
 // Message seems to be from ThriveCart so log it.
 // Look for the order.success webhook event. Make sure the response is complete before processing.
