@@ -146,6 +146,11 @@ while( $row = $rows->fetch_assoc() ) {
 
 
 // Handle affiliate.commission_earned for month, gather by orderid or invoiceid
-
+<div id="footer" >
+  <hr />
+  <em><?php
+  include 'git-info.php';
+  ?></em>
+</div>
 echo $cr . "All Done!" . $cr;
 ?>
