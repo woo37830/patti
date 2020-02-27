@@ -138,7 +138,11 @@ while( $row = $rows->fetch_assoc() ) {
   if( !defined('STDIN') ) {
     echo "</tbody></table><hr />Total Commissions: $k          Total Amount: $total";
     echo "<br /><em>Note: Unknown emails are due to missing data on invoice when signing up.</em></center>";
-  } else {
+    echo "<div id='footer' ><hr /><em>";
+
+      include 'git-info.php';
+    echo "</em></div>";
+} else {
     echo $cr . "Total Commissions: $k" . " Total Amount: $total" . $cr;
     echo $cr . "Note: Unknown emails are due to missing data on invoice when signing up." . $cr;
   }
@@ -146,11 +150,5 @@ while( $row = $rows->fetch_assoc() ) {
 
 
 // Handle affiliate.commission_earned for month, gather by orderid or invoiceid
-<div id="footer" >
-  <hr />
-  <em><?php
-  include 'git-info.php';
-  ?></em>
-</div>
 echo $cr . "All Done!" . $cr;
 ?>
