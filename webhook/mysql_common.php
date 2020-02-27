@@ -258,4 +258,56 @@ function updateProduct($accountid, $new_product)
   return $status;
 }
 
+function addOrderAndInvoiceIds($accountid, $orderid, $invoiceid)
+{ // Set the status in the users table to show it is inactive for the $accountid.
+  require 'config.ini.php';
+
+  $table = $config['PATTI_USERS_TABLE'];
+
+  $sql = " UPDATE $table SET orderid = '" . $orderid . "', invoiceid = '" . $invoiceid . "' WHERE engagemoreid = " . $accountid ;
+  $status = false;
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
+  {
+    if ($conn->query($sql))
+    {
+      $status = true;
+    }
+    else
+    {
+      echo "FAILED: " . mysqli_error($conn) . "\n";
+    }
+    mysqli_close($conn);
+  }
+  return $status;
+}
+
+function getEmailForInvoiceId( $invoiceid ) {
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+  $value = 'Unknown';
+
+  if( $conn = connect($dbase) )
+    {
+      $datetime = date_create()->format('Y-m-d H:i:s');
+      $table = $config['PATTI_USERS_TABLE'];
+
+      $query = "SELECT email FROM $table WHERE invoiceid = " . $invoiceid;
+     $results_array = array();
+     $result = $conn->query($query);
+     while( $row = $result->fetch_assoc() ) {
+        $results_array[] = $row;
+     }
+     if( !empty( $results_array[0] ) )
+     {
+       $value = $results_array[0]['email'];
+     }
+     $result -> close();
+     $conn->close();
+     return $value;
+     }
+    return $value;
+}
 ?>

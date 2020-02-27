@@ -15,24 +15,33 @@ $dbase = $config['PATTI_DATABASE'];
 if( $conn = connect($dbase) ) {
     $table = $config['PATTI_LOG_TABLE'];
 
-    $query = "SELECT request_json  FROM " . $table . " WHERE `request_json` LIKE '%order.success%' and `request_json` LIKE '%live%' limit 5";
+    $query = "SELECT request_json  FROM " . $table . " WHERE `request_json` LIKE '%order.success%' and `request_json` LIKE '%live%' ";
     $results_array = array();
     $rows = $conn->query($query)  or die($conn->error);
     while( $row = $rows->fetch_assoc() ) {
        array_push($results_array, $row['request_json']);
     }
     if( !empty( $results_array[0] ) ) {
-      $k = 1;
+      $k = 0;
       foreach ( $results_array as $result ) {
       //  echo $k . ") " . $result . "\n\n";
       $json = json_decode($result, true);
-         echo $k . ") order_id: " . $json['order_id'] . ", invoice_id: " . $json['invoice_id'] . ", email: " . $json['customer']['email'] . "\n";
+      $email = $json['customer']['email'];
+      $accountid = getAccountId($email);
+      $invoiceid = $json['invoice_id'];
+      $orderid = $json['order_id'];
+      if( addOrderAndInvoiceIds($accountid, $orderid, $invoiceid) ) {
         $k++;
+         echo $k . ") order_id: " . $orderid . ", invoice_id: " . $invoiceid . ", email: " . $email . "\n";
+      } else {
+        echo "Failure adding order and invoice id for $email\n";
+      }
       }
     }
     $rows -> close();
     $conn->close();
     // Do something
 }
+echo "$k records sucessfully processed.\n";
 echo "\nAll Done!\n";
 ?>
