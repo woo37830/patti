@@ -41,4 +41,28 @@ function product_isTheSame($thrivecartid, $product) {
   return $product == $saved_product;
 }
 
+function getProductId() {
+   $pmf = (int)$_REQUEST['base_product'];
+   $product = "product-$pmf";
+   return $product;
+}
+
+function getInvoiceId() {
+  return $_REQUEST['invoice_id'];
+}
+
+function getOrderId() {
+  return $_REQUEST['order_id'];
+}
+
+function getProductName($product, $email, $json_data) {
+
+  require 'product_data.php';
+
+  if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
+    return $products[$product];
+  }
+  logit($email, $json_data, "Invalid product: $product");
+  die("Invalid product: $product");
+}
 ?>

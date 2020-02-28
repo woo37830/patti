@@ -1,7 +1,7 @@
 <?php
 
 function add_account($api_endpoint, $account_id, $api_key, $account,
- $group_name, $email, $product) {
+ $group_name, $email, $product, $invoiceid, $orderid, $json_data) {
 /**
  * Specify URL and form fields for AddContact API function.
  */
@@ -14,6 +14,8 @@ $data = array(
 	'email' => $email,
 	'password'  => $account['password'],
   'group' => $group_name,
+  'invoiceid' => $invoiceid,
+  'orderid' => $orderid,
 );
 $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 if ($results_xml === false) {
@@ -31,7 +33,8 @@ if ($results_xml === false) {
  */
 
 if (isset($results_xml->error)) {
-  logit($email,"", "FAILURE: $results_xml->error" );
+  logit($email,$json_data, "FAILURE: $results_xml->error" );
+  echo "Failure: " . $results_xml->error . "<br />";
   return -1;
 }
 /**
@@ -41,7 +44,7 @@ if (isset($results_xml->error)) {
  $account_id = (int)$results_xml->accountid;
 
   // Here I write the account information using addUser in mysql_common.php
-  addUser($email,   $account_id, $product);
+  addUser($email,   $account_id, $product, $invoiceid, $orderid);
   return $account_id;
 }
 ?>

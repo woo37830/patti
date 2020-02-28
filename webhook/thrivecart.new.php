@@ -77,27 +77,11 @@ switch( $event ) {
   echo "Received event: $event with email: $email</br/>";
  die('All Done');
 
-function getProductId() {
-   $pmf = (int)$_REQUEST['base_product'];
-   $product = "product-$pmf";
-   return $product;
-}
 
-function getProductName($product, $email, $json_data) {
-  $products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPACT ($69)",
-                     "product-13" => "RE - IMPACT ($99)", "product-14" => "RE - IMPACT ($99)",
-                     "product-15" => "RE - IMPACT ($99)", "product-16" => "RE - IMPACT ($99)",
-                     "product-17" => "RE - IMPACT ($99)");
-
-  if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
-    return $products[$product];
-  }
-  logit($email, $json_data, "Invalid product: $product");
-  die("Invalid product: $product");
-}
 
 function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data) {
   echo "Check if account_exists for: $email <br />";
+  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
   $group_name = getProductName($product, $email, $json_data);
 
@@ -140,7 +124,9 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
         'password'  => 'engage123',
       );
       $message = " with productid: $product";
-      $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
+      $invoiceId = getInvoiceId();
+      $orderId = getOrderId();
+      $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product, $invoiceId, $orderId, $json_data);
       if( $engagemoreacct != -1 ) {
         if( $product == "product-15") { // One month free for Impact product
           $message = " - One month free/$99 mo. for product $product";
