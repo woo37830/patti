@@ -16,10 +16,8 @@ $api_key      = $config['MSG_PASSWORD'];
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
 
-$products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPACT ($69)",
-                   "product-13" => "RE - IMPACT ($99)", "product-14" => "RE - IMPACT ($99)",
-                   "product-15" => "RE - IMPACT ($99)", "product-16" => "RE - IMPACT ($99)",
-                   "product-17" => "RE - IMPACT ($99)");
+require 'product_data.php';
+
 $email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
                       "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
                       "product-17" => 10000);
@@ -139,7 +137,7 @@ $pmf = (int)$_REQUEST['base_product'];
     else if( $event == "order.subscription_cancelled")
     {
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
-        
+
         logit($email,$json_data, "Subscription_cancelled, result: $result");
     }
   }

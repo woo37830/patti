@@ -5,6 +5,7 @@
 require 'config.ini.php';
 require 'mysql_common.php';
 require 'utilities.php';
+require 'product_data.php';
 
 $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
@@ -43,7 +44,7 @@ if( $conn = connect($dbase) ) {
     $k = 0;
     if(!defined('STDIN') ) {
       echo "<center>";
-      echo "<table cellpadding='10'><thead><tr><th>Date</th><th>Email</th><th>Invoice</th><th>Order</th></tr></thead><tbody>";
+      echo "<table cellpadding='5'><thead><tr><th>Date</th><th>Email</th><th>Invoice</th><th>Order</th></tr></thead><tbody>";
     }
     while( $row = $rows->fetch_assoc() ) {
 
@@ -84,7 +85,7 @@ $k = 0;
 $total = 0;
 if(!defined('STDIN') ) {
   echo "<center>";
-  echo "<table cellpadding='10'><thead><tr><th>Date</th><th>Email</th></tr></thead><tbody>";
+  echo "<table cellpadding='5'><thead><tr><th>Date</th><th>Email</th></tr></thead><tbody>";
 }
 while( $row = $rows->fetch_assoc() ) {
   $received = $row['received'];
@@ -105,6 +106,46 @@ while( $row = $rows->fetch_assoc() ) {
   }
   $rows -> close();
 
+echo $h2 . "Payments This Month" . $h2end . $cr;
+
+$table = $config['PATTI_LOG_TABLE'];
+$query = "SELECT email, request_json, received,MONTH(received)  as 'received. MONTH' "
+. " FROM " . $table
+. " WHERE MONTH(received) =  " . $mon . " AND request_json LIKE '%order.subscription_payment%'";
+$results_array = array();
+$rows = $conn->query($query)  or die($conn->error);
+$k = 0;
+$total = 0;
+if(!defined('STDIN') ) {
+  echo "<center>";
+  echo "<table cellpadding='5'><thead><tr><th>Date</th><th>Email</th><th>Amount</th><th>Product</th></tr></thead><tbody>";
+}
+while( $row = $rows->fetch_assoc() ) {
+  $received = $row['received'];
+  $request = $row['request_json'];
+  $json = json_decode($request, true);
+  $email = $json['customer']['email'];
+  $amount = $json['subscription']['amount']/100;
+  $product = "product-" . $json['subscription']['id'];
+  if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
+    $group_name = $products[$product];
+    $total += $amount;
+  $k++;
+  if( !defined('STDIN') ) {
+    echo "<tr><td>$received</td><td>$email</td><td>$amount</td><td>$group_name</td></tr>";
+  }
+  else {
+
+  }
+}
+}
+  if( !defined('STDIN') ) {
+    echo "</tbody></table><hr />Total Received: $total</center>";
+  } else {
+    echo $cr . "Total Commissions: $k" . $cr;
+  }
+  $rows -> close();
+
 echo $h2 . "Affiliate Commissions Earned" . $h2end . $cr;
 
 $table = $config['PATTI_LOG_TABLE'];
@@ -117,22 +158,31 @@ $k = 0;
 $total = 0;
 if(!defined('STDIN') ) {
   echo "<center>";
-  echo "<table cellpadding='10'><thead><tr><th>Date</th><th>Email</th><th>Invoice</th><th>Amount</th></tr></thead><tbody>";
+  echo "<table cellpadding='5'><thead><tr><th>Date</th><th>Email</th><th>Invoice</th><th>Amount</th><th>Product</th></tr></thead><tbody>";
+} else {
+  echo "\tDate\tEmail\tInvoice\tAmount$cr";
 }
 while( $row = $rows->fetch_assoc() ) {
   $received = $row['received'];
   $request = $row['request_json'];
   $json = json_decode($request, true);
   $amount = (int)$json['commission_amount']/100;
-  $total += $amount;
-  $invoiceid = (int)$json['invoice_id'];
-  $email = getEmailForInvoiceId($invoiceid);
-  $k++;
-  if( !defined('STDIN') ) {
-    echo "<tr><td>$received</td><td>$email</td><td>$invoiceid</td><td>$amount</td></tr>";
-  }
-  else {
-
+  $product = $json['related'];
+  // see if product is in list of products
+  $pieces = explode('-', $product);
+  $product = $pieces[1] . '-' . $pieces[2];
+  if( array_key_exists($product, $products) ) {
+    $total += $amount;
+    $group_name = $products[$product];
+    $invoiceid = (int)$json['invoice_id'];
+    $email = getEmailForInvoiceId($invoiceid);
+    $k++;
+    if( !defined('STDIN') ) {
+      echo "<tr><td>$received</td><td>$email</td><td>$invoiceid</td><td>$amount</td><td>$group_name</td></tr>";
+    }
+    else {
+      echo "\t" . $received . "\t" . $email . "\t" . $invoiceid . "\t" . $amount . "\t" . $group_name . $cr;
+    }
   }
 }
   if( !defined('STDIN') ) {
