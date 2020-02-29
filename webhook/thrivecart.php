@@ -58,7 +58,7 @@ switch( $event ) {
   case 'order.subscription_cancelled':
     $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
     logit($email,$json_data, "Subscription_cancelled, result: $result");
-    echo "Received order.subscription_cancelled<br />" . $email . " - " . $json_data . "<br />";
+    echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.refund':
   echo "Received order.refund<br />" . $email . " - " . $json_data . "<br />";
@@ -82,6 +82,7 @@ switch( $event ) {
     die();
 }
   //echo "Received event: $event with email: $email</br/>";
+  echo "<br /><hr />";
   require 'git-info.php';
   die('All Done');
 
