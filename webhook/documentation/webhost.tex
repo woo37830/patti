@@ -1,0 +1,135 @@
+\documentclass[final,letterpaper,12pt]{article}
+% if you use "report", you get a separate title page
+%\documentclass[final,letterpaper,twoside,12pt]{report}
+%
+
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{listings}
+\usepackage[toc,page]{appendix}
+
+%\usepackage(hyperref}
+
+\lstset{basicstyle=\footnotesize,breaklines=true,frame=single}
+
+
+\author{John~Wooten~Ph.D.\\
+}
+\date{\today \\
+%br\input{rights}
+}
+
+\title{Setting up an AWS EC2 Instance to support EngagemoreCRM\thanks{Software developed under contract with EngagemoreCRM}}		
+\makeindex
+\restylefloat{figure}
+
+\begin{document}
+\maketitle
+\begin{center}
+Version:~1.0
+\end{center}
+
+\begin {abstract}
+\noindent  The document describes the steps taken to install a webhost server on Amazon Web Services.  This proceeds from setting up a free-tier account, creating the instance, establishing the necessary database, and setting up the backup procedures.  The software scripts that provide the backups and management of the logs are included in the Appendices\footnote{\url{https://texblog.org/2008/04/02/include-source-code-in-latex-with-listings/}}.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+
+\newpage
+\section{Track Changes}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|l|c|} \hline
+$ Date $ & $Editor$ & $Comment$ & $Version$ \\
+\hline
+200311  & J. Wooten & Initial Draft & 1.0  \\
+
+\hline
+\end{tabular}
+\end{center}
+\caption {Table of Changes}
+\label{tab:cqdata0}
+\end{table}
+
+\newpage
+\section{Introduction}
+
+
+\section{Creating AWS EC2 Instance}
+\noindent
+I have been developing a webhook for a client to coordinate between a shopping cart service and a new CRM service. The shopping cart is used to sell various categories and levels of the CRM service and keeps track of all the credit cards, payments, cancellations, and allows for affiliate relationships. When a customer wishes to use one of the services of the CRM site, they are directed to the shopping cart where they pick out their desired level and enter their payment information. The shopping cart then sends a notification to a webhook you provide. The webhook I developed needed to track the product that was bought, then if it?s a new account on the CRM, create that account and save the shopping cart customer id, and the CRM account id along with the product type.
+
+I chose to write the webhook in php (more on this later), and store the data using MySQL. I did the initial development on my own local apache server running on a Mac mini. I started by creating a GitHub project at GitHub.com and cloned the empty project to my local server in the web server area. On my Mac that was /Library/Server/Web/Data/Sites/Default/. I wrote it so that the server addresses, account information, and passwords were all in an external config.ini.php file. I added the config.ini.php filename to the .gitignore file so it would not be checked in. After doing this I committed the webhook project and pushed it to GitHub. I ran a lot of tests using my local server and local mysql server, then decided the webhook needed to be on something more robust and with better bandwidth and scalability if this project was to grow.
+
+So, I went to aws.amazon.com and (either create an account or) log into my account. You should look at security and create a key pair. Name it and download one part to your local computer. I?m on a Mac so I put my key file into ~/.ssh/mykey.pem. Set the protection on this file and directory to 700 to only allow yourself to use, read, or change the files here.
+
+
+If you don?t have an instance then create a small free EC2 one. I chose the smallest Linux 64 bit ARM type. Add security resources for SSH on port 22 and give it access to 0.0.0.0/0 unless you want to restrict it. I travel and need to ssh in from various places, so I used the above pattern. I?m protected because you have to have the pem file to ssh in. 
+then http resources on port 80, 0.0.0.0/0;::0, which allows http access from all IP4 and IP6 addresses. You can put a pattern here to restrict it to a particular subset, also.
+Assign an elastic-ip and associate it with the instance.
+
+Once you do, then ?spin up? the instance by clicking on it, noting the elastic-ip and then click on Actions/State/Start
+The instance should start up. after it has started, then from a terminal window, follow the below after ssh ec2-user@elastic-ip and login.
+
+The below is the best example I could assemble of how to get an apache server established that would interpret php and use a MySql server to run a webhook. If you click on Instances and Launch an Instance, you will be given choices. Here is what I chose:
+
+\lstinputlisting{../support/install.bash}
+
+This provided what I wanted.
+I had searched for how to get the server, php, mysql all set up and found an exhausting complex array of choices. I tried several. They all failed for various reasons. With technical help from support at AWS, I took what they had and modified it somewhat (they provided examples that didn?t work as they had been done by someone with root access! But, it was a helpful start). The below worked.
+
+ssh to your ec2-user@your-elastic-ip, then
+
+The free tier gives you 750 free hours per month on a small EC2 instance. That?s 24 hours a day for 31 days. But, each time you start, the minimum time charged is 1 hour. After setup, it?s better to just leave it running. You also get a free amount of disk space. Watch your consumption here. The fee if charged is low, so
+2.15/750 Hrs so a year would cost about \$25. You can also look at the Billing section under your account and set alerts if you go above a certain amount.
+\section{Setting up MySQL database on AWS EC2 Instance}
+
+\lstinputlisting{../support/setupmysql.bash}
+
+\section{Remote MySQL access to AWS EC2}
+
+\noindent In the AWS console add the rule to allow mysql access to port 3306 from 0.0.0.0/0
+ssh to the instance
+
+\lstinputlisting{../support/remote.bash}
+
+
+\section{Backup Plan for AWS}
+\noindent Once you have your AWS EC2 instance up and running, saving data into your MySQL database, there should be a backup plan to prevent data loss. While AWS offers some that can be set up from the EC2 console, they can cost money as they save their data often to an S3 repository. I?ve found S3 repositories to be a bit awkward to mess with unless your dataset is very large. So, instead I created a bash script to control the backups and configured crontab and logrotate to handle it the standard Unix way.
+\begin{verbatim}
+       ~/backups/daily
+                /weekly
+                /monthly
+                /yearly
+        ~/logs/daily
+              /weekly
+              /monthly
+              /yearly
+\end{verbatim}
+\smallskip
+\noindent Now, with that log structure, I created the following bash script ~/bin/backup:
+
+\lstinputlisting{../support/backup.bash}
+
+\noindent The above crontab entries will produce a daily backup of of the database(s) you entered in the ~/bin/backup bash script and place it into the ~/backups/daily directory with a filename like 
+database-20200301.sql, append the record of the backup to ~/logs/daily, and then copy the file to your remote server into ~/backups/aws. I recommend that you provide at least daily backups of your remote server, also.
+
+\section{Use logrotate to Manage Backup Volume on AWS EC2}
+\noindent The previous post showed a way to use a simple bash script to create daily, weekly, monthly, and yearly mysql backups using crontab. It also provided for storing a copy of the backups on a remote server as part of the script. Now, after monitoring the script for at least a few days and verifying that indeed the logs are appearing in the directories and are not zero length, you should consider adding some logrotate features that trim the log files periodically. I created the following file, /etc/logrotate.d/myproject:
+
+
+\lstinputlisting{../support/logrotate.bash}
+
+\noindent The only changes I made were to eliminate the addition of the date to the files, since I handled that in my script and to eliminate the compression. I periodically check the ~/logs files to see that backups are occurring and that they are being copied to my remote server. I also periodically check my remote server ~/backups/aws directory to see that indeed the files are copied there.
+
+Being absolutely certain that the system will get me if it can, I do hourly TimeMachine backups on my remote server ( It?s a mac-mini running
+OS X 10.12.6 connected to a TimeCapsule). In addition, I use Carbon Copy Clone(CCC) to produce a nightly clone of the entire mac-mini disk drive to another external drive which is bootable. Every three months, I also do a separate clone to another drive which I keep in a fire-proof safe. All of my laptops, desktops, and servers are similarly backed up and in addition most of the codes and scripts I use are maintained in github. 
+
+\noindent Told you I was paranoid!
+
+\end{document}
