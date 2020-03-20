@@ -28,7 +28,7 @@
 \begin{document}
 \maketitle
 \begin{center}
-Version:~1.0
+Version:~1.2
 \end{center}
 
 \begin {abstract}
@@ -48,7 +48,8 @@ Version:~1.0
 $ Date $ & $Editor$ & $Comment$ & $Version$ \\
 \hline
 200311  & J. Wooten & Initial Draft & 1.0  \\
-
+200320  & J. Wooten & Edited logrotate.bash & 1.1  \\
+200320  & J. Wooten & Edited backup.bash & 1.1  \\
 \hline
 \end{tabular}
 \end{center}
@@ -127,7 +128,7 @@ database-20200301.sql, append the record of the backup to ~/logs/daily, and then
 
 \noindent The only changes I made were to eliminate the addition of the date to the files, since I handled that in my script and to eliminate the compression. I periodically check the ~/logs files to see that backups are occurring and that they are being copied to my remote server. I also periodically check my remote server ~/backups/aws directory to see that indeed the files are copied there.
 
-Being absolutely certain that the system will get me if it can, I do hourly TimeMachine backups on my remote server ( It?s a mac-mini running
+Being absolutely certain that the system will get me if it can, I do hourly TimeMachine backups on my remote server ( It's a mac-mini running
 OS X 10.12.6 connected to a TimeCapsule). In addition, I use Carbon Copy Clone(CCC) to produce a nightly clone of the entire mac-mini disk drive to another external drive which is bootable. Every three months, I also do a separate clone to another drive which I keep in a fire-proof safe. All of my laptops, desktops, and servers are similarly backed up and in addition most of the codes and scripts I use are maintained in github. 
 
 \noindent Told you I was paranoid!

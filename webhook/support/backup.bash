@@ -20,7 +20,7 @@ if [ "$?" -ne 0 ]; then
 	echo "$DATE backup FAILED to $PERIOD because $?"
 else
 	echo "$DATE backup SUCCEEDED to $PERIOD with size: `du /home/userid/backups/$PERIOD/database-$DATE.sql`"
-/usr/bin/rsync -avz --ignore-existing --progress --rsh "ssh -l remote-user-id"  /home/userid/backups/$PERIOD/database-$DATE.sql remote-server:backups/aws > /dev/null
+/usr/bin/rsync -avz --ignore-existing --progress --rsh "ssh -l remote-user-id"  /home/userid/backups/$PERIOD/database-$DATE.* remote-server:backups/aws > /dev/null
    if [ "$?" -ne 0 ]; then
 	echo "$DATE rcp FAILED to destination because: $?"
    else

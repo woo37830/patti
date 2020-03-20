@@ -34,7 +34,7 @@ rotate 4
 #dateext ( I didn't want the file names changed, backup creates the names )
 
 # uncomment this if you want your log files compressed
-#compress (they were small and I didn't think I needed this)
+compress
 
 # RPM packages drop log rotation information into this directory
 include /etc/logrotate.d
