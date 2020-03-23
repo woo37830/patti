@@ -1,3 +1,4 @@
+Updated: 20200322 - woo
 There are several php files and some test html files in the test directory.
 
 The test-rest-form.html brings up a simple form to enter a name, phone number, and message.  It then sends that information to the rest-form.php which packages it and sends it to TextMagic.  This has been validated and the messages are being received at TextMagic.  I have received textmessages from this service.  It correctly handles the number in the form (813) 555-1212 form or others ways with (, -, and non numeric characters and prepends the 1 in front if only 10 numbers are there.
