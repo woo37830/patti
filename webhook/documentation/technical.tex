@@ -155,6 +155,14 @@ branch&varchar(64)&Yes&NULL&None\\
 \item {\bf EngagemoreCRM} then sends an email to the users email address inviting them to login with the password that is supplied.
 \item The user then logs into {\bf EngagemoreCRM} and fills in needed information and begins to import contacts and set up their drips, etc.
 \end{enumerate}
+
+\noindent At the bottom and to the right and left of the MySQL database, are found:
+\begin{enumerate}
+\item Several reports that are obtained from the user table and logs table.  The monthly report provides a summary of new users, cancelled users, refunded users, etc.  Also, there is a small daily review that is examined for any break-in attempts or other unusual behavior.  The Special Monitoring Report runs periodically to detect transactions that are keyed to one or more individuals whose accounts might be having problems.
+\item The Webhook is backed up remotely on a GitHub repository at: \\
+https://github.com/woo37830/patti.git.  This contains the current operating version ( master ) and the development version ( develop ) and all of their histories.  The git log command will show this.
+\item The MySQL database is backed up daily locally on the AWS EC2 instance using mysqldump.  Those backups are also copied to a remote site and saved.  Each day these are backup up to a separate device.
+\end{enumerate}
 \newpage
 \begin{appendices}
 
@@ -162,7 +170,7 @@ branch&varchar(64)&Yes&NULL&None\\
 \noindent The config.ini.php page provides the externalized constants so that if the server address changes, it can be changed in one place.  Passwords are maintained here also, and thus this file is {\bf NOT} checked into the github\footnote{https://github.com} repository but are passed in by copying from the Trello\footnote{http://thrivecart.com} site where they are specified.
 
 %\lstset{language=PHP,caption=config.ini.php,label=code:config}
-\lstinputlisting{../config.ini.php}
+\lstinputlisting{../config.fake}
 
 \section{mysql\_common.php}
 \noindent The file, mysql.comon.php, contains common mysql functions that all of the other files often share.  Such things as connect, logging to the logs database(see Table \ref{tab:logs}) getStatus, etc. are here.
