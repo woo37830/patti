@@ -7,6 +7,7 @@ require 'add_account.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
 require 'utilities.php';
+require '../smtp/notify.php';
 /**
  * AllClients Account ID and API Key.
  */
@@ -58,6 +59,8 @@ switch( $event ) {
   case 'order.subscription_cancelled':
     $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
     logit($email,$json_data, "Subscription_cancelled, result: $result");
+    $theMessage = "Account $email has cancelled!";
+    sendNotification('jwooten37830@icloud.com','Cancellation Notice',$theMessage);
     echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.refund':
