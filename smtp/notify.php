@@ -20,7 +20,7 @@ $senderName = 'John Wooten';
 
 // Replace recipient@example.com with a "To" address. If your account
 // is still in the sandbox, this address must be verified.
-$recipient = $to_email;
+$recipient = 'support@engagemorecrm.com';
 
 // Replace smtp_username with your Amazon SES SMTP user name.
 $usernameSmtp = 'AKIAS7F5B4AMF5XWV7W3';
@@ -43,7 +43,7 @@ $port = 587;
 $subject = $theSubject; 
 
 // The plain-text body of the email
-$bodyText = $theBody; 
+$bodyText = $theBody . ' User $to_email has cancelled'; 
 
 // The HTML-formatted body of the email
 $bodyHtml = $bodyText; 
@@ -72,7 +72,7 @@ try {
     $mail->Body       = $bodyHtml;
     $mail->AltBody    = $bodyText;
     $mail->Send();
-    echo "Email sent to $recipient on port: $port!" , PHP_EOL;
+    echo "Email with $bodyText sent to $recipient on port: $port!" , PHP_EOL;
     $retVal = true;
 } catch (phpmailerException $e) {
     echo "An error occurred. {$e->errorMessage()}", PHP_EOL; //Catch errors from PHPMailer.
