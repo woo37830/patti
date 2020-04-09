@@ -4,13 +4,13 @@
  * A set of functions used in tests and in the main thrivecart.php application
  */
 
-function account_exists($value, $thrivecartid) {
+function account_exists($thrivecartid) {
   //return $value['account_exists'];
   $acct_id = getAccountId( $thrivecartid );
   return $acct_id != -1;
 }
 
-function account_isInactive($value, $thrivecartid) {
+function account_isInactive($thrivecartid) {
   $id = getAccountId($thrivecartid);
   $saved_status = getStatusFor($id);
   //  return $value['account_isInactive'];
@@ -41,27 +41,28 @@ function product_isTheSame($thrivecartid, $product) {
   return $product == $saved_product;
 }
 
-function pretty_dump($mixed = null) {
-  ob_start();
-  echo json_encode($_REQUEST, JSON_PRETTY_PRINT);
-  $content = ob_get_contents();
-  ob_end_clean();
-  return $content;
+function getProductId() {
+   $pmf = (int)$_REQUEST['base_product'];
+   $product = "product-$pmf";
+   return $product;
 }
 
-//file_put_contents($file, var_dump_ret($_REQUEST));
-function dump_response($msg = null) {
-  $eFile = "error.txt";
-  $date = (new DateTime('NOW'))->format("y:m:d h:i:s");
-  if( $err = fopen($eFile, 'a') ) {
-	  fwrite($err, "\n-----------------".$date."-----------------------------------\n");
-	  fwrite($err, $msg."\n");
-	  fwrite($err,"JSON DUMP\n");
-	  fwrite($err, pretty_dump($_REQUEST));
-	  fwrite($err,"\nEND OF DUMP\n");
-	  fclose($err);
-	}
-  return;
+function getInvoiceId() {
+  return $_REQUEST['invoice_id'];
 }
 
+function getOrderId() {
+  return $_REQUEST['order_id'];
+}
+
+function getProductName($product, $email, $json_data) {
+
+  require 'product_data.php';
+
+  if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
+    return $products[$product];
+  }
+  logit($email, $json_data, "Invalid product: $product");
+  die("Invalid product: $product");
+}
 ?>

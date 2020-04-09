@@ -17,12 +17,15 @@ class DumpHTTPRequestToFile {
 		}
 
 		$data .= "\nRequest body:\n";
-
+    $data .= json_encode($_REQUEST);
+		if( $targetFile != "") {
 		file_put_contents(
 			$targetFile,
 			$data . file_get_contents('php://input') . "\n"
 		);
-
+	} else {
+		echo nl2br($data . file_get_contents('php://input') . "\n");
+	}
 		echo("Done!\n\n");
 	}
 

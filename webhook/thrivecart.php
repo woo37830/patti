@@ -6,90 +6,103 @@ require 'mysql_common.php';
 require 'add_account.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
-require 'adjust_email_limits.php';
 require 'utilities.php';
+require '../smtp/notify.php';
 /**
  * AllClients Account ID and API Key.
  */
 $account_id   = $config['MSG_USER'];
 $api_key      = $config['MSG_PASSWORD'];
+$api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
+
 
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
 
-$products = array( "product-9" => "RE - BUZZ ($69)", "product-12" => "RE - IMPACT ($69)",
-                   "product-13" => "RE - IMPACT ($99)", "product-14" => "RE - IMPACT ($99)",
-                   "product-15" => "RE - IMPACT ($99)", "product-16" => "RE - IMPACT ($99)",
-                   "product-17" => "RE - IMPACT ($99)");
 $email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
                       "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
                       "product-17" => 10000);
-
-$date = (new DateTime('NOW'))->format("y:m:d h:i:s");
-
+echo "<html><head></head><body><h1>OK</h1></body></html>";
 $json_data = json_encode($_REQUEST);
 
 /**
  * The API endpoint and time zone.
  */
-$api_timezone = new DateTimeZone('America/New_York');
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
-if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
-logit("INVALID", $json_data, "Key failure");
- http_response_code(403);
- die();
+/*if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
+logit("INVALID", $json_data, "No key supplied");
+ die('Invalid request, no key supplied');
 }
-$event = $_REQUEST['event'];
+*/
+$email = 'Undefined';
+if( isset( $_REQUEST['event'] ) ) {
+  $event = $_REQUEST['event'];
+  if( isset($_REQUEST['customer'] ) ) {
+    $email = $_REQUEST['customer']['email'];
+  }
+}
 // Message seems to be from ThriveCart so log it.
 // Look for the order.success webhook event. Make sure the response is complete before processing.
 if( empty( $event ) ) {
   logit("INVALID", $json_data, "No event provided");
-   http_response_code(403);
-   die();
+   die('No event provided');
 }
-
-if( empty ( $_REQUEST['customer'] ) || empty( $_REQUEST['customer']['email'] ) )
-{
-  if( !in_array($event, $affiliate_events) ) {
-    logit("INVALID",$json_data,"Not an affiliate event and no customer information");
-    http_response_code(400);
+switch( $event ) {
+  case 'order.success':
+    echo "Received order.success<br />" . $email . " - " . $json_data . "<br />";
+    handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data);
+    break;
+  case 'order.subscription_payment':
+    logit($email, $json_data, "order.subscription_payment");
+    echo "Received order.subscription_payment<br />" . $email . " - " . $json_data . "<br />";
+    break;
+  case 'order.subscription_cancelled':
+    $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+    logit($email,$json_data, "Subscription_cancelled, result: $result");
+    $theMessage = "Account $email has cancelled!";
+    sendNotification($email,'Cancellation Notice',$theMessage);
+    echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
+    break;
+  case 'order.refund':
+  echo "Received order.refund<br />" . $email . " - " . $json_data . "<br />";
+    logit($email, $json_data, "order.refund");
+    break;
+  case 'affiliate.commission_refund':
+    echo "Received affiliate.commission_refund<br />" . $email . " - " . $json_data . "<br />";
+    logit($email, $json_data, "affiliate.commission_refund");
+    break;
+  case 'affiliate.commission_earned':
+    echo "Received affiliate.commission_earned<br />" . $email . " - " . $json_data . "<br />";
+    logit($email, $json_data, "affiliate.commission_earned");
+    break;
+  case 'affiliate.commission_payout':
+    echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
+    logit($email, $json_data, "affiliate.commission_payout");
+    break;
+  default:
+    echo "Invalid event - $event<br />" . $email . " - " . $json_data . "<br />";
+    logit($email, $json_data, "Invalid event- $event");
     die();
-  }
-  else {
-    logit($event, $json_data, "NO identification about affiliate account provided by API");
-    http_response_code(200);
-    die();
-  }
 }
-
-$email = $_REQUEST['customer']['email'];
-
-
-
-if( !in_array($event, $events) ) {
-  logit($email, $json_data, "Invalid event- $event");
-  http_response_code(200);
-  die();
-}
-
-
-$pmf = (int)$_REQUEST['base_product'];
+  //echo "Received event: $event with email: $email</br/>";
+  echo "<br /><hr />";
+  require 'git-info.php';
+  die('All Done');
 
 
 
-  $product = "product-$pmf";
-
+function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data) {
+  //echo "Check if account_exists for: $email <br />";
+  //echo "json_data :  " . $json_data . "<br />";
+  $product = getProductId($_REQUEST);
+  require 'product_data.php';
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
-    $group_name = $products[$product];
 
+    $group_name = getProductName($product, $email, $json_data);
 
-  $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
-
-  if( $event == "order.success")
-  {
-    if( account_exists($value, $email) )
-    {
-      if( account_isInactive($value, $email) )
+    if( account_exists($email) ) {
+      echo "It does!<br />";
+      if( account_isInactive($email) )
       {
         // reactivate account
         reactivate_account($email, $api_endpoint, $account_id, $api_key);
@@ -100,35 +113,35 @@ $pmf = (int)$_REQUEST['base_product'];
         if( product_isTheSame($email, $product) )
         {
           // It is a payment and just let it go.
-          logit( $email, $json_data, "Payment was received for product: '$product'");
+          echo "Payment received for product: $product<br />";
+          logit( $email, $json_data, "Payment was received for product: $product");
         }
         else
         {
           // different product, then cnange the group for the account
-          $account = array(
-              'password'  => 'engage123', // standard default password
-            );
           $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
            if( $engagemoreacct != -1 ) {
-            logit($email, $json_data,  "SUCCESS: Changed product to '$product'");
+             echo "Changed subscription to product: $product<br />";
+            logit($email, $json_data,  "SUCCESS: Changed product to $product");
             //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
           }
         }
       }
     }
-    else
-    { // account does not exist
+    else { // account does not exist
       /**
        * The contact information to insert.
        *
        * Information will be added to your AllClients contacts!
        */
       $account = array(
-        	'password'  => 'engage123',
+          'password'  => 'engage123',
         );
         $message = " with productid: $product";
-        $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product);
+        $invoiceId = getInvoiceId();
+        $orderId = getOrderId();
+        $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product, $invoiceId, $orderId, $json_data);
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product
             $message = " - One month free/$99 mo. for product $product";
@@ -144,20 +157,14 @@ $pmf = (int)$_REQUEST['base_product'];
         //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
       } // end not invalid engagemoreid, so it was created.
     } // end account does not exist - create it
-  } // end event = order.success
-    else if( $event == "order.subscription_cancelled")
-    {
-        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
-        logit($email,$json_data, "Subscription_cancelled, result: $result");
-    }
+  } // end valid product
+  else {
+    logit($email, $json_data, "NOT TRACKED: $product is not tracked by this webhook.");
+    echo "<br /><h3>NOT TRACKED: $product is not tracked by this webhook.</h3>";
+    echo "<br />for " . $email . ", " . $json_data. "<br />";
   }
-  else
-  {
-    logit($email, $json_data, "Invalid product: $product");
-  }
+}
 
-http_response_code(200);
-//die();
 
 
 

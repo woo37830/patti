@@ -10,10 +10,10 @@ date_default_timezone_set('America/New_York');
 
 function connect($db) {
   require 'config.ini.php';
-$db_host = "jwooten37830.com"; // PROBABLY THIS IS OK
+$db_host = $config['PATTI_DATABASE_SERVER']; // PROBABLY THIS IS OK
 $db_name = $db;        // GET THESE FROM YOUR HOSTING COMPANY
-$db_user = "root";
-$db_word = $config['RAILS_PASSWORD'];
+$db_user = $config['PATTI_DATABASE_USER'];
+$db_word = $config['PATTI_DATABASE_PASSWORD'];
 
 // OPEN A CONNECTION TO THE DATA BASE SERVER AND SELECT THE DB
 $mysqli = new mysqli($db_host, $db_user, $db_word, $db_name);
@@ -21,6 +21,7 @@ $mysqli = new mysqli($db_host, $db_user, $db_word, $db_name);
 // DID THE CONNECT/SELECT WORK OR FAIL?
 if ($mysqli->connect_errno)
 {
+//    die("mysql connect error: $mysqli->connect_error");
     $err
     = "CONNECT FAIL: "
     . $mysqli->connect_errno
@@ -34,13 +35,17 @@ return $mysqli;
 
 function logit($user, $json, $my_status)
 {
-  if( $conn = connect("users_db") )
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+  if( $conn = connect($dbase) )
     {
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $sql = "INSERT INTO logs
+      $table = $config['PATTI_LOG_TABLE'];
+      $sql = "INSERT INTO $table
       ( received
       , email
       , request_json
@@ -63,9 +68,9 @@ function logit($user, $json, $my_status)
               = "QUERY FAIL: "
               . $sql
               . ' ERRNO: '
-              . $mysqli->errno
+              . $conn->errno
               . ' ERROR: '
-              . $mysqli->error
+              . $conn->error
               ;
               mysqli_close($conn);
               trigger_error($err, E_USER_ERROR);
@@ -78,21 +83,29 @@ function logit($user, $json, $my_status)
      }
 }
 
-function addUser($user, $engagemoreid, $productid)
+function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
 {
-  if( $conn = connect("users_db") )
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+  if( $conn = connect($dbase) )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $sql = "INSERT INTO users
+      $table = $config['PATTI_USERS_TABLE'];
+      $sql = "INSERT INTO $table
       ( added
       , email
       , engagemoreid
       , product
+      , invoiceid
+      , orderid
       ) VALUES
       ( '$datetime'
       , '$user'
       , '$engagemoreid'
       , '$productid'
+      , '$invoiceid'
+      , '$orderid'
       )";
 
       if (!$res = $conn->query($sql))
@@ -101,9 +114,9 @@ function addUser($user, $engagemoreid, $productid)
               = "QUERY FAIL: "
               . $sql
               . ' ERRNO: '
-              . $mysqli->errno
+              . $conn->errno
               . ' ERROR: '
-              . $mysqli->error
+              . $conn->error
               ;
               mysqli_close($conn);
               trigger_error($err, E_USER_ERROR);
@@ -118,17 +131,23 @@ function addUser($user, $engagemoreid, $productid)
 
 function updateAccountStatus($accountid, $new_status)
 { // Set the status in the users table to show it is inactive for the $accountid.
-  $sql = " UPDATE users SET status='" . $new_status . "' WHERE engagemoreid = " . $accountid ;
+  require 'config.ini.php';
+
+  $table = $config['PATTI_USERS_TABLE'];
+
+  $sql = " UPDATE $table SET status='" . $new_status . "' WHERE engagemoreid = " . $accountid ;
   $status = 'Failed';
-  if( $conn = connect("users_db") )
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
   {
-    if (mysqli_query($conn, $sql))
+    if ($conn->query($sql))
     {
       $status = 'Succeeded';
     }
     else
     {
-      echo "Error updating record: " . mysqli_error($conn);
+      logit($accountid,"","Error updating record: " . $conn->mysqli_error);
     }
     mysqli_close($conn);
   }
@@ -136,16 +155,28 @@ function updateAccountStatus($accountid, $new_status)
 }
 
 function getStatusFor( $accountid ) {
-  if( $conn = connect("users_db") )
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $query = "SELECT status FROM users WHERE engagemoreid = " . $accountid;
+      $table = $config['PATTI_USERS_TABLE'];
 
-     $result = mysqli_query( $conn, $query);
-     $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
+      $query = "SELECT status FROM $table WHERE engagemoreid = " . $accountid;
+     $results_array = array();
+     $result = $conn->query($query);
+     while( $row = $result->fetch_assoc() ) {
+        $results_array[] = $row;
+     }
+     if( !empty( $results_array[0] ) )
+     {
+       $value = $results_array[0]['status'];
+     }
      $result -> close();
      $conn->close();
-     return $table[0]['status'];
+     return $value;
      }
     return 'inactive';
 }
@@ -153,17 +184,25 @@ function getStatusFor( $accountid ) {
 function getAccountId($email)
 { // Get the Engagemore(AllClients) engagemoreid from the users database
   // given the email or the thrivecart id
+  require 'config.ini.php';
+
   $value = -1;
-  if( $conn = connect("users_db") )
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $query = "SELECT engagemoreid FROM users WHERE email = '$email' ";
+      $table = $config['PATTI_USERS_TABLE'];
 
-       $result = mysqli_query( $conn, $query);
-       $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
-       if( !empty( $table[0] ) )
+      $query = "SELECT engagemoreid FROM $table WHERE email = '$email' ";
+       $results_array = array();
+       $result = $conn->query($query);
+       while( $row = $result->fetch_assoc() ) {
+          $results_array[] = $row;
+       }
+       if( !empty( $results_array[0] ) )
        {
-         $value = (int)$table[0]['engagemoreid'];
+         $value = (int)$results_array[0]['engagemoreid'];
        }
        $result -> close();
        $conn->close();
@@ -172,18 +211,25 @@ function getAccountId($email)
 }
 function getProductFor( $email ) {
   $value = -1;
-  if( $conn = connect("users_db") )
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
     {
       $datetime = date_create()->format('Y-m-d H:i:s');
-      $query = "SELECT product FROM users WHERE email = '$email' ";
-      echo "\nquery = '$query'\n";
+      $table = $config['PATTI_USERS_TABLE'];
 
-       $result = mysqli_query( $conn, $query);
-       $table = mysqli_fetch_all($result,MYSQLI_ASSOC);
-       if( !empty( $table[0] ) )
+      $query = "SELECT product FROM $table WHERE email = '$email' ";
+
+       $results_array = array();
+       $result = $conn->query($query);
+       while( $row = $result->fetch_assoc() ) {
+          $results_array[] = $row;
+       }
+       if( !empty( $results_array[0] ) )
        {
-         $value = $table[0]['product'];
-         echo "\nvalue = $value\n";
+         $value = $results_array[0]['product'];
        }
        $result -> close();
        $conn->close();
@@ -193,22 +239,79 @@ function getProductFor( $email ) {
 
 function updateProduct($accountid, $new_product)
 { // Set the status in the users table to show it is inactive for the $accountid.
-  $sql = " UPDATE users SET product = '" . $new_product . "' WHERE engagemoreid = " . $accountid ;
+  require 'config.ini.php';
+
+  $table = $config['PATTI_USERS_TABLE'];
+
+  $sql = " UPDATE $table SET product = '" . $new_product . "' WHERE engagemoreid = " . $accountid ;
   $status = 'Failed';
-  if( $conn = connect("users_db") )
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
   {
-    if (mysqli_query($conn, $sql))
+    if ($conn->query($sql))
     {
       $status = 'Succeeded';
     }
     else
     {
-      echo "\nError updating record: " . mysqli_error($conn);
+      $status =  "FAILED: " . mysqli_error($conn);
     }
     mysqli_close($conn);
   }
-  echo "\nUpdated product for $accountid to $new_product\n";
   return $status;
 }
 
+function addOrderAndInvoiceIds($accountid, $orderid, $invoiceid)
+{ // Set the status in the users table to show it is inactive for the $accountid.
+  require 'config.ini.php';
+
+  $table = $config['PATTI_USERS_TABLE'];
+
+  $sql = " UPDATE $table SET orderid = '" . $orderid . "', invoiceid = '" . $invoiceid . "' WHERE engagemoreid = " . $accountid ;
+  $status = false;
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
+  {
+    if ($conn->query($sql))
+    {
+      $status = true;
+    }
+    else
+    {
+      echo "FAILED: " . mysqli_error($conn) . "\n";
+    }
+    mysqli_close($conn);
+  }
+  return $status;
+}
+
+function getEmailForInvoiceId( $invoiceid ) {
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+  $value = 'Unknown';
+
+  if( $conn = connect($dbase) )
+    {
+      $datetime = date_create()->format('Y-m-d H:i:s');
+      $table = $config['PATTI_USERS_TABLE'];
+
+      $query = "SELECT email FROM $table WHERE invoiceid = " . $invoiceid;
+     $results_array = array();
+     $result = $conn->query($query);
+     while( $row = $result->fetch_assoc() ) {
+        $results_array[] = $row;
+     }
+     if( !empty( $results_array[0] ) )
+     {
+       $value = $results_array[0]['email'];
+     }
+     $result -> close();
+     $conn->close();
+     return $value;
+     }
+    return $value;
+}
 ?>
