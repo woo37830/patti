@@ -19,8 +19,12 @@ $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
 
-$email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
-                      "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
+$email_limits = array("product-9" => 5000,
+                      "product-12" => 5000,
+                      "product-13" => 10000,
+                      "product-14" => 10000,
+                      "product-15" => 10000,
+                      "product-16" => 10000,
                       "product-17" => 10000);
 echo "<html><head></head><body><h1>OK</h1></body></html>";
 $json_data = json_encode($_REQUEST);
@@ -49,8 +53,9 @@ if( empty( $event ) ) {
 }
 switch( $event ) {
   case 'order.success':
-    echo "Received order.success<br />" . $email . " - " . $json_data . "<br />";
+    logit($email,$json_data,"Received order.success");
     handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data);
+    echo "Received order.success<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.subscription_payment':
     logit($email, $json_data, "order.subscription_payment");
@@ -64,24 +69,24 @@ switch( $event ) {
     echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.refund':
-  echo "Received order.refund<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "order.refund");
+    echo "Received order.refund<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'affiliate.commission_refund':
-    echo "Received affiliate.commission_refund<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "affiliate.commission_refund");
+    echo "Received affiliate.commission_refund<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'affiliate.commission_earned':
-    echo "Received affiliate.commission_earned<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "affiliate.commission_earned");
+    echo "Received affiliate.commission_earned<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'affiliate.commission_payout':
-    echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "affiliate.commission_payout");
+    echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
     break;
   default:
-    echo "Invalid event - $event<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "Invalid event- $event");
+    echo "Invalid event - $event<br />" . $email . " - " . $json_data . "<br />";
     die();
 }
   //echo "Received event: $event with email: $email</br/>";
