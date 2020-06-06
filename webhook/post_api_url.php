@@ -18,6 +18,7 @@ function post_api_url($url, array $data = array()) {
 
 	// Form data must be transformed from an array into a query string.
 	$data_query = http_build_query($data);
+	echo "data_query: " . $data_query . "<br />";
 
 	// Set request type to POST and set the data to post.
 	curl_setopt($ch, CURLOPT_POST, 1);
@@ -33,11 +34,13 @@ function post_api_url($url, array $data = array()) {
 
 	// Post data to API.
 	$output = curl_exec($ch);
+	echo "output: " . $output . "<br />";
 
 	// Exit on cURL error.
 	if ($output === false) {
 		// It is important to close the cURL session after curl_error()
 		curl_close($ch);
+	echo "output == false, error code 400 <br />";
     http_response_code(400);
     exit;
 	}

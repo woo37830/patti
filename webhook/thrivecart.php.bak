@@ -97,15 +97,13 @@ switch( $event ) {
 
 
 function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data) {
-  echo "Check if account_exists for: $email <br />";
-  echo "json_data :  " . $json_data . "<br />";
+  //echo "Check if account_exists for: $email <br />";
+  //echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
-  echo "product: ". $product . "<br />";
   require 'product_data.php';
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
 
     $group_name = getProductName($product, $email, $json_data);
-	echo "group_name: " . $group_name . "<br />";
 
     if( account_exists($email) ) {
       echo "It does!<br />";
@@ -147,11 +145,8 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
         );
         $message = " with productid: $product";
         $invoiceId = getInvoiceId();
-	echo "invoidid: " . $invoiceId . "<br />";
         $orderId = getOrderId();
-	echo "orderid: " . $orderId . "<br />";
         $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product, $invoiceId, $orderId, $json_data);
-		echo "engagemoreacct: " . $engagemoreacct . "<br />";
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product
             $message = " - One month free/$99 mo. for product $product";
@@ -163,9 +158,9 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
             $message = " - Special $99/mo. for $69/mo. product $product";
           }
           logit($email, $json_data, "SUCCESS: Added to account: $group_name, $message");
-	echo "SUCCESS: Added " . $email . " to account " . $group_name . " " . $message . "<br />"; 
+
         //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
-      } // end not invadelid engagemoreid, so it was created.
+      } // end not invalid engagemoreid, so it was created.
     } // end account does not exist - create it
   } // end valid product
   else {
