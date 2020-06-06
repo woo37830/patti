@@ -18,11 +18,6 @@ $data = array(
 $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 	echo "results_xml: " . $results_xml . "<br />";
 
-if ($results_xml === false) {
-	echo "FAILURE paring XML <br />";
-	logit($email, "", "FAILURE: Error parsing XML");
-	return -1;
-}
 /**
  * If an API error has occurred, the results object will contain a child 'error'
  * SimpleXMLElement parsed from the error response:
@@ -36,7 +31,7 @@ if ($results_xml === false) {
 if (isset($results_xml->error)) {
   echo "Failure: " . $results_xml->error . "<br />";
   logit($email,$json_data, "FAILURE: $results_xml->error" );
-  return -1;
+  exit;
 }
 /**
  * If no error was returned, the AddContact results object will contain a
