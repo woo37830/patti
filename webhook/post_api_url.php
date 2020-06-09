@@ -39,9 +39,15 @@ function post_api_url($url, array $data = array()) {
 	// Exit on cURL error.
 	if ($output === false) {
 		// It is important to close the cURL session after curl_error()
-		printf("cURL returned an error: %s{$nl}", curl_error($ch));
+		$retStr = curl_error($ch);
+		printf("cURL returned an error: %s<br />", $retStr);
+		$email = $data["email"];
+		$logStr = "";
+                printf("<br />email: %s, %s<br />",$email,$logStr);
+		logit($email,$logStr, $retStr);
+		echo "<br />logit succeeded<br />";
 		curl_close($ch);
-    exit;
+                return $retStr;
 	}
 
 	// Close the cURL session
