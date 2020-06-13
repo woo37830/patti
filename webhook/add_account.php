@@ -42,6 +42,8 @@ if (isset($results_xml->error)) {
 
   // Here I write the account information using addUser in mysql_common.php
   addUser($email,   $account_id, $product, $invoiceid, $orderid);
+  echo "User $email added to user table with $account_id, $invoiceid, $orderid.";
+  logit($email,$json_data,"SUCCESS: User $email added with $account_id, $invoiceid, $orderid.");
   return $account_id;
 }
 ?>

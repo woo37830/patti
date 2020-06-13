@@ -48,11 +48,11 @@ function getProductId() {
 }
 
 function getInvoiceId() {
-  return $_REQUEST['invoiceid'];
+  return $_REQUEST['invoice_id'];
 }
 
 function getOrderId() {
-  return $_REQUEST['orderid'];
+  return $_REQUEST['order_id'];
 }
 
 function getProductName($product, $email, $json_data) {
