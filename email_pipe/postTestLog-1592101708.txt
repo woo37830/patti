@@ -1,0 +1,393 @@
+Email post log:
+Processed on: Sat Jun 13 22:28:28 EDT 2020
+------------
+$_POST array:
+------------
+Array
+(
+    [email] => {"headers":{"from jwooten37830@icloud.com  sun jun 14 02":"28:53 2020","return-path":"<jwooten37830@icloud.com>","x-original-to":"mail@woo37830.mailnuggets.com","delivered-to":"mail@woo37830.mailnuggets.com","received":["from st43p00im-zteg10063401.me.com (st43p00im-zteg10063401.me.com [17.58.63.175]) by mail.mailnuggets.com (Postfix) with ESMTP id A8D6641825 for <mail@woo37830.mailnuggets.com>; Sun, 14 Jun 2020 02:28:53 +0000 (UTC)","from [10.0.1.244] (c-73-121-27-131.hsd1.tn.comcast.net [73.121.27.131]) by st43p00im-zteg10063401.me.com (Postfix) with ESMTPSA id B05314A0472; Sun, 14 Jun 2020 02:28:52 +0000 (UTC)"],"dkim-signature":"v=1; a=rsa-sha256; c=relaxed\/relaxed; d=icloud.com; s=1a1hai; t=1592101733; bh=ckpuzSpprJeqC43OpPlq37CERYFbv7a0\/PBw+W9UfRY=; h=From:Message-Id:Content-Type:Date:Subject:To; b=VlfaU+RHlnCJxcmec3u9CHuT9qPAWgN5IW2zyPMik3fuRkcabdG\/2ntQn+fo+t4+7 ao3ZobuSWyiMCm1Furza3KtmpA8KESeCyFj2a41C\/5FpMJj48H1ktC1mkBTZ2iBHWu UVm6BHPvEaYz5yGYJTO\/jkwimZIiDBucB7LlRYHxvJ5FT79eYqGEPVJPuMR6+NhyBr Kpt8xaIzZYgMW0KF9mQ20Yrf8tgka9UM63ddI7nM9WVUK0A0N+Cu9S2n3fV1yLRDr8 veJbwOZInUnsOsLQNDnJASqOrRCWdxoA1j4qIODsgv2tprVAO0aVVYaiGiMX6RxDyG g795c2OSK61gQ==","from":"John Wooten <jwooten37830@icloud.com>","message-id":"<92FE8F3D-F419-483A-AF17-A242440139EA@icloud.com>","content-type":"multipart\/alternative; boundary=\"Apple-Mail=_5423B7AD-525B-4F36-95E3-78566551FEF1\"","mime-version":"1.0 (Mac OS X Mail 13.4 \\(3608.80.23.2.2\\))","date":"Sat, 13 Jun 2020 22:29:00 -0400","subject":"Re: Use of mail nuggets","in-reply-to":"<CAGjVw=r70gYakPjoohkKv3SUVnd73eXmYq0P97TvZObPTvkHvA@mail.gmail.com>","to":"Van Stokes <info@mailnuggets.com>","references":"<46B4E8F5-BB5D-4809-8892-D91C59ABFE66@icloud.com> <CAGjVw=pC1OQVZNw-6AfKcQPUc76H=A3SgROaazuJh0b76WsFyg@mail.gmail.com> <0A0B45E2-2307-4136-A9DA-10AC6B57CE28@icloud.com> <CAGjVw=r70gYakPjoohkKv3SUVnd73eXmYq0P97TvZObPTvkHvA@mail.gmail.com>","x-mailer":"Apple Mail (2.3608.80.23.2.2)","x-proofpoint-virus-version":"vendor=fsecure engine=2.50.10434:6.0.216,18.0.687 definitions=2020-06-13_11:2020-06-12,2020-06-13 signatures=0","x-proofpoint-spam-details":"rule=notspam policy=default score=0 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0 mlxlogscore=923 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-2004280000 definitions=main-2006140018","message-id-hash":"2aa500ba0808a6dd9b9ed707707ce97c"},"ctype_primary":"multipart","ctype_secondary":"alternative","ctype_parameters":{"boundary":"Apple-Mail=_5423B7AD-525B-4F36-95E3-78566551FEF1"},"parts":[{"headers":{"content-transfer-encoding":"quoted-printable","content-type":"text\/plain; charset=utf-8"},"ctype_primary":"text","ctype_secondary":"plain","ctype_parameters":{"charset":"utf-8"},"body":"Thanks,\n\nI changed the format of the email message to json and the log shows I =\ngot it with no errors.  Now, I can parse and do what I want.\n\nThanks so much.\n\nWill be in contact soon about joining officially.\n\nJohn Wooten, Ph.D.\n\n> On Jun 13, 2020, at 9:39 PM, Van Stokes <info@mailnuggets.com> wrote:\n>=20\n> Hi John,\n> This is likely caused by the configuration of your script on the =\nserver.  Unfortunately, MailNuggets is not able to assist =\ntroubleshooting code on the remote script or server errors such as this. =\n Hope this information helps.\n> Thanks, Van\n>=20\n> On Sun, Jun 14, 2020 at 9:35 AM John Wooten <jwooten37830@icloud.com =\n<mailto:jwooten37830@icloud.com>> wrote:\n> Thanks so much!\n>=20\n> I tried it using key\/value pairs to the example I found on your site.  =\nI got a 405 error after I made the directory where the php script is =\nworld writable.\n>=20\n> Any ideas about why the 405?\n>=20\n>> On Jun 13, 2020, at 9:05 PM, Van Stokes <info@mailnuggets.com =\n<mailto:info@mailnuggets.com>> wrote:\n>>=20\n>> Hi John,\n>> Yes, MailNuggets can receive an email and post it to a remote script =\nas described here:\n>> https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post =\n<https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post>\n>> If you get stuck on a particular part of this please let me know.\n>> Thanks, Van\n>>=20\n>> On Sun, Jun 14, 2020 at 7:44 AM John Wooten <jwooten37830@icloud.com =\n<mailto:jwooten37830@icloud.com>> wrote:\n>> Hi,\n>>=20\n>> I am trying to be able to receive an email to my mailnugger email =\naccount and pass the email content to a php script.  The script can run =\non AWS or on my own Mac OS X server.  There I need to be able to look up =\nthe sender and recipient emails in a data table I keep and append a note =\ncontaining the email to the senders CRM account via an API.  This =\nprovides a trace of the emails the sender received and replied to from =\ntheir contracts by using a bcc when they respond to the email.  The bcc =\nwould contain the mailnuggets email account.\n>>=20\n>> Is there a way I can forward received emails to a remote server that =\nhas a php web page?\n>>=20\n>> I don=E2=80=99t have access to cPanel which I=E2=80=99ve seen a lot =\nof references to that do this? =20\n>>=20\n>> John Wooten, Ph.D.\n>>=20\n>>=20\n>>=20\n>>=20\n>> --=20\n>> Van Stokes\n>> info@mailnuggets.com <mailto:info@mailnuggets.com>\n>> +1.917.472.9997\n>=20\n>=20\n>=20\n> --=20\n> Van Stokes\n> info@mailnuggets.com <mailto:info@mailnuggets.com>\n> +1.917.472.9997\n\n\n"},{"headers":{"content-transfer-encoding":"quoted-printable","content-type":"text\/html; charset=utf-8"},"ctype_primary":"text","ctype_secondary":"html","ctype_parameters":{"charset":"utf-8"},"body":"<html><head><meta http-equiv=3D\"Content-Type\" content=3D\"text\/html; =\ncharset=3Dutf-8\"><\/head><body style=3D\"word-wrap: break-word; =\n-webkit-nbsp-mode: space; line-break: after-white-space;\" =\nclass=3D\"\">Thanks,<div class=3D\"\"><br class=3D\"\"><\/div><div class=3D\"\">I =\nchanged the format of the email message to json and the log shows I got =\nit with no errors. &nbsp;Now, I can parse and do what I want.<\/div><div =\nclass=3D\"\"><br class=3D\"\"><\/div><div class=3D\"\">Thanks so =\nmuch.<\/div><div class=3D\"\"><br class=3D\"\"><\/div><div class=3D\"\">Will be =\nin contact soon about joining officially.<\/div><div class=3D\"\"><br =\nclass=3D\"\"><\/div><div class=3D\"\">John Wooten, Ph.D.<br class=3D\"\"><div><br=\n class=3D\"\"><blockquote type=3D\"cite\" class=3D\"\"><div class=3D\"\">On Jun =\n13, 2020, at 9:39 PM, Van Stokes &lt;<a =\nhref=3D\"mailto:info@mailnuggets.com\" =\nclass=3D\"\">info@mailnuggets.com<\/a>&gt; wrote:<\/div><br =\nclass=3D\"Apple-interchange-newline\"><div class=3D\"\"><div dir=3D\"ltr\" =\nclass=3D\"\">Hi John,<div class=3D\"\">This is likely caused by the =\nconfiguration of your script on the server.&nbsp; Unfortunately, =\nMailNuggets is not able to assist troubleshooting code on the remote =\nscript or server errors such as this.&nbsp; Hope this =\ninformation&nbsp;helps.<\/div><div class=3D\"\">Thanks, Van<\/div><\/div><br =\nclass=3D\"\"><div class=3D\"gmail_quote\"><div dir=3D\"ltr\" =\nclass=3D\"gmail_attr\">On Sun, Jun 14, 2020 at 9:35 AM John Wooten &lt;<a =\nhref=3D\"mailto:jwooten37830@icloud.com\" =\nclass=3D\"\">jwooten37830@icloud.com<\/a>&gt; wrote:<br =\nclass=3D\"\"><\/div><blockquote class=3D\"gmail_quote\" style=3D\"margin:0px =\n0px 0px 0.8ex;border-left:1px solid =\nrgb(204,204,204);padding-left:1ex\"><div style=3D\"overflow-wrap: =\nbreak-word;\" class=3D\"\">Thanks so much!<div class=3D\"\"><br =\nclass=3D\"\"><\/div><div class=3D\"\">I tried it using key\/value pairs to the =\nexample I found on your site.&nbsp; I got a 405 error after I made the =\ndirectory where the php script is world writable.<\/div><div class=3D\"\"><br=\n class=3D\"\"><\/div><div class=3D\"\">Any ideas about why the 405?<br =\nclass=3D\"\"><div class=3D\"\"><br class=3D\"\"><blockquote type=3D\"cite\" =\nclass=3D\"\"><div class=3D\"\">On Jun 13, 2020, at 9:05 PM, Van Stokes =\n&lt;<a href=3D\"mailto:info@mailnuggets.com\" target=3D\"_blank\" =\nclass=3D\"\">info@mailnuggets.com<\/a>&gt; wrote:<\/div><br class=3D\"\"><div =\nclass=3D\"\"><div dir=3D\"ltr\" class=3D\"\">Hi John,<div class=3D\"\">Yes, =\nMailNuggets can receive an email and post it to a remote script as =\ndescribed here:<\/div><div class=3D\"\"><a =\nhref=3D\"https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post\" =\ntarget=3D\"_blank\" =\nclass=3D\"\">https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post<\/a>=\n<br class=3D\"\"><\/div><div class=3D\"\">If you get stuck on a particular =\npart of this please let me know.<\/div><div class=3D\"\">Thanks, =\nVan<\/div><\/div><br class=3D\"\"><div class=3D\"gmail_quote\"><div dir=3D\"ltr\" =\nclass=3D\"gmail_attr\">On Sun, Jun 14, 2020 at 7:44 AM John Wooten &lt;<a =\nhref=3D\"mailto:jwooten37830@icloud.com\" target=3D\"_blank\" =\nclass=3D\"\">jwooten37830@icloud.com<\/a>&gt; wrote:<br =\nclass=3D\"\"><\/div><blockquote class=3D\"gmail_quote\" style=3D\"margin:0px =\n0px 0px 0.8ex;border-left:1px solid =\nrgb(204,204,204);padding-left:1ex\">Hi,<br class=3D\"\">\n<br class=3D\"\">\nI am trying to be able to receive an email to my mailnugger email =\naccount and pass the email content to a php script.&nbsp; The script can =\nrun on AWS or on my own Mac OS X server.&nbsp; There I need to be able =\nto look up the sender and recipient emails in a data table I keep and =\nappend a note containing the email to the senders CRM account via an =\nAPI.&nbsp; This provides a trace of the emails the sender received and =\nreplied to from their contracts by using a bcc when they respond to the =\nemail.&nbsp; The bcc would contain the mailnuggets email account.<br =\nclass=3D\"\">\n<br class=3D\"\">\nIs there a way I can forward received emails to a remote server that has =\na php web page?<br class=3D\"\">\n<br class=3D\"\">\nI don=E2=80=99t have access to cPanel which I=E2=80=99ve seen a lot of =\nreferences to that do this?&nbsp; <br class=3D\"\">\n<br class=3D\"\">\nJohn Wooten, Ph.D.<br class=3D\"\">\n<br class=3D\"\">\n<br class=3D\"\">\n<\/blockquote><\/div><br clear=3D\"all\" class=3D\"\"><div class=3D\"\"><br =\nclass=3D\"\"><\/div>-- <br class=3D\"\"><div dir=3D\"ltr\" class=3D\"\">Van =\nStokes<br class=3D\"\"><a href=3D\"mailto:info@mailnuggets.com\" =\ntarget=3D\"_blank\" class=3D\"\">info@mailnuggets.com<\/a><br =\nclass=3D\"\">+1.917.472.9997<\/div>\n<\/div><\/blockquote><\/div><br class=3D\"\"><\/div><\/div><\/blockquote><\/div><br=\n clear=3D\"all\" class=3D\"\"><div class=3D\"\"><br class=3D\"\"><\/div>-- <br =\nclass=3D\"\"><div dir=3D\"ltr\" class=3D\"gmail_signature\">Van Stokes<br =\nclass=3D\"\"><a href=3D\"mailto:info@mailnuggets.com\" target=3D\"_blank\" =\nclass=3D\"\">info@mailnuggets.com<\/a><br class=3D\"\">+1.917.472.9997<\/div>\n<\/div><\/blockquote><\/div><br class=3D\"\"><\/div><\/body><\/html>=\n\n"}]}
+)
+
+****************
+Decoded values: 
+****************
+------------
+$_POST['email'] value (JSON only):
+------------
+{"headers":{"from jwooten37830@icloud.com  sun jun 14 02":"28:53 2020","return-path":"<jwooten37830@icloud.com>","x-original-to":"mail@woo37830.mailnuggets.com","delivered-to":"mail@woo37830.mailnuggets.com","received":["from st43p00im-zteg10063401.me.com (st43p00im-zteg10063401.me.com [17.58.63.175]) by mail.mailnuggets.com (Postfix) with ESMTP id A8D6641825 for <mail@woo37830.mailnuggets.com>; Sun, 14 Jun 2020 02:28:53 +0000 (UTC)","from [10.0.1.244] (c-73-121-27-131.hsd1.tn.comcast.net [73.121.27.131]) by st43p00im-zteg10063401.me.com (Postfix) with ESMTPSA id B05314A0472; Sun, 14 Jun 2020 02:28:52 +0000 (UTC)"],"dkim-signature":"v=1; a=rsa-sha256; c=relaxed\/relaxed; d=icloud.com; s=1a1hai; t=1592101733; bh=ckpuzSpprJeqC43OpPlq37CERYFbv7a0\/PBw+W9UfRY=; h=From:Message-Id:Content-Type:Date:Subject:To; b=VlfaU+RHlnCJxcmec3u9CHuT9qPAWgN5IW2zyPMik3fuRkcabdG\/2ntQn+fo+t4+7 ao3ZobuSWyiMCm1Furza3KtmpA8KESeCyFj2a41C\/5FpMJj48H1ktC1mkBTZ2iBHWu UVm6BHPvEaYz5yGYJTO\/jkwimZIiDBucB7LlRYHxvJ5FT79eYqGEPVJPuMR6+NhyBr Kpt8xaIzZYgMW0KF9mQ20Yrf8tgka9UM63ddI7nM9WVUK0A0N+Cu9S2n3fV1yLRDr8 veJbwOZInUnsOsLQNDnJASqOrRCWdxoA1j4qIODsgv2tprVAO0aVVYaiGiMX6RxDyG g795c2OSK61gQ==","from":"John Wooten <jwooten37830@icloud.com>","message-id":"<92FE8F3D-F419-483A-AF17-A242440139EA@icloud.com>","content-type":"multipart\/alternative; boundary=\"Apple-Mail=_5423B7AD-525B-4F36-95E3-78566551FEF1\"","mime-version":"1.0 (Mac OS X Mail 13.4 \\(3608.80.23.2.2\\))","date":"Sat, 13 Jun 2020 22:29:00 -0400","subject":"Re: Use of mail nuggets","in-reply-to":"<CAGjVw=r70gYakPjoohkKv3SUVnd73eXmYq0P97TvZObPTvkHvA@mail.gmail.com>","to":"Van Stokes <info@mailnuggets.com>","references":"<46B4E8F5-BB5D-4809-8892-D91C59ABFE66@icloud.com> <CAGjVw=pC1OQVZNw-6AfKcQPUc76H=A3SgROaazuJh0b76WsFyg@mail.gmail.com> <0A0B45E2-2307-4136-A9DA-10AC6B57CE28@icloud.com> <CAGjVw=r70gYakPjoohkKv3SUVnd73eXmYq0P97TvZObPTvkHvA@mail.gmail.com>","x-mailer":"Apple Mail (2.3608.80.23.2.2)","x-proofpoint-virus-version":"vendor=fsecure engine=2.50.10434:6.0.216,18.0.687 definitions=2020-06-13_11:2020-06-12,2020-06-13 signatures=0","x-proofpoint-spam-details":"rule=notspam policy=default score=0 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0 mlxlogscore=923 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-2004280000 definitions=main-2006140018","message-id-hash":"2aa500ba0808a6dd9b9ed707707ce97c"},"ctype_primary":"multipart","ctype_secondary":"alternative","ctype_parameters":{"boundary":"Apple-Mail=_5423B7AD-525B-4F36-95E3-78566551FEF1"},"parts":[{"headers":{"content-transfer-encoding":"quoted-printable","content-type":"text\/plain; charset=utf-8"},"ctype_primary":"text","ctype_secondary":"plain","ctype_parameters":{"charset":"utf-8"},"body":"Thanks,\n\nI changed the format of the email message to json and the log shows I =\ngot it with no errors.  Now, I can parse and do what I want.\n\nThanks so much.\n\nWill be in contact soon about joining officially.\n\nJohn Wooten, Ph.D.\n\n> On Jun 13, 2020, at 9:39 PM, Van Stokes <info@mailnuggets.com> wrote:\n>=20\n> Hi John,\n> This is likely caused by the configuration of your script on the =\nserver.  Unfortunately, MailNuggets is not able to assist =\ntroubleshooting code on the remote script or server errors such as this. =\n Hope this information helps.\n> Thanks, Van\n>=20\n> On Sun, Jun 14, 2020 at 9:35 AM John Wooten <jwooten37830@icloud.com =\n<mailto:jwooten37830@icloud.com>> wrote:\n> Thanks so much!\n>=20\n> I tried it using key\/value pairs to the example I found on your site.  =\nI got a 405 error after I made the directory where the php script is =\nworld writable.\n>=20\n> Any ideas about why the 405?\n>=20\n>> On Jun 13, 2020, at 9:05 PM, Van Stokes <info@mailnuggets.com =\n<mailto:info@mailnuggets.com>> wrote:\n>>=20\n>> Hi John,\n>> Yes, MailNuggets can receive an email and post it to a remote script =\nas described here:\n>> https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post =\n<https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post>\n>> If you get stuck on a particular part of this please let me know.\n>> Thanks, Van\n>>=20\n>> On Sun, Jun 14, 2020 at 7:44 AM John Wooten <jwooten37830@icloud.com =\n<mailto:jwooten37830@icloud.com>> wrote:\n>> Hi,\n>>=20\n>> I am trying to be able to receive an email to my mailnugger email =\naccount and pass the email content to a php script.  The script can run =\non AWS or on my own Mac OS X server.  There I need to be able to look up =\nthe sender and recipient emails in a data table I keep and append a note =\ncontaining the email to the senders CRM account via an API.  This =\nprovides a trace of the emails the sender received and replied to from =\ntheir contracts by using a bcc when they respond to the email.  The bcc =\nwould contain the mailnuggets email account.\n>>=20\n>> Is there a way I can forward received emails to a remote server that =\nhas a php web page?\n>>=20\n>> I don=E2=80=99t have access to cPanel which I=E2=80=99ve seen a lot =\nof references to that do this? =20\n>>=20\n>> John Wooten, Ph.D.\n>>=20\n>>=20\n>>=20\n>>=20\n>> --=20\n>> Van Stokes\n>> info@mailnuggets.com <mailto:info@mailnuggets.com>\n>> +1.917.472.9997\n>=20\n>=20\n>=20\n> --=20\n> Van Stokes\n> info@mailnuggets.com <mailto:info@mailnuggets.com>\n> +1.917.472.9997\n\n\n"},{"headers":{"content-transfer-encoding":"quoted-printable","content-type":"text\/html; charset=utf-8"},"ctype_primary":"text","ctype_secondary":"html","ctype_parameters":{"charset":"utf-8"},"body":"<html><head><meta http-equiv=3D\"Content-Type\" content=3D\"text\/html; =\ncharset=3Dutf-8\"><\/head><body style=3D\"word-wrap: break-word; =\n-webkit-nbsp-mode: space; line-break: after-white-space;\" =\nclass=3D\"\">Thanks,<div class=3D\"\"><br class=3D\"\"><\/div><div class=3D\"\">I =\nchanged the format of the email message to json and the log shows I got =\nit with no errors. &nbsp;Now, I can parse and do what I want.<\/div><div =\nclass=3D\"\"><br class=3D\"\"><\/div><div class=3D\"\">Thanks so =\nmuch.<\/div><div class=3D\"\"><br class=3D\"\"><\/div><div class=3D\"\">Will be =\nin contact soon about joining officially.<\/div><div class=3D\"\"><br =\nclass=3D\"\"><\/div><div class=3D\"\">John Wooten, Ph.D.<br class=3D\"\"><div><br=\n class=3D\"\"><blockquote type=3D\"cite\" class=3D\"\"><div class=3D\"\">On Jun =\n13, 2020, at 9:39 PM, Van Stokes &lt;<a =\nhref=3D\"mailto:info@mailnuggets.com\" =\nclass=3D\"\">info@mailnuggets.com<\/a>&gt; wrote:<\/div><br =\nclass=3D\"Apple-interchange-newline\"><div class=3D\"\"><div dir=3D\"ltr\" =\nclass=3D\"\">Hi John,<div class=3D\"\">This is likely caused by the =\nconfiguration of your script on the server.&nbsp; Unfortunately, =\nMailNuggets is not able to assist troubleshooting code on the remote =\nscript or server errors such as this.&nbsp; Hope this =\ninformation&nbsp;helps.<\/div><div class=3D\"\">Thanks, Van<\/div><\/div><br =\nclass=3D\"\"><div class=3D\"gmail_quote\"><div dir=3D\"ltr\" =\nclass=3D\"gmail_attr\">On Sun, Jun 14, 2020 at 9:35 AM John Wooten &lt;<a =\nhref=3D\"mailto:jwooten37830@icloud.com\" =\nclass=3D\"\">jwooten37830@icloud.com<\/a>&gt; wrote:<br =\nclass=3D\"\"><\/div><blockquote class=3D\"gmail_quote\" style=3D\"margin:0px =\n0px 0px 0.8ex;border-left:1px solid =\nrgb(204,204,204);padding-left:1ex\"><div style=3D\"overflow-wrap: =\nbreak-word;\" class=3D\"\">Thanks so much!<div class=3D\"\"><br =\nclass=3D\"\"><\/div><div class=3D\"\">I tried it using key\/value pairs to the =\nexample I found on your site.&nbsp; I got a 405 error after I made the =\ndirectory where the php script is world writable.<\/div><div class=3D\"\"><br=\n class=3D\"\"><\/div><div class=3D\"\">Any ideas about why the 405?<br =\nclass=3D\"\"><div class=3D\"\"><br class=3D\"\"><blockquote type=3D\"cite\" =\nclass=3D\"\"><div class=3D\"\">On Jun 13, 2020, at 9:05 PM, Van Stokes =\n&lt;<a href=3D\"mailto:info@mailnuggets.com\" target=3D\"_blank\" =\nclass=3D\"\">info@mailnuggets.com<\/a>&gt; wrote:<\/div><br class=3D\"\"><div =\nclass=3D\"\"><div dir=3D\"ltr\" class=3D\"\">Hi John,<div class=3D\"\">Yes, =\nMailNuggets can receive an email and post it to a remote script as =\ndescribed here:<\/div><div class=3D\"\"><a =\nhref=3D\"https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post\" =\ntarget=3D\"_blank\" =\nclass=3D\"\">https:\/\/mailnuggets.com\/pages\/features\/email_over_http_post<\/a>=\n<br class=3D\"\"><\/div><div class=3D\"\">If you get stuck on a particular =\npart of this please let me know.<\/div><div class=3D\"\">Thanks, =\nVan<\/div><\/div><br class=3D\"\"><div class=3D\"gmail_quote\"><div dir=3D\"ltr\" =\nclass=3D\"gmail_attr\">On Sun, Jun 14, 2020 at 7:44 AM John Wooten &lt;<a =\nhref=3D\"mailto:jwooten37830@icloud.com\" target=3D\"_blank\" =\nclass=3D\"\">jwooten37830@icloud.com<\/a>&gt; wrote:<br =\nclass=3D\"\"><\/div><blockquote class=3D\"gmail_quote\" style=3D\"margin:0px =\n0px 0px 0.8ex;border-left:1px solid =\nrgb(204,204,204);padding-left:1ex\">Hi,<br class=3D\"\">\n<br class=3D\"\">\nI am trying to be able to receive an email to my mailnugger email =\naccount and pass the email content to a php script.&nbsp; The script can =\nrun on AWS or on my own Mac OS X server.&nbsp; There I need to be able =\nto look up the sender and recipient emails in a data table I keep and =\nappend a note containing the email to the senders CRM account via an =\nAPI.&nbsp; This provides a trace of the emails the sender received and =\nreplied to from their contracts by using a bcc when they respond to the =\nemail.&nbsp; The bcc would contain the mailnuggets email account.<br =\nclass=3D\"\">\n<br class=3D\"\">\nIs there a way I can forward received emails to a remote server that has =\na php web page?<br class=3D\"\">\n<br class=3D\"\">\nI don=E2=80=99t have access to cPanel which I=E2=80=99ve seen a lot of =\nreferences to that do this?&nbsp; <br class=3D\"\">\n<br class=3D\"\">\nJohn Wooten, Ph.D.<br class=3D\"\">\n<br class=3D\"\">\n<br class=3D\"\">\n<\/blockquote><\/div><br clear=3D\"all\" class=3D\"\"><div class=3D\"\"><br =\nclass=3D\"\"><\/div>-- <br class=3D\"\"><div dir=3D\"ltr\" class=3D\"\">Van =\nStokes<br class=3D\"\"><a href=3D\"mailto:info@mailnuggets.com\" =\ntarget=3D\"_blank\" class=3D\"\">info@mailnuggets.com<\/a><br =\nclass=3D\"\">+1.917.472.9997<\/div>\n<\/div><\/blockquote><\/div><br class=3D\"\"><\/div><\/div><\/blockquote><\/div><br=\n clear=3D\"all\" class=3D\"\"><div class=3D\"\"><br class=3D\"\"><\/div>-- <br =\nclass=3D\"\"><div dir=3D\"ltr\" class=3D\"gmail_signature\">Van Stokes<br =\nclass=3D\"\"><a href=3D\"mailto:info@mailnuggets.com\" target=3D\"_blank\" =\nclass=3D\"\">info@mailnuggets.com<\/a><br class=3D\"\">+1.917.472.9997<\/div>\n<\/div><\/blockquote><\/div><br class=3D\"\"><\/div><\/body><\/html>=\n\n"}]}
+------------
+Email object (JSON only):
+------------
+Array
+(
+    [headers] => Array
+        (
+            [from jwooten37830@icloud.com  sun jun 14 02] => 28:53 2020
+            [return-path] => <jwooten37830@icloud.com>
+            [x-original-to] => mail@woo37830.mailnuggets.com
+            [delivered-to] => mail@woo37830.mailnuggets.com
+            [received] => Array
+                (
+                    [0] => from st43p00im-zteg10063401.me.com (st43p00im-zteg10063401.me.com [17.58.63.175]) by mail.mailnuggets.com (Postfix) with ESMTP id A8D6641825 for <mail@woo37830.mailnuggets.com>; Sun, 14 Jun 2020 02:28:53 +0000 (UTC)
+                    [1] => from [10.0.1.244] (c-73-121-27-131.hsd1.tn.comcast.net [73.121.27.131]) by st43p00im-zteg10063401.me.com (Postfix) with ESMTPSA id B05314A0472; Sun, 14 Jun 2020 02:28:52 +0000 (UTC)
+                )
+
+            [dkim-signature] => v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com; s=1a1hai; t=1592101733; bh=ckpuzSpprJeqC43OpPlq37CERYFbv7a0/PBw+W9UfRY=; h=From:Message-Id:Content-Type:Date:Subject:To; b=VlfaU+RHlnCJxcmec3u9CHuT9qPAWgN5IW2zyPMik3fuRkcabdG/2ntQn+fo+t4+7 ao3ZobuSWyiMCm1Furza3KtmpA8KESeCyFj2a41C/5FpMJj48H1ktC1mkBTZ2iBHWu UVm6BHPvEaYz5yGYJTO/jkwimZIiDBucB7LlRYHxvJ5FT79eYqGEPVJPuMR6+NhyBr Kpt8xaIzZYgMW0KF9mQ20Yrf8tgka9UM63ddI7nM9WVUK0A0N+Cu9S2n3fV1yLRDr8 veJbwOZInUnsOsLQNDnJASqOrRCWdxoA1j4qIODsgv2tprVAO0aVVYaiGiMX6RxDyG g795c2OSK61gQ==
+            [from] => John Wooten <jwooten37830@icloud.com>
+            [message-id] => <92FE8F3D-F419-483A-AF17-A242440139EA@icloud.com>
+            [content-type] => multipart/alternative; boundary="Apple-Mail=_5423B7AD-525B-4F36-95E3-78566551FEF1"
+            [mime-version] => 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+            [date] => Sat, 13 Jun 2020 22:29:00 -0400
+            [subject] => Re: Use of mail nuggets
+            [in-reply-to] => <CAGjVw=r70gYakPjoohkKv3SUVnd73eXmYq0P97TvZObPTvkHvA@mail.gmail.com>
+            [to] => Van Stokes <info@mailnuggets.com>
+            [references] => <46B4E8F5-BB5D-4809-8892-D91C59ABFE66@icloud.com> <CAGjVw=pC1OQVZNw-6AfKcQPUc76H=A3SgROaazuJh0b76WsFyg@mail.gmail.com> <0A0B45E2-2307-4136-A9DA-10AC6B57CE28@icloud.com> <CAGjVw=r70gYakPjoohkKv3SUVnd73eXmYq0P97TvZObPTvkHvA@mail.gmail.com>
+            [x-mailer] => Apple Mail (2.3608.80.23.2.2)
+            [x-proofpoint-virus-version] => vendor=fsecure engine=2.50.10434:6.0.216,18.0.687 definitions=2020-06-13_11:2020-06-12,2020-06-13 signatures=0
+            [x-proofpoint-spam-details] => rule=notspam policy=default score=0 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0 mlxlogscore=923 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-2004280000 definitions=main-2006140018
+            [message-id-hash] => 2aa500ba0808a6dd9b9ed707707ce97c
+        )
+
+    [ctype_primary] => multipart
+    [ctype_secondary] => alternative
+    [ctype_parameters] => Array
+        (
+            [boundary] => Apple-Mail=_5423B7AD-525B-4F36-95E3-78566551FEF1
+        )
+
+    [parts] => Array
+        (
+            [0] => Array
+                (
+                    [headers] => Array
+                        (
+                            [content-transfer-encoding] => quoted-printable
+                            [content-type] => text/plain; charset=utf-8
+                        )
+
+                    [ctype_primary] => text
+                    [ctype_secondary] => plain
+                    [ctype_parameters] => Array
+                        (
+                            [charset] => utf-8
+                        )
+
+                    [body] => Thanks,
+
+I changed the format of the email message to json and the log shows I =
+got it with no errors.  Now, I can parse and do what I want.
+
+Thanks so much.
+
+Will be in contact soon about joining officially.
+
+John Wooten, Ph.D.
+
+> On Jun 13, 2020, at 9:39 PM, Van Stokes <info@mailnuggets.com> wrote:
+>=20
+> Hi John,
+> This is likely caused by the configuration of your script on the =
+server.  Unfortunately, MailNuggets is not able to assist =
+troubleshooting code on the remote script or server errors such as this. =
+ Hope this information helps.
+> Thanks, Van
+>=20
+> On Sun, Jun 14, 2020 at 9:35 AM John Wooten <jwooten37830@icloud.com =
+<mailto:jwooten37830@icloud.com>> wrote:
+> Thanks so much!
+>=20
+> I tried it using key/value pairs to the example I found on your site.  =
+I got a 405 error after I made the directory where the php script is =
+world writable.
+>=20
+> Any ideas about why the 405?
+>=20
+>> On Jun 13, 2020, at 9:05 PM, Van Stokes <info@mailnuggets.com =
+<mailto:info@mailnuggets.com>> wrote:
+>>=20
+>> Hi John,
+>> Yes, MailNuggets can receive an email and post it to a remote script =
+as described here:
+>> https://mailnuggets.com/pages/features/email_over_http_post =
+<https://mailnuggets.com/pages/features/email_over_http_post>
+>> If you get stuck on a particular part of this please let me know.
+>> Thanks, Van
+>>=20
+>> On Sun, Jun 14, 2020 at 7:44 AM John Wooten <jwooten37830@icloud.com =
+<mailto:jwooten37830@icloud.com>> wrote:
+>> Hi,
+>>=20
+>> I am trying to be able to receive an email to my mailnugger email =
+account and pass the email content to a php script.  The script can run =
+on AWS or on my own Mac OS X server.  There I need to be able to look up =
+the sender and recipient emails in a data table I keep and append a note =
+containing the email to the senders CRM account via an API.  This =
+provides a trace of the emails the sender received and replied to from =
+their contracts by using a bcc when they respond to the email.  The bcc =
+would contain the mailnuggets email account.
+>>=20
+>> Is there a way I can forward received emails to a remote server that =
+has a php web page?
+>>=20
+>> I don=E2=80=99t have access to cPanel which I=E2=80=99ve seen a lot =
+of references to that do this? =20
+>>=20
+>> John Wooten, Ph.D.
+>>=20
+>>=20
+>>=20
+>>=20
+>> --=20
+>> Van Stokes
+>> info@mailnuggets.com <mailto:info@mailnuggets.com>
+>> +1.917.472.9997
+>=20
+>=20
+>=20
+> --=20
+> Van Stokes
+> info@mailnuggets.com <mailto:info@mailnuggets.com>
+> +1.917.472.9997
+
+
+
+                )
+
+            [1] => Array
+                (
+                    [headers] => Array
+                        (
+                            [content-transfer-encoding] => quoted-printable
+                            [content-type] => text/html; charset=utf-8
+                        )
+
+                    [ctype_primary] => text
+                    [ctype_secondary] => html
+                    [ctype_parameters] => Array
+                        (
+                            [charset] => utf-8
+                        )
+
+                    [body] => <html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D"">Thanks,<div class=3D""><br class=3D""></div><div class=3D"">I =
+changed the format of the email message to json and the log shows I got =
+it with no errors. &nbsp;Now, I can parse and do what I want.</div><div =
+class=3D""><br class=3D""></div><div class=3D"">Thanks so =
+much.</div><div class=3D""><br class=3D""></div><div class=3D"">Will be =
+in contact soon about joining officially.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">John Wooten, Ph.D.<br class=3D""><div><br=
+ class=3D""><blockquote type=3D"cite" class=3D""><div class=3D"">On Jun =
+13, 2020, at 9:39 PM, Van Stokes &lt;<a =
+href=3D"mailto:info@mailnuggets.com" =
+class=3D"">info@mailnuggets.com</a>&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div class=3D""><div dir=3D"ltr" =
+class=3D"">Hi John,<div class=3D"">This is likely caused by the =
+configuration of your script on the server.&nbsp; Unfortunately, =
+MailNuggets is not able to assist troubleshooting code on the remote =
+script or server errors such as this.&nbsp; Hope this =
+information&nbsp;helps.</div><div class=3D"">Thanks, Van</div></div><br =
+class=3D""><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Sun, Jun 14, 2020 at 9:35 AM John Wooten &lt;<a =
+href=3D"mailto:jwooten37830@icloud.com" =
+class=3D"">jwooten37830@icloud.com</a>&gt; wrote:<br =
+class=3D""></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex"><div style=3D"overflow-wrap: =
+break-word;" class=3D"">Thanks so much!<div class=3D""><br =
+class=3D""></div><div class=3D"">I tried it using key/value pairs to the =
+example I found on your site.&nbsp; I got a 405 error after I made the =
+directory where the php script is world writable.</div><div class=3D""><br=
+ class=3D""></div><div class=3D"">Any ideas about why the 405?<br =
+class=3D""><div class=3D""><br class=3D""><blockquote type=3D"cite" =
+class=3D""><div class=3D"">On Jun 13, 2020, at 9:05 PM, Van Stokes =
+&lt;<a href=3D"mailto:info@mailnuggets.com" target=3D"_blank" =
+class=3D"">info@mailnuggets.com</a>&gt; wrote:</div><br class=3D""><div =
+class=3D""><div dir=3D"ltr" class=3D"">Hi John,<div class=3D"">Yes, =
+MailNuggets can receive an email and post it to a remote script as =
+described here:</div><div class=3D""><a =
+href=3D"https://mailnuggets.com/pages/features/email_over_http_post" =
+target=3D"_blank" =
+class=3D"">https://mailnuggets.com/pages/features/email_over_http_post</a>=
+<br class=3D""></div><div class=3D"">If you get stuck on a particular =
+part of this please let me know.</div><div class=3D"">Thanks, =
+Van</div></div><br class=3D""><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Sun, Jun 14, 2020 at 7:44 AM John Wooten &lt;<a =
+href=3D"mailto:jwooten37830@icloud.com" target=3D"_blank" =
+class=3D"">jwooten37830@icloud.com</a>&gt; wrote:<br =
+class=3D""></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">Hi,<br class=3D"">
+<br class=3D"">
+I am trying to be able to receive an email to my mailnugger email =
+account and pass the email content to a php script.&nbsp; The script can =
+run on AWS or on my own Mac OS X server.&nbsp; There I need to be able =
+to look up the sender and recipient emails in a data table I keep and =
+append a note containing the email to the senders CRM account via an =
+API.&nbsp; This provides a trace of the emails the sender received and =
+replied to from their contracts by using a bcc when they respond to the =
+email.&nbsp; The bcc would contain the mailnuggets email account.<br =
+class=3D"">
+<br class=3D"">
+Is there a way I can forward received emails to a remote server that has =
+a php web page?<br class=3D"">
+<br class=3D"">
+I don=E2=80=99t have access to cPanel which I=E2=80=99ve seen a lot of =
+references to that do this?&nbsp; <br class=3D"">
+<br class=3D"">
+John Wooten, Ph.D.<br class=3D"">
+<br class=3D"">
+<br class=3D"">
+</blockquote></div><br clear=3D"all" class=3D""><div class=3D""><br =
+class=3D""></div>-- <br class=3D""><div dir=3D"ltr" class=3D"">Van =
+Stokes<br class=3D""><a href=3D"mailto:info@mailnuggets.com" =
+target=3D"_blank" class=3D"">info@mailnuggets.com</a><br =
+class=3D"">+1.917.472.9997</div>
+</div></blockquote></div><br class=3D""></div></div></blockquote></div><br=
+ clear=3D"all" class=3D""><div class=3D""><br class=3D""></div>-- <br =
+class=3D""><div dir=3D"ltr" class=3D"gmail_signature">Van Stokes<br =
+class=3D""><a href=3D"mailto:info@mailnuggets.com" target=3D"_blank" =
+class=3D"">info@mailnuggets.com</a><br class=3D"">+1.917.472.9997</div>
+</div></blockquote></div><br class=3D""></div></body></html>=
+
+
+                )
+
+        )
+
+)
+
+
+------------
+from:
+------------
+John Wooten <jwooten37830@icloud.com>
+
+------------
+to:
+------------
+Van Stokes <info@mailnuggets.com>
+
+------------
+delivered-to:
+------------
+mail@woo37830.mailnuggets.com
+
+------------
+return-path:
+------------
+<jwooten37830@icloud.com>
+
+------------
+replyTo:
+------------
+
+
+------------
+message-id:
+------------
+<92FE8F3D-F419-483A-AF17-A242440139EA@icloud.com>
+
+------------
+content-type:
+------------
+multipart/alternative; boundary="Apple-Mail=_5423B7AD-525B-4F36-95E3-78566551FEF1"
+
+------------
+content-transfer-encoding:
+------------
+
+
+------------
+subject:
+------------
+Re: Use of mail nuggets
+
+------------
+message:
+------------
+Thanks,
+
+I changed the format of the email message to json and the log shows I got it with no errors.  Now, I can parse and do what I want.
+
+Thanks so much.
+
+Will be in contact soon about joining officially.
+
+John Wooten, Ph.D.
+
+> On Jun 13, 2020, at 9:39 PM, Van Stokes <info@mailnuggets.com> wrote:
+> 
+> Hi John,
+> This is likely caused by the configuration of your script on the server.  Unfortunately, MailNuggets is not able to assist troubleshooting code on the remote script or server errors such as this.  Hope this information helps.
+> Thanks, Van
+> 
+> On Sun, Jun 14, 2020 at 9:35 AM John Wooten <jwooten37830@icloud.com <mailto:jwooten37830@icloud.com>> wrote:
+> Thanks so much!
+> 
+> I tried it using key/value pairs to the example I found on your site.  I got a 405 error after I made the directory where the php script is world writable.
+> 
+> Any ideas about why the 405?
+> 
+>> On Jun 13, 2020, at 9:05 PM, Van Stokes <info@mailnuggets.com <mailto:info@mailnuggets.com>> wrote:
+>> 
+>> Hi John,
+>> Yes, MailNuggets can receive an email and post it to a remote script as described here:
+>> https://mailnuggets.com/pages/features/email_over_http_post <https://mailnuggets.com/pages/features/email_over_http_post>
+>> If you get stuck on a particular part of this please let me know.
+>> Thanks, Van
+>> 
+>> On Sun, Jun 14, 2020 at 7:44 AM John Wooten <jwooten37830@icloud.com <mailto:jwooten37830@icloud.com>> wrote:
+>> Hi,
+>> 
+>> I am trying to be able to receive an email to my mailnugger email account and pass the email content to a php script.  The script can run on AWS or on my own Mac OS X server.  There I need to be able to look up the sender and recipient emails in a data table I keep and append a note containing the email to the senders CRM account via an API.  This provides a trace of the emails the sender received and replied to from their contracts by using a bcc when they respond to the email.  The bcc would contain the mailnuggets email account.
+>> 
+>> Is there a way I can forward received emails to a remote server that has a php web page?
+>> 
+>> I don’t have access to cPanel which I’ve seen a lot of references to that do this?  
+>> 
+>> John Wooten, Ph.D.
+>> 
+>> 
+>> 
+>> 
+>> -- 
+>> Van Stokes
+>> info@mailnuggets.com <mailto:info@mailnuggets.com>
+>> +1.917.472.9997
+> 
+> 
+> 
+> -- 
+> Van Stokes
+> info@mailnuggets.com <mailto:info@mailnuggets.com>
+> +1.917.472.9997
+
+
+
+
+------------
+messagehtml:
+------------
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; line-break: after-white-space;" class="">Thanks,<div class=""><br class=""></div><div class="">I changed the format of the email message to json and the log shows I got it with no errors. &nbsp;Now, I can parse and do what I want.</div><div class=""><br class=""></div><div class="">Thanks so much.</div><div class=""><br class=""></div><div class="">Will be in contact soon about joining officially.</div><div class=""><br class=""></div><div class="">John Wooten, Ph.D.<br class=""><div><br class=""><blockquote type="cite" class=""><div class="">On Jun 13, 2020, at 9:39 PM, Van Stokes &lt;<a href="mailto:info@mailnuggets.com" class="">info@mailnuggets.com</a>&gt; wrote:</div><br class="Apple-interchange-newline"><div class=""><div dir="ltr" class="">Hi John,<div class="">This is likely caused by the configuration of your script on the server.&nbsp; Unfortunately, MailNuggets is not able to assist troubleshooting code on the remote script or server errors such as this.&nbsp; Hope this information&nbsp;helps.</div><div class="">Thanks, Van</div></div><br class=""><div class="gmail_quote"><div dir="ltr" class="gmail_attr">On Sun, Jun 14, 2020 at 9:35 AM John Wooten &lt;<a href="mailto:jwooten37830@icloud.com" class="">jwooten37830@icloud.com</a>&gt; wrote:<br class=""></div><blockquote class="gmail_quote" style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div style="overflow-wrap: break-word;" class="">Thanks so much!<div class=""><br class=""></div><div class="">I tried it using key/value pairs to the example I found on your site.&nbsp; I got a 405 error after I made the directory where the php script is world writable.</div><div class=""><br class=""></div><div class="">Any ideas about why the 405?<br class=""><div class=""><br class=""><blockquote type="cite" class=""><div class="">On Jun 13, 2020, at 9:05 PM, Van Stokes &lt;<a href="mailto:info@mailnuggets.com" target="_blank" class="">info@mailnuggets.com</a>&gt; wrote:</div><br class=""><div class=""><div dir="ltr" class="">Hi John,<div class="">Yes, MailNuggets can receive an email and post it to a remote script as described here:</div><div class=""><a href="https://mailnuggets.com/pages/features/email_over_http_post" target="_blank" class="">https://mailnuggets.com/pages/features/email_over_http_post</a><br class=""></div><div class="">If you get stuck on a particular part of this please let me know.</div><div class="">Thanks, Van</div></div><br class=""><div class="gmail_quote"><div dir="ltr" class="gmail_attr">On Sun, Jun 14, 2020 at 7:44 AM John Wooten &lt;<a href="mailto:jwooten37830@icloud.com" target="_blank" class="">jwooten37830@icloud.com</a>&gt; wrote:<br class=""></div><blockquote class="gmail_quote" style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi,<br class="">
+<br class="">
+I am trying to be able to receive an email to my mailnugger email account and pass the email content to a php script.&nbsp; The script can run on AWS or on my own Mac OS X server.&nbsp; There I need to be able to look up the sender and recipient emails in a data table I keep and append a note containing the email to the senders CRM account via an API.&nbsp; This provides a trace of the emails the sender received and replied to from their contracts by using a bcc when they respond to the email.&nbsp; The bcc would contain the mailnuggets email account.<br class="">
+<br class="">
+Is there a way I can forward received emails to a remote server that has a php web page?<br class="">
+<br class="">
+I don’t have access to cPanel which I’ve seen a lot of references to that do this?&nbsp; <br class="">
+<br class="">
+John Wooten, Ph.D.<br class="">
+<br class="">
+<br class="">
+</blockquote></div><br clear="all" class=""><div class=""><br class=""></div>-- <br class=""><div dir="ltr" class="">Van Stokes<br class=""><a href="mailto:info@mailnuggets.com" target="_blank" class="">info@mailnuggets.com</a><br class="">+1.917.472.9997</div>
+</div></blockquote></div><br class=""></div></div></blockquote></div><br clear="all" class=""><div class=""><br class=""></div>-- <br class=""><div dir="ltr" class="gmail_signature">Van Stokes<br class=""><a href="mailto:info@mailnuggets.com" target="_blank" class="">info@mailnuggets.com</a><br class="">+1.917.472.9997</div>
+</div></blockquote></div><br class=""></div></body></html>
+
+
+------------
+Attachments:
+------------
+
+ 
