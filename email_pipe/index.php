@@ -1,4 +1,4 @@
-#!/usr/bin/php -q
+#!/usr/local/bin/php -q
 <?php // /email_pipe/index.php
 
 
@@ -60,6 +60,6 @@ var_dump($raw_email);
 
 // CAPTURE THE OUTPUT BUFFER AND SEND IT TO SOMEONE ELSE VIA EMAIL
 $buf = ob_get_contents();
-mail ('you@your.org', 'EMAIL PIPE DATA', $buf);
+mail ('jwooten37830@icloud.com', 'EMAIL PIPE DATA', $buf);
 ob_end_clean();
 ?>
