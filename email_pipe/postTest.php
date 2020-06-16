@@ -375,11 +375,11 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 $email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
 $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
+$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog);
 $time = time();
 $myFile = "postTestLog-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
-$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog);
 
 	$log .= "Email added as contact note: $added \n";
 
@@ -387,7 +387,7 @@ fwrite($fh, $log);
 fclose($fh);
 
 // return a confirmation to mailnuggets
-echo "#Posted $today#";
+echo "#Posted $today#, note added: $added";
 
 
 
