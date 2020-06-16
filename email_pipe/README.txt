@@ -11,9 +11,9 @@ When this is used as the bcc address, then the email goes to the addressee, and 
 Now that we know how to get the from, to, subject, and the original email body,
 it is only necessary to:
 
-  1.  Use the from address as the email of the account holder
+  1.  Use the 'from address' as the email of the account holder
   2.  Look in the users data table and get the EngagemorecrmID for that email.
-  3.  Look to see if the to address is in the users data table.
+  3.  Look to see if the 'to address' is in the users data table.
     1.  If it is, then note that and get the engagemorecrmID for that address.
     2.  If not, note that also.
   4.  Use the https://secure.engagemorecrm.com/api/2/AddContactNote.aspx

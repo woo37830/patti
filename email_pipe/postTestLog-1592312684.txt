@@ -1,0 +1,159 @@
+Email post log:
+Processed on: Tue Jun 16 9:04:44 EDT 2020
+------------
+$_POST array:
+------------
+Array
+(
+)
+
+****************
+Decoded values: 
+****************
+------------
+$_POST['email'] value (JSON only):
+------------
+{"headers":{"from example@example.com  sat nov 20 22":"02:41 2010","return-path":"<example@example.com>","x-original-to":"mail@post.demo.mailnuggets.com","delivered-to":"mail@post.demo.mailnuggets.com","received":["from mail-wy0-f181.google.com (mail-wy0-f181.google.com [74.125.82.181]) by mail.mailnuggets.com (Postfix) with ESMTP id 21C3BE992 for <mail@post.demo.mailnuggets.com>; Sat, 20 Nov 2010 22:02:40 -0500 (EST)","by wyb36 with SMTP id 36so1316109wyb.40 for <mail@post.demo.mailnuggets.com>; Sat, 20 Nov 2010 19:02:40 -0800 (PST)","by 10.216.141.79 with SMTP id f57mr3446869wej.101.1290308560097; Sat, 20 Nov 2010 19:02:40 -0800 (PST)","by 10.216.86.129 with HTTP; Sat, 20 Nov 2010 19:02:40 -0800 (PST)"],"dkim-signature":"v=1; a=rsa-sha256; c=relaxed\/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:received:date:message-id :subject:from:to:content-type; bh=AJI14WuSViQ1Tn2HM8g83+mUumXYHUQie+kWqS2gc0A=; b=KjRM8LkON8LOms5luodtNlKWxGRisiTPU\/UoT7elsijQtGD61qymZin8Wmwt+gUyHq gxc+0WEOxZQdzjCLXz55gUe4kfV4hrvs6cjnDiRVtVNxBSR+eVXnLEwcsOh9B\/3DZ1rj 4ZKKMC1NEENjXLor+G\/FgAxPpioXDxMf1MSso=","domainkey-signature":"a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:date:message-id:subject:from:to:content-type; b=njXZSFk0ajP3vJU0gFzS4K8eXHFRo0Nb03IJniQ1fSjg+UKFOoJujE7Mfhgx\/TsJSu 1pd3j1ZeauW6BllKHws\/hcdWx9LvNHLiYubGdtWBvxX30lI2\/RGYUV+PRXIH3wfQ+01K m8H+PnJfFFzuSRZMHO\/6SaCmd1Pw2zW+RDEwQ=","mime-version":"1.0","date":"Sun, 21 Nov 2010 11:02:40 +0800","message-id":"<AANLkTik-UGO5D1mhiFJrpHBEqgNer3pRsnx=NghMG9Sj@mail.gmail.com>","subject":"Test email subject","from":"Tom Jones <example@example.com>","to":"mail@post.demo.mailnuggets.com","content-type":"multipart\/alternative; boundary=00504502b1bd6011f10495875f8d"},"ctype_primary":"multipart","ctype_secondary":"alternative","ctype_parameters":{"boundary":"00504502b1bd6011f10495875f8d"},"parts":[{"headers":{"content-type":"text\/plain; charset=ISO-8859-1"},"ctype_primary":"text","ctype_secondary":"plain","ctype_parameters":{"charset":"ISO-8859-1"},"body":"Test email message\n\n"},{"headers":{"content-type":"text\/html; charset=ISO-8859-1"},"ctype_primary":"text","ctype_secondary":"html","ctype_parameters":{"charset":"ISO-8859-1"},"body":"<b>Test email message<\/b><br>\n\n"}]}
+------------
+Email object (JSON only):
+------------
+Array
+(
+    [headers] => Array
+        (
+            [from example@example.com  sat nov 20 22] => 02:41 2010
+            [return-path] => <example@example.com>
+            [x-original-to] => mail@post.demo.mailnuggets.com
+            [delivered-to] => mail@post.demo.mailnuggets.com
+            [received] => Array
+                (
+                    [0] => from mail-wy0-f181.google.com (mail-wy0-f181.google.com [74.125.82.181]) by mail.mailnuggets.com (Postfix) with ESMTP id 21C3BE992 for <mail@post.demo.mailnuggets.com>; Sat, 20 Nov 2010 22:02:40 -0500 (EST)
+                    [1] => by wyb36 with SMTP id 36so1316109wyb.40 for <mail@post.demo.mailnuggets.com>; Sat, 20 Nov 2010 19:02:40 -0800 (PST)
+                    [2] => by 10.216.141.79 with SMTP id f57mr3446869wej.101.1290308560097; Sat, 20 Nov 2010 19:02:40 -0800 (PST)
+                    [3] => by 10.216.86.129 with HTTP; Sat, 20 Nov 2010 19:02:40 -0800 (PST)
+                )
+
+            [dkim-signature] => v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:received:date:message-id :subject:from:to:content-type; bh=AJI14WuSViQ1Tn2HM8g83+mUumXYHUQie+kWqS2gc0A=; b=KjRM8LkON8LOms5luodtNlKWxGRisiTPU/UoT7elsijQtGD61qymZin8Wmwt+gUyHq gxc+0WEOxZQdzjCLXz55gUe4kfV4hrvs6cjnDiRVtVNxBSR+eVXnLEwcsOh9B/3DZ1rj 4ZKKMC1NEENjXLor+G/FgAxPpioXDxMf1MSso=
+            [domainkey-signature] => a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:date:message-id:subject:from:to:content-type; b=njXZSFk0ajP3vJU0gFzS4K8eXHFRo0Nb03IJniQ1fSjg+UKFOoJujE7Mfhgx/TsJSu 1pd3j1ZeauW6BllKHws/hcdWx9LvNHLiYubGdtWBvxX30lI2/RGYUV+PRXIH3wfQ+01K m8H+PnJfFFzuSRZMHO/6SaCmd1Pw2zW+RDEwQ=
+            [mime-version] => 1.0
+            [date] => Sun, 21 Nov 2010 11:02:40 +0800
+            [message-id] => <AANLkTik-UGO5D1mhiFJrpHBEqgNer3pRsnx=NghMG9Sj@mail.gmail.com>
+            [subject] => Test email subject
+            [from] => Tom Jones <example@example.com>
+            [to] => mail@post.demo.mailnuggets.com
+            [content-type] => multipart/alternative; boundary=00504502b1bd6011f10495875f8d
+        )
+
+    [ctype_primary] => multipart
+    [ctype_secondary] => alternative
+    [ctype_parameters] => Array
+        (
+            [boundary] => 00504502b1bd6011f10495875f8d
+        )
+
+    [parts] => Array
+        (
+            [0] => Array
+                (
+                    [headers] => Array
+                        (
+                            [content-type] => text/plain; charset=ISO-8859-1
+                        )
+
+                    [ctype_primary] => text
+                    [ctype_secondary] => plain
+                    [ctype_parameters] => Array
+                        (
+                            [charset] => ISO-8859-1
+                        )
+
+                    [body] => Test email message
+
+
+                )
+
+            [1] => Array
+                (
+                    [headers] => Array
+                        (
+                            [content-type] => text/html; charset=ISO-8859-1
+                        )
+
+                    [ctype_primary] => text
+                    [ctype_secondary] => html
+                    [ctype_parameters] => Array
+                        (
+                            [charset] => ISO-8859-1
+                        )
+
+                    [body] => <b>Test email message</b><br>
+
+
+                )
+
+        )
+
+)
+
+
+------------
+from:
+------------
+
+
+------------
+to:
+------------
+
+
+------------
+delivered-to:
+------------
+
+
+------------
+return-path:
+------------
+
+
+------------
+replyTo:
+------------
+
+
+------------
+message-id:
+------------
+
+
+------------
+content-type:
+------------
+
+
+------------
+content-transfer-encoding:
+------------
+
+
+------------
+subject:
+------------
+
+
+------------
+message:
+------------
+
+
+------------
+messagehtml:
+------------
+
+
+------------
+Attachments:
+------------
+
+ 
+Email added as contact note: 1 
