@@ -52,7 +52,7 @@ $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
 function addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog)
 {
-  $email_data = $today.",".$from.",".$to.",".$messageId.",".$subject.",".$message.",".$attachmentLog;
+  $email_data = "$today,$from,$to,$messageId,$subject,$message,$attachmentLog#"";
   logit($email,$email_data,"Add Contact Note");
   return true;
 }
