@@ -381,13 +381,13 @@ $myFile = "postTestLog-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
 
-	$log .= "Email added as contact note: $added \n";
+	$log .= "Email added as contact note to $to: $added \n";
 
 fwrite($fh, $log);
 fclose($fh);
 
 // return a confirmation to mailnuggets
-echo "#Posted $today#, note added: $added";
+echo "#Posted $today#, note added to $to: $added";
 
 
 
