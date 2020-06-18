@@ -36,7 +36,6 @@ return $mysqli;
 function logit($user, $json, $my_status)
 {
   require 'config.ini.php';
-  echo "\nlogit received: '$json'\n";
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
