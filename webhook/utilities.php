@@ -65,4 +65,43 @@ function getProductName($product, $email, $json_data) {
   logit($email, $json_data, "Invalid product: $product");
   die("Invalid product: $product");
 }
+
+function firstAndLastFromEmail($email)
+{
+  $displayname = get_displayname_from_rfc_email($email);
+//  echo "\n$displayname\n";
+
+  $pieces = explode(" ", $displayname);
+//  echo "\n$pieces[0], $pieces[1]\n";
+
+  $address = $email;
+  $pos = strstr($email, '<');
+  if( $pos !== false )
+  {
+    $address = get_email_from_rfc_email($email);
+  }
+  array_push($pieces,$address);
+  return $pieces;
+}
+function get_displayname_from_rfc_email($rfc_email_string) {
+    // match all words and whitespace, will be terminated by '<'
+    $pos = strstr($rfc_email_string, '<');
+    if( $pos !== false )
+    {
+      $name       = preg_match('/[\w\s]+/', $rfc_email_string, $matches);
+      $matches[0] = trim($matches[0]);
+      return $matches[0];
+    }
+    else
+    {
+      return "First Last";
+    }
+}
+// Output: My Test Email
+
+function get_email_from_rfc_email($rfc_email_string) {
+    // extract parts between the two angle brackets
+    $mailAddress = preg_match('/(?:<)(.+)(?:>)$/', $rfc_email_string, $matches);
+    return $matches[1];
+}
 ?>

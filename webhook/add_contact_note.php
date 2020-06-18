@@ -57,15 +57,31 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
 
   $url = $api_endpoint . 'AddContactNote.aspx';
 
-  $email = "\n------------\nfrom:\n------------\n$from\n";
-  $email .= "\n------------\nto:\n------------\n$to\n";
+  $names = firstAndLastFromEmail($from);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
+  $names = firstAndLastFromEmail($to);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $to_email_address = $names[2];
+
+
+  $email = "\n------------\nfrom:\n------------\n$from_email_address\n";
+  $email .= "\n------------\nto:\n------------\n$to_email_address\n";
   $email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
   $email .= "\n------------\nsubject:\n------------\n$subject\n";
   $email .= "\n------------\nmessage:\n------------\n$message\n";
   $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
   // Get the agents engagemorecrm id from the users table
-  $agentId = getAccountId( $from );
+  $names = firstAndLastFromEmail($from);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $email_address = $names[2];
+
+  $agentId = getAccountId( $email_address );
   if( $agentId == -1 )
   {
     echo "\nFAILURE: $from does not have an engagemorecrm id<br />\n";
@@ -73,9 +89,13 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
     exit;
   }
   echo "\nGot agentId = $agentId on lookup of $from\n";
+  $names = firstAndLastFromEmail($to);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $email_address = $names[2];
 
   // See if we have the contacts emgagemorecrm id in the users table
-  $contactId = getAccountId( $to );
+  $contactId = getAccountId( $email_address );
   $identifyMethod = 1;
   $identifyValue = $contactId;
   if( $contactId === -1 )
@@ -83,16 +103,19 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
     echo "\nPROBLEM: $to does not have an engagemorecrm id<br />\n";
     logit($to,$postArray, "PROBLEM: $to does not have an engagemorecrm id" );
     $identifyMethod = 2;
-    $identifyValue = $to;
+    $identifyValue = $email_address;
   }
   echo "\n$to appears to have contactId of $contactId, using method $identifyMethod with $identifyValue\n";
   //   	'teammemberid' => $agentId,
-
+//  TODO: Check to see if the contact exists using QuickSearchContacts.aspx,
+// Supply apiusername, apipassword, accountid, and searchstring = "email = $email_address";
+// If it does exist, use the method 1 and the contactid else
+// create the contact, get the contact id, then add the contactNote to it.
+//
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
-    'email' => $to,
-//    'teammemberid' => $agentId,
+    'accountid' => $agentId,
   	'identifymethod'  => $identifyMethod,
     'identifyvalue' => $identifyValue,
     'note' => $email
@@ -130,8 +153,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
       $data = array(
         'apiusername' => $account_id,
         'apipassword'    => $api_key,
-        'email' => $to,
-    //    'teammemberid' => $agentId,
+        'accountid' => $agentId,
         'identifymethod'  => $identifyMethod,
         'identifyvalue' => $identifyValue,
         'note' => $email
@@ -151,7 +173,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   }
 
   echo "\nSUCCESS: email added as note: $results_xml->noteid to $to<br />\n";
-  logit($from,$postArray, "SUCCESS: email added as note to $to" );
+  logit($from,$postArray, "SUCCESS: email added as note $results_xml->noteid to $to" );
   return true;
 
 }

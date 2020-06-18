@@ -23,7 +23,7 @@ function getContacts($today, $from)
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
-  	'teammemberid' => $agentId,
+  	'accountid' => $agentId,
     'pagingsize' => 100,
     'pagingoffset' => 0
   );

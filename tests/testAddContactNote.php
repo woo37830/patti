@@ -7,7 +7,7 @@ require '../webhook/get_contacts.php';
 
 $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
-$to = "wooten.666@gmail.com";
+$to = "Hector Gomez<wooten.666@gmail.com>";
 $messageId = 123;
 $subject = "Test AddContactNote";
 $message = "This is a test";

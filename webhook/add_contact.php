@@ -11,8 +11,12 @@ function addContact($today, $from, $to, $messageId, $subject, $message, $attachm
   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
   $url = $api_endpoint . 'AddContact.aspx';
+  $names = firstAndLastFromEmail($from);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $email_address = $names[2];
 
-  $agentId = getAccountId( $from );
+  $agentId = getAccountId( $email_address );
   if( $agentId == -1 )
   {
     echo "\nFAILURE: $from does not have an engagemorecrm id<br />\n";
@@ -22,15 +26,17 @@ function addContact($today, $from, $to, $messageId, $subject, $message, $attachm
   echo "\nGot agentId = $agentId on lookup of $from\n";
 
   // Parse out first and last name if present
-  $first_name = "John";
-  $last_name = "Gomez";
-  $email_address = $to;
+  $str = $to;
+  $names = firstAndLastFromEmail($to);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $email_address = $names[2];
 
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
-    'email' => $to,
-//  	'teammemberid' => $agentId,
+    'email' => $email_address,
+  	'accountid' => $agentId,
     'firstname' => $first_name,
     'lastname' => $last_name
   );
