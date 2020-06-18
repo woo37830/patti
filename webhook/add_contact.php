@@ -1,11 +1,11 @@
 <?php
-function createContact($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray)
+function addContact($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray)
 {
   require '../webhook/config.ini.php';
-//  require '../webhook/thrivecart_api.php';
+  require '../webhook/thrivecart_api.php';
 
-//  require '../webhook/mysql_common.php';
-//  require '../webhook/utilities.php';
+  require '../webhook/mysql_common.php';
+  require '../webhook/utilities.php';
   $account_id   = $config['MSG_USER'];
   $api_key      = $config['MSG_PASSWORD'];
   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
@@ -30,12 +30,11 @@ function createContact($today, $from, $to, $messageId, $subject, $message, $atta
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
     'email' => $to,
-  	'teammemberid' => $agentId,
+//  	'teammemberid' => $agentId,
     'firstname' => $first_name,
     'lastname' => $last_name
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
-  	echo "\n<br />results_xml: " . $results_xml . "<br />\n";
 
   /**
    * If an API error has occurred, the results object will contain a child 'error'
@@ -52,7 +51,9 @@ function createContact($today, $from, $to, $messageId, $subject, $message, $atta
     logit($from,$postArray, "FAILURE: $results_xml->error" );
     return false;
   }
-  return true;
+  echo "\n<br />results_xml: " . $results_xml . "<br />\n";
+  logit($from, $postArray, "SUCCESS: contact $to added with $results_xml->contactid");
+  return $results_xml->contactid;
 
 }
 ?>

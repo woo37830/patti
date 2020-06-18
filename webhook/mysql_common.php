@@ -36,7 +36,7 @@ return $mysqli;
 function logit($user, $json, $my_status)
 {
   require 'config.ini.php';
-
+  echo "\nlogit received: '$json'\n";
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
@@ -73,6 +73,7 @@ function logit($user, $json, $my_status)
               . $conn->error
               ;
               mysqli_close($conn);
+              echo "\nError processing query $sql\n";
               trigger_error($err, E_USER_ERROR);
        }
        else
