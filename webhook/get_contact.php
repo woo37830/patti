@@ -55,7 +55,7 @@ function getContact($today, $from, $to)
   if (isset($results_xml->error)) {
     echo "\nresults_xml: " . $results_xml . "\n";
     echo "\nFailure: " . $results_xml->error . "\n";
-    logit($from,$results_xml, "FAILURE: $results_xml->error" );
+    logit($from_email_address,$results_xml, "FAILURE: $results_xml->error" );
     return "-1";
   }
   if( !isset($results_xml->contacts->contact) )

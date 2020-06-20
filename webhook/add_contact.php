@@ -19,8 +19,8 @@ function addContact($today, $from, $to)
   $agentId = getAccountId( $email_address );
   if( $agentId == -1 )
   {
-    echo "\nFAILURE: $from does not have an engagemorecrm id<br />\n";
-    logit($from,$postArray, "FAILURE: $from does not have an engagemorecrm id" );
+    echo "\nFAILURE: $from does not have an engagemorecrm id\n";
+    logit($email_address,$first_name, "FAILURE: $email_address does not have an engagemorecrm id" );
     exit;
   }
   echo "\nGot agentId = $agentId on lookup of $from in add_contact.php\n";
@@ -53,12 +53,12 @@ function addContact($today, $from, $to)
    */
 
   if (isset($results_xml->error)) {
-    echo "\nFailure: " . $results_xml->error . "<br />\n";
+    echo "\nFailure: " . $results_xml->error . "\n";
     logit($from,$results_xml, "FAILURE: $results_xml->error" );
     return $results_xml;
   }
-  echo "\n<br />results_xml: " . $results_xml . "<br />\n";
-  logit($from, "", "SUCCESS: contact $to added with $results_xml->contactid");
+  echo "\nresults_xml: " . $results_xml . "\n";
+  logit($from, "", "SUCCESS: contact $email_address added with $results_xml->contactid");
   return $results_xml;
 
 }

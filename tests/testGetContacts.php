@@ -7,6 +7,10 @@ require '../webhook/get_contacts.php';
 $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
 
-$result = getContacts($today, $from);
-echo "\nResult of getContacts: $result\n";
+$contacts = getContacts($today, $from);
+$k = 1;
+foreach($contacts as $contact){
+  $active = $contact->inactive == "False" ? "active" : "inactive";
+  echo "\n" . $k++ . "  $contact->firstname $contact->lastname - $contact->email - $active since: $contact->adddate\n";
+}
 ?>

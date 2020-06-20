@@ -129,12 +129,12 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
 
   if (isset($results_xml->error))
   {
-    echo "\nFailure: " . $results_xml->error . "<br />\n";
+    echo "\nFailure: " . $results_xml->error . "\n";
     logit($from_email_address,$postArray, "FAILURE: $results_xml->error" );
     return false;
   }
 
-  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address<br />\n";
+  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address\n";
   logit($from,$postArray, "SUCCESS: email added as note $results_xml->noteid to $to_email_address" );
   return true;
 
