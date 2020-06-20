@@ -18,7 +18,7 @@ function post_api_url($url, array $data = array()) {
 
 	// Form data must be transformed from an array into a query string.
 	$data_query = http_build_query($data);
-	echo "data_query: " . $data_query . "<br />";
+	echo "\ndata_query: " . $data_query . "\n";
 
 	// Set request type to POST and set the data to post.
 	curl_setopt($ch, CURLOPT_POST, 1);
@@ -34,7 +34,7 @@ function post_api_url($url, array $data = array()) {
 
 	// Post data to API.
 	$output = curl_exec($ch);
-	echo "output: " . $output . "<br />";
+	echo "\noutput: " . $output . "\n";
 
 	// Exit on cURL error.
 	if ($output === false) {
@@ -45,7 +45,6 @@ function post_api_url($url, array $data = array()) {
 		$logStr = "";
                 printf("<br />email: %s, %s<br />",$email,$logStr);
 		logit($email,$logStr, $retStr);
-		echo "<br />logit succeeded<br />";
 		curl_close($ch);
                 return $retStr;
 	}

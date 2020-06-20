@@ -66,6 +66,11 @@ function getProductName($product, $email, $json_data) {
   die("Invalid product: $product");
 }
 
+// firstAndLastFromEmail returns an array with:
+//  0) First Name
+//  1) Last Name
+//  2) actual email address xxx@yyy.zzz
+//
 function firstAndLastFromEmail($email)
 {
   $displayname = get_displayname_from_rfc_email($email);

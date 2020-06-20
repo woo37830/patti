@@ -9,13 +9,19 @@ $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
 $to = "Hector Gomez<wooten.666@gmail.com>";
 $messageId = 123;
-$subject = "Test AddContactNote";
+$subject = "Test AddContactNote to existing contact";
 $message = "This is a test";
 $attachmentLog = "A note about an attachment";
 $postArray = "The complete data received in the request";
 
-//$restult = getContacts($today, $from);
-//echo "\nResult of getContacts: $result\n";
+
 $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 echo "\nResult addContactNote: $result <br />\n";
+
+$to = "Jeffrey Jones<jwooten37830@mac.com>";
+$messageId = 124;
+$subject = "Test AddContactNote to non-existing contact";
+$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+echo "\nResult addContactNote: $result <br />\n";
+
 ?>
