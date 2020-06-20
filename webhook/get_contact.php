@@ -32,7 +32,7 @@ function getContact($today, $from, $to)
   $last_name = $names[1];
   $to_email_address = $names[2];
 
-  echo "\nGot to_email_address = '$to_email_address' from $to\n";
+  //echo "\nGot to_email_address = '$to_email_address' from $to\n";
 
   $data = array(
   	'apiusername' => $account_id,
@@ -53,7 +53,7 @@ function getContact($today, $from, $to)
    */
 
   if (isset($results_xml->error)) {
-    echo "\nresults_xml: " . $results_xml . "\n";
+  //  echo "\nresults_xml: " . $results_xml . "\n";
     echo "\nFailure: " . $results_xml->error . "\n";
     logit($from_email_address,$results_xml, "FAILURE: $results_xml->error" );
     return "-1";
