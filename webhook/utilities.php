@@ -106,7 +106,12 @@ function get_displayname_from_rfc_email($rfc_email_string) {
 
 function get_email_from_rfc_email($rfc_email_string) {
     // extract parts between the two angle brackets
-    $mailAddress = preg_match('/(?:<)(.+)(?:>)$/', $rfc_email_string, $matches);
-    return $matches[1];
+    $pos = strstr($rfc_email_string, '<');
+    if( $pos !== false )
+    {
+      $mailAddress = preg_match('/(?:<)(.+)(?:>)$/', $rfc_email_string, $matches);
+      return $matches[1];
+    }
+    return $rfc_email_string;
 }
 ?>
