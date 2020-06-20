@@ -103,16 +103,15 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
         logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
         return false;
       }
-      //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
+      echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
 
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
     'accountid' => $agentId,
-  	'identifymethod'  => 1,
-    'identifyvalue' => intval($contactId),
-    'email' => $to_email_address,
+  	'identifymethod'  => 2,
+    'identifyvalue' => $to_email_address,
     'note' => $email
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
