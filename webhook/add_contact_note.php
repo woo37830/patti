@@ -96,14 +96,13 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
       //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
-      $result_xml = addContact($today, $from_email_address, $to); // Use full to get first and last
-      if( $result_xml->message != "Success" )
+      $contactId = addContact($today, $from_email_address, $to); // Use full to get first and last
+      if( intval($contactId) == -1  )
       {
         echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
         logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
         return false;
       }
-      $contactId = $result_xml->contactid;
       //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
 
