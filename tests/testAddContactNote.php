@@ -15,11 +15,11 @@ $attachmentLog = "A note about an attachment";
 $postArray = "The complete data received in the request";
 
 
-$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-echo "\nResult addContactNote: $result <br />\n";
+//$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+//echo "\nResult addContactNote: $result <br />\n";
 
 $to = "Jeffrey Jones<jwooten37830@gmail.com>";
-$messageId = 124;
+$messageId = 127;
 $subject = "Test AddContactNote to non-existing contact jwooten37830@gmail.com";
 $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 echo "\nResult addContactNote: $result <br />\n";

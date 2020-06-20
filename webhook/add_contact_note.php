@@ -135,7 +135,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   }
 
   echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address\n";
-  logit($from,$postArray, "SUCCESS: email added as note $results_xml->noteid to $to_email_address" );
+  logit($from_email_address,$postArray, "SUCCESS: email added as noteid $results_xml->noteid to contact $to_email_address" );
   return true;
 
 }
