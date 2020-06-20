@@ -34,7 +34,7 @@ function post_api_url($url, array $data = array()) {
 
 	// Post data to API.
 	$output = curl_exec($ch);
-	echo "\noutput (" . gettype($output) . "): " . $output . "\n";
+	//echo "\noutput (" . gettype($output) . "): " . $output . "\n";
 
 	// Exit on cURL error.
 	if ($output === false) {
