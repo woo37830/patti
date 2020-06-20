@@ -65,12 +65,12 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $first_name = $names[0];
   $last_name = $names[1];
   $from_email_address = $names[2];
-  echo "from_email_address: $from_email_address\n";
+  //echo "from_email_address: $from_email_address\n";
   $names = firstAndLastFromEmail($to);
   $first_name = $names[0];
   $last_name = $names[1];
   $to_email_address = $names[2];
-  echo "to_email_address: $to_email_address\n";
+  //echo "to_email_address: $to_email_address\n";
 
 
   $email = "\nfrom:\t$from_email_address\n";
@@ -85,17 +85,17 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
-    echo "\nFAILURE: $from_email_address does not have an engagemorecrm id\n";
+    echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
     logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     exit;
   }
-  echo "\nGot agentId = $agentId on lookup of $from_email_address\n";
+  //echo "\nGot agentId = $agentId on lookup of $from_email_address\n";
 
   $contactId = getContact( $today, $from_email_address, $to_email_address );
-  echo "\nResult of getContact for $to_email_address is: $contactId\n";
+  //echo "\nResult of getContact for $to_email_address is: $contactId\n";
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
-      echo "\nWill try to add $to_email_address as a contact of $from_email_address\n";
+      //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
       $result_xml = addContact($today, $from_email_address, $to); // Use full to get first and last
       if( $result_xml->message != "Success" )
       {
@@ -104,7 +104,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
         return false;
       }
       $contactId = $result_xml->contactid;
-      echo "\nAdded $to_email_address to $from_email_address as contactId: $contactId\n";
+      //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
 
   $data = array(
@@ -116,7 +116,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
     'note' => $email
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
-  echo "\nResult of addContactNote is: $results_xml\n";
+  //echo "Result of addContactNote is: $results_xml\n";
   /**
    * If an API error has occurred, the results object will contain a child 'error'
    * SimpleXMLElement parsed from the error response:

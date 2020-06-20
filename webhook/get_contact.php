@@ -21,11 +21,11 @@ function getContact($today, $from, $to)
   $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
-    echo "\nFAILURE: $from_email_address does not have an engagemorecrm id\n";
+    echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
     logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     exit;
   }
-  echo "\nGot agentId = $agentId on lookup of $from_email_address in get_contact.php\n";
+  //echo "\nGot agentId = $agentId on lookup of $from_email_address in get_contact.php\n";
 
   $names = firstAndLastFromEmail($to);
   $first_name = $names[0];
