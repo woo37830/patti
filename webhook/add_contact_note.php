@@ -112,6 +112,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
     'accountid' => $agentId,
   	'identifymethod'  => 1,
     'identifyvalue' => intval($contactId),
+    'email' => $to_email_address,
     'note' => $email
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
