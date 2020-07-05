@@ -47,58 +47,75 @@
 function addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray)
 {
   require '../webhook/config.ini.php';
-  require '../webhook/thrivecart_api.php';
-  require '../webhook/add_contact.php';
-  require '../webhook/mysql_common.php';
-  require '../webhook/utilities.php';
+  require_once '../webhook/thrivecart_api.php';
+  require_once '../webhook/add_contact.php';
+  require_once '../webhook/get_contact.php';
+  require_once '../webhook/mysql_common.php';
+  require_once '../webhook/utilities.php';
+
+  $today = date("D M j G:i:s T Y");
+
   $account_id   = $config['MSG_USER'];
   $api_key      = $config['MSG_PASSWORD'];
   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
   $url = $api_endpoint . 'AddContactNote.aspx';
 
-  $email = "\n------------\nfrom:\n------------\n$from\n";
-  $email .= "\n------------\nto:\n------------\n$to\n";
-  $email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
-  $email .= "\n------------\nsubject:\n------------\n$subject\n";
-  $email .= "\n------------\nmessage:\n------------\n$message\n";
-  $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
+  $names = firstAndLastFromEmail($from);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+  //echo "from_email_address: $from_email_address\n";
+  $names = firstAndLastFromEmail($to);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $to_email_address = $names[2];
+  //echo "to_email_address: $to_email_address\n";
+
+
+  $email = "\nfrom:\t$from_email_address\n";
+  $email .= "\nto:\t$to_email_address\n";
+  $email .= "\nmessage-id:\t$messageId\n";
+  $email .= "\nsubject:\t$subject\n";
+  $email .= "\nmessage:\t$message\n";
+  $email .= "\nAttachments:\t$attachmentLog\n";
 
   // Get the agents engagemorecrm id from the users table
-  $agentId = getAccountId( $from );
+
+  $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
-    echo "\nFAILURE: $from does not have an engagemorecrm id<br />\n";
-    logit($from,$postArray, "FAILURE: $from does not have an engagemorecrm id" );
+    echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
+    logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     exit;
   }
-  echo "\nGot agentId = $agentId on lookup of $from\n";
+  //echo "\nGot agentId = $agentId on lookup of $from_email_address\n";
 
-  // See if we have the contacts emgagemorecrm id in the users table
-  $contactId = getAccountId( $to );
-  $identifyMethod = 1;
-  $identifyValue = $contactId;
-  if( $contactId === -1 )
+  $contactId = getContact( $today, $from_email_address, $to_email_address );
+  //echo "\nResult of getContact for $to_email_address is: $contactId\n";
+  if( $contactId == "-1" ) // Contact does not exist in agents list
   {
-    echo "\nPROBLEM: $to does not have an engagemorecrm id<br />\n";
-    logit($to,$postArray, "PROBLEM: $to does not have an engagemorecrm id" );
-    $identifyMethod = 2;
-    $identifyValue = $to;
+      //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
+      $contactId = addContact($today, $from_email_address, $to); // Use full to get first and last
+      if( intval($contactId) == -1  )
+      {
+        echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
+        logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
+        return false;
+      }
+      echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
-  echo "\n$to appears to have contactId of $contactId, using method $identifyMethod with $identifyValue\n";
-  //   	'teammemberid' => $agentId,
 
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
-    'email' => $to,
-//    'teammemberid' => $agentId,
-  	'identifymethod'  => $identifyMethod,
-    'identifyvalue' => $identifyValue,
+    'accountid' => $agentId,
+  	'identifymethod'  => 2,
+    'identifyvalue' => $to_email_address,
     'note' => $email
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
-
+  //echo "Result of addContactNote is: $results_xml\n";
   /**
    * If an API error has occurred, the results object will contain a child 'error'
    * SimpleXMLElement parsed from the error response:
@@ -111,47 +128,13 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
 
   if (isset($results_xml->error))
   {
-    echo "\nFailure: " . $results_xml->error . "<br />\n";
-    logit($from,$postArray, "FAILURE: $results_xml->error" );
-    $res = strpos($results_xml->error, "Contact not found");
-    echo "\nres = $res\n";
-    if( $res )
-    {
-      echo "\nFailure: $from does not have a contact $to" . "<br />\n";
-      // Add the person and note as a new contact and note
-      $res = createContact($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-      if( $res === false )
-      {
-        echo "\nFailure: Could not create a contact $to for $from" . "<br />\n";
-        logit($from,$postArray, "FAILURE: $results_xml->error" );
-        return false;
-      }
-      echo "\nSuccess: Created a contact with id: $results_xml->contactid for $to" . "<br />\n";
-      $data = array(
-        'apiusername' => $account_id,
-        'apipassword'    => $api_key,
-        'email' => $to,
-    //    'teammemberid' => $agentId,
-        'identifymethod'  => $identifyMethod,
-        'identifyvalue' => $identifyValue,
-        'note' => $email
-      );
-      $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
-
-      if (!isset($results_xml->error))
-      {
-        echo "\nSuccess: After adding contact for $to, email was added as note: $results_xml->noteid\n";
-        return true;
-      }
-      echo "\nFailure: " . $results_xml->error . "<br />\n";
-      logit($from,$postArray, "FAILURE: $results_xml->error" );
-      return false;
-    }
+    echo "\nFailure: " . $results_xml->error . "\n";
+    logit($from_email_address,$postArray, "FAILURE: $results_xml->error" );
     return false;
   }
 
-  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to<br />\n";
-  logit($from,$postArray, "SUCCESS: email added as note to $to" );
+  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address\n";
+  logit($from_email_address,$postArray, "SUCCESS: email added as noteid $results_xml->noteid to contact $to_email_address" );
   return true;
 
 }

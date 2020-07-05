@@ -30,8 +30,6 @@ $result_xml_string = post_api_url($url, $data);
  */
 $results_xml = simplexml_load_string($result_xml_string);
 if ($results_xml === false) {
-	$email = $data["email"];
-	echo "<br />FAILURE parsing XML for: $email<br />";
 	logit($email, "", "FAILURE: Error parsing XML");
 	exit;
 }

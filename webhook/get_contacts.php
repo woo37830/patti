@@ -12,23 +12,27 @@ function getContacts($today, $from)
 
   $url = $api_endpoint . 'GetContacts.aspx';
 
-  $agentId = getAccountId( $from );
+  $names = firstAndLastFromEmail($from);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
+  $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
-    echo "\nFAILURE: $from does not have an engagemorecrm id<br />\n";
-    logit($from,$postArray, "FAILURE: $from does not have an engagemorecrm id" );
+    echo "\nFAILURE: $from does not have an engagemorecrm id in get_contacts.php\n";
+    logit($from_email_address,$first_name, "FAILURE: no engagemorecrm id" );
     exit;
   }
-  echo "\nGot agentId = $agentId on lookup of $from\n";
+  echo "\nGot agentId = $agentId on lookup of $from_email_address in get_contacts.php\n";
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
-  	'teammemberid' => $agentId,
+  	'accountid' => $agentId,
     'pagingsize' => 100,
     'pagingoffset' => 0
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
-  	echo "\n<br />results_xml: " . $results_xml . "<br />\n";
 
   /**
    * If an API error has occurred, the results object will contain a child 'error'
@@ -42,10 +46,15 @@ function getContacts($today, $from)
 
   if (isset($results_xml->error)) {
     echo "\nFailure: " . $results_xml->error . "<br />\n";
-    logit($from,$postArray, "FAILURE: $results_xml->error" );
-    return false;
+    logit($from_email_address,$first_name, "FAILURE: $results_xml->error" );
+    return $results_xml->error;
   }
-  return true;
+  $contacts = array();
+  foreach($results_xml->contacts->contact as $contact){
+    array_push($contacts, $contact);
+  }
+
+  return $contacts;
 
 }
 ?>
