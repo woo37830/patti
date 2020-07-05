@@ -38,23 +38,122 @@
 ##    users and logs be available.  They are used via the mysql_common.php
 ##    functions and the parameters provided in config.inc.php
 ######################################################
-require 'config.ini.php';
-require 'mysql_common.php';
-require 'utilities.php';
 
 /**
  * AllClients Account ID and API Key.
  */
-$account_id   = $config['MSG_USER'];
-$api_key      = $config['MSG_PASSWORD'];
-$api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
 
-function addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog)
+function addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray)
 {
-  $email_data = "$today,$from,$to,$messageId,$subject,$message,$attachmentLog#";
-  logit($from,$email_data,"Add Contact Note");
+  require '../webhook/config.ini.php';
+  require '../webhook/thrivecart_api.php';
+  require '../webhook/add_contact.php';
+  require '../webhook/mysql_common.php';
+  require '../webhook/utilities.php';
+  $account_id   = $config['MSG_USER'];
+  $api_key      = $config['MSG_PASSWORD'];
+  $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
+
+  $url = $api_endpoint . 'AddContactNote.aspx';
+
+  $email = "\n------------\nfrom:\n------------\n$from\n";
+  $email .= "\n------------\nto:\n------------\n$to\n";
+  $email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
+  $email .= "\n------------\nsubject:\n------------\n$subject\n";
+  $email .= "\n------------\nmessage:\n------------\n$message\n";
+  $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
+
+  // Get the agents engagemorecrm id from the users table
+  $agentId = getAccountId( $from );
+  if( $agentId == -1 )
+  {
+    echo "\nFAILURE: $from does not have an engagemorecrm id<br />\n";
+    logit($from,$postArray, "FAILURE: $from does not have an engagemorecrm id" );
+    exit;
+  }
+  echo "\nGot agentId = $agentId on lookup of $from\n";
+
+  // See if we have the contacts emgagemorecrm id in the users table
+  $contactId = getAccountId( $to );
+  $identifyMethod = 1;
+  $identifyValue = $contactId;
+  if( $contactId === -1 )
+  {
+    echo "\nPROBLEM: $to does not have an engagemorecrm id<br />\n";
+    logit($to,$postArray, "PROBLEM: $to does not have an engagemorecrm id" );
+    $identifyMethod = 2;
+    $identifyValue = $to;
+  }
+  echo "\n$to appears to have contactId of $contactId, using method $identifyMethod with $identifyValue\n";
+  //   	'teammemberid' => $agentId,
+
+  $data = array(
+  	'apiusername' => $account_id,
+  	'apipassword'    => $api_key,
+    'email' => $to,
+//    'teammemberid' => $agentId,
+  	'identifymethod'  => $identifyMethod,
+    'identifyvalue' => $identifyValue,
+    'note' => $email
+  );
+  $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
+
+  /**
+   * If an API error has occurred, the results object will contain a child 'error'
+   * SimpleXMLElement parsed from the error response:
+   *
+   *   <?xml version="1.0"?>
+   *   <results>
+   *     <error>Authentication failed</error>
+   *   </results>
+   */
+
+  if (isset($results_xml->error))
+  {
+    echo "\nFailure: " . $results_xml->error . "<br />\n";
+    logit($from,$postArray, "FAILURE: $results_xml->error" );
+    $res = strpos($results_xml->error, "Contact not found");
+    echo "\nres = $res\n";
+    if( $res )
+    {
+      echo "\nFailure: $from does not have a contact $to" . "<br />\n";
+      // Add the person and note as a new contact and note
+      $res = createContact($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+      if( $res === false )
+      {
+        echo "\nFailure: Could not create a contact $to for $from" . "<br />\n";
+        logit($from,$postArray, "FAILURE: $results_xml->error" );
+        return false;
+      }
+      echo "\nSuccess: Created a contact with id: $results_xml->contactid for $to" . "<br />\n";
+      $data = array(
+        'apiusername' => $account_id,
+        'apipassword'    => $api_key,
+        'email' => $to,
+    //    'teammemberid' => $agentId,
+        'identifymethod'  => $identifyMethod,
+        'identifyvalue' => $identifyValue,
+        'note' => $email
+      );
+      $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
+
+      if (!isset($results_xml->error))
+      {
+        echo "\nSuccess: After adding contact for $to, email was added as note: $results_xml->noteid\n";
+        return true;
+      }
+      echo "\nFailure: " . $results_xml->error . "<br />\n";
+      logit($from,$postArray, "FAILURE: $results_xml->error" );
+      return false;
+    }
+    return false;
+  }
+
+  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to<br />\n";
+  logit($from,$postArray, "SUCCESS: email added as note to $to" );
   return true;
+
 }
 
 ?>
