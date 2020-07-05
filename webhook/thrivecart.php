@@ -19,13 +19,7 @@ $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 $events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
 $affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
 
-$email_limits = array("product-9" => 5000,
-                      "product-12" => 5000,
-                      "product-13" => 10000,
-                      "product-14" => 10000,
-                      "product-15" => 10000,
-                      "product-16" => 10000,
-                      "product-17" => 10000);
+
 echo "<html><head></head><body><h1>OK</h1></body></html>";
 $json_data = json_encode($_REQUEST);
 
@@ -131,7 +125,6 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
            if( $engagemoreacct != -1 ) {
              echo "Changed subscription to product: $product<br />";
             logit($email, $json_data,  "SUCCESS: Changed product to $product");
-            //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
           }
         }
       }
@@ -163,8 +156,7 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
             $message = " - Special $99/mo. for $69/mo. product $product";
           }
           logit($email, $json_data, "SUCCESS: Added to account: $group_name, $message");
-	echo "SUCCESS: Added " . $email . " to account " . $group_name . " " . $message . "<br />"; 
-        //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
+	echo "SUCCESS: Added " . $email . " to account " . $group_name . " " . $message . "<br />";
       } // end not invadelid engagemoreid, so it was created.
     } // end account does not exist - create it
   } // end valid product
