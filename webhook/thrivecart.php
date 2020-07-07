@@ -52,8 +52,7 @@ switch( $event ) {
     echo "Received order.success<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.subscription_payment':
-    logit($email, $json_data, "order.subscription_payment");
-    echo "Received order.subscription_payment<br />" . $email . " - " . $json_data . "<br />";
+    handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data);
     break;
   case 'order.subscription_cancelled':
     $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
@@ -88,6 +87,62 @@ switch( $event ) {
   require 'git-info.php';
   die('All Done');
 
+function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data) {
+  echo "Check if account_exists for: $email <br />";
+  echo "json_data :  " . $json_data . "<br />";
+  $product = getProductId($_REQUEST);
+  echo "product: ". $product . "<br />";
+  require 'product_data.php';
+  if( $product != 'product-29' )
+  {
+    logit($email, $json_data, "order.subscription_payment for " . $product);
+    echo "Received order.subscription_payment<br />" . $email . " - " . $json_data . "<br />";
+    return;
+  }
+// We are here because we are looking at payment for product-29.
+    if( account_exists($email) ) {
+      echo "It does!<br />";
+      if( account_isInactive($email) )
+      {
+        echo "order.subscription_payment for inactive account<br>";
+        logit($email, $json_data, "FAILURE: order.subscription_payment for inactive account " . $product);
+      // reactivate account
+      //  reactivate_account($email, $api_endpoint, $account_id, $api_key);
+        return;
+      }
+      else
+      {
+        // account is active and the product on record is product-29
+        // then we want to change it to product-13
+        if( product_isTheSame($email, $product) )
+        { // i.e. product-29 is the current product for the $email
+          // different product, then cnange the group for the account
+          $product = 'product-13'; // change it to product-13
+          $group_name = getProductName($product, $email, $json_data);
+          echo "group_name: " . $group_name . "<br />";
+
+          $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
+           $group_name, $product);
+           if( $engagemoreacct != -1 ) {
+             echo "Changed subscription to product: $product<br />";
+            logit($email, $json_data,  "SUCCESS: Changed product to $product");
+          }
+        } else { // This should not happen as it means the product being paid for is product-29
+          // AND the user already has product-29 recoreded.
+          // This should have been changed the first subscription payment to produt-13
+          echo "Failure: $product on record should have been changed for $email<br />";
+         logit($email, $json_data,  "FAILURE: $product should have already been changed!");
+         return;
+        }
+      }
+    }
+    else { // account does not exist
+      echo "FAILURE: the account $email does not exist<br>";
+      logit($email, $json_data,  "FAILURE: Changing product to $product because account does not exist.");
+      return;
+    }
+    return;
+}
 
 
 function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data) {
@@ -99,7 +154,7 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
 
     $group_name = getProductName($product, $email, $json_data);
-	echo "group_name: " . $group_name . "<br />";
+ 	echo "group_name: " . $group_name . "<br />";
 
     if( account_exists($email) ) {
       echo "It does!<br />";

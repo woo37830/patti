@@ -54,11 +54,11 @@ function addContact($today, $from, $to)
 
   if (isset($results_xml->error)) {
     echo "\nFailure: " . $results_xml->error . "\n";
-    logit($from,$results_xml, "FAILURE: $results_xml->error" );
+    logit($email_address,$results_xml, "FAILURE: add_contact.php $results_xml->error" );
     return "-1";
   }
   //echo "\nresults_xml: " . $results_xml . "\n";
-  logit($from, $email_address, "SUCCESS: contact  added with $results_xml->contactid");
+  logit($email_address, $email_address, "SUCCESS: contact  added with $results_xml->contactid");
   return $results_xml->contactid;
 
 }

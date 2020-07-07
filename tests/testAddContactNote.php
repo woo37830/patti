@@ -22,6 +22,13 @@ $to = "Jeffrey Jones<jwooten37830@gmail.com>";
 $messageId = 127;
 $subject = "Test AddContactNote to non-existing contact jwooten37830@gmail.com";
 $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-echo "\nResult addContactNote: $result\n";
+echo "\n<br />Result addContactNote: $result<br/>\n";
+
+
+$to = "Patti Sampson<patti@exposedagent.com>";
+$messageId = 128;
+$subject = "Test AddContactNote to an agent in engagemorecrm";
+$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+echo "\n<br />Result addContactNote: $result<br />\n";
 
 ?>

@@ -86,7 +86,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   if( $agentId == -1 )
   {
     echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
-    logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
+    logit($from_email_address,$to_email_address, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     exit;
   }
   //echo "\nGot agentId = $agentId on lookup of $from_email_address\n";
@@ -96,7 +96,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
       //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
-      $contactId = addContact($today, $from_email_address, $to); // Use full to get first and last
+      $contactId = addContact($today, $from_email_address, $to_email_address); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
         echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
@@ -129,12 +129,12 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   if (isset($results_xml->error))
   {
     echo "\nFailure: " . $results_xml->error . "\n";
-    logit($from_email_address,$postArray, "FAILURE: $results_xml->error" );
+    logit($from_email_address,$to_email_address, "FAILURE: add_contact_note: $results_xml->error" );
     return false;
   }
 
   echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address\n";
-  logit($from_email_address,$postArray, "SUCCESS: email added as noteid $results_xml->noteid to contact $to_email_address" );
+  logit($from_email_address,$to_email_address, "SUCCESS: email added as noteid $results_xml->noteid to contact $to_email_address" );
   return true;
 
 }

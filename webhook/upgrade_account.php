@@ -42,7 +42,7 @@ if (isset($results_xml->error)) {
 
   // Here I write the account information using updateProduct in mysql_common.php
   updateProduct($account, $productid);
-  logit($email, $json_data, "Success upgraded account to: " . $productid);
+  //logit($email, $json_data, "Success upgraded account to: " . $productid);
   return $account;
 }
 ?>

@@ -30,7 +30,7 @@ $result_xml_string = post_api_url($url, $data);
  */
 $results_xml = simplexml_load_string($result_xml_string);
 if ($results_xml === false) {
-	logit($email, "", "FAILURE: Error parsing XML");
+	logit("Not found", json_encode($data), "FAILURE: thrivecart_api: Error parsing XML");
 	exit;
 }
 
