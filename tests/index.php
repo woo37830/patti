@@ -39,7 +39,7 @@ table, th, td {
 <tr><td>GetContact</td><td>Get a contact using their email</td><td></td></tr>
 <tr><td>Get Contacts</td><td>Get the list of contacts for an account</td><td></td></tr>
 <tr><td>Add Account</td><td>Add account information to users_db.users table</td><td></td></tr>
-<tr><td>Update Account</td><td>Update account informatin in users_db.users table</td><td></td></tr>
+<tr><td>Update Account</td><td>Update account information in users_db.users table</td><td></td></tr>
 </tbody>
 </table>
 </center>
