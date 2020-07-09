@@ -95,11 +95,13 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
   require 'product_data.php';
   if( $product != 'product-29' )
   {
+    if( $product != 'product-24' ) {
     logit($email, $json_data, "order.subscription_payment for " . $product);
     echo "Received order.subscription_payment<br />" . $email . " - " . $json_data . "<br />";
     return;
+    }	
   }
-// We are here because we are looking at payment for product-29.
+// We are here because we are looking at payment for product-29 or product-24.
     if( account_exists($email) ) {
       echo "It does!<br />";
       if( account_isInactive($email) )
@@ -112,10 +114,10 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
       }
       else
       {
-        // account is active and the product on record is product-29
+        // account is active and the product on record is product-29 or product-24
         // then we want to change it to product-13
         if( product_isTheSame($email, $product) )
-        { // i.e. product-29 is the current product for the $email
+        { // i.e. product-29 or product-24 is the current product for the $email
           // different product, then cnange the group for the account
           $product = 'product-13'; // change it to product-13
           $group_name = getProductName($product, $email, $json_data);
@@ -128,7 +130,7 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
             logit($email, $json_data,  "SUCCESS: Changed product to $product");
           }
         } else { // This should not happen as it means the product being paid for is product-29
-          // AND the user already has product-29 recoreded.
+          // AND the user already has product-29 recorded.
           // This should have been changed the first subscription payment to produt-13
           echo "Failure: $product on record should have been changed for $email<br />";
          logit($email, $json_data,  "FAILURE: $product should have already been changed!");
