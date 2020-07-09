@@ -10,5 +10,5 @@ $products = array( "product-9" => "RE - BUZZ ($69)",
 	           "product-21" => "RE - IMPACT ($99)",
                    "product-22" => "RE - BUZZ ($69)",
                    "product-24" => "RE - 14 DAY TREE TRIAL",
-                   "product-29" => "RE - 14 DAY TREE TRIAL");
+                   "product-29" => "RE - 14 DAY FREE TRIAL");
 ?>
