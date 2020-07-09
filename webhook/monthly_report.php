@@ -10,6 +10,9 @@ require 'product_data.php';
 $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 $mon = (int)date("m");
+if(isset($_POST['submit']) && strlen($_POST['month']) > 0 ){
+    $mon = $_POST['month'];
+  }
 $cr = "\n";
 $h1="";
 $h1end="";
@@ -27,7 +30,7 @@ if(!defined('STDIN') ) {
     $mon = (int)$argv[1];
   }
 }
-if( isset($_REQUEST['month']) ) {
+if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
   $mon = (int)$_REQUEST['month'];
 }
 echo $h1 . "Monthly Report for: $months[$mon]" . $h1end . $cr;
@@ -102,10 +105,10 @@ while( $row = $rows->fetch_assoc() ) {
   if( !defined('STDIN') ) {
     echo "</tbody></table><hr />Total Cancellations: $k</center>";
   } else {
-    echo $cr . "Total Commissions: $k" . $cr;
+    echo $cr . "Total Cancellations: $k" . $cr;
   }
   $rows -> close();
-
+/*
 echo $h2 . "Payments This Month" . $h2end . $cr;
 
 $table = $config['PATTI_LOG_TABLE'];
@@ -188,17 +191,33 @@ while( $row = $rows->fetch_assoc() ) {
   if( !defined('STDIN') ) {
     echo "</tbody></table><hr />Total Commissions: $k          Total Amount: $total";
     echo "<br /><em>Note: Unknown emails are due to missing data on invoice when signing up.</em></center>";
-    echo "<div id='footer' ><hr /><em>";
 
-      include 'git-info.php';
-    echo "</em></div>";
 } else {
     echo $cr . "Total Commissions: $k" . " Total Amount: $total" . $cr;
     echo $cr . "Note: Unknown emails are due to missing data on invoice when signing up." . $cr;
   }
   $rows -> close();
+  */
+  echo "<div id='footer' ><hr /><em>";
+
+    include 'git-info.php';
+  echo "</em></div>";
 
 
 // Handle affiliate.commission_earned for month, gather by orderid or invoiceid
-echo $cr . "All Done!" . $cr;
+
 ?>
+<!DOCTYPE html>
+<head>
+<title>Monthly Report</title>
+</head>
+<body>
+<center>
+  <br />
+<form action="" method="post">
+Month(e.g. 6): <input type="text" name="month"><br /><br />
+<input type="submit" name="submit" value="Submit">
+</form>
+</center>
+</body>
+</html>

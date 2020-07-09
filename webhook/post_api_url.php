@@ -40,13 +40,10 @@ function post_api_url($url, array $data = array()) {
 	if ($output === false) {
 		// It is important to close the cURL session after curl_error()
 		$retStr = curl_error($ch);
-		printf("cURL returned an error: %s<br />", $retStr);
-		$email = $data["email"];
-		$logStr = "";
-                printf("<br />email: %s, %s<br />",$email,$logStr);
-		logit($email,$logStr, $retStr);
+		$logStr = "---post_api_url.php---";
+		logit("Not available",$logStr, $retStr);
 		curl_close($ch);
-                return $retStr;
+    return $retStr;
 	}
 
 	// Close the cURL session
