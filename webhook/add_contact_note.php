@@ -87,7 +87,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   {
     echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
     logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
-    exit;
+    return false;
   }
   // getContact will either return the id of an existing contact OR
   // it will create the contact and return the  new id.
