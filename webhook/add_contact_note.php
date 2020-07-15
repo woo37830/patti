@@ -70,6 +70,11 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $first_name = $names[0];
   $last_name = $names[1];
   $to_email_address = $names[2];
+
+  if( $to_email_address == null ) {
+    logit($from_email_address, "from email provided a null to_email_address", "FAILURE: (add_contact_note)");
+    return false;
+  }
   //echo "to_email_address: $to_email_address\n";
 
 
