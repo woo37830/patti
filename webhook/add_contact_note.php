@@ -143,7 +143,7 @@ try {
 
   if (isset($results_xml->error) || $results_xml == false)
   {
-    if( $results != false ) {
+    if( $results_xml != false ) {
     logit($from_email_address,strip_tags($postArray), "FAILURE: (add_contact_note) $results_xml->error" );
   } else {
     logit($from_email_address, "results were false", "FAILURE: (add_contact_note)");
