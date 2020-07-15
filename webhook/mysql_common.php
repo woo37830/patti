@@ -51,8 +51,8 @@ function logit($user, $json, $my_status)
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
-      $user_email = $from_email_address;
-      $stripped_json = strip_tags($json);
+      $user_email = "me"; //$from_email_address;
+      $stripped_json = "the json"; //strip_tags($json);
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
       $sql = "INSERT INTO $table
