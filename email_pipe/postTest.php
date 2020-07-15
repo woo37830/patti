@@ -380,8 +380,8 @@ $added = "Starting";
 try {
 	$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 }
-catch (exception e) {
-	echo "#Posted $today#, Exception e occurred attempting to add note to $to from $from";
+catch (exception $e) {
+	echo "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
 	return;
 }
 $time = time();
