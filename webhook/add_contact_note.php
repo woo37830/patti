@@ -118,10 +118,13 @@ try {
    *   </results>
    */
 
-  if (isset($results_xml->error))
+  if (isset($results_xml->error) || $results_xml == false)
   {
-  //  echo "\nFailure: " . $results_xml->error . "\n";
-    logit($from_email_address,strip_tags($postArray), "FAILURE: $results_xml->error" );
+    if( $results != false ) {
+    logit($from_email_address,strip_tags($postArray), "FAILURE: (add_contact_note) $results_xml->error" );
+  } else {
+    logit($from_email_address, "results were false", "FAILURE: (add_contact_note)");
+  }
     return false;
   }
 
