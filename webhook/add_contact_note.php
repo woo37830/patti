@@ -62,14 +62,32 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $url = $api_endpoint . 'AddContactNote.aspx';
 
   $names = firstAndLastFromEmail($from);
-  $first_name = $names[0];
-  $last_name = $names[1];
-  $from_email_address = $names[2];
   //echo "from_email_address: $from_email_address\n";
+  if ( sizeof( $names) < 3 )
+  {
+    $first_name = $names[0];
+    $last_name = "";
+    $from_email_address = $names[1];
+
+  } else {
+    $first_name = $names[0];
+    $last_name = $names[1];
+    $from_email_address = $names[2];
+  }
+
   $names = firstAndLastFromEmail($to);
-  $first_name = $names[0];
-  $last_name = $names[1];
-  $to_email_address = $names[2];
+
+  if ( sizeof( $names) < 3 )
+  {
+    $first_name = $names[0];
+    $last_name = "";
+    $to_email_address = $names[1];
+
+  } else {
+    $first_name = $names[0];
+    $last_name = $names[1];
+    $to_email_address = $names[2];
+  }
 
   if( $to_email_address == null ) {
     logit($from_email_address, "from email provided a null to_email_address", "FAILURE: (add_contact_note)");
@@ -96,7 +114,7 @@ try {
   }
   // getContact will either return the id of an existing contact OR
   // it will create the contact and return the  new id.
-  $contactId = getContact( $today, $from_email_address, $to_email_address );
+  $contactId = getContact( $today, $from_email_address, $to );
 //  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
@@ -134,7 +152,7 @@ try {
   }
 
 //  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address, contact of $agentId\n";
-  logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid to contact $to_email_address" );
+  logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address" );
   return true;
 
 }

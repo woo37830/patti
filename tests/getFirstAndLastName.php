@@ -17,7 +17,7 @@ $displayName = get_displayname_from_rfc_email($to);
 $email = get_email_from_rfc_email( $to );
 //echo "\nemail = $email\n";
 $names2 = firstAndLastFromEmail($to);
-IF( sizeof( $names2) < 3 )
+if ( sizeof( $names2) < 3 )
 {
   echo "\nto - Name: $names2[0], email: $names2[1]\n";
 

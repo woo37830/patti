@@ -12,15 +12,38 @@ function addContact($today, $from, $to)
 
   $url = $api_endpoint . 'AddContact.aspx';
   $names = firstAndLastFromEmail($from);
-  $first_name = $names[0];
-  $last_name = $names[1];
-  $email_address = $names[2];
+  //echo "from_email_address: $from_email_address\n";
+  if ( sizeof( $names) < 3 )
+  {
+    $first_name = $names[0];
+    $last_name = "";
+    $from_email_address = $names[1];
 
-  $agentId = getAccountId( $email_address );
+  } else {
+    $first_name = $names[0];
+    $last_name = $names[1];
+    $from_email_address = $names[2];
+  }
+
+  $names = firstAndLastFromEmail($to);
+  if ( sizeof( $names) < 3 )
+  {
+    $first_name = $names[0];
+    $last_name = "";
+    $to_email_address = $names[1];
+
+  } else {
+    $first_name = $names[0];
+    $last_name = $names[1];
+    $to_email_address = $names[2];
+  }
+
+
+  $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
     echo "FAILURE: $from does not have an engagemorecrm id\n";
-    logit($email_address,$first_name, "FAILURE: $email_address does not have an engagemorecrm id" );
+    logit($email_address,$first_name, "FAILURE: $from_email_address does not have an engagemorecrm id" );
     exit;
   }
 
@@ -57,7 +80,7 @@ function addContact($today, $from, $to)
     return "-1";
   }
 //  echo "\nSUCCESS: contact $email_address added to $agentId with $results_xml->contactid\n";
-  logit($from, $email_address, "SUCCESS: contact $email_address added to $agentId with $results_xml->contactid");
+  logit($from_email_address, $to_email_address, "SUCCESS: contact $to_email_address added to $agentId with $results_xml->contactid");
   return $results_xml->contactid;
 
 }

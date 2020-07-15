@@ -7,7 +7,7 @@ require '../webhook/get_contacts.php';
 
 $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
-$to = "John Wooten<jwooten37830@me.com>";
+$to = "Patti - AZ Sampson <patti@exposedagent.com>";
 $messageId = $today;
 $subject = "Test AddContactNote to a non-existing contact";
 $message = "This is a test that contains <h1>Some Data in brackets</h1>";
@@ -22,7 +22,7 @@ try
 {
 $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 $resultStr = $result ? "Succeeded" : "Failed";
-echo "\nResult addContactNote: $resultStr\n";
+echo "\nResult addContactNote: $resultStr to $to as contact of $from\n";
 }
 catch( exception $e )
 {

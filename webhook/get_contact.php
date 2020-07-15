@@ -31,9 +31,18 @@ function getContact($today, $from, $to)
   //echo "\nGot agentId = $agentId on lookup of $from_email_address in get_contact.php\n";
 
   $names = firstAndLastFromEmail($to);
-  $first_name = $names[0];
-  $last_name = $names[1];
-  $to_email_address = $names[2];
+
+  if ( sizeof( $names) < 3 )
+  {
+    $first_name = $names[0];
+    $last_name = "";
+    $to_email_address = $names[1];
+
+  } else {
+    $first_name = $names[0];
+    $last_name = $names[1];
+    $to_email_address = $names[2];
+  }
 
   //echo "\nGot to_email_address = '$to_email_address' from $to\n";
 
@@ -64,7 +73,7 @@ function getContact($today, $from, $to)
   if( !isset($results_xml->contacts->contact) )
   {
 //      echo "\nHaving to add contact $to_email_address to $from_email_address\n";
-      $contactId = addContact($today, $from_email_address, $to_email_address);
+      $contactId = addContact($today, $from, $to);
 //      echo "\nGot a contactId of $contactId adding $from_email_address to $to_email_address\n";
       return $contactId;
   }
