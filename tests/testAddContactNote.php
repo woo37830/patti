@@ -7,21 +7,27 @@ require '../webhook/get_contacts.php';
 
 $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
-$to = "Hector Gomez<wooten.666@gmail.com>";
-$messageId = 123;
-$subject = "Test AddContactNote to existing contact";
-$message = "This is a test";
+//$to = "Patti - AZ Sampson <patti@exposedagent.com>";
+$to = "AllClients support+id30186@allclients.zendesk.com";
+$messageId = $today;
+$subject = "Test AddContactNote to a non-existing contact";
+$message = "This is a test that contains <h1>Some Data in brackets</h1>";
 $attachmentLog = "A note about an attachment";
-$postArray = "The complete data received in the request";
+$postArray = "The complete <a >data</a> received in the request";
 
 
 //$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 //echo "\nResult addContactNote: $result <br />\n";
 
-$to = "Jeffrey Jones<jwooten37830@gmail.com>";
-$messageId = 127;
-$subject = "Test AddContactNote to non-existing contact jwooten37830@gmail.com";
+try
+{
 $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-echo "\nResult addContactNote: $result\n";
+$resultStr = $result ? "Succeeded" : "Failed";
+echo "\nResult addContactNote: $resultStr to $to as contact of $from\n";
+}
+catch( exception $e )
+{
+  echo "\Result addContactNote: Exception $e";
+}
 
 ?>
