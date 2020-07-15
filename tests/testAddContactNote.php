@@ -18,12 +18,15 @@ $postArray = "The complete <a >data</a> received in the request";
 //$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 //echo "\nResult addContactNote: $result <br />\n";
 
-try {
-$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-echo "\nResult addContactNote: $result\n";
-} catch (exception e )
+try
 {
-  echo "\Result addContactNote: Exception " . e;
+$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+$resultStr = $result ? "Succeeded" : "Failed";
+echo "\nResult addContactNote: $resultStr\n";
+}
+catch( exception $e )
+{
+  echo "\Result addContactNote: Exception $e";
 }
 
 ?>

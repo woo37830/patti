@@ -129,12 +129,13 @@ try {
   logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid to contact $to_email_address" );
   return true;
 
-  }
 }
-catch( exception e )
+
+catch( exception $e )
 {
-  logit($from_email_address,strip_tags($postArray), "FAILURE: Exception " . e);
+  logit($from_email_address,strip_tags($postArray), "FAILURE: Exception $e");
   return false;
+}
 }
 
 ?>
