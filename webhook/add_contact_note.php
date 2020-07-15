@@ -81,7 +81,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $email .= "\nAttachments:\t$attachmentLog\n";
 
   // Get the agents engagemorecrm id from the users table
-
+try {
   $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
@@ -92,7 +92,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   // getContact will either return the id of an existing contact OR
   // it will create the contact and return the  new id.
   $contactId = getContact( $today, $from_email_address, $to_email_address );
-  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
+//  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
       return false;
@@ -120,15 +120,21 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
 
   if (isset($results_xml->error))
   {
-    echo "\nFailure: " . $results_xml->error . "\n";
+  //  echo "\nFailure: " . $results_xml->error . "\n";
     logit($from_email_address,strip_tags($postArray), "FAILURE: $results_xml->error" );
     return false;
   }
 
-  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address, contact of $agentId\n";
+//  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address, contact of $agentId\n";
   logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid to contact $to_email_address" );
   return true;
 
+  }
+}
+catch( exception e )
+{
+  logit($from_email_address,strip_tags($postArray), "FAILURE: Exception " . e);
+  return false;
 }
 
 ?>

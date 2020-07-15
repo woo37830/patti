@@ -63,13 +63,13 @@ function getContact($today, $from, $to)
   }
   if( !isset($results_xml->contacts->contact) )
   {
-      echo "\nHaving to add contact $to_email_address to $from_email_address\n";
+//      echo "\nHaving to add contact $to_email_address to $from_email_address\n";
       $contactId = addContact($today, $from_email_address, $to_email_address);
-      echo "\nGot a contactId of $contactId adding $from_email_address to $to_email_address\n";
+//      echo "\nGot a contactId of $contactId adding $from_email_address to $to_email_address\n";
       return $contactId;
   }
   $contactId = $results_xml->contacts->contact->id;
-  echo "\nContact $to_email_address of $agentId exists and has id of $contactId\n";
+//  echo "\nContact $to_email_address of $agentId exists and has id of $contactId\n";
   return $contactId;
 
 }

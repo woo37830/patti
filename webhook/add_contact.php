@@ -56,7 +56,7 @@ function addContact($today, $from, $to)
     logit($from,$results_xml, "FAILURE: $results_xml->error" );
     return "-1";
   }
-  echo "\nSUCCESS: contact $email_address added to $agentId with $results_xml->contactid\n";
+//  echo "\nSUCCESS: contact $email_address added to $agentId with $results_xml->contactid\n";
   logit($from, $email_address, "SUCCESS: contact $email_address added to $agentId with $results_xml->contactid");
   return $results_xml->contactid;
 
