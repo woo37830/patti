@@ -44,7 +44,7 @@ function logit($user, $json, $my_status)
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
-      $user_email = get_email_from_rfc_email($user);
+      $user_email = strip_tags(get_email_from_rfc_email($user));
       $stripped_json = strip_tags($json);
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
