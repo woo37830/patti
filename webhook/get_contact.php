@@ -5,12 +5,15 @@ function getContact($today, $from, $to)
   require_once '../webhook/thrivecart_api.php';
 
   require_once '../webhook/mysql_common.php';
+  require_once '../webhook/add_contact.php';
   require_once '../webhook/utilities.php';
   $account_id   = $config['MSG_USER'];
   $api_key      = $config['MSG_PASSWORD'];
   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
   $url = $api_endpoint . 'QuickSearchContacts.aspx';
+
+  $today = date("D M j G:i:s T Y");
 
   $names = firstAndLastFromEmail($from);
   $first_name = $names[0];
@@ -38,7 +41,7 @@ function getContact($today, $from, $to)
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
   	'accountid' => $agentId,
-    'searchstring' => "$to_email_address"
+    'searchstring' => $to_email_address
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 
@@ -60,9 +63,14 @@ function getContact($today, $from, $to)
   }
   if( !isset($results_xml->contacts->contact) )
   {
-    return "-1";
+      echo "\nHaving to add contact $to_email_address to $from_email_address\n";
+      $contactId = addContact($today, $from_email_address, $to_email_address);
+      echo "\nGot a contactId of $contactId adding $from_email_address to $to_email_address\n";
+      return $contactId;
   }
-  return $results_xml->contacts->contact->id;
+  $contactId = $results_xml->contacts->contact->id;
+  echo "\nContact $to_email_address of $agentId exists and has id of $contactId\n";
+  return $contactId;
 
 }
 ?>

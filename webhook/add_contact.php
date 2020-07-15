@@ -23,7 +23,6 @@ function addContact($today, $from, $to)
     logit($email_address,$first_name, "FAILURE: $email_address does not have an engagemorecrm id" );
     exit;
   }
-  //echo "\nGot agentId = $agentId on lookup of $from in add_contact.php\n";
 
   // Parse out first and last name if present
   $str = $to;
@@ -57,8 +56,8 @@ function addContact($today, $from, $to)
     logit($from,$results_xml, "FAILURE: $results_xml->error" );
     return "-1";
   }
-  //echo "\nresults_xml: " . $results_xml . "\n";
-  logit($from, $email_address, "SUCCESS: contact  added with $results_xml->contactid");
+  echo "\nSUCCESS: contact $email_address added to $agentId with $results_xml->contactid\n";
+  logit($from, $email_address, "SUCCESS: contact $email_address added to $agentId with $results_xml->contactid");
   return $results_xml->contactid;
 
 }

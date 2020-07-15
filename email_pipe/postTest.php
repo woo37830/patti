@@ -28,7 +28,8 @@
 ##	  for saving attachments and logging.
 ##
 ######################################################
-require '../webhook/add_contact_note.php';
+require_once '../webhook/add_contact_note.php';
+require_once '../webhood/mysql_common.php';
 // Set to 1 to Save Attachements
 
 // NOTE: By default, this saves attachments to the same directory as this script.
