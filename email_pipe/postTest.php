@@ -376,7 +376,14 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 $email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
 $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
-$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+$added = "Starting";
+try {
+	$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+}
+catch (exception e) {
+	echo "#Posted $today#, Exception e occurred attempting to add note to $to from $from";
+	return;
+}
 $time = time();
 /*
 $myFile = "postTestLog-$time.txt";
