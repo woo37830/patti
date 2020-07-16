@@ -7,37 +7,16 @@ require '../webhook/utilities.php';
 
 
 $today = date("D M j G:i:s T Y");
-$from = "John Wooten<jwooten37830@icloud.com>";
-$to = "Patti - AZ Sampson <patti@exposedagent.com>";
-$support = "AllClients support+id30186@allclients.zendesk.com";
-$names = firstAndLastFromEmail($from);
-echo "\nfrom - First: $names[0], Last: $names[1], email: $names[2]\n";
-//echo "\nto = $to\n";
-$displayName = get_displayname_from_rfc_email($to);
-//echo "\ndisplayName = '$displayName'\n";
-$email = get_email_from_rfc_email( $to );
-//echo "\nemail = $email\n";
-$names2 = firstAndLastFromEmail($to);
-if ( sizeof( $names2) < 3 )
+$email = array();
+$email[0] = "John Wooten<jwooten37830@icloud.com>";
+$email[1] = "Patti - AZ Sampson <patti@exposedagent.com>";
+$email[2] = "AllClients support+id30186@allclients.zendesk.com";
+$email[3] = "John <john@email.com>";
+for( $i = 0; $i < sizeof($email); $i++ )
 {
-  echo "\nto - Name: $names2[0], email: $names2[1]\n";
-
-} else {
-    echo "\nto - First: $names2[0], Last: $names2[1], email: $names2[2]\n";
-  }
-
-  $names2 = firstAndLastFromEmail($support);
-  if( (sizeof( $names2) == 1 ) )
-  {
-    echo "\nsupport : $names2[0]";
-  } else
-  if ( sizeof( $names2) < 3 )
-  {
-    echo "\nto - Name: $names2[0], email: $names2[1]\n";
-
-  } else {
-      echo "\nto - First: $names2[0], Last: $names2[1], email: $names2[2]\n";
-    }
-
+$names = firstAndLastFromEmail($email[$i]);
+  echo "\n$i) email = '$email[$i]'";
+  echo "\n\tfrom - First: $names[0], Last: $names[1], email: $names[2]\n";
+}
 echo "\nAll Done!\n";
 ?>

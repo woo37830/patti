@@ -96,6 +96,7 @@ function firstAndLastFromEmail($email)
       $pieces[1] = $thePieces[sizeof($thePieces)-1];
   } else if( sizeof($thePieces) == 1 ) {
     $pieces[0] = $thePieces[0];
+    $pieces[1] = 'Last';
   } else {
     $pieces = $thePieces;
   }
@@ -113,6 +114,12 @@ function get_displayname_from_rfc_email($rfc_email_string) {
     }
     else
     {
+      $pos = strstr($rfc_email_string, ' ');
+      if( $pos != false )
+      {
+        $pieces = explode(" ", $rfc_email_string);
+        return $pieces[0];
+      }
       return "First Last";
     }
 }
@@ -125,6 +132,12 @@ function get_email_from_rfc_email($rfc_email_string) {
     {
       $mailAddress = preg_match('/(?:<)(.+)(?:>)$/', $rfc_email_string, $matches);
       return $matches[1];
+    }
+    $pos = strstr($rfc_email_string, ' ');
+    if( $pos != false )
+    {
+      $pieces = explode(" ", $rfc_email_string);
+      return $pieces[sizeof($pieces) -1 ];
     }
     return $rfc_email_string;
 }
