@@ -66,6 +66,17 @@ function getProductName($product, $email, $json_data) {
   die("Invalid product: $product");
 }
 
+function delete_all_between($beginning, $end, $string) {
+  $beginningPos = strpos($string, $beginning);
+  $endPos = strpos($string, $end);
+  if ($beginningPos === false || $endPos === false) {
+    return $string;
+  }
+
+  $textToDelete = substr($string, $beginningPos, ($endPos + strlen($end)) - $beginningPos);
+
+  return delete_all_between($beginning, $end, str_replace($textToDelete, '', $string)); // recursion to ensure all occurrences are replaced
+}
 // firstAndLastFromEmail returns an array with:
 //  0) First Name
 //  1) Last Name
@@ -73,19 +84,24 @@ function getProductName($product, $email, $json_data) {
 //
 function firstAndLastFromEmail($email)
 {
-  $displayname = get_displayname_from_rfc_email($email);
+  $displayname = trim(get_displayname_from_rfc_email($email));
 //  echo "\n$displayname\n";
-
-  $pieces = explode(" ", $displayname);
-//  echo "\n$pieces[0], $pieces[1]\n";
-
-  $address = $email;
-  $pos = strstr($email, '<');
-  if( $pos !== false )
+  $email = get_email_from_rfc_email($email);
+  $pieces = array();
+  $thePieces = explode(" ", $displayname);
+//  print_r($thePieces);
+  if( sizeof($thePieces) > 2 )
   {
-    $address = get_email_from_rfc_email($email);
+      $pieces[0] = $thePieces[0];
+      $pieces[1] = $thePieces[sizeof($thePieces)-1];
+  } else if( sizeof($thePieces) == 1 ) {
+    $pieces[0] = $thePieces[0];
+    $pieces[1] = 'Last';
+  } else {
+    $pieces = $thePieces;
   }
-  array_push($pieces,$address);
+  array_push($pieces, $email);
+//  print_r($pieces);
   return $pieces;
 }
 function get_displayname_from_rfc_email($rfc_email_string) {
@@ -93,12 +109,17 @@ function get_displayname_from_rfc_email($rfc_email_string) {
     $pos = strstr($rfc_email_string, '<');
     if( $pos !== false )
     {
-      $name       = preg_match('/[\w\s]+/', $rfc_email_string, $matches);
-      $matches[0] = trim($matches[0]);
-      return $matches[0];
+      $name = delete_all_between('<','>', $rfc_email_string);
+      return $name;
     }
     else
     {
+      $pos = strstr($rfc_email_string, ' ');
+      if( $pos != false )
+      {
+        $pieces = explode(" ", $rfc_email_string);
+        return $pieces[0];
+      }
       return "First Last";
     }
 }
@@ -111,6 +132,12 @@ function get_email_from_rfc_email($rfc_email_string) {
     {
       $mailAddress = preg_match('/(?:<)(.+)(?:>)$/', $rfc_email_string, $matches);
       return $matches[1];
+    }
+    $pos = strstr($rfc_email_string, ' ');
+    if( $pos != false )
+    {
+      $pieces = explode(" ", $rfc_email_string);
+      return $pieces[sizeof($pieces) -1 ];
     }
     return $rfc_email_string;
 }

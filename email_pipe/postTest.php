@@ -28,7 +28,8 @@
 ##	  for saving attachments and logging.
 ##
 ######################################################
-require '../webhook/add_contact_note.php';
+require_once '../webhook/add_contact_note.php';
+require_once '../webhook/mysql_common.php';
 // Set to 1 to Save Attachements
 
 // NOTE: By default, this saves attachments to the same directory as this script.
@@ -375,8 +376,16 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 $email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
 $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
-$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+$added = "Starting";
+try {
+	$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+}
+catch (exception $e) {
+	echo "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
+	return;
+}
 $time = time();
+/*
 $myFile = "postTestLog-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
@@ -385,7 +394,7 @@ $log = "Email post log:\n$email \n";
 
 fwrite($fh, $log);
 fclose($fh);
-
+*/
 // return a confirmation to mailnuggets
 echo "#Posted $today#, note added to $to: $added";
 
