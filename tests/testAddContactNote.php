@@ -7,28 +7,31 @@ require '../webhook/get_contacts.php';
 
 $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
-$to = "Hector Gomez<wooten.666@gmail.com>";
-$messageId = 123;
-$subject = "Test AddContactNote to existing contact";
-$message = "This is a test";
+//$to = "Patti - AZ Sampson <patti@exposedagent.com>";
+$to = "Ralph Jones <ralph@gmail.com>";
+$messageId = $today;
+$subject = "Test AddContactNote to a existing contact";
+$message = "This is a test that contains <h1>Some Data in brackets</h1>";
 $attachmentLog = "A note about an attachment";
-$postArray = "The complete data received in the request";
+$postArray = "The complete <a >data</a> received in the request";
 
 
 //$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 //echo "\nResult addContactNote: $result <br />\n";
 
-$to = "Jeffrey Jones<jwooten37830@gmail.com>";
-$messageId = 127;
-$subject = "Test AddContactNote to non-existing contact jwooten37830@gmail.com";
+try
+{
 $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 echo "\n<br />Result addContactNote: $result<br/>\n";
 
 
-$to = "Patti Sampson<patti@exposedagent.com>";
-$messageId = 128;
+$to = "Patti AZ Sampson<patti@exposedagent.com>";
+$messageId = 666;
 $subject = "Test AddContactNote to an agent in engagemorecrm";
 $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 echo "\n<br />Result addContactNote: $result<br />\n";
-
+} catch( Exception $e )
+{
+  echo "\n<br />An Exception occurred in testAddContactNote.php: $e\n<br />";
+}
 ?>

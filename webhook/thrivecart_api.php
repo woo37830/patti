@@ -31,7 +31,8 @@ $result_xml_string = post_api_url($url, $data);
 $results_xml = simplexml_load_string($result_xml_string);
 if ($results_xml === false) {
 	$email = "Not available";
-	logit($email, "---thrivecart_api---", "FAILURE: Error parsing XML");
+	logit($email, "---thrivecart_api---",  "FAILURE: (thrivecart_api) Error parsing XML");
+	return false;
 }
 
 return $results_xml;

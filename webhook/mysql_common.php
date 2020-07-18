@@ -10,6 +10,8 @@ date_default_timezone_set('America/New_York');
 
 function connect($db) {
   require 'config.ini.php';
+  require_once 'utilities.php';
+
 $db_host = $config['PATTI_DATABASE_SERVER']; // PROBABLY THIS IS OK
 $db_name = $db;        // GET THESE FROM YOUR HOSTING COMPANY
 $db_user = $config['PATTI_DATABASE_USER'];
@@ -38,13 +40,18 @@ function logit($user, $json, $my_status)
   require 'config.ini.php';
   require_once 'utilities.php';
 
+  $names = firstAndLastFromEmail($user);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
-      $user_email = get_email_from_rfc_email($user);
+      $user_email = $from_email_address;
       $stripped_json = strip_tags($json);
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
