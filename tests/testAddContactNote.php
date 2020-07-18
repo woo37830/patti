@@ -8,7 +8,7 @@ require '../webhook/get_contacts.php';
 $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
 //$to = "Patti - AZ Sampson <patti@exposedagent.com>";
-$to = "Ralph Jones <ralph@gmail.com>";
+$to = "AllClients support+id30186@allclients.zendesk.com";
 $messageId = $today;
 $subject = "Test AddContactNote to a existing contact";
 $message = "This is a test that contains <h1>Some Data in brackets</h1>";
