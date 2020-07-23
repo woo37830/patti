@@ -40,10 +40,22 @@ function logit($user, $json, $my_status)
   require 'config.ini.php';
   require_once 'utilities.php';
 
+  $log_file = "./mysql-errors.log";
+
+  // setting error logging to be active
+  ini_set("log_errors", TRUE);
+
+  // setting the logging file in php.ini
+  ini_set('error_log', $log_file);
+
+//  error_log("Received json: $json for $user");
+
   $names = firstAndLastFromEmail($user);
   $first_name = $names[0];
   $last_name = $names[1];
   $from_email_address = $names[2];
+
+//  error_log("Parsed out: $first_name, $last_name, and $from_email_address");
 
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
@@ -83,6 +95,9 @@ function logit($user, $json, $my_status)
               . $conn->error
               ;
               mysqli_close($conn);
+              // logging the error
+              error_log("An error occurred processing $sql for $user with json: $json");
+
               echo "\nError processing query $sql\n";
               trigger_error($err, E_USER_ERROR);
        }
@@ -98,6 +113,11 @@ function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
 {
   require 'config.ini.php';
 
+  $names = firstAndLastFromEmail($user);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
@@ -112,7 +132,7 @@ function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
       , orderid
       ) VALUES
       ( '$datetime'
-      , '$user'
+      , '$from_email_address'
       , '$engagemoreid'
       , '$productid'
       , '$invoiceid'
@@ -197,6 +217,11 @@ function getAccountId($email)
   // given the email or the thrivecart id
   require 'config.ini.php';
 
+  $names = firstAndLastFromEmail($email);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
   $value = -1;
   $dbase = $config['PATTI_DATABASE'];
 
@@ -205,7 +230,7 @@ function getAccountId($email)
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_USERS_TABLE'];
 
-      $query = "SELECT engagemoreid FROM $table WHERE email = '$email' ";
+      $query = "SELECT engagemoreid FROM $table WHERE email = '$from_email_address' ";
        $results_array = array();
        $result = $conn->query($query);
        while( $row = $result->fetch_assoc() ) {
@@ -224,6 +249,11 @@ function getProductFor( $email ) {
   $value = -1;
   require 'config.ini.php';
 
+  $names = firstAndLastFromEmail($email);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
   $dbase = $config['PATTI_DATABASE'];
 
   if( $conn = connect($dbase) )
@@ -231,7 +261,7 @@ function getProductFor( $email ) {
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_USERS_TABLE'];
 
-      $query = "SELECT product FROM $table WHERE email = '$email' ";
+      $query = "SELECT product FROM $table WHERE email = '$from_email_address' ";
 
        $results_array = array();
        $result = $conn->query($query);
