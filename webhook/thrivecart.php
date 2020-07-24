@@ -59,7 +59,7 @@ switch( $event ) {
     $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
     logit($email,$json_data, "Subscription_cancelled, result: $result");
     $theMessage = "Account $email has cancelled!";
-    sendNotification($email,'Cancellation Notice',$theMessage);
+//    sendNotification($email,'Cancellation Notice',$theMessage);
     echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.refund':
@@ -210,15 +210,15 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
 		echo "engagemoreacct: " . $engagemoreacct . "<br />";
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product
-            $message = " - One month free/$99 mo. for product $product";
+            $message = " - One month free\/$99 mo. for product $product";
           }
           if( $product == "product-16") { // 2 months free and discounted rate
-            $message = " - Special $990/yr. for $690/yr. product $product";
+            $message = " - Special $990\/yr. for $690/yr. product $product";
           }
           if( $product == "product-17") { // discounted rate
-            $message = " - Special $99/mo. for $69/mo. product $product";
+            $message = " - Special $99\/mo. for $69/mo. product $product";
           }
-          logit($from_email_address, $json_data, "SUCCESS: Added to account: $group_name, $message");
+          logit($from_email_address, $json_data, "SUCCESS: Added to account: $group_name . " " . $message");
 	echo "SUCCESS: Added " . $from_email_address . " to account " . $group_name . " " . $message . "<br />";
       } // end not invadelid engagemoreid, so it was created.
     } // end account does not exist - create it

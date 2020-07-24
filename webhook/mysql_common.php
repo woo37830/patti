@@ -83,7 +83,7 @@ function logit($user, $json, $my_status)
       , '$rev'
       , '$branch'
       )";
-
+      $sql = str_replace("\/","_",$sql);
       if (!$res = $conn->query($sql))
       {
                  $err
@@ -96,7 +96,7 @@ function logit($user, $json, $my_status)
               ;
               mysqli_close($conn);
               // logging the error
-              error_log("An error occurred processing $sql for $user with json: $json");
+              error_log("An error occurred processing $user");
 
               echo "\nError processing query $sql\n";
               trigger_error($err, E_USER_ERROR);
