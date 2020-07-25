@@ -218,7 +218,7 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
           if( $product == "product-17") { // discounted rate
             $message = " - Special $99\/mo. for $69/mo. product $product";
           }
-          logit($from_email_address, $json_data, "SUCCESS: Added to account: $group_name . " " . $message");
+          logit($from_email_address, $json_data, "SUCCESS: Added to account: $group_name - $message");
 	echo "SUCCESS: Added " . $from_email_address . " to account " . $group_name . " " . $message . "<br />";
       } // end not invadelid engagemoreid, so it was created.
     } // end account does not exist - create it
