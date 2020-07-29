@@ -8,10 +8,12 @@ require '../webhook/utilities.php';
 
 $today = date("D M j G:i:s T Y");
 $email = array();
-$email[0] = "John Wooten<jwooten37830@icloud.com>";
+$email[0] = "John Wooten, Ph.D.<jwooten37830@icloud.com>";
 $email[1] = "Patti - AZ Sampson <patti@exposedagent.com>";
 $email[2] = "AllClients support+id30186@allclients.zendesk.com";
 $email[3] = "John <john@email.com>";
+$email[4] = "john@email.com";
+$email[4] = "John.wooten@quantellia.com";
 for( $i = 0; $i < sizeof($email); $i++ )
 {
 $names = firstAndLastFromEmail($email[$i]);

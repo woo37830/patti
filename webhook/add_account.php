@@ -5,6 +5,7 @@ function add_account($api_endpoint, $account_id, $api_key, $account,
 /**
  * Specify URL and form fields for AddContact API function.
  */
+ $email = get_email_from_rfc_email($email);
 echo "add_account: " . $group_name . ", " . $email . ", " . $product . ", " . $account['password'] . "<br />";
 $url = $api_endpoint . 'AddAccount.aspx';
 

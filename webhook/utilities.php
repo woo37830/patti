@@ -88,17 +88,28 @@ function firstAndLastFromEmail($email)
 //  echo "\n$displayname\n";
   $email = get_email_from_rfc_email($email);
   $pieces = array();
+  $surName = explode(",", $displayname);
+//  print_r($surName);
+  if( sizeof( $surName ) > 1 ) {
+    $displayname = $surName[0];
+  }
   $thePieces = explode(" ", $displayname);
 //  print_r($thePieces);
-  if( sizeof($thePieces) > 2 )
+  switch( sizeof($thePieces) )
   {
+    case 4:
+    case 3:
+    case 2:
       $pieces[0] = $thePieces[0];
       $pieces[1] = $thePieces[sizeof($thePieces)-1];
-  } else if( sizeof($thePieces) == 1 ) {
-    $pieces[0] = $thePieces[0];
-    $pieces[1] = 'Last';
-  } else {
-    $pieces = $thePieces;
+      break;
+    case 1:
+      $pieces[0] = $thePieces[0];
+      $pieces[1] = 'Last';
+      break;
+    case 0:
+      $pieces = $thePieces;
+      break;
   }
   array_push($pieces, $email);
 //  print_r($pieces);
@@ -110,15 +121,24 @@ function get_displayname_from_rfc_email($rfc_email_string) {
     if( $pos !== false )
     {
       $name = delete_all_between('<','>', $rfc_email_string);
-      return $name;
+      return $name; // return what's not between < and >
     }
     else
-    {
+    { // there is no < > in the email string
       $pos = strstr($rfc_email_string, ' ');
       if( $pos != false )
       {
         $pieces = explode(" ", $rfc_email_string);
         return $pieces[0];
+      }
+      $parts = explode("@", $rfc_email_string);
+      $pos = strstr($parts[0], '.');
+      if( $pos != false )
+      {
+        $pieces = explode(".", $parts[0]);
+        $pieces[0] = ucfirst($pieces[0]);
+        $pieces[1] = ucfirst($pieces[1]);
+        return "$pieces[0] $pieces[1]";
       }
       return "First Last";
     }

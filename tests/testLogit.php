@@ -10,9 +10,9 @@ $from = "John Wooten<jwooten37830@icloud.com>";
 $to = "jwooten37830@gmail.com";
 $messageId = 123;
 $subject = "Test AddContactNote";
-$message = "This is a test";
+$message = "This is a test of 69\/mo. ";
 $attachmentLog = "A note about an attachment";
-$postArray = "The <br />complete data<br /> received in the <xml><value>request</value></xml>";
+$postArray = "The <br />complete data<br /> received \/ in the <xml><value>request</value></xml>";
 
 echo "\n Using $from and a postArray with xml tags '$postArray'\n";
 logit($from, $postArray, $message);
