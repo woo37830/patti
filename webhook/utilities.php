@@ -131,10 +131,10 @@ function get_displayname_from_rfc_email($rfc_email_string) {
         $pieces = explode(" ", $rfc_email_string);
         return $pieces[0];
       }
-      $pos = strstr($rfc_email_string, '.');
+      $parts = explode("@", $rfc_email_string);
+      $pos = strstr($parts[0], '.');
       if( $pos != false )
       {
-        $parts = explode("@", $rfc_email_string);
         $pieces = explode(".", $parts[0]);
         $pieces[0] = ucfirst($pieces[0]);
         $pieces[1] = ucfirst($pieces[1]);

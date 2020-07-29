@@ -1,5 +1,10 @@
 <?php
 // Test the addContactNote
+session_start(); //don't forget to do this
+$location = "/patti/tests/testAddContactNote.php";
+if( !isset($_SESSION['auth']) ) {
+  require('fancyAuthentication.php');
+}
 
 
 require '../webhook/add_contact_note.php';
