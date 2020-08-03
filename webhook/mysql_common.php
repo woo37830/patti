@@ -48,8 +48,6 @@ function logit($user, $json, $my_status)
   // setting the logging file in php.ini
   ini_set('error_log', $log_file);
 
-//  error_log("Received json: $json for $user");
-
   $names = firstAndLastFromEmail($user);
   $first_name = $names[0];
   $last_name = $names[1];
@@ -64,7 +62,8 @@ function logit($user, $json, $my_status)
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
       $user_email = $from_email_address;
-      $stripped_json = "See json.logs";
+      $stripped_json = "See json logs for $user_email";
+
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
       $sql = "INSERT INTO $table

@@ -8,6 +8,12 @@ require 'change_account_status.php';
 require 'upgrade_account.php';
 require 'utilities.php';
 require '../smtp/notify.php';
+require_once 'mylib.php';
+
+$log_file = "./mysql-errors.log";
+$log = new Logging();
+$log->lfile("./json-data.log");
+
 /**
  * AllClients Account ID and API Key.
  */
@@ -45,12 +51,12 @@ if( empty( $event ) ) {
   logit("INVALID", $json_data, "No event provided");
    die('No event provided');
 }
+$log->lwrite("$email,$json_data");
+
 //$email = get_email_from_rfc_email($email);
 switch( $event ) {
   case 'order.success':
-    logit($email,$json_data,"Received order.success");
     handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data);
-    echo "Received order.success<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.subscription_payment':
     handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data);
@@ -218,7 +224,7 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
           if( $product == "product-17") { // discounted rate
             $message = " - Special $99\/mo. for $69/mo. product $product";
           }
-          logit($from_email_address, $json_data, "SUCCESS: Added to account: $group_name - $message");
+  logit($from_email_address, $json_data, "SUCCESS: Added to account: $group_name - $message");
 	echo "SUCCESS: Added " . $from_email_address . " to account " . $group_name . " " . $message . "<br />";
       } // end not invadelid engagemoreid, so it was created.
     } // end account does not exist - create it
