@@ -11,3 +11,4 @@ webhook/config.ini.php
 *.log
 *.gz
 *.toc
+config.ini.php
