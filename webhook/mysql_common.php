@@ -64,7 +64,7 @@ function logit($user, $json, $my_status)
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
       $user_email = $from_email_address;
-      $stripped_json = strip_tags($json);
+      $stripped_json = "See json.logs";
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
       $sql = "INSERT INTO $table
@@ -98,7 +98,6 @@ function logit($user, $json, $my_status)
               // logging the error
               error_log("An error occurred processing $user");
 
-              echo "\nError processing query $sql\n";
               trigger_error($err, E_USER_ERROR);
        }
        else
