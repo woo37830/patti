@@ -2,84 +2,46 @@
   /**
    * AllClients Account ID and API Key.
    */
-$account_id = '[ SET ACCOUNT ID ]';
-$api_key    = '[ SET API KEY ]';
-$text_magic_api_key = '[AIMRx8N1BKnpfiIAJEVUSdmqUbTt08]';
-$text_magic_to_address = '[textmagic.com]';
-$headers = "From: patti@engagemorecrm.com\r\n";
+   require '../webhook/config.ini.php';
+   require_once '../webhook/thrivecart_api.php';
 
-/**
- * The API endpoint and time zone.
- */
-$api_endpoint = 'http://www.allclients.com/api/2/';
-$api_timezone = new DateTimeZone('America/New_York');
+   require_once '../webhook/mysql_common.php';
+   require_once '../webhook/utilities.php';
+   $account_id   = $config['MSG_USER'];
+   $api_key      = $config['MSG_PASSWORD'];
+   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
+
+   $url = $api_endpoint . 'GetAccounts.aspx';
 
 /**
  * Newline character, to support browser or CLI output.
  */
 $nl = php_sapi_name() === 'cli' ? "\n" : "<br>";
 
-/**
-  * Post data to URL with cURL and return result XML string.
-  *
-  * Outputs cURL error and exits on failure.
-  *
-  * @param string $url
-  * @param array  $data
-  *
-  * @return string
-  */
-function post_api_url($url, array $data = array()) {
-    global $nl;
-    // Initialize a new cURL resource and set the URL.
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    // Form data must be transformed from an array into a query string.
-    $data_query = http_build_query($data);
-    // Set request type to POST and set the data to post.
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_query);
-    // Set cURL to error on failed response codes from AllClients server,
-    // such as 404 and 500.
-    curl_setopt($ch, CURLOPT_FAILONERROR, true);
-    // Set cURL option to return the response from the AllClients server,
-    // otherwise $output below will just return true/false.
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    // Post data to API.
-    $output = curl_exec($ch);
-    // Exit on cURL error.
-    if ($output === false) {
-       // It is important to close the cURL session after curl_error()
-       printf("cURL returned an error: %s{$nl}", curl_error($ch));
-       curl_close($ch);
-       exit;
-    }
-    // Close the cURL session
-    curl_close($ch);
-    // Return response
-    return $output;
- }
+
 
 /**
  * Specify URL and form fields for GetContacts API function.
  */
-$url = $api_endpoint . 'GetContacts.aspx';
+$url = $api_endpoint . 'GetAccounts.aspx';
 $data = array(
     'accountid' => $account_id,
     'apikey'    => $api_key,
  );
 
-if ( true ) {
-#  if(mail("jwooten37830@me.com","Test Email","This is a test of emailing myself",$headers)) {
-#   print("Sent an email{$nl}");
-#} else {
-#   print("Failed to send email message{$nl}");
-#}
-  if(mail("16028181667@textmagic.com","Test","This is a test text message from AlClients",$headers)) {
-     print("Sent a text a message to Patti{$nl}");
-  } else {
-     print("Unable to send text message{$nl}");
-  }
-     exit;
-}
+ $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
+
+ if (isset($results_xml->error)) {
+ //  echo "\nresults_xml: " . $results_xml . "\n";
+   echo "\nFailure: " . $results_xml->error . "\n";
+   logit($email,$results_xml->error, "FAILURE: get_accounts.php: $results_xml->error" );
+   die ("FAILURE: $results_xml->error");
+ }
+//  var_dump($results_xml);
+ $accounts = array();
+ foreach($results_xml->accounts as $account){
+     array_push($accounts, $account);
+ }
+ return $accounts;
+
 ?>

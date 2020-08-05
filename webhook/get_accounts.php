@@ -1,5 +1,5 @@
 <?php
-function getAccounts($today, $email)
+function getAccounts()
 {
   require '../webhook/config.ini.php';
   require_once '../webhook/thrivecart_api.php';
@@ -12,11 +12,13 @@ function getAccounts($today, $email)
 
   $url = $api_endpoint . 'GetAccounts.aspx';
 
+  $agentId = getAccountId( 'jwooten37830@icloud.com' );
 
   $data = array(
-  	'apiusername' => $account_id,
-  	'apipassword'    => $api_key
+    'apiusername' => $account_id,
+    'apipassword' => $api_key
   );
+
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 
   /**
@@ -35,10 +37,10 @@ function getAccounts($today, $email)
     logit($email,$results_xml->error, "FAILURE: get_accounts.php: $results_xml->error" );
     die ("FAILURE: $results_xml->error");
   }
-//  var_dump($results_xml);
   $accounts = array();
+
   foreach($results_xml->accounts as $account){
-      array_push($accounts, $account);
+    array_push($accounts, $account);
   }
   return $accounts;
 

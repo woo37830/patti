@@ -8,6 +8,7 @@ $today = date("D M j G:i:s T Y");
 $from = "jwooten37830@icloud.com";
 
 $contacts = getContacts($today, $from);
+echo "\nContacts for $from as of $today\n";
 $k = 1;
 foreach($contacts as $contact){
   $active = $contact->inactive == "False" ? "active" : "inactive";

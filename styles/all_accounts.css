@@ -1,0 +1,37 @@
+ <style type="text/css" media="screen"> html {
+     background-color: #c8dcff;
+}
+ .topdiv {
+     background-color: #c8dcff;
+     color:white;
+     overflow:auto;
+}
+ .topdiv_wrap {
+     width:980px;
+     overflow:auto;
+     margin: 0 auto;
+}
+ .topdiv_header {
+     background-color:#ccc;
+     padding: 15px 25px;
+     height:30px;
+}
+ .topdiv_menu {
+     color:black;
+     font-weight:bold;
+     background:#ffc;
+     padding: 10px 25px;
+     font-size:14px;
+}
+ </style> <div class="topdiv"> <div class="topdiv_wrap">
+  <div class="topdiv_header">
+    <div style="float:left;">
+      <img src="images/wlcrm/widgetlogo.png" width="200" height="35">
+    </div>
+    <div style="float:right;">
+      <input type="button" value="logout" onclick="window.location.href='/Logout.aspx'">
+    </div>
+  </div>
+  <div class="topdiv_menu">
+   Company Web Site | Company Events | Support | Services | Store </div> 
+  </div>
