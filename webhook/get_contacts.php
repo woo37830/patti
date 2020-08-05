@@ -24,7 +24,7 @@ function getContacts($today, $from)
     logit($from_email_address,$first_name, "FAILURE: no engagemorecrm id" );
     exit;
   }
-  echo "\nGot agentId = $agentId on lookup of $from_email_address in get_contacts.php\n";
+  //echo "\nGot agentId = $agentId on lookup of $from_email_address in get_contacts.php\n";
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
