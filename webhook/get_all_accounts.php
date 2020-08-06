@@ -33,9 +33,8 @@ function getAllAccounts()
     echo "\nFailure: " . $results_xml->error . "<br />\n";
     return $results_xml->error;
   }
-  var_dump($results_xml);
   $accounts = array();
-  foreach($results_xml->accounts as $account){
+  foreach($results_xml->accounts->account as $account){
     array_push($accounts, $account);
   }
 
