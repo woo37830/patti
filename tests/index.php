@@ -64,7 +64,10 @@ footer
   <tbody>
   <tr><td><a href="../webhook/monthly_report.php">Monthly Report</a></td><td>Get a monthly report</td><td>Add input for month</th></tr>
   <tr><td><a href="../billing.php">Billing Report</a></td><td>Get a report on Billing</td><td>Add input for month</th></tr>
-  <tr><td><a href="./getAccountId.php">Get Account Id</a></td><td>Get the account id for an email</td><td>Result xml seems bad</td></tr>
+  <tr><td><a href="./getAccountId.php">Get Account Id</a></td><td>Get the account id for an email</td><td></td></tr>
+  <tr><td><a href="./GetAllAccounts.php">Listing of All Accounts</a></td><td>Listing of all Engagemore Accounts</td><td></td></tr>
+  <tr><td><a href="./GetAllUsers.php">Get All Users</a></td><td>Listing of all users in users_db.users</td><td></td></tr>
+  <tr><td><a href="./Consistency.php">Consistency Report</a></td><td>Check for extra or missing account information</td><td>Add check for order id, etc.</td></tr>
   <tr><td>Add Contact</td><td>Add a contact to an account</td><td>Add authentication</td></tr>
   <tr><td>Add Contact Note</td><td>Create a note and add it to a contact</td><td>Add authentication</td></tr>
   <tr><td>GetContact</td><td>Get a contact using their email</td><td></td></tr>
