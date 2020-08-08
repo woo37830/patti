@@ -12,3 +12,4 @@ webhook/config.ini.php
 *.gz
 *.toc
 config.ini.php
+/nbproject/private/

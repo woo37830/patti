@@ -2,13 +2,13 @@
 <head>
   <style type="text/css" media="screen">
 html {
-//      background-color: #c8dcff;
+/*      background-color: #c8dcff; */
  }
 
 body
 {
     color:#404040;
-#    background-color: powderblue;
+/*   background-color: powderblue; */
     font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 
@@ -114,15 +114,18 @@ echo "<table id='accounts'>" .
     "<tr><th>ID</th><th>Email</th><th>Full Name</th><th>Status</th><th>Since</th></tr>".
   "</thead>".
   "<tbody>";
-
+$acctsfile = fopen("/tmp/Accounts.csv", "w");
+fwrite($acctsfile, "ID,Email,Full Name,Status,Since\n"); // Write Header
 foreach($accounts as $account){
   if(  getUser( $account->email, $users ) == -1 )
   {
     if( (strpos($account->email,"@") !== false) ) {
       showAccount( $account );
+      fwrite($acctsfile,"$account->accountid,$account->email,\"$account->mailmerge_fullname\",$account->account_status,$account->create_date\n");
     }
   }
 }
+fclose($acctsfile);
 echo "</tbody></table>";
 
 // Loop through users, see if there is an account for each user
@@ -137,14 +140,23 @@ echo "<table id='tests'>".
   "<tr><th>ID</th><th>Email</th><th>EngagemoreID</th><th>Order</th><th>Invoice</th><th>Product</th><th>Status</th><th>Since</th></tr>".
   "</thead>".
   "<tbody>";
-
+$usersfile = fopen("/tmp/Users.csv", "w");
+fwrite($usersfile, "ID,Email,EngagemoreID,Order,Invoice,Product,Status,Since\n"); // Write Header
 foreach($users as $user){
 //    print_r($user);
   if( getAccount( $user['email'], $accounts ) == -1 ) {
     showData( $user );
+  fwrite($usersfile,$user['id'].",".
+          $user['email'].",".
+          $user['engagemoreid'].",".
+          $user['orderid'].",".
+          $user['invoiceid'].",".
+          $user['product'].",".
+          $user['status'].",".
+          $user['added']."\n");
   }
 }
-
+fclose($usersfile);
 
 echo "</tbody></table>";
 
