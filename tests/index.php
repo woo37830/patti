@@ -67,8 +67,8 @@ footer
   <tr><td><a href="./getAccountId.php">Get Account Id</a></td><td>Get the account id for an email</td><td></td></tr>
   <tr><td><a href="./GetAllAccounts.php">Listing of All Accounts</a></td><td>Listing of all Engagemore Accounts</td><td></td></tr>
   <tr><td><a href="./GetAllUsers.php">Get All Users</a></td><td>Listing of all users in users_db.users</td><td></td></tr>
-  <tr><td><a href="./Consistency.php">Consistency Report</a></td><td>Check for extra or missing account information</td><td>Add check for order id, etc.</td></tr>
-  <tr><td>Add Contact</td><td>Add a contact to an account</td><td>Add authentication</td></tr>
+  <tr><td><a href="./Consistency.php">Consistency Report</a></td><td>Check for extra or missing account information,csv files to tmp</td><td>Add check for order id, etc.</td></tr>
+  <tr><td><a href="./testAddContact.php">Add Contact</a></td><td>Add a contact to an account</td><td>Add authentication</td></tr>
   <tr><td>Add Contact Note</td><td>Create a note and add it to a contact</td><td>Add authentication</td></tr>
   <tr><td>GetContact</td><td>Get a contact using their email</td><td></td></tr>
   <tr><td>Get Contacts</td><td>Get the list of contacts for an account</td><td></td></tr>
