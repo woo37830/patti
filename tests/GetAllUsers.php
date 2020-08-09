@@ -1,3 +1,13 @@
+<?php
+// Test the addContactNote
+session_start(); //don't forget to do this
+$location = "/patti/tests/GetAllUsers.php";
+if( !isset($_SESSION['auth']) ) {
+  require('fancyAuthentication.php');
+}
+
+
+?>
 <html>
 <head>
   <style type="text/css" media="screen">
@@ -64,25 +74,37 @@ table {
 </style>
 </head>
 <body>
+    <center>
+  <br />
+  <h1>EngagemoreCRM Users</h1>
   <div id='page'>
     <div id='content'>
+<?php
+require '../webhook/add_contact.php';
+require '../webhook/config.ini.php';
+require '../webhook/mysql_common.php';
+require '../webhook/utilities.php';
+
+$today = date("D M j G:i:s T Y");
+echo "<center>$today<br /><hr />";
+
+  if( isset($_REQUEST['id'])) {
+      echo "<h2>submit id = ".$_REQUEST['id']."</h2>";
+      echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+  } else {
+
+?>
       <table id='tests'>
         <thead>
           <tr><th>#</th><th>ID</th><th>Email</th><th>EngagemoreID</th><th>Order</th><th>Invoice</th><th>Product</th><th>Status</th><th>Since</th></tr>
         </thead>
         <tbody>
 <?php
-// Test the addContactNote
-
-
-require '../webhook/mysql_common.php';
-
-$today = date("D M j G:i:s T Y");
 $users = getAllUsers();
 $k = 1;
 foreach($users as $user){
 //    print_r($user);
-    echo "<tr><td>" . $k++ . "</td><td>".$user['id'].
+    echo "<tr><td>" . $k++ . "</td><td><a href='./GetAllUsers.php?id=".$user['id']."'>".$user['id']."</a>".
       "</td><td>".$user['email'].
       "</td><td>".$user['engagemoreid'].
       "</td><td>".$user['orderid'].
@@ -95,7 +117,8 @@ foreach($users as $user){
 
 
 echo "</tbody></table>";
-echo "<footer>";
+  } // end of showing users
+echo "</center><footer>";
 include '../webhook/git-info.php';
 echo "</footer></div></div></div></body></html>";
 
