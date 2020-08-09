@@ -1,10 +1,9 @@
 <?php
-// Test the addContactNote
-session_start(); //don't forget to do this
-$location = "/patti/tests/testAddContact.php";
-if( !isset($_SESSION['auth']) ) {
+  session_start(); //don't forget to do this
+  $location = "/patti/tests/testAddContact.php";
+
   require('fancyAuthentication.php');
-}
+
 
 
 ?>

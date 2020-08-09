@@ -1,4 +1,12 @@
-<html>
+<?php
+  session_start(); //don't forget to do this
+  $location = "/patti/tests/GetAllUsers.php";
+
+  require('fancyAuthentication.php');
+
+
+
+?><html>
 <head>
   <style type="text/css" media="screen">
 html {
