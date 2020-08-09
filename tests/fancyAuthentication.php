@@ -14,6 +14,7 @@ if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Logout') {
   echo "You have been logged out.<br />";
 }
 
+if( !isset($_SESSION['loggedIn']) ) {
 $validated = (in_array($user, $valid_users)) && ($pass == $valid_passwords[$user]);
 
 if (!$validated ) {
@@ -42,7 +43,8 @@ if (!$validated ) {
 
 // If arrives here, is a valid user.
 $_SESSION['loggedIn'] = $user;
-echo "<p>Welcome $user.</p>";
+}
+echo "<p>Welcome ".$_SESSION['loggedIn']."</p>";
 echo "<br />";
 
 
