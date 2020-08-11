@@ -48,18 +48,14 @@ footer
 
 table {
   border-collapse: collapse;
+}
+
+table, th, td {
+  width: 90vw;
   border: 1px solid black;
+  padding: 5px 5px 5px 5px;
 }
-
-#tests table {
-  border: 1px;
-}
-
-#tests tr th {
-  border: 1px solid #000;
-  padding: 10px;
-}
-#tests tr td {
+table, tr th {
   border: 1px solid #000;
   padding: 10px;
 }
@@ -89,10 +85,42 @@ $today = date("D M j G:i:s T Y");
 echo "<center>$today<br /><hr />";
 
   if( isset($_REQUEST['id'])) {
-      echo "<h2>submit id = ".$_REQUEST['id']."</h2>";
-      echo "<br /><a href='./GetAllUsers.php' >Back</a>";
-  } else {
+      echo "<h2>id: ".$_REQUEST['id']."</h2>";
+      $user = getUser($_REQUEST['id'])[0];
+      echo "<form type='POST' >";
+      echo "<table id='user'>";
+      echo "<thead>";
+      echo "<tr><th>Field</th><th>Value</th></tr>";
+      echo "</thead><tbody>";
+      echo "<tr><td>Email</td><td>".$user['email']."</td></tr>".
+      "<tr><td>EngagemoreID</td><td><input type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
+      "<tr><td>OrderID</td><td>".$user['orderid']."</td></tr>".
+      "<tr><td>InvoiceID</td><td>".$user['invoiceid']."</td></tr>".
+      "<tr><td>ProductID</td><td>".$user['product']."</td></tr>".
+      "<tr><td>Status</td><td>".$user['status']."</td></tr>".
+      "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
 
+      echo "<br /><input type='submit' name='Update' value='Update'/>";
+      echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
+      echo "</form>";
+      echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+  } else
+    if( isset($_REQUEST['Delete']) ) {
+      echo "<h2>Are You Sure (Y/N)?</h2><br /><br />";
+      echo "<form type='POST' >";
+      echo "<input type='submit' name='YES' value='YES' />";
+      echo "&nbsp;&nbsp;<input type='submit' name='NO' value='NO' />";
+      echo "</form>";
+      echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+    } else
+      if( isset($_REQUEST['YES']) ) {
+        echo "<h2>This suckers GONE!</h2>";
+        echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+    } else
+     if( isset($_REQUEST['Update']) ) {
+       echo "<h2>This suckers UPDATED!</h2>";
+       echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+     } else {
 ?>
       <table id='tests'>
         <thead>
