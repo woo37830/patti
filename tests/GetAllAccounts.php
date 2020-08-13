@@ -81,8 +81,7 @@ $today = date("D M j G:i:s T Y");
 $accounts = getAllAccounts();
 $k = 1;
 foreach($accounts as $account){
-  $active = $account->status;
-  echo "<tr><td>" . $k++ . "</td><td> $account->accountid</td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$active</td><td>$account->create_date</td></tr>";
+  echo "<tr><td>" . $k++ . "</td><td> $account->accountid</td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
 }
 
 

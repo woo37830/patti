@@ -85,7 +85,7 @@ function showData( $user ) {
 function showAccount($account ) {
   echo "<tr><td> $account->accountid</td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
 }
-function getUser( $email, $users ) {
+function getAUser( $email, $users ) {
   foreach($users as $user) {
     if( $user['email'] == $email ) {
       return $user;
@@ -117,7 +117,7 @@ echo "<table id='accounts'>" .
 $acctsfile = fopen("/tmp/Accounts.csv", "w");
 fwrite($acctsfile, "ID,Email,Full Name,Status,Since\n"); // Write Header
 foreach($accounts as $account){
-  if(  getUser( $account->email, $users ) == -1 )
+  if(  getAUser( $account->email, $users ) == -1 )
   {
     if( (strpos($account->email,"@") !== false) ) {
       showAccount( $account );

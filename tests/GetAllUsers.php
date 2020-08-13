@@ -30,6 +30,7 @@ body
 
 #content
 {
+  width: 90vw;
   padding-bottom: 1.5rem; /* Footer height */
 }
 
@@ -50,20 +51,30 @@ table {
   border-collapse: collapse;
 }
 
-table, th, td {
+#tests table, th, td {
   width: 90vw;
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
 }
-table, tr th {
+#tests table, tr th {
   border: 1px solid #000;
   padding: 10px;
 }
 
+#user table, th, td {
+  width: 50vw;
+  border: 1px solid black;
+  padding: 5px 5px 5px 5px;
+}
 
 
 /* Zebra stripe */
 #tests tr:nth-child(odd) {
+  background: #f4f4f4;
+}
+
+/* Zebra stripe */
+#user tr:nth-child(odd) {
   background: #f4f4f4;
 }
 
@@ -88,16 +99,16 @@ echo "<center>$today<br /><hr />";
       echo "<h2>id: ".$_REQUEST['id']."</h2>";
       $user = getUser($_REQUEST['id'])[0];
       echo "<form type='POST' >";
-      echo "<table id='user'>";
+      echo "<table id='user' >";
       echo "<thead>";
       echo "<tr><th>Field</th><th>Value</th></tr>";
       echo "</thead><tbody>";
       echo "<tr><td>Email</td><td>".$user['email']."</td></tr>".
       "<tr><td>EngagemoreID</td><td><input type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
-      "<tr><td>OrderID</td><td>".$user['orderid']."</td></tr>".
-      "<tr><td>InvoiceID</td><td>".$user['invoiceid']."</td></tr>".
-      "<tr><td>ProductID</td><td>".$user['product']."</td></tr>".
-      "<tr><td>Status</td><td>".$user['status']."</td></tr>".
+      "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$user['orderid']."\" </td></tr>".
+      "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
+      "<tr><td>ProductID</td><td><input type=\"text\" name=\"product\" value=\"".$user['product']."\" </td></tr>".
+      "<tr><td>Status</td><td><input type=\"text\" name=\"status\" value=\"".$user['status']."\" </td></tr>".
       "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
 
       echo "<br /><input type='submit' name='Update' value='Update'/>";
@@ -148,7 +159,7 @@ echo "</tbody></table>";
   } // end of showing users
 echo "</center><footer>";
 include '../webhook/git-info.php';
-echo "</footer></div></div></div></body></html>";
+echo "</footer></div></div></div>";
 
 ?>
 </body>
