@@ -1,0 +1,4 @@
+{
+    "woo": { "passwd":"random1", "role":"mgr", "org":"Shoulders"},
+    "ralph": { "passwd":"ralph", "role":"grunt", "org":"Shoulders"}
+}

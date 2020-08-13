@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<!-- $Author: woo $   -->
+<!-- $Date: 2016/03/17 15:35:51 $     -->
+<!-- $Revision: 1.8 $ -->
+<!-- $Source: /Users/woo/cvsrep/queue/index.html,v $   -->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
+	<title>Workflow Demo</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="_js/nav1.1.min.js" id="navJS"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
+    <LINK REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
+    <!-- link rel="stylesheet" href="_css/jquery.tablesorter.pager.css" / -->
+	<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+ 	<script type="text/javascript" src="_js/cookies.js" > </script>
+ 	<script type="text/javascript" src="_js/home.js"> </script>
+    <script type="text/javascript" class="init">
+        var Request;
+        var uName;
+        var uRole;
+        var uOrg;
+        var data;
+        var json;
+        $(document).ready(function() {
+            $(document).on('click','#log_in', function() {
+                    $.ajax({
+                        url: "./users.txt",
+                        dataSrc: "users",
+                        success: function(data) {
+                            json = $.parseJSON(data);
+                            login();
+                        }
+                    });
+            });
+            $("#log_out").hide();
+            $(document).on('click','#log_out', function() {
+                logout();
+            });
+            $("#navigation").hover(function(){
+                alert('hovering');
+                    $(this).children('ul').hide();
+                    $(this).children('ul').slideDown('fast');
+                },
+            function () {
+                $('ul', this).slideUp('fast');
+            });
+    });
+    </script>
+</head>
+<body
+    <div class="wrapper">
+	    <div class="content">
+          <div id="user"></div>
+          <div id="role"></div>
+          <div id="org"></div>
+	      <!-- insert header.jsp stuff -->
+        <div class="header" id="header">
+	      <center>
+	      <div id="log_in">Login</div>
+    <!-- This is done on the server, request should have filled in userToken -->
+    <table cellpadding="0" cellspacing="0" width="100%" >
+        <tr>
+            <td width="150" height="100" align="center" valign="middle">
+                <a href="http://www.shoulderscorp.com">
+                    <IMG id="logo" SRC="_images/scLogo.jpg" width="150" height="50" alt="Version: 1.0" border="0" >
+                </a>
+            </td>
+            <td>
+                <table id="header-table">
+                    <tr id="app" title="View Application">
+                        <td>&nbsp;Application:&nbsp;&nbsp;</td>
+                        <td id="doApplication"></td>
+                    </tr>
+                    <tr id="process" title="View Process">
+                        <td>&nbsp;Process:&nbsp;&nbsp;</td>
+                        <td id="doProcess"></td>
+                    </tr>
+                    <tr id="debug-token">
+                        <td>&nbsp;UserToken:&nbsp;&nbsp;</td>
+                        <td id="token"></td>
+                    </tr >
+
+                    <tr>
+                        <td>&nbsp;Job:&nbsp;&nbsp;</td>
+                        <td id="doJob"></td>
+                    </tr >
+                </table>
+            </td>
+            <td align="right" width="100%">
+
+                <table id="header-nav" cellPadding="0" cellSpacing="0" width="100%"  align="left">
+                    <tr valign="top" >
+                        <td align="right" valign="middle" >
+                            <table border="0" cellPadding="2" cellSpacing="4">
+                                <tr>
+                                    <td>&nbsp;User:&nbsp;&nbsp;</td>
+                                    <td id="userName" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Edit User Prefs"><a href="editPrefs.jsp?userName=<%=userName%>&userToken=<%=userToken%>" title="User Preferences"></a></td>
+                                    <td id="home-td"  ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Home"><img alt="Home" src="_images/Home.gif" width="27" height="25">
+                                    </td>
+                                    <td id="bugs" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Problem Reports"><img alt="Bugs" src="_images/bug.gif" width="27" height="25">
+                                    </td>
+                                    <td id="notes" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Notes"><img alt="Notes" src="_images/Notes.gif" width="27" height="25">
+                                    </td>
+                                    <td ONCLICK="supportCenter(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Support"><img alt="Support" src="_images/support.gif"  width="27" height="25">
+                                    </td>
+
+                                    <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Site Map"><img alt="Site Map" src="_images/sitemap.gif"  width="27" height="25">
+                                    </td>
+                                    <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Products"><img alt="Products" src="_images/products.gif"  width="27" height="25">
+                                    </td>
+                                    <td id="log_in" ONCLICK="logout();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap title="Log Out"><img alt="Log Out" src="_images/logout.jpg"  width="27" height="25">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</center>
+
+<div id="error-div">
+    <!-- if (request.getParameter( "_error" ) != null)
+        {%> <%=request.getParameter( "_error" )%> <% }% -->
+</div> <!-- end of error-div -->
+<hr/>
+                <div id="dropDownDest">
+                </div> <!-- end of dropDownDest -->
+</div> <!-- end of header -->
+          <div class="title" id="myTitle">Welcome to Our Page</div>
+          <div id="debug"></div>
+          <div id="info"></div>
+          <div id="page"></div>
+	</div> <!-- end of content -->
+</div> <!-- end of wrapper -->
+    <div class="footer">
+        <p>Created by J. W. Wooten, Ph.D. gitinfo();</p>
+    </div>
+	<div id="lin" class="easyui-dialog" style="width:400px;height:200px;padding:10px 20px"
+			closed="true" buttons="#lin-buttons">
+		<div class="ftitle">Login</div>
+		<form id="lfm" method="post" novalidate>
+			<div class="fitem">
+				<label>User:</label>
+				<input name="user" class="easyui-textbox" id="userid" required="true">
+			</div>
+			<div class="fitem">
+				<label>Password:</label>
+				<input name="passwd" type="password" class="easyui-textbox" id="password" required="true">
+			</div>
+		</form>
+	</div>
+	<div id="lin-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="authorize()" style="width:90px">Login</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#lin').dialog('close')" style="width:90px">Cancel</a>
+	</div>
+<script type="text/javascript">
+	if( readCookie("logged_in") ) {
+	                $("#user").text(getFromCookie("logged_in", "uName"));
+	                $("#userName").text(getFromCookie("logged_in", "uName"));
+	                $("#role").text(getFromCookie("logged_in", "uRole"));
+	                $("#org").text(getFromCookie("logged_in", "uOrg" ));
+	 	                //alert('user: '+$("#user").text()+', role: '+$("#role").text()+', org: '+$("#org").text());
+                    $("#error-div").css("visibility", "visible"); // show and set the error
+	                $("#page").load(getFromCookie("logged_in", "page"));
+	                $("#header").show();
+	                $("#dropDownDest").show();
+                    loadMenuData();
+                  $("#doApplication").text("Home");
+	                $("#doProcess").text("TaskList");
+	                $("#doJob").text("N/A");
+	} else {
+	            $("#user").text("");
+	            $("#role").text("");
+	            $("#org").text("");
+	            $("#log_out").attr('id', 'log_in');
+	            //$("#header").hide();
+	            $("#dropDownDest").hide();
+	            login();
+	        }
+
+        var days = 1;
+        function login() {
+	                $('#lfm').form('clear');
+        	        $('#lin').dialog('open').dialog('set Title', 'Login');
+	                $('#lfm').form('clear');
+            }
+	    function authorize() {
+	        // This is called when the login div is clicked.
+	        // Compare the form data to the json data and if match, createCookie, else logout;
+	        //alert("form data: " + document.getElementById("userid").value);
+            uName = document.getElementById("userid").value;
+            var pName = document.getElementById("password").value;
+            $('#lin').dialog('close');
+	        if( json[uName] && pName == json[uName].passwd ) {
+	                $("#error-div").text("");
+	                $("#log_in").text('Logout');
+	                $("#log_in").attr('id', 'log_out');
+	                uRole = json[uName].role;
+	                uOrg = json[uName].org;
+	                var cookieData = 'uName='+uName+'|uRole='+uRole+'|uOrg='+uOrg+'|page=home.page';
+	                createCookie('logged_in', cookieData, days);
+	                $("#user").text(getFromCookie("logged_in", "uName"));
+	                $("#userName").text(getFromCookie("logged_in", "uName"));
+	                $("#role").text(getFromCookie("logged_in", "uRole"));
+	                $("#org").text(getFromCookie("logged_in", "uOrg" ));
+	 	                //alert('user: '+$("#user").text()+', role: '+$("#role").text()+', org: '+$("#org").text());
+                    $("#error-div").css("visibility", "visible"); // show and set the error
+	                $("#page").load("home.page");
+	                $("#header").show();
+	                $("#dropDownDest").show();
+                  loadMenuData();
+									alert('loaded Menu Data');
+									$("#navigation ul").show();
+									$(".app").show();
+                  $("#doApplication").text("Home");
+	                $("#doProcess").text("TaskList");
+	                $("#doJob").text("N/A");
+	            } else {
+	                alert("The userName and password did not match our records");
+	                logout();
+	            }
+	        }
+	        function logout() {
+	            eraseCookie('logged_in');
+	            $("#entries").hide();
+	            uName = "";
+	            uRole = "";
+	            uOrg = "";
+	            $("#page").text("");
+	            $("#myTitle").text("Welcome to Our Page");
+	            $("#user").text("");
+	            $("#role").text("");
+	            $("#org").text("");
+	            $("#userName").text("");
+	            //$("#header").hide();
+	            $("#error-div").text("");
+	            $("#dropDownDest").hide();
+                $("#doApplication").text("");
+	            $("#doProcess").text("");
+	            $("#doJob").text("");
+	            $("#log_out").text('Login');
+	            $("#log_out").attr('id', 'log_in');
+	            //login();
+	        }
+	        function getRequests() {
+                var s1 = location.search.substring(1, location.search.length).split('&'),
+                r = {}, s2, i;
+                for (i = 0; i < s1.length; i += 1) {
+                s2 = s1[i].split('=');
+                r[decodeURIComponent(s2[0]).toLowerCase()] = decodeURIComponent(s2[1]);
+            }
+            return r;
+        };
+        function get_param(name) {
+            return Request[name.toLowerCase()];
+        }
+        function loadMenuData() {
+            $(document).find("#dropDownDest").text("");
+            menu = '<ul id="navigation" ><li class="application"><a href="#">Applications</a>';
+            $.getJSON("./shoulders.json", function( json ) {
+                var close = 0;
+                $.each(json, function( key, value) {
+                       menu += '<li class="app" id=\"'+value['app']+'\">'+value['app']+'</li>';
+                       if( close == 0 ) {
+                            menu += '<ul>';
+                            close = 1;
+                        }
+                        $.each(value['processes'], function(key2, process) {
+                            menu += '<li name="'+value['app']+'"><a href="#">'+process['process']+'</a></li>';
+                        });
+                        if( close != 0 ) {
+                            menu += '</ul>';
+                            close = 0;
+                        }
+                });
+                menu += '</ul>';
+                $(document).find("#dropDownDest").append(menu);
+  //  TODO - 200412 -woo             $("#navigation ul").hide();
+  //              $(".app").hide();
+            },
+            "json"
+            );
+         }
+			function gitinfo() {
+					return "Git Hash";
+			}
+</script>
+	<style type="text/css">
+	        #dlg-buttons div {
+	            float: left;
+	            clear: none;
+	        }
+	        #user {
+	            display: none;
+	        }
+	        #role {
+	            display: none;
+	        }
+	        #toolbar.hide {
+	            display: none;
+	        }
+	        #toolbar.show {
+	            display: block;
+	        }
+	        #sql-buttons.hide {
+	            display: none;
+	        }
+	        #sql-buttons.show {
+	            display: block;
+	        }
+	        #fm{
+			margin:0;
+			padding:10px 30px;
+		}
+		.ftitle{
+			font-size:14px;
+			font-weight:bold;
+			padding:5px 0;
+			margin-bottom:10px;
+			border-bottom:1px solid #ccc;
+		}
+		.fitem{
+			margin-bottom:5px;
+		}
+		.fitem label{
+			display:inline-block;
+			width:80px;
+		}
+		.fitem input{
+			width:160px;
+		}
+		.datatable td {
+              overflow: hidden; /* this is what fixes the expansion */
+              text-overflow: ellipsis; /* not supported in all browsers, but I accepted the tradeoff */
+              white-space: nowrap;
+        }
+        table.tablesorter { /* So it won't keep expanding */
+            table-layout: fixed
+        }
+        #title {
+			font-size:14px;
+			font-weight:bold;
+			padding:5px 0;
+			margin-bottom:10px;
+        }
+	</style>
+</body>
+</html>

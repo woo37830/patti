@@ -1,0 +1,121 @@
+    <script type="text/javascript" class="init">
+/*
+    $Author: woo $
+    $Date: 2016/03/17 15:29:26 $
+    $Revision: 1.2 $
+    $Source: /Users/woo/cvsrep/queue/home.page,v $
+*/
+        var oTable;
+    </script>
+
+                <table id="entries" class="tablesorter">
+                    <thead>
+                        <tr>
+                            <th >Entry</th>
+                            <th >Job</th>
+                            <th >Dept</th>
+                            <th >Process</th>
+                            <th >Activity</th>
+                            <th >Since</th>
+                            <th >From</th>
+                            <th >Msg</th>
+                        </tr>
+                 </table>
+                <div id="toolbar" class="show">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addEntry()">New Entry</a>
+                </div>
+
+
+	<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
+			closed="true" buttons="#dlg-buttons">
+		<div class="ftitle">Entry</div>
+		<form id="fm" method="post" novalidate>
+			<div class="fitem">
+				<label>Entry:</label>
+				<input name="entry" class="easyui-textbox" required="true">
+			</div>
+			<div class="fitem">
+				<label>Application:</label>
+				<input name="application" class="easyui-textbox" required="true">
+			</div>
+			<div class="fitem">
+				<label>Process:</label>
+				<input name="process" class="easyui-textbox">
+			</div>
+			<div class="fitem">
+				<label>Activity:</label>
+				<input name="activity" class="easyui-textbox">
+			</div>
+			<div class="fitem">
+				<label>Message:</label>
+				<input name="msg" class="easyui-textbox" data-options="multiline:true" style="height:100px">
+			</div>
+		</form>
+	</div>
+	<div id="dlg-buttons">
+	    <div id="sql_buttons" class="show-sql">
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveEntry()" style="width:90px">Save</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyEntry()" style="width:90px">Remove</a>
+	   </div>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+	</div>
+<script type="text/javascript">
+           function load_table() {
+           oTable = $("#entries").DataTable({
+            processing: true,
+            bStateSave: true,
+            ajax: {
+                url: "./get_entries.php",
+                dataSrc: "data",
+                type: "POST"
+                /*data: function(d) {
+	                d.uName = $('#user').text();
+	                d.uRole = $('#role').text();
+	                d.uOrg = $('#org').text();
+                }*/
+             },
+            "bAutoWidth": false,
+            columns: [
+                { data:  "ENTRY_NUMBER", width: "10%" },
+                { data:  "JOB_ID", width: "10%" },
+                { data:  "QUEUE_NAME" },
+                { data:  "BUSINESS_PROCESS" },
+                { data:  "JOB_STEP_ID" },
+                { data:  "CREATION_DATE" },
+                { data:  "OWNER", width: "10%" },
+                { data: "COMMENT" }
+            ]
+            });
+            }
+            /*setInterval( function() {
+                oTable.ajax.reload(null, false);
+            }, 30000 );*/
+
+            $(document).on('click','#entries tbody tr',function() {
+                var row = $(this).closest("tr");
+                //alert("The job_id is: "+$(row).find("td:nth-child(2)").text());
+                //editEntry($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(),$(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(8)").text());
+                deQueue($(row).find("td:nth-child(1)").text());
+            });
+	    function addEntry() {
+	        newEntry($("#user").text(), $("#org").text());
+	    }
+	    $("#dlg").hide();
+	    $("#dlg-buttons").hide();
+	    $("#myTitle").text("My Tasks");
+	    load_table();
+	    function deQueue( id ) {
+            $.post('./deQueue.php',{id:id},function(result){
+                if (result.data){
+                        data = result.data[0];
+                        $("#page").load("queue_entry.page");
+                }  else  {
+                        $.messager.show({	// show error message
+                            title: 'Error',
+                            msg: result.msg
+                    });
+                }
+            },'json');
+		}
+</script>
+<script type="text/javascript" src="_js/queue/crud.js" > </script>

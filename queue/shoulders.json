@@ -1,0 +1,74 @@
+[
+        {
+                "app": "HR",
+                "visibleTo": "*",
+				"img": "http://www.bewebdeveloper.com/images/uploads/how-to-create-an-rss-feed-with-php-and-mysql.jpg",
+				"link": "http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql",
+				"processes": [
+				    {
+				        "process": "New Employee",
+				        "initBy": "mgr",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    },
+				    {
+				        "process": "Update Contact Info",
+				        "initBy": "grunt",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    }
+				]
+            },
+            {
+                "app": "Payroll",
+                "visibleTo": "*",
+				"img": "http://www.bewebdeveloper.com/images/uploads/crop-photo-using-php-and-jquery.jpg",
+				"link": "http://www.bewebdeveloper.com/tutorial-about-crop-photo-using-php-and-jquery",
+ 				"processes": [
+				    {
+				        "process": "Change Hourly Rate",
+				        "initBy": "mgr",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    },
+				    {
+				        "process": "Enter Hours",
+				        "initBy": "grunt",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    }
+				]
+           },
+            {
+                "app": "Order",
+                "visibleTo": "*",
+                "img": "http://www.bewebdeveloper.com/images/uploads/using-ajax-with-php-mysql.jpg",
+                "link": "http://www.bewebdeveloper.com/tutorial-about-using-ajax-with-phpmysql",
+				"processes": [
+				    {
+				        "process": "Place Order",
+				        "initBy": "grunt",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    },
+				    {
+				        "process": "Update Ship Date",
+				        "initBy": "mgr",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    }
+				]
+            },
+            {
+                "app": "Admin",
+                "visibleTo": "admin",
+                "img": "http://www.bewebdeveloper.com/images/uploads/using-ajax-with-native-javascript.jpg",
+                "link": "http://www.bewebdeveloper.com/tutorial-about-using-ajax-with-native-javascript",
+ 				"processes": [
+				    {
+				        "process": "Manage Users",
+				        "initBy": "admin",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    },
+				    {
+				        "process": "Manage Queue",
+				        "initBy": "mgr",
+				        "link":"http://www.bewebdeveloper.com/tutorial-about-how-to-create-an-rss-feed-with-php-and-mysql"
+				    }
+				]
+           }
+]

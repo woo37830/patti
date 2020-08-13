@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8"/>
+	<title>My Library</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
+    <link REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
+    <!-- link rel="stylesheet" href="_css/jquery.tablesorter.pager.css" / -->
+	<link REL="stylesheet" HREF="_css/home.css" id="styleid"/>
+     <script type="text/javascript" class="init">
+        var oTable;
+        var json;
+        $(document).ready(function() {
+            oTable = $('#entries').DataTable({
+            processing: true,
+            bStateSave: true,
+            ajax: {
+                url: "./get_entries.php",
+                dataSrc: "data"
+            },
+            columns: [
+                { data:  "ENTRY_NUMBER"},
+                { data:  "JOB_ID" },
+                { data:  "JOB_STEP_ID" },
+                { data:  "BUSINESS_PROCESS" },
+                { data: "COMMENT" }
+            ]
+            });
+        });
+    </script>
+</head>
+<body <div class="wrapper">
+        <div class="header"></div>
+	    <div class="content">
+            <div id="page" >
+                <div class="title">My Tasks</div>
+                <hr />
+                <table id="entries" class="tablesorter">
+                    <thead>
+                        <tr>
+                            <th class="entry">Entry</th>
+                            <th class="job">Job</th>
+                            <th class="step">Step</th>
+                            <th class="process">Process</th>
+                            <th class="note">Comment</th>
+                        </tr>
+                 </thead></table>
+
+	    </div>
+	</div>
+
+    <div class="footer">
+        <p>JavaScript &amp; jQuery: The Missing Manual.</p>
+    </div>
+	<style type="text/css"
+		.datatable td {
+              overflow: hidden; /* this is what fixes the expansion */
+              text-overflow: ellipsis; /* not supported in all browsers, but I accepted the tradeoff */
+              white-space: nowrap;
+        }
+        table.tablesorter { /* So it won't keep expanding */
+            table-layout: fixed
+        }
+	</style>
+</style></body>
+</html>
