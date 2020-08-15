@@ -44,11 +44,12 @@ if (!$validated ) {
 // If arrives here, is a valid user.
 $_SESSION['loggedIn'] = $user;
 }
-echo "<p>Welcome ".$_SESSION['loggedIn']."</p>";
+echo "<div id='logoutDiv'><div id='welcome'>Welcome ".$_SESSION['loggedIn']."</div><div id='home'>".
+  "<a href='./index.php'>Home</a></div></div>";
 echo "<br />";
 
 
 ?>
-<form type='POST' action="<?=$action ?>" >
+<form id='logoutForm' type='POST' action="<?=$action ?>" >
   <input type='submit' name='submit' value='Logout' />
 </form>

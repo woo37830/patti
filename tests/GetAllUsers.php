@@ -77,6 +77,11 @@ table {
 #user tr:nth-child(odd) {
   background: #f4f4f4;
 }
+#home {
+  align: auto;
+  float: right;
+  margin-right: 10%;
+}
 
 </style>
 </head>
@@ -144,7 +149,12 @@ function showUserForm( $user, $back ) {
      } else
      if( isset($_REQUEST['email']) ) {
        $user = getUserByEmail( $_REQUEST['email'] );
-       showUserForm( $user, $back );
+       if( $user ) {
+         showUserForm( $user, $back );
+       } else {
+         echo "User ".$_REQUEST['email']." does not exist in users table";
+         echo "<br /><br /><a href='".$back."' >Back</a>";
+       }
      } else {
 ?>
       <table id='tests'>
