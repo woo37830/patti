@@ -433,4 +433,38 @@ function deleteUser( $email ) {
      }
     return;
 }
+
+function updateUser( $email, $engagemoreid,
+          $orderid, $invoiceid,
+          $product, $status ) {
+            require 'config.ini.php';
+            $user = getUserByEmail( $email );
+            if( $user ) {
+              $ID = $user['id'];
+            } else {
+              return "FAILED: User $email not found!";
+            }
+            $table = $config['PATTI_USERS_TABLE'];
+
+            $sql = " UPDATE $table SET engagemoreid = $engagemoreid, orderid = $orderid,".
+              " invoiceid = $invoiceid,product = '".$product."', status = '".$status."'" .
+              " WHERE id = $ID";
+            $status = 'Failed';
+            $dbase = $config['PATTI_DATABASE'];
+
+            if( $conn = connect($dbase) )
+            {
+              if ($conn->query($sql))
+              {
+                $status = "Update for id = $ID Succeeded";
+              }
+              else
+              {
+                $status =  "FAILED: " . mysqli_error($conn);
+              }
+              mysqli_close($conn);
+            }
+            return $status;
+}
+
 ?>

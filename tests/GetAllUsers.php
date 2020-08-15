@@ -136,7 +136,10 @@ function showUserForm( $user, $back ) {
       echo "<br /><a href='".$back."' >Back</a>";
     } else
      if( isset($_REQUEST['Update']) ) {
-       echo "<h2>This suckers UPDATED!</h2>";
+       $status = updateUser( $_REQUEST['email'], $_REQUEST['engagemoreid'],
+          $_REQUEST['orderid'], $_REQUEST['invoiceid'],
+          $_REQUEST['product'], $_REQUEST['status']);
+       echo "<h2>Account ".$_REQUEST['email']." $status!</h2>";
        echo "<br /><a href='".$back."' >Back</a>";
      } else
      if( isset($_REQUEST['email']) ) {
