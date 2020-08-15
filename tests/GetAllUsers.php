@@ -91,7 +91,10 @@ require '../webhook/add_contact.php';
 require '../webhook/config.ini.php';
 require '../webhook/mysql_common.php';
 require '../webhook/utilities.php';
-
+$back = './GetAllUsers.php';
+if( isset($_REQUEST['back']) ) {
+  $back = $_REQUEST['back'];
+}
 $today = date("D M j G:i:s T Y");
 echo "<center>$today<br /><hr />";
 
@@ -114,7 +117,7 @@ echo "<center>$today<br /><hr />";
       echo "<br /><input type='submit' name='Update' value='Update'/>";
       echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
       echo "</form>";
-      echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+      echo "<br /><a href='".$back."' >Back</a>";
   } else
     if( isset($_REQUEST['Delete']) ) {
       echo "<h2>Are You Sure (Y/N)?</h2><br /><br />";
@@ -122,15 +125,19 @@ echo "<center>$today<br /><hr />";
       echo "<input type='submit' name='YES' value='YES' />";
       echo "&nbsp;&nbsp;<input type='submit' name='NO' value='NO' />";
       echo "</form>";
-      echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+      echo "<br /><a href='".$back."' >Back</a>";
     } else
       if( isset($_REQUEST['YES']) ) {
         echo "<h2>This suckers GONE!</h2>";
-        echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+        echo "<br /><a href='".$back."' >Back</a>";
     } else
      if( isset($_REQUEST['Update']) ) {
        echo "<h2>This suckers UPDATED!</h2>";
-       echo "<br /><a href='./GetAllUsers.php' >Back</a>";
+       echo "<br /><a href='".$back."' >Back</a>";
+     } else
+     if( isset($_REQUEST['email']) ) {
+       echo "<h2>This suckers Email is: ".$_REQUEST['email']."</h2>";
+       echo "<br /><a href='".$back."' >Back</a>";
      } else {
 ?>
       <table id='tests'>

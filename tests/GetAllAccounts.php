@@ -78,10 +78,12 @@ table {
 require '../webhook/get_all_accounts.php';
 
 $today = date("D M j G:i:s T Y");
+$back = './GetAllAccounts.php';
+$users = './GetAllUsers.php?back='.$back.'&email=';
 $accounts = getAllAccounts();
 $k = 1;
 foreach($accounts as $account){
-  echo "<tr><td>" . $k++ . "</td><td> $account->accountid</td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
+  echo "<tr><td>" . $k++ . "</td><td>$account->accountid</td><td><a href='".$users.$account->email."' >$account->email</a></td><td>$account->mailmerge_fullname</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
 }
 
 
