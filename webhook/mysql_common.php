@@ -404,6 +404,33 @@ function getUser( $id )
     $conn->close();
    }
   return $results_array;
+}
 
+function deleteUser( $email ) {
+  $value = -1;
+  require 'config.ini.php';
+
+  $names = firstAndLastFromEmail($email);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
+    {
+      $datetime = date_create()->format('Y-m-d H:i:s');
+      $table = $config['PATTI_USERS_TABLE'];
+
+      $query = "DELETE FROM $table WHERE email = '$from_email_address' ";
+
+      if (mysqli_query($conn, $query)) {
+          echo "Record deleted successfully";
+      } else {
+          echo "Error deleting record: " . mysqli_error($conn);
+      }
+      $conn->close();
+     }
+    return;
 }
 ?>

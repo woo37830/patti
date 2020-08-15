@@ -131,8 +131,9 @@ function showUserForm( $user, $back ) {
       echo "<br /><a href='".$back."' >Back</a>";
     } else
       if( isset($_REQUEST['YES']) ) {
-        echo "<h2>This ".$_REQUEST['email']." is GONE!</h2>";
-        echo "<br /><a href='".$back."' >Back</a>";
+      deleteUser( $_REQUEST['email'] );
+      echo "<h2>This ".$_REQUEST['email']." is GONE!</h2>";
+      echo "<br /><a href='".$back."' >Back</a>";
     } else
      if( isset($_REQUEST['Update']) ) {
        echo "<h2>This suckers UPDATED!</h2>";
