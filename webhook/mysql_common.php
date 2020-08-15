@@ -209,10 +209,7 @@ function getStatusFor( $accountid ) {
      }
     return 'inactive';
 }
-
-function getAccountId($email)
-{ // Get the Engagemore(AllClients) engagemoreid from the users database
-  // given the email or the thrivecart id
+function getUserByEmail( $email ) {
   require 'config.ini.php';
 
   $names = firstAndLastFromEmail($email);
@@ -228,7 +225,7 @@ function getAccountId($email)
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_USERS_TABLE'];
 
-      $query = "SELECT engagemoreid FROM $table WHERE email = '$from_email_address' ";
+      $query = "SELECT * FROM $table WHERE email = '$from_email_address' ";
        $results_array = array();
        $result = $conn->query($query);
        while( $row = $result->fetch_assoc() ) {
@@ -236,12 +233,22 @@ function getAccountId($email)
        }
        if( !empty( $results_array[0] ) )
        {
-         $value = (int)$results_array[0]['engagemoreid'];
+         return $results_array[0];
        }
        $result -> close();
        $conn->close();
      }
-    return $value;
+    return null;
+
+}
+function getAccountId($email)
+{ // Get the Engagemore(AllClients) engagemoreid from the users database
+  // given the email or the thrivecart id
+  $user = getUserByEmail( $email );
+  if( $user ) {
+    return $user['engagemoreid'];
+  }
+  return -1;
 }
 function getProductFor( $email ) {
   $value = -1;

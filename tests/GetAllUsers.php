@@ -97,28 +97,31 @@ if( isset($_REQUEST['back']) ) {
 }
 $today = date("D M j G:i:s T Y");
 echo "<center>$today<br /><hr />";
+function showUserForm( $user, $back ) {
+  echo "<form type='POST' >";
+  echo "<table id='user' >";
+  echo "<thead>";
+  echo "<tr><th>Field</th><th>Value</th></tr>";
+  echo "</thead><tbody>";
+  echo "<tr><td>Email</td><td>".$user['email']."</td></tr>".
+  "<tr><td>EngagemoreID</td><td><input type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
+  "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$user['orderid']."\" </td></tr>".
+  "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
+  "<tr><td>ProductID</td><td><input type=\"text\" name=\"product\" value=\"".$user['product']."\" </td></tr>".
+  "<tr><td>Status</td><td><input type=\"text\" name=\"status\" value=\"".$user['status']."\" </td></tr>".
+  "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
 
+  echo "<br /><input type='submit' name='Update' value='Update'/>";
+  echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
+  echo "</form>";
+  echo "<br /><a href='".$back."' >Back</a>";
+
+}
   if( isset($_REQUEST['id'])) {
       echo "<h2>id: ".$_REQUEST['id']."</h2>";
       $user = getUser($_REQUEST['id'])[0];
-      echo "<form type='POST' >";
-      echo "<table id='user' >";
-      echo "<thead>";
-      echo "<tr><th>Field</th><th>Value</th></tr>";
-      echo "</thead><tbody>";
-      echo "<tr><td>Email</td><td>".$user['email']."</td></tr>".
-      "<tr><td>EngagemoreID</td><td><input type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
-      "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$user['orderid']."\" </td></tr>".
-      "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
-      "<tr><td>ProductID</td><td><input type=\"text\" name=\"product\" value=\"".$user['product']."\" </td></tr>".
-      "<tr><td>Status</td><td><input type=\"text\" name=\"status\" value=\"".$user['status']."\" </td></tr>".
-      "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
-
-      echo "<br /><input type='submit' name='Update' value='Update'/>";
-      echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
-      echo "</form>";
-      echo "<br /><a href='".$back."' >Back</a>";
-  } else
+      showUserForm( $user , $back);
+    } else
     if( isset($_REQUEST['Delete']) ) {
       echo "<h2>Are You Sure (Y/N)?</h2><br /><br />";
       echo "<form type='POST' >";
@@ -136,8 +139,8 @@ echo "<center>$today<br /><hr />";
        echo "<br /><a href='".$back."' >Back</a>";
      } else
      if( isset($_REQUEST['email']) ) {
-       echo "<h2>This suckers Email is: ".$_REQUEST['email']."</h2>";
-       echo "<br /><a href='".$back."' >Back</a>";
+       $user = getUserByEmail( $_REQUEST['email'] );
+       showUserForm( $user, $back );
      } else {
 ?>
       <table id='tests'>
