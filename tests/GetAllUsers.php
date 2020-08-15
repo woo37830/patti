@@ -103,14 +103,13 @@ function showUserForm( $user, $back ) {
   echo "<thead>";
   echo "<tr><th>Field</th><th>Value</th></tr>";
   echo "</thead><tbody>";
-  echo "<tr><td>Email</td><td>".$user['email']."</td></tr>".
+  echo "<tr><td>Email</td><td><input type=\"text\" name=\"email\" value=\"".$user['email']."\" /></td></tr>".
   "<tr><td>EngagemoreID</td><td><input type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
   "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$user['orderid']."\" </td></tr>".
   "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
   "<tr><td>ProductID</td><td><input type=\"text\" name=\"product\" value=\"".$user['product']."\" </td></tr>".
   "<tr><td>Status</td><td><input type=\"text\" name=\"status\" value=\"".$user['status']."\" </td></tr>".
   "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
-
   echo "<br /><input type='submit' name='Update' value='Update'/>";
   echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
   echo "</form>";
@@ -125,13 +124,14 @@ function showUserForm( $user, $back ) {
     if( isset($_REQUEST['Delete']) ) {
       echo "<h2>Are You Sure (Y/N)?</h2><br /><br />";
       echo "<form type='POST' >";
+      echo "<input type='hidden' name='email' value='".$_REQUEST['email']."' />";
       echo "<input type='submit' name='YES' value='YES' />";
       echo "&nbsp;&nbsp;<input type='submit' name='NO' value='NO' />";
       echo "</form>";
       echo "<br /><a href='".$back."' >Back</a>";
     } else
       if( isset($_REQUEST['YES']) ) {
-        echo "<h2>This suckers GONE!</h2>";
+        echo "<h2>This ".$_REQUEST['email']." is GONE!</h2>";
         echo "<br /><a href='".$back."' >Back</a>";
     } else
      if( isset($_REQUEST['Update']) ) {
