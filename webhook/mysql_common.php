@@ -436,7 +436,7 @@ function deleteUser( $email ) {
 
 function updateUser( $email, $engagemoreid,
           $orderid, $invoiceid,
-          $product, $status ) {
+          $product, $type, $status ) {
             require 'config.ini.php';
             $user = getUserByEmail( $email );
             if( $user ) {
@@ -447,7 +447,8 @@ function updateUser( $email, $engagemoreid,
             $table = $config['PATTI_USERS_TABLE'];
 
             $sql = " UPDATE $table SET engagemoreid = $engagemoreid, orderid = $orderid,".
-              " invoiceid = $invoiceid,product = '".$product."', status = '".$status."'" .
+              " invoiceid = $invoiceid,product = '".$product."', status = '".$status."', accountType = '" .
+              $type."'" .
               " WHERE id = $ID";
             $status = 'Failed';
             $dbase = $config['PATTI_DATABASE'];

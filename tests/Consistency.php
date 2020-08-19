@@ -83,7 +83,7 @@ function showData( $user ) {
     "</td></tr>";
 }
 function showAccount($account ) {
-  echo "<tr><td> $account->accountid</td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
+  echo "<tr><td> $account->accountid</td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->group_name</td><td>$account->license_type</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
 }
 function getAUser( $email, $users ) {
   foreach($users as $user) {
@@ -111,17 +111,17 @@ $users = getAllUsers();
 echo "<hr /><h1>Accounts with no entry in user table</h1><hr /><br>";
 echo "<table id='accounts'>" .
   "<thead>".
-    "<tr><th>ID</th><th>Email</th><th>Full Name</th><th>Status</th><th>Since</th></tr>".
+    "<tr><th>ID</th><th>Email</th><th>Full Name</th><th>Group Name</th><th>License Type</th><th>Status</th><th>Since</th></tr>".
   "</thead>".
   "<tbody>";
 $acctsfile = fopen("/tmp/Accounts.csv", "w");
-fwrite($acctsfile, "ID,Email,Full Name,Status,Since\n"); // Write Header
+fwrite($acctsfile, "ID,Email,Full Name,Group Name, Account Type, Status,Since\n"); // Write Header
 foreach($accounts as $account){
   if(  getAUser( $account->email, $users ) == -1 )
   {
     if( (strpos($account->email,"@") !== false) ) {
       showAccount( $account );
-      fwrite($acctsfile,"$account->accountid,$account->email,\"$account->mailmerge_fullname\",$account->account_status,$account->create_date\n");
+      fwrite($acctsfile,"$account->accountid,$account->email,\"$account->mailmerge_fullname\",\"$account->group_name\",\"$account->license_type\",$account->account_status,$account->create_date\n");
     }
   }
 }

@@ -56,6 +56,10 @@ padding: 5px 5px 5px 5px;
 border: 1px solid #000;
 padding: 10px;
 }
+#tests th {
+  background: black;
+  color: white;
+}
 
 #user table, th, td {
 width: 50vw;
@@ -89,7 +93,7 @@ margin-right: 10%;
     <div id='content'>
       <table id='tests'>
         <thead>
-          <tr><th>#</th><th>ID</th><th>Email</th><th>Full Name</th><th>Status</th><th>Since</th></tr>
+          <tr><th>#</th><th>ID</th><th>Email</th><th>Full Name</th><th>Group Name</th><th>License Type</th></th><th>Status</th><th>Since</th></tr>
         </thead>
         <tbody>
 <?php
@@ -104,7 +108,7 @@ $users = './GetAllUsers.php?back='.$back.'&email=';
 $accounts = getAllAccounts();
 $k = 1;
 foreach($accounts as $account){
-  echo "<tr><td>" . $k++ . "</td><td>$account->accountid</td><td><a href='".$users.$account->email."' >$account->email</a></td><td>$account->mailmerge_fullname</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
+  echo "<tr><td>" . $k++ . "</td><td>$account->accountid</td><td><a href='".$users.$account->email."' >$account->email</a></td><td>$account->mailmerge_fullname</td><td>$account->group_name</td><td>$account->license_type</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
 }
 
 

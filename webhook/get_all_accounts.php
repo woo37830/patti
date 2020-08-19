@@ -15,7 +15,8 @@ function getAllAccounts()
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
-    'showpendingdelete' => 1
+    'showpendingdelete' => 1,
+    'getgroup' => 1
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 

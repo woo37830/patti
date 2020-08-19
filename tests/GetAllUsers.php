@@ -114,6 +114,7 @@ function showUserForm( $user, $back ) {
   "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
   "<tr><td>ProductID</td><td><input type=\"text\" name=\"product\" value=\"".$user['product']."\" </td></tr>".
   "<tr><td>Status</td><td><input type=\"text\" name=\"status\" value=\"".$user['status']."\" </td></tr>".
+  "<tr><td>Type</td><td><input type=\"text\" name=\"accountType\" value=\"".$user['accountType']."\" </td></tr>".
   "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
   echo "<br /><input type='submit' name='Update' value='Update'/>";
   echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
@@ -143,7 +144,7 @@ function showUserForm( $user, $back ) {
      if( isset($_REQUEST['Update']) ) {
        $status = updateUser( $_REQUEST['email'], $_REQUEST['engagemoreid'],
           $_REQUEST['orderid'], $_REQUEST['invoiceid'],
-          $_REQUEST['product'], $_REQUEST['status']);
+          $_REQUEST['product'], $_REQUEST['accountType'], $_REQUEST['status']);
        echo "<h2>Account ".$_REQUEST['email']." $status!</h2>";
        echo "<br /><a href='".$back."' >Back</a>";
      } else
@@ -159,7 +160,7 @@ function showUserForm( $user, $back ) {
 ?>
       <table id='tests'>
         <thead>
-          <tr><th>#</th><th>ID</th><th>Email</th><th>EngagemoreID</th><th>Order</th><th>Invoice</th><th>Product</th><th>Status</th><th>Since</th></tr>
+          <tr><th>#</th><th>ID</th><th>Email</th><th>EngagemoreID</th><th>Order</th><th>Invoice</th><th>Product</th><th>Status</th><th>Type</th><th>Since</th></tr>
         </thead>
         <tbody>
 <?php
@@ -174,6 +175,7 @@ foreach($users as $user){
       "</td><td>".$user['invoiceid'].
       "</td><td>".$user['product'].
       "</td><td>".$user['status'].
+      "</td><td>".$user['accountType'].
       "</td><td>".$user['added'].
       "</td></tr>";
 }
