@@ -102,19 +102,29 @@ if( isset($_REQUEST['back']) ) {
 }
 $today = date("D M j G:i:s T Y");
 echo "<center>$today<br /><hr />";
+function selected( $option, $type ) {
+  return ($option == $type ) ? "selected" : "";
+}
 function showUserForm( $user, $back ) {
+  $s = $user['accountType'];
+  $t = $user['status'];
   echo "<form type='POST' >";
   echo "<table id='user' >";
   echo "<thead>";
   echo "<tr><th>Field</th><th>Value</th></tr>";
   echo "</thead><tbody>";
-  echo "<tr><td>Email</td><td><input type=\"text\" name=\"email\" value=\"".$user['email']."\" /></td></tr>".
+  echo "<tr><td>Email</td><td><input type=\"text\" name=\"email\" readonly size=\"35\" value=\"".$user['email']."\" /></td></tr>".
   "<tr><td>EngagemoreID</td><td><input type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
   "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$user['orderid']."\" </td></tr>".
   "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
   "<tr><td>ProductID</td><td><input type=\"text\" name=\"product\" value=\"".$user['product']."\" </td></tr>".
-  "<tr><td>Status</td><td><input type=\"text\" name=\"status\" value=\"".$user['status']."\" </td></tr>".
-  "<tr><td>Type</td><td><input type=\"text\" name=\"accountType\" value=\"".$user['accountType']."\" </td></tr>".
+  "<tr><td>Status</td><td><select name=\"status\">".
+    "<option value=\"active\" ".selected("active", $t).">active</option>".
+    "<option value=\"inactive\" ".selected("inactive", $t).">inactive</option> </td></tr>".
+  "<tr><td>Type</td><td><select name=\"accountType\">" .
+    "<option value=\"test\" ".selected("test", $s).">test</option>".
+    "<option value=\"real\" ".selected("real", $s).">real</option>".
+    "<option value=\"special\" ".selected("special", $s).">special</option></td></tr>".
   "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
   echo "<br /><input type='submit' name='Update' value='Update'/>";
   echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
