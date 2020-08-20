@@ -6,6 +6,7 @@
 <!-- $Source: /Users/woo/cvsrep/queue/index.html,v $   -->
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
+	<base href="http://localhost/patti/queue/" />
 	<title>Workflow Demo</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="_js/nav1.1.min.js" id="navJS"></script>
@@ -51,10 +52,13 @@
             function () {
                 $('ul', this).slideUp('fast');
             });
+
+
     });
     </script>
 </head>
-<body
+<body>
+
     <div class="wrapper">
 	    <div class="content">
           <div id="user"></div>
@@ -128,8 +132,6 @@
 </center>
 
 <div id="error-div">
-    <!-- if (request.getParameter( "_error" ) != null)
-        {%> <%=request.getParameter( "_error" )%> <% }% -->
 </div> <!-- end of error-div -->
 <hr/>
                 <div id="dropDownDest">
@@ -142,7 +144,7 @@
 	</div> <!-- end of content -->
 </div> <!-- end of wrapper -->
     <div class="footer">
-        <p>Created by J. W. Wooten, Ph.D. gitinfo();</p>
+        <p>Created by J. W. Wooten, Ph.D. <%="gitinfo();"%></p>
     </div>
 	<div id="lin" class="easyui-dialog" style="width:400px;height:200px;padding:10px 20px"
 			closed="true" buttons="#lin-buttons">
@@ -162,7 +164,8 @@
 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="authorize()" style="width:90px">Login</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#lin').dialog('close')" style="width:90px">Cancel</a>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
+
 	if( readCookie("logged_in") ) {
 	                $("#user").text(getFromCookie("logged_in", "uName"));
 	                $("#userName").text(getFromCookie("logged_in", "uName"));

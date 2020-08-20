@@ -7,8 +7,7 @@
 #
 header("Content-type: application/json");
 header("Cache-Control: no-cache, must-revalidate");
-  require 'config.ini.php';
-	include 'conn.php';
+	require_once 'conn.php';
 	$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 	$result = array();
 	$items = array();
