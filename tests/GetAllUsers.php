@@ -105,19 +105,29 @@ echo "<center>$today<br /><hr />";
 function selected( $option, $type ) {
   return ($option == $type ) ? "selected" : "";
 }
+function productOptions($product) {
+  require '../webhook/product_data.php';
+  $options = "";
+  foreach ($products as $key => $value) {
+  $options .=  "<option value=\"$key\" ".selected( $product, $key).">$key</option>";
+  }
+  return $options;
+}
 function showUserForm( $user, $back ) {
-  $s = $user['accountType'];
-  $t = $user['status'];
+  $s = isset($user['accountType']) ? $user['accountType'] : "real";
+  $t = isset($user['status']) ? $user['status'] : "active";
+  $p = isset($user['product']) ? $user['product'] : "product-13";
   echo "<form type='POST' >";
   echo "<table id='user' >";
   echo "<thead>";
   echo "<tr><th>Field</th><th>Value</th></tr>";
   echo "</thead><tbody>";
   echo "<tr><td>Email</td><td><input type=\"text\" name=\"email\" readonly size=\"35\" value=\"".$user['email']."\" /></td></tr>".
-  "<tr><td>EngagemoreID</td><td><input type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
+  "<tr><td>EngagemoreID</td><td><input title=\"Important that this match CRM Account\" type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
   "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$user['orderid']."\" </td></tr>".
   "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
-  "<tr><td>ProductID</td><td><input type=\"text\" name=\"product\" value=\"".$user['product']."\" </td></tr>".
+  "<tr><td>ProductID</td><td><select name=\"product\" >".
+    productOptions($p) ." </td></tr>".
   "<tr><td>Status</td><td><select name=\"status\">".
     "<option value=\"active\" ".selected("active", $t).">active</option>".
     "<option value=\"inactive\" ".selected("inactive", $t).">inactive</option> </td></tr>".
@@ -166,6 +176,9 @@ function showUserForm( $user, $back ) {
          echo "User ".$_REQUEST['email']." does not exist in users table";
          echo "<br /><br /><a href='".$back."' >Back</a>";
        }
+     } else
+     if( isset($_REQUEST['new']) ) {
+       showUserForm( "", $back );
      } else {
 ?>
       <table id='tests'>
