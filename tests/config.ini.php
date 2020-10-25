@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/New_York');
 $config['RAILS_ENV']='development';
 $config['RAILS_USER']='woo';
 $config['RAILS_USERID']='jwooten37830@mac.com';
