@@ -143,8 +143,9 @@ function showUserForm( $user, $back ) {
 
 }
   if( isset($_REQUEST['id'])) {
-      echo "<h2>id: ".$_REQUEST['id']."</h2>";
-      $user = getUser($_REQUEST['id'])[0];
+      $id = $_REQUEST['id'];
+      echo "<h2>id: ".$id."</h2>";
+      $user = getUser($id);
       showUserForm( $user , $back);
     } else
     if( isset($_REQUEST['Delete']) ) {

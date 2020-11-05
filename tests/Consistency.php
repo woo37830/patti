@@ -70,6 +70,8 @@ table tr:nth-child(odd) {
 //require_ '../webhook/mysql_common.php';
 require '../webhook/get_all_accounts.php';
 
+date_default_timezone_set("America/New_York");
+
 $today = date("D M j G:i:s T Y");
 function showData( $user ) {
   echo "<tr><td>".$user['id'].
