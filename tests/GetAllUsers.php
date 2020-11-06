@@ -92,10 +92,10 @@ table {
   <div id='page'>
     <div id='content'>
 <?php
-require '../webhook/add_contact.php';
-require '../webhook/config.ini.php';
-require '../webhook/mysql_common.php';
-require '../webhook/utilities.php';
+//require '../webhook/add_contact.php';
+require 'config.ini.php';
+require 'mysql_common.php';
+require 'utilities.php';
 $back = './GetAllUsers.php';
 if( isset($_REQUEST['back']) ) {
   $back = $_REQUEST['back'];
@@ -144,8 +144,8 @@ function showUserForm( $user, $back ) {
 }
   if( isset($_REQUEST['id'])) {
       $id = $_REQUEST['id'];
-      echo "<h2>id: ".$id."</h2>";
       $user = getUser($id);
+      echo "<h2>id: ".$id."</h2>";
       showUserForm( $user , $back);
     } else
     if( isset($_REQUEST['Delete']) ) {

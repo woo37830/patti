@@ -385,25 +385,25 @@ function getAllUsers() {
 
 function getUser( $id )
 {
-  require 'config.ini.php';
+    require 'config.ini.php';
 
-  $dbase = $config['PATTI_DATABASE'];
-  $results_array = array();
+    $dbase = $config['PATTI_DATABASE'];
 
-  if( $conn = connect($dbase) )
-  {
-    $datetime = date_create()->format('Y-m-d H:i:s');
-    $table = $config['PATTI_USERS_TABLE'];
+    if( $conn = connect($dbase) )
+    {
+      $datetime = date_create()->format('Y-m-d H:i:s');
+      $table = $config['PATTI_USERS_TABLE'];
 
-    $query = "SELECT * FROM $table where id = $id";
-    $result = $conn->query($query);
-    while( $row = $result->fetch_assoc() ) {
-      $results_array[] = $row;
-    }
-    $result -> close();
-    $conn->close();
+      $query = "SELECT * FROM $table where id = $id";
+      $result = $conn->query($query);
+      $row = $result -> fetch_assoc();
+
+      // Free result set
+      $result -> free_result();
+
+      $conn -> close();
    }
-  return $results_array;
+    return $row;
 }
 
 function deleteUser( $email ) {
