@@ -86,6 +86,7 @@ table {
 </style>
 </head>
 <body>
+  <a href='./GetAllUsers.php?new=true' id='home'>Add New User</a>
     <center>
   <br />
   <h1>EngagemoreCRM Users</h1>
@@ -114,18 +115,27 @@ function productOptions($product) {
   return $options;
 }
 function showUserForm( $user, $back ) {
+  date_default_timezone_set('America/New_York');
+  $today = date("Y-m-d H:i:s");
+
   $s = isset($user['accountType']) ? $user['accountType'] : "real";
   $t = isset($user['status']) ? $user['status'] : "active";
   $p = isset($user['product']) ? $user['product'] : "product-13";
+  $email = isset($user['email']) ? $user['email'] : "";
+  $readOnly = isset($user['email']) ? "readonly" : "";
+  $engagemoreId = isset($user['engagemoreid']) ? $user['engagemoreid'] : "";
+  $orderId = isset($user['orderid']) ? $user['orderid'] : "";
+  $invoiceId = isset($user['invoiceid']) ? $user['invoiceid'] : "";
+  $added = isset($user['added']) ? $user['added'] : $today;
   echo "<form type='POST' >";
   echo "<table id='user' >";
   echo "<thead>";
   echo "<tr><th>Field</th><th>Value</th></tr>";
   echo "</thead><tbody>";
-  echo "<tr><td>Email</td><td><input type=\"text\" name=\"email\" readonly size=\"35\" value=\"".$user['email']."\" /></td></tr>".
-  "<tr><td>EngagemoreID</td><td><input title=\"Important that this match CRM Account\" type=\"text\" name=\"engagemoreid\" value=\"".$user['engagemoreid']."\" /></td></tr>".
-  "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$user['orderid']."\" </td></tr>".
-  "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$user['invoiceid']."\" </td></tr>".
+  echo "<tr><td>Email</td><td><input type=\"text\" name=\"email\" ".$readOnly." size=\"35\" value=\"".$email."\" /></td></tr>".
+  "<tr><td>EngagemoreID</td><td><input title=\"Important that this match CRM Account\" type=\"text\" name=\"engagemoreid\" value=\"".$engagemoreId."\" /></td></tr>".
+  "<tr><td>OrderID</td><td><input type=\"text\" name=\"orderid\" value=\"".$orderId."\" </td></tr>".
+  "<tr><td>InvoiceID</td><td><input type=\"text\" name=\"invoiceid\" value=\"".$invoiceId."\" </td></tr>".
   "<tr><td>ProductID</td><td><select name=\"product\" >".
     productOptions($p) ." </td></tr>".
   "<tr><td>Status</td><td><select name=\"status\">".
@@ -135,13 +145,26 @@ function showUserForm( $user, $back ) {
     "<option value=\"test\" ".selected("test", $s).">test</option>".
     "<option value=\"real\" ".selected("real", $s).">real</option>".
     "<option value=\"special\" ".selected("special", $s).">special</option></td></tr>".
-  "<tr><td>Added</td><td>".$user['added']."</td></tr></tbody></table>";
-  echo "<br /><input type='submit' name='Update' value='Update'/>";
-  echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
+  "<tr><td>Added</td><td>".$added."</td></tr></tbody></table>";
+  if ( isset($user['email'])) {
+    echo "<br /><input type='submit' name='Update' value='Update'/>";
+    echo "&nbsp;&nbsp;<input type='submit' name='Delete' value='Delete' />";
+  } else {
+    echo "<br /><input type='submit' name='add' value='Add'/>";
+  }
   echo "</form>";
   echo "<br /><a href='".$back."' >Back</a>";
 
 }
+ if( isset($_REQUEST['add']) ) {
+// TODO - check for ommitted fields
+// TODO - Add accountType to addUser and get fields?
+   addUser($_REQUEST['email'], $_REQUEST['engagemoreid'],
+    $_REQUEST['product'], $_REQUEST['invoiceid'], $_REQUEST['orderid']);
+    echo "<h2>This ".$_REQUEST['email']." has been added!</h2>";
+    echo "<br /><a href='".$back."' >Back</a>";
+ }
+ else {
   if( isset($_REQUEST['id'])) {
       $id = $_REQUEST['id'];
       $user = getUser($id);
@@ -163,6 +186,7 @@ function showUserForm( $user, $back ) {
       echo "<br /><a href='".$back."' >Back</a>";
     } else
      if( isset($_REQUEST['Update']) ) {
+// TODO - Add checks for ommitted fields!
        $status = updateUser( $_REQUEST['email'], $_REQUEST['engagemoreid'],
           $_REQUEST['orderid'], $_REQUEST['invoiceid'],
           $_REQUEST['product'], $_REQUEST['accountType'], $_REQUEST['status']);
@@ -180,7 +204,8 @@ function showUserForm( $user, $back ) {
      } else
      if( isset($_REQUEST['new']) ) {
        showUserForm( "", $back );
-     } else {
+     }
+      else {
 ?>
       <table id='tests'>
         <thead>
@@ -207,6 +232,7 @@ foreach($users as $user){
 
 echo "</tbody></table>";
   } // end of showing users
+}
 echo "</center><footer>";
 include '../webhook/git-info.php';
 echo "</footer></div></div></div>";

@@ -72,7 +72,6 @@ footer
   <tr><td>Add Contact Note</td><td>Create a note and add it to a contact</td><td>Working with login</td></tr>
   <tr><td>GetContact</td><td>Get a contact using their email</td><td>Add login</td></tr>
   <tr><td>Get Contacts</td><td>Get the list of contacts for an account</td><td>Add login and links to Add Contact Note</td></tr>
-  <tr><td>Add User</td><td>Add account information to users_db.users table</td><td>Remove when integrated into Maintain Users</td></tr>
   </tbody>
   </table>
   </center>
