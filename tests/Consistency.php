@@ -74,7 +74,7 @@ date_default_timezone_set("America/New_York");
 
 $today = date("D M j G:i:s T Y");
 function showData( $user ) {
-  echo "<tr><td>".$user['id'].
+  echo "<tr><td><a href=\"http://ec2-44-241-140-144.us-west-2.compute.amazonaws.com/patti/GetAllUsers.php?back=Consistency.php\">".$user['id']."</a>".
     "</td><td>".$user['email'].
     "</td><td>".$user['engagemoreid'].
     "</td><td>".$user['orderid'].
