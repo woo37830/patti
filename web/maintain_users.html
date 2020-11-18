@@ -49,7 +49,9 @@
             $(document).on('click','#books tbody tr',function() {
                 var row = $(this).closest("tr");
                 //alert("You clicked: "+$(row).find("td:nth-child(6)").text());
+								if( readCookie("logged_in") ) {
                 editUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text(),  $(row).find("td:nth-child(8)").text());
+							}
             });
             $(document).on('click','#log_in', function() {
                 $.ajax({
