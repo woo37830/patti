@@ -1,5 +1,5 @@
 <?php
-require '../webhook/config.ini.php';
+require '../webho/config.ini.php';
 require '../webhook/mysql_common.php';
 require '../webhook/utilities.php';
 require '../webhook/get_accounts.php';
