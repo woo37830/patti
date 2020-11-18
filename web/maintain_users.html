@@ -26,7 +26,7 @@
             processing: true,
             bStateSave: true,
             ajax: {
-                url: "./get_books.php",
+                url: "./get_users.php",
                 dataSrc: "data"
             },
             columns: [
@@ -49,7 +49,7 @@
             $(document).on('click','#books tbody tr',function() {
                 var row = $(this).closest("tr");
                 //alert("You clicked: "+$(row).find("td:nth-child(6)").text());
-                editBook($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text());
+                editUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text(),  $(row).find("td:nth-child(8)").text());
             });
             $(document).on('click','#log_in', function() {
                 $.ajax({
@@ -89,7 +89,7 @@
                         </tr>
                  </table>
                 <div id="toolbar" class="hide">
-                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newBook()">New User</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
                 </div>
 	    </div>
 	</div>
@@ -125,7 +125,7 @@
 				<input name="author" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
-				<label>EngagemoreID:</label>
+				<label>AccountID:</label>
 				<input name="title" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
@@ -148,8 +148,8 @@
 	</div>
 	<div id="dlg-buttons">
 	    <div id="sql_buttons" class="show-sql">
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveBook()" style="width:90px">Save</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyBook()" style="width:90px">Remove</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
 	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 	</div>
@@ -191,15 +191,15 @@
 
 		var url;
 		var row;
-		function newBook(){
+		function newUser(){
 			$('#dlg').dialog('open').dialog('setTitle','New User');
 			$('#fm').form('clear');
-			url = './save_book.php';
+			url = './save_user.php';
 		}
-		function editBook( id, author, title, genre, location, notes){
+		function editUser( id, author, title, genre, location, notes){
 			if (author){
 			//alert("Values are: "+author+", "+title);
-				$('#dlg').dialog('open').dialog('setTitle','Edit Book');
+				$('#dlg').dialog('open').dialog('setTitle','Edit User');
 				$('#fm').form('load',{
 				    author: author,
 				    title: title,
@@ -208,10 +208,10 @@
 				    notes: notes
 				});
 				row = id;
-				url = './update_book.php?id='+id;
+				url = './update_user.php?id='+id;
 			}
 		}
-		function saveBook(){
+		function saveUser(){
 			$('#fm').form('submit',{
 				url: url,
 				onSubmit: function(){
@@ -232,16 +232,16 @@
 				}
 			});
 		}
-		function destroyBook(){
+		function destroyUser(){
                 var id = row;
 			if (id){
-				$.messager.confirm('Confirm','Are you sure you want to destroy this book?',function(r){
+				$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
 					if (r){
-						$.post('./destroy_book.php',{id:id},function(result){
+						$.post('./destroy_user.php',{id:id},function(result){
 							if (result.success){
 						        $('#dlg').dialog('close');		// close the dialog
 						        //$("#books").dataTable()._fnAjaxUpdate();
-                                                        oTable.ajax.reload(null, false);
+                          oTable.ajax.reload(null, false);
                                 } else {
 								$.messager.show({	// show error message
 									title: 'Error',
