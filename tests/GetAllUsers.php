@@ -87,6 +87,7 @@ table {
 </head>
 <body>
   <a href='./GetAllUsers.php?new=true' id='home'>Add New User</a>
+  <a href='./index.php'>Back</a>
     <center>
   <br />
   <h1>EngagemoreCRM Users</h1>
@@ -233,6 +234,8 @@ foreach($users as $user){
 echo "</tbody></table>";
   } // end of showing users
 }
+echo "<br /><a href='".$back."' >Back</a>";
+
 echo "</center><footer>";
 include '../webhook/git-info.php';
 echo "</footer></div></div></div>";

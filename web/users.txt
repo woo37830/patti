@@ -1,1 +1,1 @@
-{"user":"woo", "passwd":"random1"}
+{"user":"woo", "passwd":"random1", "preferences":{"theme":"default", "rows":"25"}}

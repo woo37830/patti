@@ -61,8 +61,16 @@ table tr:nth-child(odd) {
 </style>
 </head>
 <body>
+  <a href='./index.php'>Back</a>
+    <center>
+  <br />
+  <h1>EngagemoreCRM Consistency Report</h1>
   <div id='page'>
     <div id='content'>
+        <center>
+      <br />
+        <div id='page'>
+        <div id='content'>
 <?php
 // Test the addContactNote
 
@@ -74,7 +82,7 @@ date_default_timezone_set("America/New_York");
 
 $today = date("D M j G:i:s T Y");
 function showData( $user ) {
-  echo "<tr><td><a href=\"http://ec2-44-241-140-144.us-west-2.compute.amazonaws.com/patti/GetAllUsers.php?back=Consistency.php\">".$user['id']."</a>".
+  echo "<tr><td><a href=\"http://ec2-44-241-140-144.us-west-2.compute.amazonaws.com/patti/tests/GetAllUsers.php?back=Consistency.php\">".$user['id']."</a>".
     "</td><td>".$user['email'].
     "</td><td>".$user['engagemoreid'].
     "</td><td>".$user['orderid'].
@@ -85,7 +93,7 @@ function showData( $user ) {
     "</td></tr>";
 }
 function showAccount($account ) {
-  echo "<tr><td> $account->accountid</td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->group_name</td><td>$account->license_type</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
+  echo "<tr><td><a href=\"http://ec2-44-241-140-144.us-west-2.compute.amazonaws.com/patti/tests/GetAllUsers.php?back=Consistency.php\">$account->accountid</a></td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->group_name</td><td>$account->license_type</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
 }
 function getAUser( $email, $users ) {
   foreach($users as $user) {
