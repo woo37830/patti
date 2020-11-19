@@ -75,7 +75,7 @@ html , body{
     left: 10px;
     right: 10px;
     padding-top: 18px;
-    background: url(../_images/bg-footer.png) repeat-x left top;
+    /*background: url(../_images/bg-footer.png) repeat-x left top; */
     /*border: 5px solid black;*/
 }
 .footer p {
@@ -300,4 +300,3 @@ tr#debug-token {
 {
     display:none;
 }
-

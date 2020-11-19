@@ -30,18 +30,26 @@
                 dataSrc: "data"
             },
             columns: [
-//							  { data: "#", width: "5%"},
                 { data: "id", width: "5%" },
                 { data:  "email" , width: "25%" },
                 { data:  "engagemoreid" },
                 { data:  "orderid" },
-//                { data:  "Invoice" },
                 { data: "product" },
 								{ data: "status" },
 								{ data: "accountType" },
 								{ data: "added" }
             ]
             });
+
+					/*	$(document).on('click','#footer-div',function() {*/
+							$.ajax({
+								url: "./git-info.php",
+								dataType: "text",
+								success: function(data) {
+									$('#footer-div').append(data);
+							}
+					/*	})*/
+					});
             /*setInterval( function() {
                 oTable.ajax.reload(null, false);
             }, 30000 );*/
@@ -96,8 +104,7 @@
 	    </div>
 	</div>
 	</div>
-    <div class="footer">
-        <p>JavaScript &amp; jQuery: The Missing Manual.</p>
+    <div class="footer" id="footer-div">
     </div>
 	<div id="lin" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
 			closed="true" buttons="#lin-buttons">
