@@ -22,7 +22,7 @@
         var oTable;
         var json;
         $(document).ready(function() {
-            oTable = $('#books').DataTable({
+            oTable = $('#users').DataTable({
             processing: true,
             bStateSave: true,
             ajax: {
@@ -46,7 +46,7 @@
                 oTable.ajax.reload(null, false);
             }, 30000 );*/
 
-            $(document).on('click','#books tbody tr',function() {
+            $(document).on('click','#users tbody tr',function() {
                 var row = $(this).closest("tr");
                 //alert("You clicked: "+$(row).find("td:nth-child(6)").text());
 								if( readCookie("logged_in") ) {
@@ -77,12 +77,12 @@
             <div id="page" >
                 <div class="title">EngagemoreCRM Users</div>
                 <hr/>
-                <table id="books" class="tablesorter">
+                <table id="users" class="tablesorter">
                     <thead>
                         <tr>
-                            <th class="id_name">ID</th>
+                            <th class="id_name">UserID</th>
                             <th class="author_name">Email</th>
-                            <th class="title_name">EngagemoreID</th>
+                            <th class="title_name">ID</th>
                             <th class="genre_name">Order</th>
                             <th class="product_name">Product</th>
 														<th class="status_name">Status</th>
@@ -123,27 +123,27 @@
 		<div class="ftitle">User</div>
 		<form id="fm" method="post" novalidate>
 			<div class="fitem">
-				<label>Email:</label>
-				<input name="author" class="easyui-textbox" required="true">
+				<label for="email">Email:</label>
+				<input name="email" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
-				<label>AccountID:</label>
-				<input name="title" class="easyui-textbox" required="true">
+				<label for="account">AccountID:</label>
+				<input name="account" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
-				<label>Order:</label>
-				<input name="genre" class="easyui-textbox">
+				<label for="order">Order:</label>
+				<input name="order" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label>Product:</label>
+				<label for="product">Product:</label>
 				<input name="product" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label>Status:</label>
+				<label for="status">Status:</label>
 				<input name="status" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label>Type:</label>
+				<label for="type">Type:</label>
 				<input name="type" class="easyui-textbox">
 			</div>
 		</form>
@@ -198,16 +198,17 @@
 			$('#fm').form('clear');
 			url = './save_user.php';
 		}
-		function editUser( id, author, title, genre, location, notes){
-			if (author){
+		function editUser( id, email, account, order, product, status, type){
+			if (email){
 			//alert("Values are: "+author+", "+title);
 				$('#dlg').dialog('open').dialog('setTitle','Edit User');
 				$('#fm').form('load',{
-				    author: author,
-				    title: title,
-				    genre: genre,
-				    location: location,
-				    notes: notes
+				    email: email,
+				    account: account,
+				    order: order,
+				    product: product,
+				    status: status,
+						type: type
 				});
 				row = id;
 				url = './update_user.php?id='+id;
@@ -228,7 +229,7 @@
 						});
 					} else {
 						$('#dlg').dialog('close');		// close the dialog
-						//$("#books").dataTable()._fnAjaxUpdate();
+						//$("#users").dataTable()._fnAjaxUpdate();
                         oTable.ajax.reload(null, false);
                     }
 				}
@@ -242,7 +243,7 @@
 						$.post('./destroy_user.php',{id:id},function(result){
 							if (result.success){
 						        $('#dlg').dialog('close');		// close the dialog
-						        //$("#books").dataTable()._fnAjaxUpdate();
+						        //$("#users").dataTable()._fnAjaxUpdate();
                           oTable.ajax.reload(null, false);
                                 } else {
 								$.messager.show({	// show error message
