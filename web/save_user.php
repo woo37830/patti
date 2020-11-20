@@ -59,12 +59,14 @@ if( $conn = connect($dbase) )
 						. $conn->error
 						;
 						mysqli_close($conn);
-						trigger_error($err, E_USER_ERROR);
+						echo json_encode(array('errorMsg'=>'Some errors occured.'));
+						return;
+				//		trigger_error($err, E_USER_ERROR);
 		 } // end of got an error
 		 else
 		 {
 				mysqli_close($conn);
-/*	echo json_encode(array(
+	echo json_encode(array(
 		'id' => mysql_insert_id() ,
 		'email' => $email,
 		'engagemoreid' => $engagemoreid,
@@ -74,7 +76,7 @@ if( $conn = connect($dbase) )
 		'status' => $status,
 		'accountType' => $accountType,
 		'added' => $added
-	));*/
+		));
 		return;
 	} // end of successful insertion
 

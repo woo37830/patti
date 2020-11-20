@@ -79,7 +79,6 @@
 </head>
 <body
     <div class="wrapper">
-        <div class="header"></div>
 	    <div class="content">
 	    <div id="log_in">Login</div>
             <div id="page" >
@@ -104,8 +103,8 @@
 	    </div>
 	</div>
 	</div>
-    <div class="footer" id="footer-div">
-    </div>
+    <footer class="footer" id="footer-div" /footer>
+  </div>
 	<div id="lin" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
 			closed="true" buttons="#lin-buttons">
 		<div class="ftitle">Login</div>
@@ -209,16 +208,16 @@
 			$('#fm').form('clear');
 			url = './save_user.php';
 		}
-		function editUser( id, email, account, order, product, status, type){
+		function editUser( id, email, engagemoreid, orderid, productid, status, accountType, added){
 			if (email){
 				$('#dlg').dialog('open').dialog('setTitle','Edit User');
 				$('#fm').form('load',{
 				    email: email,
-				    engagemoreid: account,
-				    orderid: order,
-				    product: product,
+				    engagemoreid: engagemoreid,
+				    orderid: orderid,
+				    productid: productid,
 				    status: status,
-						accountType: type
+						accountType: accountType
 				});
 				row = id;
 				url = './update_user.php?id='+id;
@@ -253,14 +252,16 @@
 					if (r){
 						$.post('./destroy_user.php',{id:id},function(result){
 							if (result.success){
-						        $('#dlg').dialog('close');		// close the dialog
+									alert('Success!');
+						      $('#dlg').dialog('close');		// close the dialog
 						        //$("#users").dataTable()._fnAjaxUpdate();
-                          oTable.ajax.reload(null, false);
-                                } else {
-								$.messager.show({	// show error message
-									title: 'Error',
-									msg: result.errorMsg
-								});
+                  oTable.ajax.reload(null, false);
+              } else {
+								alert('Failure');
+						//		$.messager.show({	// show error message
+						//			title: 'Error',
+						//			msg: result.errorMsg
+						//		});
 							}
 						},'json');
 					}
