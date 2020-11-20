@@ -6,27 +6,29 @@ require 'conn.php';
 	//$offset = ($page-1)*$rows;
 	$result = array();
 
-	include 'conn.php';
+	$dbase = $config['PATTI_DATABASE'];
+	if( $conn = connect($dbase) )
+	{
+		$datetime = date_create()->format('Y-m-d H:i:s');
+		$table = $config['PATTI_USERS_TABLE'];
+		$sql = "SELECT * FROM `$table`";
 
-	//$rs = mysql_query("select count(*) from books");
-	//$row = mysql_fetch_row($rs);
-	//$result["iTotalRecords"] = $row[0];
-	//$rs = mysql_query("select * from books limit $offset,$rows");
-	$table = $config['PATTI_USERS_TABLE'];
-	$sql = "SELECT * FROM `$table`";
+		$rs = $conn -> query( $sql );
 
-	$rs = $conn -> query( $sql );
+		$items = array();
+		while($row = mysqli_fetch_array($rs)){
+		    //echo json_encode($row);
+			array_push($items, $row);
+		}
 
-	$items = array();
-	while($row = mysqli_fetch_array($rs)){
-	    //echo json_encode($row);
-		array_push($items, $row);
+		$result["data"] = $items;
+      header("Content-type: application/json");
+      header("Cache-Control: no-cache, must-revalidate");
+		}
+	else {
+		echo json_encode(array('errorMsg'=>'Some errors occured.'));
+		return;
 	}
-
-	$result["data"] = $items;
-        header("Content-type: application/json");
-        header("Cache-Control: no-cache, must-revalidate");
-
 	echo json_encode($result);
 
 ?>

@@ -134,12 +134,16 @@
 				<input name="email" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
-				<label for="account">AccountID:</label>
-				<input name="account" class="easyui-textbox" required="true">
+				<label for="engagemoreid">AccountID:</label>
+				<input name="engagemoreid" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
-				<label for="order">Order:</label>
-				<input name="order" class="easyui-textbox">
+				<label for="orderid">Order:</label>
+				<input name="orderid" class="easyui-textbox">
+			</div>
+			<div class="fitem">
+				<label for="invoiceid">Invoice:</label>
+				<input name="invoiceid" class="easyui-textbox">
 			</div>
 			<div class="fitem">
 				<label for="product">Product:</label>
@@ -150,8 +154,8 @@
 				<input name="status" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label for="type">Type:</label>
-				<input name="type" class="easyui-textbox">
+				<label for="accountType">Type:</label>
+				<input name="accountType" class="easyui-textbox">
 			</div>
 		</form>
 	</div>
@@ -207,15 +211,14 @@
 		}
 		function editUser( id, email, account, order, product, status, type){
 			if (email){
-			//alert("Values are: "+author+", "+title);
 				$('#dlg').dialog('open').dialog('setTitle','Edit User');
 				$('#fm').form('load',{
 				    email: email,
-				    account: account,
-				    order: order,
+				    engagemoreid: account,
+				    orderid: order,
 				    product: product,
 				    status: status,
-						type: type
+						accountType: type
 				});
 				row = id;
 				url = './update_user.php?id='+id;
@@ -228,17 +231,18 @@
 					return $(this).form('validate');
 				},
 				success: function(result){
-					var result = eval('('+result+')');
-					if (result.errorMsg){
-						$.messager.show({
-							title: 'Error',
-							msg: result.errorMsg
-						});
-					} else {
+					alert('success achieved');
+			//		var result = eval('('+result+')');
+			//		if (result.errorMsg){
+			//			$.messager.show({
+			//				title: 'Error',
+			//				msg: result.errorMsg
+			//			});
+			//		} else {
 						$('#dlg').dialog('close');		// close the dialog
 						//$("#users").dataTable()._fnAjaxUpdate();
-                        oTable.ajax.reload(null, false);
-                    }
+            oTable.ajax.reload(null, false);
+      //              }
 				}
 			});
 		}
