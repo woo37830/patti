@@ -1,11 +1,10 @@
 <?php
-function getAllAccounts()
-{
-  require 'config.ini.php';
-  require 'thrivecart_api.php';
 
-  require 'mysql_common.php';
-  require 'utilities.php';
+  require 'config.ini.php';
+  require '../webhook/thrivecart_api.php';
+
+  //require 'mysql_common.php';
+  //require 'utilities.php';
   $account_id   = $config['MSG_USER'];
   $api_key      = $config['MSG_PASSWORD'];
   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
@@ -29,17 +28,21 @@ function getAllAccounts()
    *     <error>Authentication failed</error>
    *   </results>
    */
-
+  // $json = json_encode($results_xml);
+  // echo $json;
   if (isset($results_xml->error)) {
-    echo "\nFailure: " . $results_xml->error . "<br />\n";
+    echo json_encode(array('errorMsg'=>'Some errors occured: '+$results_xml->error));
     return $results_xml->error;
   }
   $accounts = array();
+  $k = 0;
   foreach($results_xml->accounts->account as $account){
-    array_push($accounts, $account);
+    if( $k++ < 5 ) {
+      array_push($accounts, $account);
+    }
   }
 
-  return $accounts;
+  echo json_encode($results_xml);
 
-}
+
 ?>
