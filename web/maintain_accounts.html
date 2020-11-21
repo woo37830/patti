@@ -42,15 +42,16 @@
             ]
             });
 
-					/*	$(document).on('click','#footer-div',function() {*/
-							$.ajax({
-								url: "./git-info.php",
-								dataType: "text",
-								success: function(data) {
-									$('#footer-div').append(data);
-							}
-					/*	})*/
-					});
+
+						/*	$(document).on('click','#footer-div',function() {*/
+								$.ajax({
+									url: "./git-info.php",
+									dataType: "text",
+									success: function(data) {
+										$('#footer-div').append(data);
+								}
+						/*	})*/
+						});
             /*setInterval( function() {
                 oTable.ajax.reload(null, false);
             }, 30000 );*/
