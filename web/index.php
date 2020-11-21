@@ -66,8 +66,8 @@ footer
   <tr><td><a href="./monthly_report.php">Monthly Report</a></td><td>Get a monthly report</td><td>Add input for month</th></tr>
   <tr><td><a href="../billing.php">Billing Report</a></td><td>Get a report on Billing</td><td>Add input for month</th></tr>
   <tr><td><a href="./getAccountId.php">Get Account Id</a></td><td>Get the account id for an email</td><td></td></tr>
-  <tr><td><a href="./GetAllAccounts.php">Listing/Edit Accounts</a></td><td>Maintain Engagemore Accounts</td><td></td></tr>
-  <tr><td><a href="./maintain_users.html">Maintain User Table</a></td><td>List, Update, delete users_db.users</td><td>Add DataTables and nav at top and new user</td></tr>
+  <tr><td><a href="./maintain_accounts.php">Maintain Accounts</a></td><td>Maintain Engagemore Accounts</td><td></td></tr>
+  <tr><td><a href="./maintain_users.php">Maintain Users</a></td><td>List, Update, delete users_db.users</td><td>Add DataTables and nav at top and new user</td></tr>
   <tr><td><a href="./Consistency.php">Consistency Report</a></td><td>Check for extra or missing account information,csv files to tmp</td><td>Add check for order id, etc., Add links to Update User</td></tr>
   <tr><td><a href="./testAddContact.php">Add Contact</a></td><td>Add a contact to an account</td><td>Style info?</td></tr>
   <tr><td>Add Contact Note</td><td>Create a note and add it to a contact</td><td>Working with login</td></tr>

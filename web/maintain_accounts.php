@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<?php
+session_start(); //don't forget to do this
+$location = "/patti/web/maintain_accounts.php";
+
+require('fancyAuthentication.php');
+
+?>
 <html>
 <!-- $Author: woo $   -->
 <!-- $Date: 2017/11/14 16:37:22 $     -->
@@ -26,191 +32,116 @@
             processing: true,
             bStateSave: true,
             ajax: {
-                url: "./get_users.php",
-                dataSrc: "data"
+                url: "./get_all_accounts.php",
+								dataType: "JSON",
+                dataSrc: "accounts.account"
             },
             columns: [
-                { data: "id", width: "5%" },
+                { data: "accountid", width: "5%" },
                 { data:  "email" , width: "25%" },
-                { data:  "engagemoreid" },
-                { data:  "orderid" },
-                { data: "product" },
-								{ data: "status" },
-								{ data: "accountType" },
-								{ data: "added" }
+                { data:  "group_name" },
+                { data: "subscription_level", width: "10%" },
+								{ data: "account_status" },
+								{ data: "license_type", width: "10%" },
+								{ data: "create_date" }
             ]
             });
 
-					/*	$(document).on('click','#footer-div',function() {*/
-							$.ajax({
-								url: "./git-info.php",
-								dataType: "text",
-								success: function(data) {
-									$('#footer-div').append(data);
-							}
-					/*	})*/
-					});
             /*setInterval( function() {
                 oTable.ajax.reload(null, false);
             }, 30000 );*/
 
-            $(document).on('click','#users tbody tr',function() {
-                var row = $(this).closest("tr");
-                //alert("You clicked: "+$(row).find("td:nth-child(6)").text());
-								if( readCookie("logged_in") ) {
-                editUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text(),  $(row).find("td:nth-child(8)").text());
-							}
-            });
-            $(document).on('click','#log_in', function() {
-                $.ajax({
-                    url: "./users.txt",
-                    dataType: "text",
-                    success: function(data) {
-                        json = $.parseJSON(data);
-                    }
-                });
-                login();
-            });
-            $(document).on('click','#log_out', function() {
-                logout();
-            });
+						$(document).on('click','#users tbody tr',function() {
+								var row = $(this).closest("tr");
+								editAccount($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text());
+
+						});
         });
+				$.ajax({
+					url: "./git-info.php",
+					dataType: "text",
+					success: function(data) {
+						$('#footer-div').append(data);
+				}
+			});
     </script>
 </head>
 <body
     <div class="wrapper">
 	    <div class="content">
-	    <div id="log_in">Login</div>
             <div id="page" >
-                <div class="title">EngagemoreCRM Users</div>
+                <div class="title">EngagemoreCRM Accounts</div>
+								<div id="messages">
+									<div id="message"></div>
+									<div id="error_div"></div>
+								</div>
                 <hr/>
                 <table id="users" class="tablesorter">
                     <thead>
                         <tr>
-                            <th class="id_name">UserID</th>
+                            <th class="id_name">Account</th>
                             <th class="author_name">Email</th>
-                            <th class="title_name">ID</th>
-                            <th class="genre_name">Order</th>
-                            <th class="product_name">Product</th>
+                            <th class="genre_name">Product</th>
+                            <th class="product_name">Type</th>
 														<th class="status_name">Status</th>
-														<th class="type_name">Type</th>
+														<th class="type_name">License</th>
 														<th class="since_name">Since</th>
                         </tr>
                  </table>
-                <div id="toolbar" class="hide">
-                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
-                </div>
+      <div id="toolbar" >
+          <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newAccount()">New Account</a>
+      </div>
 	    </div>
 	</div>
 	</div>
     <footer class="footer" id="footer-div" /footer>
   </div>
-	<div id="lin" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
-			closed="true" buttons="#lin-buttons">
-		<div class="ftitle">Login</div>
-		<form id="lfm" method="post" novalidate>
-			<div class="fitem">
-				<label>User:</label>
-				<input name="user" class="easyui-textbox" id="userid" required="true">
-			</div>
-			<div class="fitem">
-				<label>Password:</label>
-				<input name="passwd" class="easyui-textbox" id="password" type="password" required="true">
-			</div>
-		</form>
-	</div>
-	<div id="lin-buttons">
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="authorize()" style="width:90px">Login</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#lin').dialog('close')" style="width:90px">Cancel</a>
-	</div>
+
 
 	<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
 			closed="true" buttons="#dlg-buttons">
-		<div class="ftitle">User</div>
+		<div class="ftitle">Account</div>
 		<form id="fm" method="post" novalidate>
 			<div class="fitem">
 				<label for="email">Email:</label>
 				<input name="email" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
-				<label for="engagemoreid">AccountID:</label>
-				<input name="engagemoreid" class="easyui-textbox" required="true">
+				<label for="group_name">Product:</label>
+				<input name="group_name" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label for="orderid">Order:</label>
-				<input name="orderid" class="easyui-textbox">
+				<label for="subscription_level">Type:</label>
+				<input name="subscription_level" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label for="invoiceid">Invoice:</label>
-				<input name="invoiceid" class="easyui-textbox">
+				<label for="account_status">Status:</label>
+				<input name="account_status" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label for="product">Product:</label>
-				<input name="product" class="easyui-textbox">
-			</div>
-			<div class="fitem">
-				<label for="status">Status:</label>
-				<input name="status" class="easyui-textbox">
-			</div>
-			<div class="fitem">
-				<label for="accountType">Type:</label>
-				<input name="accountType" class="easyui-textbox">
+				<label for="license">License:</label>
+				<input name="license" class="easyui-textbox">
 			</div>
 		</form>
 	</div>
 	<div id="dlg-buttons">
 	    <div id="sql_buttons" class="show-sql">
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveAccount()" style="width:90px">Save</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyAccount()" style="width:90px">Remove</a>
 	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 	</div>
 	<script type="text/javascript">
-	if( readCookie("logged_in") ) {
-	                $("#log_in").text("Logout");
-	                $("#log_in").attr('id', 'log_out');
-                        $("#toolbar").attr('class', 'show');
-	} else {
-	            $("#log_out").text("Login");
-	            $("#log_out").attr('id', 'log_in');
-                    $("#toolbar").attr('class', 'hide');
-	}
-         var days = 1;
-    	        function login() {
-	                $('#lin').dialog('open').dialog('set Title', 'Login');
-	                $('#lfm').form('clear');
-	        }
-	        function authorize() {
-	        // Compare the form data to the json data and if match, createCookie, else logout;
-	        //alert("json data: " + json.user + ", " + json.passwd);
-	        //alert("form data: " + document.getElementById("userid").value);
-	        var uName = document.getElementById("userid").value;
-	        var pName = document.getElementById("password").value;
-	       $('#lin').dialog('close');
-	        if( uName == json.user && pName == json.passwd ) {
-	                createCookie('logged_in', 'yes', days);
-	            } else {
-	            	alert("User name or password incorrect!");
-	                logout();
-	            }
-	            //alert("Cookie: 'logged_in': "+readCookie('logged_in'));
-	            window.location.reload();
-	        }
-	        function logout() {
-	            eraseCookie('logged_in');
-	            window.location.reload();
-	        }
-
 		var url;
 		var row;
-		function newUser(){
-			$('#dlg').dialog('open').dialog('setTitle','New User');
+		function newAccount(){
+			$('#dlg').dialog('open').dialog('setTitle','New Account');
 			$('#fm').form('clear');
-			url = './save_user.php';
+			url = './save_account.php';
 		}
-		function editUser( id, email, engagemoreid, orderid, productid, status, accountType, added){
+		function editAccount( id, email, engagemoreid, orderid, productid, status, accountType, added){
 			if (email){
-				$('#dlg').dialog('open').dialog('setTitle','Edit User');
+				$('#dlg').dialog('open').dialog('setTitle','Edit Account');
 				$('#fm').form('load',{
 				    email: email,
 				    engagemoreid: engagemoreid,
@@ -220,10 +151,10 @@
 						accountType: accountType
 				});
 				row = id;
-				url = './update_user.php?id='+id;
+				url = './update_account.php?id='+id;
 			}
 		}
-		function saveUser(){
+		function saveAccount(){
 			$('#fm').form('submit',{
 				url: url,
 				onSubmit: function(){
@@ -245,12 +176,12 @@
 				}
 			});
 		}
-		function destroyUser(){
+		function destroyAccoount(){
                 var id = row;
 			if (id){
-				$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
+				$.messager.confirm('Confirm','Are you sure you want to destroy this account?',function(r){
 					if (r){
-						$.post('./destroy_user.php',{id:id},function(result){
+						$.post('./destroy_account.php',{id:id},function(result){
 							if (result.success){
 									alert('Success!');
 						      $('#dlg').dialog('close');		// close the dialog
