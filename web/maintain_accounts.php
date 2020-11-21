@@ -225,15 +225,12 @@ function eraseCookie(name) {
 	createCookie(name,"",-1);
 	//alert("Cookie: "+name+": "+readCookie(name));
 }
-        var logged_in = document.getElementById('logged_in');
-        if (readCookie('logged_in') ) {
-            toolbar.className = 'show';
-            sql_buttons.className = 'show';
-            createCookie('logged_in', 'yes', days);
-        } else {
-            toolbar.className = 'hide';
-            sql_buttons.className = 'hide';
-        }
+var logged_in = isset($_SESSION['loggedIn'])
+if ( logged_in ) {
+		sql_buttons.className = 'show';
+} else {
+		sql_buttons.className = 'hide';
+}
 </script>
 	<style type="text/css">
 	        #log_in,#log_out {

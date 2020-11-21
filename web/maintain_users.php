@@ -176,7 +176,7 @@ require('fancyAuthentication.php');
 			});
 		}
 		function destroyUser(){
-                var id = row;
+      var id = row;
 			if (id){
 				$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
 					if (r){
@@ -224,13 +224,10 @@ function eraseCookie(name) {
 	createCookie(name,"",-1);
 	//alert("Cookie: "+name+": "+readCookie(name));
 }
-        var logged_in = document.getElementById('logged_in');
-        if (readCookie('logged_in') ) {
-            toolbar.className = 'show';
+        var logged_in = isset($_SESSION['loggedIn'])
+        if ( logged_in ) {
             sql_buttons.className = 'show';
-            createCookie('logged_in', 'yes', days);
         } else {
-            toolbar.className = 'hide';
             sql_buttons.className = 'hide';
         }
 </script>
