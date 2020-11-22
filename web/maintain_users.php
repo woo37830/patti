@@ -160,18 +160,17 @@ require('fancyAuthentication.php');
 					return $(this).form('validate');
 				},
 				success: function(result){
-					alert('success achieved');
-			//		var result = eval('('+result+')');
-			//		if (result.errorMsg){
-			//			$.messager.show({
-			//				title: 'Error',
-			//				msg: result.errorMsg
-			//			});
-			//		} else {
+				//	var result = eval('('+result+')');
+					if (result.errorMsg){
+						$.messager.show({
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					} else {
 						$('#dlg').dialog('close');		// close the dialog
 						//$("#users").dataTable()._fnAjaxUpdate();
             oTable.ajax.reload(null, false);
-      //              }
+                    }
 				}
 			});
 		}

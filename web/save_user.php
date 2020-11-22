@@ -5,15 +5,15 @@ $datetime = date_create()->format('Y-m-d H:i:s');
 $email = htmlspecialchars($_REQUEST['email']);
 $engagemoreid = htmlspecialchars($_REQUEST['engagemoreid']); // TODO not getting inserted
 $orderid = intval($_REQUEST['orderid']);	// TODO not getting inserted
-$productid = htmlspecialchars($_REQUEST['product']);
+$product = htmlspecialchars($_REQUEST['product']);
 $invoiceid = intval($_REQUEST['invoiceid']);
 $status = htmlspecialchars($_REQUEST['status']);
 $accountType = htmlspecialchars($_REQUEST['accountType']); // TODO not getting inserted
 /*
-$email = 'ralph@testers.com';
+$email = 'ralphy@testers.com';
 $engagemoreid = 12345;
 $orderid = 6789;
-$productid = 'product-13';
+$product = 'product-13';
 $invoiceid = 123;
 $status = 'active';
 $accountType = 'test';
@@ -41,7 +41,7 @@ if( $conn = connect($dbase) )
 		( '$datetime'
 		, '$email'
 		, '$engagemoreid'
-		, '$productid'
+		, '$product'
 		, '$invoiceid'
 		, '$orderid'
 		, '$status'
@@ -67,15 +67,15 @@ if( $conn = connect($dbase) )
 		 {
 				mysqli_close($conn);
 	echo json_encode(array(
-		'id' => mysql_insert_id() ,
+		'id' => mysqli_insert_id($conn) ,
 		'email' => $email,
 		'engagemoreid' => $engagemoreid,
-		'orderid' => $orderid
+		'orderid' => $orderid,
 		'invoiceid' => $invoiceid,
 		'product' => $product,
 		'status' => $status,
 		'accountType' => $accountType,
-		'added' => $added
+		'added' => $datetime
 		));
 		return;
 	} // end of successful insertion
