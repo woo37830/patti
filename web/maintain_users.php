@@ -65,7 +65,7 @@ require('fancyAuthentication.php');
 			});
 		</script>
 </head>
-<body
+<body>
     <div class="wrapper">
 	    <div class="content">
             <div id="page" >

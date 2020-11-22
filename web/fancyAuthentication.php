@@ -34,8 +34,7 @@ if (!$validated ) {
       <br />
                   <input type='submit' name='submit' value='Login' />
   </form>
-  <br /><br /><a href='index.php' />Home</a>
-                 </center>
+                   </center>
 
   <?php
   die;
@@ -45,11 +44,11 @@ if (!$validated ) {
 $_SESSION['loggedIn'] = $user;
 }
 echo "<div id='logoutDiv'><div id='welcome'>Welcome ".$_SESSION['loggedIn']."</div><div id='home'>".
-  "<a href='./index.php'>Home</a></div></div>";
+  "<a href='./index.php' class='easyui-linkbutton'>Home</a></div></div>";
 echo "<br />";
 
 
 ?>
 <form id='logoutForm' type='POST' action="<?=$action ?>" >
-  <input type='submit' name='submit' value='Logout' />
+  <input type='submit' name='submit' value='Logout'  />
 </form>
