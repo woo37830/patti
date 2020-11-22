@@ -74,9 +74,9 @@ require('fancyAuthentication.php');
                 <table id="users" class="tablesorter">
                     <thead>
                         <tr>
-                            <th class="id_name">UserID</th>
+                            <th class="id_name">ID</th>
                             <th class="author_name">Email</th>
-                            <th class="title_name">ID</th>
+                            <th class="title_name">CRM</th>
                             <th class="genre_name">Order</th>
                             <th class="product_name">Product</th>
 														<th class="status_name">Status</th>

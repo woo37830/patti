@@ -39,8 +39,8 @@ require('fancyAuthentication.php');
             columns: [
                 { data: "accountid", width: "5%" },
                 { data:  "email" , width: "25%" },
+								{ data: "mailmerge_fullname"},
                 { data:  "group_name" },
-                { data: "subscription_level", width: "10%" },
 								{ data: "account_status" },
 								{ data: "license_type", width: "10%" },
 								{ data: "create_date" }
@@ -79,11 +79,11 @@ require('fancyAuthentication.php');
                 <table id="users" class="tablesorter">
                     <thead>
                         <tr>
-                            <th class="id_name">Account</th>
+                            <th class="id_name">ID</th>
                             <th class="author_name">Email</th>
+														<th class="author_name">Name</th>
                             <th class="genre_name">Product</th>
-                            <th class="product_name">Type</th>
-														<th class="status_name">Status</th>
+  													<th class="status_name">Status</th>
 														<th class="type_name">License</th>
 														<th class="since_name">Since</th>
                         </tr>
@@ -107,12 +107,12 @@ require('fancyAuthentication.php');
 				<input name="email" class="easyui-textbox" required="true">
 			</div>
 			<div class="fitem">
+				<label for="mailmerge_fullname">Name:</label>
+				<input name="mailmerge_fullname" class="easyui-textbox">
+			</div>
+ 			<div class="fitem">
 				<label for="group_name">Product:</label>
 				<input name="group_name" class="easyui-textbox">
-			</div>
-			<div class="fitem">
-				<label for="subscription_level">Type:</label>
-				<input name="subscription_level" class="easyui-textbox">
 			</div>
 			<div class="fitem">
 				<label for="account_status">Status:</label>
@@ -139,16 +139,15 @@ require('fancyAuthentication.php');
 			$('#fm').form('clear');
 			url = './save_account.php';
 		}
-		function editAccount( id, email, engagemoreid, orderid, productid, status, accountType, added){
+		function editAccount( id, email, name, product, status, accountType, added){
 			if (email){
 				$('#dlg').dialog('open').dialog('setTitle','Edit Account');
 				$('#fm').form('load',{
 				    email: email,
-				    engagemoreid: engagemoreid,
-				    orderid: orderid,
-				    productid: productid,
-				    status: status,
-						accountType: accountType
+				    mailmerge_fullname: name,
+				    group_name: product,
+				    account_status: status,
+						license: accountType
 				});
 				row = id;
 				url = './update_account.php?id='+id;
