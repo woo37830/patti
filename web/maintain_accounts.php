@@ -88,9 +88,9 @@ require('fancyAuthentication.php');
 														<th class="since_name">Since</th>
                         </tr>
                  </table>
-      <div id="toolbar" >
+      <!-- div id="toolbar" >
           <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newAccount()">New Account</a>
-      </div>
+      </div -->
 	    </div>
 	</div>
 	</div>
@@ -127,7 +127,7 @@ require('fancyAuthentication.php');
 	<div id="dlg-buttons">
 	    <div id="sql_buttons" class="show-sql">
 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveAccount()" style="width:90px">Save</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyAccount()" style="width:90px">Remove</a>
+		<!-- a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyAccount()" style="width:90px">Remove</a -->
 	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 	</div>
@@ -160,18 +160,17 @@ require('fancyAuthentication.php');
 					return $(this).form('validate');
 				},
 				success: function(result){
-					alert('success achieved');
 			//		var result = eval('('+result+')');
-			//		if (result.errorMsg){
-			//			$.messager.show({
-			//				title: 'Error',
-			//				msg: result.errorMsg
-			//			});
-			//		} else {
+					if (result.errorMsg){
+						$.messager.show({
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					} else {
 						$('#dlg').dialog('close');		// close the dialog
 						//$("#users").dataTable()._fnAjaxUpdate();
             oTable.ajax.reload(null, false);
-      //              }
+          }
 				}
 			});
 		}
@@ -224,7 +223,7 @@ function eraseCookie(name) {
 	createCookie(name,"",-1);
 	//alert("Cookie: "+name+": "+readCookie(name));
 }
-var logged_in = isset($_SESSION['loggedIn'])
+var logged_in = true;
 if ( logged_in ) {
 		sql_buttons.className = 'show';
 } else {
