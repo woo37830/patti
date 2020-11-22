@@ -37,9 +37,9 @@ require('fancyAuthentication.php');
             },
             columns: [
                 { data: "id", width: "5%" },
-                { data:  "email" , width: "25%" },
-                { data:  "engagemoreid" },
-                { data:  "orderid" },
+                { data: "email" , width: "25%" },
+                { data: "engagemoreid" },
+                { data: "orderid" },
                 { data: "product" },
 								{ data: "status" },
 								{ data: "accountType" },
@@ -182,16 +182,15 @@ require('fancyAuthentication.php');
 					if (r){
 						$.post('./destroy_user.php',{id:id},function(result){
 							if (result.success){
-									alert('Success!');
 						      $('#dlg').dialog('close');		// close the dialog
 						        //$("#users").dataTable()._fnAjaxUpdate();
                   oTable.ajax.reload(null, false);
               } else {
 								alert('Failure');
-						//		$.messager.show({	// show error message
-						//			title: 'Error',
-						//			msg: result.errorMsg
-						//		});
+								$.messager.show({	// show error message
+									title: 'Error',
+									msg: result.errorMsg
+								});
 							}
 						},'json');
 					}
@@ -224,7 +223,7 @@ function eraseCookie(name) {
 	createCookie(name,"",-1);
 	//alert("Cookie: "+name+": "+readCookie(name));
 }
-        var logged_in = isset($_SESSION['loggedIn'])
+        var logged_in = true;
         if ( logged_in ) {
             sql_buttons.className = 'show';
         } else {
