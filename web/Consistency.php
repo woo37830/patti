@@ -1,63 +1,34 @@
+<?php
+session_start(); //don't forget to do this
+$location = "/patti/web/Consistency.php";
+
+require('fancyAuthentication.php');
+
+?>
 <html>
+<!-- $Author: woo $   -->
+<!-- $Date: 2017/11/14 16:37:22 $     -->
+<!-- $Revision: 1.5 $ -->
+<!-- $Source: /Users/woo/cvsrep/library/index.html,v $   -->
 <head>
-  <style type="text/css" media="screen">
-html {
-/*      background-color: #c8dcff; */
- }
+	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
+	<title>EngagemoreCRM</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
+    <LINK REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
+    <!-- link rel="stylesheet" href="_css/jquery.tablesorter.pager.css" / -->
+	<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
 
-body
-{
-    color:#404040;
-/*   background-color: powderblue; */
-    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-}
-
-#page
-{
-  position: relative;
-  min-height: 100%;
-}
-
-#content
-{
-  padding-bottom: 1.5rem; /* Footer height */
-}
-
-footer
-{
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  padding-top: 3px;
-  background-color: powderblue;
-  text-align: center;
-  height: 1.5rem;
-  font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  font-style: italic;
-}
-
-table {
-  border-collapse: collapse;
-  border: 1px solid black;
-}
-
-
-table tr th {
-  border: 1px solid #000;
-  padding: 10px;
-}
-table tr td {
-  border: 1px solid #000;
-  padding: 10px;
-}
-
-
-
-/* Zebra stripe */
-table tr:nth-child(odd) {
-  background: #f4f4f4;
-}
-
+<style type="text/css">
+  table.tablesorter { /* So it won't keep expanding */
+      table-layout: fixed
+  }
 </style>
 </head>
 <body>
@@ -67,10 +38,8 @@ table tr:nth-child(odd) {
   <h1>EngagemoreCRM Consistency Report</h1>
   <div id='page'>
     <div id='content'>
-        <center>
       <br />
         <div id='page'>
-        <div id='content'>
 <?php
 // Test the addContactNote
 
@@ -127,7 +96,7 @@ $users = getAllUsers();
 //      Check that accounts status is the same as the users status ?
 //
 echo "<hr /><h1>Accounts with no entry in user table</h1><hr /><br>";
-echo "<table id='accounts'>" .
+echo "<table id='accounts' class='tablesorter'>" .
   "<thead>".
     "<tr><th>ID</th><th>Email</th><th>Full Name</th><th>Group Name</th><th>License Type</th><th>Status</th><th>Since</th></tr>".
   "</thead>".
@@ -153,7 +122,7 @@ echo "</tbody></table>";
 //
 echo "<hr /><h1>Users with no entry in Engagemore</h1><hr /><br>";
 
-echo "<table id='tests'>".
+echo "<table id='tests' class='tablesorter'>".
   "<thead>".
   "<tr><th>ID</th><th>Email</th><th>EngagemoreID</th><th>Order</th><th>Invoice</th><th>Product</th><th>Status</th><th>Since</th></tr>".
   "</thead>".

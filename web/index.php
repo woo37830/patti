@@ -1,63 +1,53 @@
 <?php
-function getHTML() {
-$html = <<<EOS
+session_start(); //don't forget to do this
+$location = "/patti/web/index.php";
+
+require('fancyAuthentication.php');
+
+?>
 <html>
+<!-- $Author: woo $   -->
+<!-- $Date: 2017/11/14 16:37:22 $     -->
+<!-- $Revision: 1.5 $ -->
+<!-- $Source: /Users/woo/cvsrep/library/index.html,v $   -->
 <head>
-<title>Tests</title>
-<style type="text/css">
-table {
-  border-collapse: collapse;
-}
-
-table, th, td {
-  width: 90vw;
-  border: 1px solid black;
-  padding: 5px 5px 5px 5px;
-}
-
-body
-{
-    color:#404040;
-#    background-color: powderblue;
-    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-}
-
-#page
-{
-  position: relative;
-  height: 95vh;
-}
-
-
-
-#content
-{
-  padding-bottom: 1.5rem; /* Footer height */
-}
-
-footer
-{
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  padding-top: 3px;
-  background-color: powderblue;
-  text-align: center;
-  height: 1.5rem;
-  font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  font-style: italic;
-}
-</style>
+	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
+	<title>EngagemoreCRM</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+	  <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
+    <LINK REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
+    <!-- link rel="stylesheet" href="_css/jquery.tablesorter.pager.css" / -->
+	  <LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
+	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+  <script type="text/javascript" class="init">
+     var oTable;
+     var json;
+     $(document).ready(function() {
+       $.ajax({
+      url: "./git-info.php",
+      dataType: "text",
+      success: function(data) {
+        $('#footer-div').append(data);
+    }
+  });
+});
+</script>
 </head>
 <body>
-<div id='page'>
-<div id='content'>
+<div class="wrapper">
+<div class='content'>
+  <div id='page'>
   <center>
     <br />
     <h1>Applications</h1>
     <hr />
     <br />
-  <table>
+  <table id="users" class="tablesorter">
   <thead>
   <tr><th>Application</th><th>Purpose</th><th>Comment</th></tr>
   </thead>
@@ -76,13 +66,10 @@ footer
   </tbody>
   </table>
   </center>
+</div> <!-- end of page -->
 </div> <!-- end of content div -->
-<footer>
-EOS;
-  return $html;
-}
-
-echo getHTML();
-include '../webhook/git-info.php';
-echo "</footer></div></body></html>";
-?>
+</div>
+<footer class="footer" id="footer-div" /footer>
+</div>
+</body>
+</html>
