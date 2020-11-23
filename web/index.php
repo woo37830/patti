@@ -35,7 +35,7 @@ require('fancyAuthentication.php');
     ["<a href=\"./maintain_accounts.php\">Maintain Accounts</a>",
       "Maintain Engagemore Accounts",""],
     ["<a href=\"./maintain_users.php\">Maintain Users</a>","",""],
-    ["<a href=\"./Consistency.php\">Consistency Report</a>","",""]
+    ["<a href=\"./Consistency.php\">Consistency Report</a>","Find insconsistencies","Change to DataTable and AJAX"]
     ];
 
      var oTable;
