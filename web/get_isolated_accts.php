@@ -1,5 +1,8 @@
 <?php
+require 'get_users.php';
 
+function getTheAccounts($users)
+{
   require 'config.ini.php';
   require '../webhook/thrivecart_api.php';
 
@@ -41,9 +44,11 @@
       array_push($accounts, $account);
 
   }
+  return $results_xml;
+}
 
-
-  echo json_encode($results_xml);
+$users = getAllUsers();
+echo json_encode(getTheAccounts($users));
 
 
 ?>

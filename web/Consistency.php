@@ -26,149 +26,105 @@ require('fancyAuthentication.php');
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
 
 <style type="text/css">
-  table.tablesorter { /* So it won't keep expanding */
+  table.tablesorter
+	{ /* So it won't keep expanding */
       table-layout: fixed
   }
 </style>
 </head>
 <body>
-  <a href='./index.php'>Back</a>
-    <center>
-  <br />
+	 <center>
   <h1>EngagemoreCRM Consistency Report</h1>
+	<div id='wrapper'></div>
+	<div id='content'>
   <div id='page'>
-    <div id='content'>
       <br />
-        <div id='page'>
+<script type="text/javascript">
+var oTable;
+var json;
+var k = 0;
+	$(document).ready(function() {
+
+			oTable = $('#accounts').DataTable({
+			processing: true,
+			bStateSave: true,
+			ajax: {
+					url: "./get_all_accounts.php",
+					dataType: "JSON",
+					dataSrc: "accounts.account"
+			},
+			columns: [
+					{ data: "accountid", width: "5%", title: "ID" },
+					{ data:  "email" , width: "25%", title: "Email" },
+					{ data: "mailmerge_fullname", title: "Name" },
+					{ data:  "group_name", title: "Product" },
+					{ data: "account_status", title: "Status" },
+					{ data: "license_type", width: "10%", title: "Type" },
+					{ data: "create_date", title: "Since" }
+			]
+			});
+
+			pTable = $('#users').DataTable({
+			processing: true,
+			bStateSave: true,
+			ajax: {
+					url: "./get_users.php",
+					dataSrc: "data"
+			},
+			columns: [
+					{ data: "id", width: "5%", title: "ID" },
+					{ data: "email" , width: "25%" , title: "Email"},
+					{ data: "engagemoreid",  width: "10%", title: "Account" },
+					{ data: "orderid", title: "Order ID" },
+					{ data: "product", title: "Product" },
+					{ data: "status",  width: "10%", title: "Status" },
+					{ data: "accountType", width: "10%", title: "Type" },
+					{ data: "added", title: "Since" }
+			]
+			});
+			$("#test").on("click", function() { alert("HELLO, WORLD!"); });
+});
+</script>
+<style type="text/css">
+	.datatable td {
+						overflow: hidden; /* this is what fixes the expansion */
+						text-overflow: ellipsis; /* not supported in all browsers, but I accepted the tradeoff */
+						white-space: nowrap;
+			}
+			table.tablesorter { /* So it won't keep expanding */
+					table-layout: fixed
+			}
+</style>
+<div class="easyui-tabs" style="width:90%;height:90%">
+		<div title="Accounts" style="padding:10px">
+
+<h1>Isolated Accounts</h1>
+<hr />
+<br />
+<table id="accounts" class="tablesorter" width="95%"></table>
+</div>
+<div title="Users" class="tablesorter" width="95%">
+
+<h1>Isolated Users</h1>
+<hr />
+<br />
+<table id="users" class="tablesorter" width="95%"></table>
+</div>
+</div>
+<button name="Test" id='test' type="button">Press Me</button>
+
+</center>
+<footer>
 <?php
-// Test the addContactNote
-
-
-//require_ '../webhook/mysql_common.php';
-require '../webhook/get_all_accounts.php';
-
-date_default_timezone_set("America/New_York");
-
-$today = date("D M j G:i:s T Y");
-function showData( $user ) {
-  echo "<tr><td><a href=\"./maintain_users.php?back=Consistency.php\">".$user['id']."</a>".
-    "</td><td>".$user['email'].
-    "</td><td>".$user['engagemoreid'].
-    "</td><td>".$user['orderid'].
-    "</td><td>".$user['invoiceid'].
-    "</td><td>".$user['product'].
-    "</td><td>".$user['status'].
-    "</td><td>".$user['added'].
-    "</td></tr>";
-}
-function showAccount($account ) {
-  echo "<tr><td><a href=\"./maintain_accounts.php?back=Consistency.php\">$account->accountid</a></td><td> $account->email</td><td>$account->mailmerge_fullname</td><td>$account->group_name</td><td>$account->license_type</td><td>$account->account_status</td><td>$account->create_date</td></tr>";
-}
-function getAUser( $email, $users ) {
-  foreach($users as $user) {
-    if( $user['email'] == $email ) {
-      return $user;
-    }
-  }
-  return -1;
-}
-function getAccountById( $id, $accounts ) {
-  foreach( $accounts as $account ) {
-    if( $account->id == $id ) {
-      return $account;
-    }
-  }
-  return -1;
-}
-function getAccountByEmail( $email, $accounts ) {
-  foreach( $accounts as $account ) {
-    if( $account->email == $email ) {
-      return $account;
-    }
-  }
-  return -1;
-}
-$accounts = getAllAccounts();
-$users = getAllUsers();
-// Loop through accounts, see if there is a user for each account.
-// Display accounts with no user.
-// If account has user, check that user has engagemoreid that agrees
-//      Check that accounts status is the same as the users status ?
-//
-echo "<hr /><h1>Accounts with no entry in user table</h1><hr /><br>";
-echo "<table id='accounts' class='tablesorter'>" .
-  "<thead>".
-    "<tr><th>ID</th><th>Email</th><th>Full Name</th><th>Group Name</th><th>License Type</th><th>Status</th><th>Since</th></tr>".
-  "</thead>".
-  "<tbody>";
-$acctsfile = fopen("/tmp/Accounts.csv", "w");
-fwrite($acctsfile, "ID,Email,Full Name,Group Name, Account Type, Status,Since\n"); // Write Header
-foreach($accounts as $account){
-  if(  getAUser( $account->email, $users ) == -1 )
-  {
-    if( (strpos($account->email,"@") !== false) ) {
-      showAccount( $account );
-      fwrite($acctsfile,"$account->accountid,$account->email,\"$account->mailmerge_fullname\",\"$account->group_name\",\"$account->license_type\",$account->account_status,$account->create_date\n");
-    }
-  }
-}
-fclose($acctsfile);
-echo "</tbody></table>";
-
 // Loop through users, see if there is an account for each user
 // Display users tht have not accounts.
 // If user has account, check that user has engagemore id that agrees
 //       Check that users status is the same as the account status ?
 //
-echo "<hr /><h1>Users with no entry in Engagemore</h1><hr /><br>";
 
-echo "<table id='tests' class='tablesorter'>".
-  "<thead>".
-  "<tr><th>ID</th><th>Email</th><th>EngagemoreID</th><th>Order</th><th>Invoice</th><th>Product</th><th>Status</th><th>Since</th></tr>".
-  "</thead>".
-  "<tbody>";
-$usersfile = fopen("/tmp/Users.csv", "w");
-fwrite($usersfile, "ID,Email,EngagemoreID,Order,Invoice,Product,Status,Since\n"); // Write Header
-foreach($users as $user){
-//    print_r($user);
-  if( getAccountById( $user['id'], $accounts ) == -1 ) {
-    showData( $user );
-  fwrite($usersfile,$user['id'].",".
-          $user['email'].",".
-          $user['engagemoreid'].",".
-          $user['orderid'].",".
-          $user['invoiceid'].",".
-          $user['product'].",".
-          $user['status'].",".
-          $user['added']."\n");
-  }
-}
-fclose($usersfile);
-
-echo "</tbody></table>";
-
-echo "<hr /><h1>Users with no engagemore ID</h1><hr /><br>";
-
-echo "<table id='tests2'>".
-  "<thead>".
-  "<tr><th>ID</th><th>Email</th><th>EngagemoreID</th><th>Order</th><th>Invoice</th><th>Product</th><th>Status</th><th>Since</th></tr>".
-  "</thead>".
-  "<tbody>";
-
-foreach($users as $user){
-//    print_r($user);
-  if( trim($user['engagemoreid']) == "") {
-    showData( $user );
-  }
-}
-
-
-echo "</tbody></table>";
-
-echo "<footer>";
 include '../webhook/git-info.php';
-echo "</footer></div></div></div></body></html>";
 
 ?>
+</footer>
 </body>
 </html>

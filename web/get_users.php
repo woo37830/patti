@@ -1,6 +1,7 @@
 <?php
-require 'config.ini.php';
-require 'conn.php';
+
+	require 'config.ini.php';
+	require_once 'conn.php';
 	$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 	//$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
 	//$offset = ($page-1)*$rows;
@@ -24,11 +25,12 @@ require 'conn.php';
 		$result["data"] = $items;
       header("Content-type: application/json");
       header("Cache-Control: no-cache, must-revalidate");
-		}
+	}
 	else {
 		echo json_encode(array('errorMsg'=>'Some errors occured.'));
 		return;
 	}
-	echo json_encode($result);
+
+echo json_encode($result);
 
 ?>
