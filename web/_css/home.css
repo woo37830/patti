@@ -22,11 +22,9 @@ b         {font-size:9pt;}
 
 html , body{
     line-height: 1;
-  /*  background : #9999CC; */
-    color:#404040;
-
-
-    /* background-image: url(../_images/elogo.jpg); */
+    background : #9999CC;
+  /*  color:#404040; */
+  /* background-image: url(../_images/elogo.jpg); */
 }
 #login
 {
@@ -275,6 +273,10 @@ input
     width:99%;
     height:500px;
     /*   border: 2px solid brown; */
+}
+
+tr:nth-child(even) {
+          background-color: Lightblue;
 }
 
 tr {
