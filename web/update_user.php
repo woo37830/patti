@@ -4,7 +4,7 @@ $id = intval($_REQUEST['id']);
 $email = htmlspecialchars($_REQUEST['email']);
 $engagemoreid = htmlspecialchars($_REQUEST['engagemoreid']); // TODO not getting inserted
 $orderid = intval($_REQUEST['orderid']);	// TODO not getting inserted
-$productid = htmlspecialchars($_REQUEST['productid']);
+$product = htmlspecialchars($_REQUEST['product']);
 $invoiceid = intval($_REQUEST['invoiceid']);
 $status = htmlspecialchars($_REQUEST['status']);
 $accountType = htmlspecialchars($_REQUEST['accountType']); // TODO not getting inserted
@@ -19,16 +19,11 @@ if( $conn = connect($dbase) )
 		$sql = "update $table set email=\"$email\",engagemoreid=\"$engagemoreid\",orderid=\"$orderid\",product=\"$product\", status=\"$status\", accountType=\"$accountType\" where id=$id";
 		if ($result = $conn->query($sql))
 		{
-/*	echo json_encode(array(
-		'id' => $id,
-		'email' => $email,
-		'engagemoreid' => $engagemoreid,
-		'orderid' => $orderid,
-		'product' => $product,
-		'status' => $status,
-		'accountType' => $accountType
-		*/
-		echo "Record has been updated successfully.";
+			echo json_encode(array('success' => array(
+				'email' => $email,
+				'engagemoreid' => $engagemoreid
+			)
+			));
 	//));
 } else {
 		echo json_encode(array('errorMsg'=>'Some errors occured.'));

@@ -20,6 +20,7 @@ $accountType = 'test';
 */
 $invoiceid = 123;
 
+
 require 'config.ini.php';
 include 'conn.php';
 
@@ -66,10 +67,12 @@ if( $conn = connect($dbase) )
 		 else
 		 {
 				mysqli_close($conn);
-	echo json_encode(array(
-		'id' => mysqli_insert_id($conn) ,
+	echo json_encode(array('success' => array(
 		'email' => $email,
-		'engagemoreid' => $engagemoreid,
+		'engagemoreid' => $engagemoreid
+		)
+	));
+	/*
 		'orderid' => $orderid,
 		'invoiceid' => $invoiceid,
 		'product' => $product,
@@ -78,7 +81,8 @@ if( $conn = connect($dbase) )
 		'added' => $datetime
 		));
 		return;
-	} // end of successful insertion
+		*/
+		} // end of successful insertion
 
 } // end of got connection
 else

@@ -134,7 +134,7 @@ function addUser( engagemoreid, email, name, product, status, accountType, added
 				accountType: accountType
 		});
 		row = id;
-		url = './save_user.php?id='+id;
+		url = './save_user.php';
 	}
 }
 
@@ -147,12 +147,14 @@ function saveUser(){
 		success: function(result){
 		//	var result = eval('('+result+')');
 			if (result.errorMsg){
+				alert('Failure: ' + JSON.stringify(result));
 				$.messager.show({
 					title: 'Error',
 					msg: result.errorMsg
 				});
 			} else {
-				$('#dlg').dialog('close');		// close the dialog
+				alert('Success: ' + JSON.stringify(result));
+			$('#dlg').dialog('close');		// close the dialog
 				//$("#users").dataTable()._fnAjaxUpdate();
 				oTable.ajax.reload(null, false);
 								}
@@ -161,17 +163,17 @@ function saveUser(){
 }
 
 function groupNameToProduct( groupName ) {
-  alert('groupName: \"'+groupName+'\" groups: ' + JSON.stringify(groups));
+//  alert('groupName: \"'+groupName+'\" groups: ' + JSON.stringify(groups));
   var done = 0;
   var result = 'unknown';
   $.each(groups, function(key, innerjson)
   {
     for( var key in innerjson )
     {
-			alert( 'key: \"' + key + '\", product: ' + innerjson[key]);
+	//		alert( 'key: \"' + key + '\", product: ' + innerjson[key]);
       if( String(key) == String(groupName) )
       {
-         alert('returning ' + innerjson[key]);
+  //       alert('returning ' + innerjson[key]);
          result = innerjson[key];
          done = -1;
          break;
@@ -187,7 +189,48 @@ function groupNameToProduct( groupName ) {
 
 </script>
 <style type="text/css">
-	.datatable td {
+	<style type="text/css">
+	        #log_in,#log_out {
+	            float:  left;
+	        }
+	        #dlg-buttons div {
+	            float: left;
+	            clear: none;
+	        }
+	         #toolbar.hide {
+	            display: none;
+	        }
+	        #toolbar.show {
+	            display: block;
+	        }
+	        #sql-buttons.hide {
+	            display: none;
+	        }
+	        #sql-buttons.show {
+	            display: block;
+	        }
+		#fm{
+			margin:0;
+			padding:10px 30px;
+		}
+		.ftitle{
+			font-size:14px;
+			font-weight:bold;
+			padding:5px 0;
+			margin-bottom:10px;
+			border-bottom:1px solid #ccc;
+		}
+		.fitem{
+			margin-bottom:5px;
+		}
+		.fitem label{
+			display:inline-block;
+			width:80px;
+		}
+		.fitem input{
+			width:160px;
+		}
+		.datatable td {
 						overflow: hidden; /* this is what fixes the expansion */
 						text-overflow: ellipsis; /* not supported in all browsers, but I accepted the tradeoff */
 						white-space: nowrap;
@@ -248,8 +291,8 @@ function groupNameToProduct( groupName ) {
 <div id="dlg-buttons">
 		<div id="sql_buttons" class="show-sql">
 	<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-	<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
-	 </div>
+	<!-- a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
+	</div -->
 	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 </div>
 </body>
