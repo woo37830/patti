@@ -32,7 +32,7 @@ require('fancyAuthentication.php');
             processing: true,
             bStateSave: true,
             ajax: {
-                url: "./get_users.php",
+                url: "./ajaxUsers.php",
                 dataSrc: "data"
             },
             columns: [

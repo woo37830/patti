@@ -48,9 +48,9 @@ var k = 0;
 			processing: true,
 			bStateSave: true,
 			ajax: {
-					url: "./get_all_accounts.php",
+					url: "./ajaxIsolatedAccounts.php",
 					dataType: "json",
-					dataSrc: "accounts.account",
+					dataSrc: "",
 			},
 			columns: [
 					{ data: "accountid", width: "5%", title: "ID" },
@@ -68,7 +68,7 @@ var k = 0;
 			processing: true,
 			bStateSave: true,
 			ajax: {
-					url: "./get_users.php",
+					url: "./ajaxUsers.php",
 					dataSrc: "data"
 			},
 			columns: [

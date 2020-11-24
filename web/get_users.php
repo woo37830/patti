@@ -1,5 +1,6 @@
 <?php
 
+function getUsers() {
 	require 'config.ini.php';
 	require_once 'conn.php';
 	$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
@@ -21,16 +22,13 @@
 		    //echo json_encode($row);
 			array_push($items, $row);
 		}
-
-		$result["data"] = $items;
-      header("Content-type: application/json");
-      header("Cache-Control: no-cache, must-revalidate");
 	}
 	else {
 		echo json_encode(array('errorMsg'=>'Some errors occured.'));
 		return;
 	}
 
-echo json_encode($result);
+	return $items;
+}
 
 ?>

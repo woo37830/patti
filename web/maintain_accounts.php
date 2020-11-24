@@ -32,7 +32,7 @@ require('fancyAuthentication.php');
             processing: true,
             bStateSave: true,
             ajax: {
-                url: "./get_all_accounts.php",
+                url: "./ajaxAccounts.php",
 								dataType: "JSON",
                 dataSrc: "accounts.account"
             },
