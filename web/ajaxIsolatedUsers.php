@@ -9,6 +9,15 @@
  require './get_all_accounts.php';
  require './get_users.php';
 
+ function getAUser( $email, $users ) {
+   foreach($users as $user) {
+     if( $user['email'] == $email ) {
+       return $user;
+     }
+   }
+   return -1;
+ }
+
  function getAUserById( $id, $users ) {
    foreach($users as $user) {
      if( $user['engagemoreid'] == $id ) {
@@ -19,23 +28,13 @@
  }
 
  function getAccountById( $id, $accounts ) {
-   $k = 0;
-   if( $id = 2607 ) {
-     echo "\nStarting $id\n";
-     echo "\naccountid ".$accounts->accounts->account->accountid."\n";
-   }
    foreach( $accounts->accounts->account as $account ) {
      if( $account->accountid == $id ) {
-       if( $id = 2607  ) {
-         echo "2607 : $account->email";
-       }
        return $id;
      }
-     $k++;
    }
    return -1;
  }
-
  function getAccountByEmail( $email, $accounts ) {
    foreach( $accounts as $account ) {
      if( $account->email == $email ) {
@@ -48,22 +47,16 @@
  $accounts = getAccounts(); // The collection of all accounts in CRM (accounts.account.[id,email...])
 
  $users = getUsers(); // The collection of all users (data[i].[id,email,...])
-
- function testIt() {
-
-   $isolated_accounts = array();
-   foreach($accounts as $account)
+ $results = array();
+ $isolated_users = array();
+ foreach($users as $user)
+ {
+   if(  getAccountById( $user['engagemoreid'], $accounts ) == -1 )
    {
-     if(  getAUserById( $account->accountid, $users ) == -1 )
-     {
-   			array_push($isolated_accounts,$account);
-     }
+ 			array_push($isolated_users,$user);
    }
-   return $isolated_accounts;
  }
+ $result["data"] = $isolated_users;
+ echo json_encode($result);
 
- $aUser = getAUserById( 2607, $users);
- echo "\n".$aUser."\n";
- $anAccount = getAccountById( 2607, $accounts);
- echo "\n".$anAccount."\n";
  ?>

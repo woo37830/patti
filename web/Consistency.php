@@ -68,8 +68,9 @@ var k = 0;
 			processing: true,
 			bStateSave: true,
 			ajax: {
-					url: "./ajaxUsers.php",
-					dataSrc: "data"
+					url: "./ajaxIsolatedUsers.php",
+					dataType: "json",
+					dataSrc: "data",
 			},
 			columns: [
 					{ data: "id", width: "5%", title: "ID" },
