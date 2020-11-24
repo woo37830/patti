@@ -316,3 +316,8 @@ tr#debug-token {
 {
     display:none;
 }
+
+.show
+{
+    display: block;
+}

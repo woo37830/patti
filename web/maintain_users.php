@@ -46,7 +46,6 @@ require('fancyAuthentication.php');
 								{ data: "added" }
             ]
             });
-
             /*setInterval( function() {
                 oTable.ajax.reload(null, false);
             }, 30000 );*/

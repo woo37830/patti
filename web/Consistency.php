@@ -24,25 +24,28 @@ require('fancyAuthentication.php');
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
 
-<style type="text/css">
-  table.tablesorter
-	{ /* So it won't keep expanding */
-      table-layout: fixed
-  }
-</style>
 </head>
 <body>
 	 <center>
+		 <div id="error-div">
+ 		    <!-- if (request.getParameter( "_error" ) != null)
+ 		        {%> <%=request.getParameter( "_error" )%> <% }% -->
+ 		</div> <!-- end of error-div -->
   <h1>EngagemoreCRM Consistency Report</h1>
+	<div id="debug"></div>
+	<div id="info"></div>
 	<div id='wrapper'>
 	<div id='content'>
   <div id='page'>
       <br />
 <script type="text/javascript">
+var groups = [];
 var oTable;
 var json;
 var k = 0;
 	$(document).ready(function() {
+		$("#error-div").css("visibility", "visible"); // show and set the error
+		$("#error-div").text("");
 
 			oTable = $('#accounts').DataTable({
 			processing: true,
@@ -85,13 +88,103 @@ var k = 0;
 			});
 
 });
+
+$(document).on('click','#accounts tbody tr',function() {
+		var row = $(this).closest("tr");
+		addUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text());
+});
+
+	function showError(message)
+	{
+		$('#error-div').append(message);
+		setTimeout( function() {
+			$('#error-div').fadeOut('fast');
+		}, 3000);
+	}
+
 $.ajax({
 	url: "./git-info.php",
 	dataType: "text",
 	success: function(data) {
-		$('#footer-div').append(data);
-}
+				$('#footer-div').append(data);
+			}
 });
+$.ajax({
+	url: "./ajaxProducts.php",
+	dataType: "json",
+	success: function(data) {
+		groups = data;
+	}
+});
+var url;
+var row;
+function newUser(){
+	$('#dlg').dialog('open').dialog('setTitle','New User');
+	$('#fm').form('clear');
+	url = './save_user.php';
+}
+function addUser( engagemoreid, email, name, product, status, accountType, added){
+	if (email){
+		$('#dlg').dialog('open').dialog('setTitle','Add User');
+		$('#fm').form('load',{
+				engagemoreid: engagemoreid,
+				email: email,
+				product: groupNameToProduct( product),
+				status: status,
+				accountType: accountType
+		});
+		row = id;
+		url = './save_user.php?id='+id;
+	}
+}
+
+function saveUser(){
+	$('#fm').form('submit',{
+		url: url,
+		onSubmit: function(){
+			return $(this).form('validate');
+		},
+		success: function(result){
+		//	var result = eval('('+result+')');
+			if (result.errorMsg){
+				$.messager.show({
+					title: 'Error',
+					msg: result.errorMsg
+				});
+			} else {
+				$('#dlg').dialog('close');		// close the dialog
+				//$("#users").dataTable()._fnAjaxUpdate();
+				oTable.ajax.reload(null, false);
+								}
+		}
+	});
+}
+
+function groupNameToProduct( groupName ) {
+  alert('groupName: \"'+groupName+'\" groups: ' + JSON.stringify(groups));
+  var done = 0;
+  var result = 'unknown';
+  $.each(groups, function(key, innerjson)
+  {
+    for( var key in innerjson )
+    {
+			alert( 'key: \"' + key + '\", product: ' + innerjson[key]);
+      if( String(key) == String(groupName) )
+      {
+         alert('returning ' + innerjson[key]);
+         result = innerjson[key];
+         done = -1;
+         break;
+       }
+    }
+    if( done == -1 )
+    {
+      return false;
+    }
+  });
+  return result;
+}
+
 </script>
 <style type="text/css">
 	.datatable td {
@@ -126,5 +219,38 @@ $.ajax({
 <hr />
 <div class="footer" id="footer-div"> </div>
 </div> <!-- end of wrapper -->
+<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
+		closed="true" buttons="#dlg-buttons">
+	<div class="ftitle">User</div>
+	<form id="fm" method="post" novalidate>
+		<div class="fitem">
+			<label for="engagemoreid">ID:</label>
+			<input name="engagemoreid" class="easyui-textbox" required="true">
+		</div>
+		<div class="fitem">
+			<label for="email">Email:</label>
+			<input name="email" class="easyui-textbox" required="true">
+		</div>
+		<div class="fitem">
+			<label for="product">Product:</label>
+			<input name="product" class="easyui-textbox">
+		</div>
+		<div class="fitem">
+			<label for="status">Status:</label>
+			<input name="status" class="easyui-textbox">
+		</div>
+		<div class="fitem">
+			<label for="accountType">Type:</label>
+			<input name="accountType" class="easyui-textbox">
+		</div>
+	</form>
+</div>
+<div id="dlg-buttons">
+		<div id="sql_buttons" class="show-sql">
+	<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
+	 </div>
+	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+</div>
 </body>
 </html>
