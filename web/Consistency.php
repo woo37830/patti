@@ -3,7 +3,6 @@ session_start(); //don't forget to do this
 $location = "/patti/web/Consistency.php";
 
 require('fancyAuthentication.php');
-
 ?>
 <html>
 <!-- $Author: woo $   -->
@@ -35,7 +34,7 @@ require('fancyAuthentication.php');
 <body>
 	 <center>
   <h1>EngagemoreCRM Consistency Report</h1>
-	<div id='wrapper'></div>
+	<div id='wrapper'>
 	<div id='content'>
   <div id='page'>
       <br />
@@ -50,13 +49,14 @@ var k = 0;
 			bStateSave: true,
 			ajax: {
 					url: "./get_all_accounts.php",
-					dataType: "JSON",
-					dataSrc: "accounts.account"
+					dataType: "json",
+					dataSrc: "accounts.account",
 			},
 			columns: [
 					{ data: "accountid", width: "5%", title: "ID" },
 					{ data:  "email" , width: "25%", title: "Email" },
-					{ data: "mailmerge_fullname", title: "Name" },
+					{ data: "mailmerge_fullname", title: "Name",
+						"defaultContent": "" },
 					{ data:  "group_name", title: "Product" },
 					{ data: "account_status", title: "Status" },
 					{ data: "license_type", width: "10%", title: "Type" },
@@ -82,7 +82,14 @@ var k = 0;
 					{ data: "added", title: "Since" }
 			]
 			});
-			$("#test").on("click", function() { alert("HELLO, WORLD!"); });
+
+});
+$.ajax({
+	url: "./git-info.php",
+	dataType: "text",
+	success: function(data) {
+		$('#footer-div').append(data);
+}
 });
 </script>
 <style type="text/css">
@@ -95,15 +102,15 @@ var k = 0;
 					table-layout: fixed
 			}
 </style>
-<div class="easyui-tabs" style="width:90%;height:90%">
-		<div title="Accounts" style="padding:10px">
+<div class="easyui-tabs" style="width:90%;height:80%">
+		<div title="Accounts" style="padding:10px" class="tab">
 
 <h1>Isolated Accounts</h1>
 <hr />
 <br />
 <table id="accounts" class="tablesorter" width="95%"></table>
 </div>
-<div title="Users" class="tablesorter" width="95%">
+<div title="Users" class="tablesorter" width="95%" class="tab">
 
 <h1>Isolated Users</h1>
 <hr />
@@ -111,20 +118,12 @@ var k = 0;
 <table id="users" class="tablesorter" width="95%"></table>
 </div>
 </div>
-<button name="Test" id='test' type="button">Press Me</button>
 
 </center>
-<footer>
-<?php
-// Loop through users, see if there is an account for each user
-// Display users tht have not accounts.
-// If user has account, check that user has engagemore id that agrees
-//       Check that users status is the same as the account status ?
-//
-
-include '../webhook/git-info.php';
-
-?>
-</footer>
+</div> <!-- end of page -->
+</div> <!-- end of content -->
+<hr />
+<div class="footer" id="footer-div"> </div>
+</div> <!-- end of wrapper -->
 </body>
 </html>

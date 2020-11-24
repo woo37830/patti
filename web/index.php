@@ -72,8 +72,9 @@ require('fancyAuthentication.php');
   </center>
 </div> <!-- end of page -->
 </div> <!-- end of content div -->
+<hr />
+<div id="footer-div" class="footer"></div>
 </div> <!-- end of wrapper -->
-<footer class="footer" id="footer-div" /footer>
 
 </body>
 </html>

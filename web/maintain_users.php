@@ -87,11 +87,11 @@ require('fancyAuthentication.php');
                 <div id="toolbar" >
                     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
                 </div>
-	    </div>
-	</div>
-	</div>
-    <footer class="footer" id="footer-div" /footer>
-  </div>
+	    		</div> <!-- end of page -->
+			</div> <!-- end of content -->
+			<hr />
+			<div class="footer" id="footer-div"> </div>
+	</div> <!-- end of wrapper -->
 
 	<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
 			closed="true" buttons="#dlg-buttons">

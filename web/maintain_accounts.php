@@ -39,7 +39,8 @@ require('fancyAuthentication.php');
             columns: [
                 { data: "accountid", width: "5%" },
                 { data:  "email" , width: "25%" },
-								{ data: "mailmerge_fullname"},
+								{ data: "mailmerge_fullname",
+									"defaultContent": ""},
                 { data:  "group_name" },
 								{ data: "account_status" },
 								{ data: "license_type", width: "10%" },
@@ -91,11 +92,11 @@ require('fancyAuthentication.php');
       <!-- div id="toolbar" >
           <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newAccount()">New Account</a>
       </div -->
-	    </div>
-	</div>
-	</div>
-    <footer class="footer" id="footer-div" /footer>
-  </div>
+		</div> <!-- end of page -->
+</div> <!-- end of content -->
+<hr />
+<div class="footer" id="footer-div"> </div>
+</div> <!-- end of wrapper -->
 
 
 	<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
