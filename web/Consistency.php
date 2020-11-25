@@ -94,6 +94,11 @@ $(document).on('click','#accounts tbody tr',function() {
 		addUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text());
 });
 
+$(document).on('click','#users tbody tr',function() {
+		var row = $(this).closest("tr");
+		editUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text());
+});
+
 	function showError(message)
 	{
 		$('#error-div').append(message);
@@ -138,6 +143,22 @@ function addUser( engagemoreid, email, name, product, status, accountType, added
 	}
 }
 
+function editUser( id, email, engagemoreid, orderid, product, status, accountType, added){
+	if (email){
+		$('#dlg').dialog('open').dialog('setTitle','Edit User');
+		$('#fm').form('load',{
+				email: email,
+				engagemoreid: engagemoreid,
+				orderid: orderid,
+				product: product,
+				status: status,
+				accountType: accountType
+		});
+		row = id;
+		url = './update_user.php?id='+id;
+	}
+}
+
 function saveUser(){
 	$('#fm').form('submit',{
 		url: url,
@@ -156,11 +177,36 @@ function saveUser(){
 				alert('Success: ' + JSON.stringify(result));
 			$('#dlg').dialog('close');		// close the dialog
 				//$("#users").dataTable()._fnAjaxUpdate();
-				oTable.ajax.reload(null, false);
-								}
+				pTable.ajax.reload(null, false);
+				oTable.ajax.reload(null, false);	
+			}
 		}
 	});
 }
+
+function destroyUser(){
+	var id = row;
+	if (id){
+		$.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
+			if (r){
+				$.post('./destroy_user.php',{id:id},function(result){
+					if (result.success){
+							$('#dlg').dialog('close');		// close the dialog
+								//$("#users").dataTable()._fnAjaxUpdate();
+							pTable.ajax.reload(null, false);
+					} else {
+						alert('Failure');
+						$.messager.show({	// show error message
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					}
+				},'json');
+			}
+		});
+	}
+}
+
 
 function groupNameToProduct( groupName ) {
 //  alert('groupName: \"'+groupName+'\" groups: ' + JSON.stringify(groups));
@@ -291,8 +337,8 @@ function groupNameToProduct( groupName ) {
 <div id="dlg-buttons">
 		<div id="sql_buttons" class="show-sql">
 	<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-	<!-- a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
-	</div -->
+	<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
+	</div>
 	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 </div>
 </body>
