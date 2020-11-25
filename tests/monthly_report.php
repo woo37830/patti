@@ -198,7 +198,7 @@ while( $row = $rows->fetch_assoc() ) {
   }
   $rows -> close();
   */
-  echo "<div id='footer' ><hr /><em>";
+  echo "<div id='footer-div' ><hr /><em>";
 
     include 'git-info.php';
   echo "</em></div>";
@@ -256,14 +256,10 @@ body {
 Month(e.g. 6): <input type="text" name="month"><br /><br />
 <input type="submit" name="submit" value="Submit">
 </form>
-<br /><br /><a href='../tests/index.php' />Home</a>
+<br /><br /><a href='../web/index.php' />Home</a>
 </center>
-<div id="footer">
-  <!-- Footer start -->
-<?php
-  include 'git-info.php';
-?>
-  <p>Last Update: 2020-03-13 11:07    <a href="mailto:jwooten37830@me.com?Subject=EngagemoreCRM%20Problem">webmaster</a>
+<div id="footer-div">
+<p>Last Update: 2020-11-25 10:51    <a href="mailto:jwooten37830@me.com?Subject=EngagemoreCRM%20Problem">webmaster</a>
   <!-- Footer end -->
 </div>
 </body>

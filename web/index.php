@@ -28,14 +28,14 @@ require('fancyAuthentication.php');
     var dataSet = [
     [ "<a href=\"../index.html\">Documentation</a>",
       "System Architect", "Update"],
-    ["<a href=\"./monthly_report.php\">Monthly Report</a>",
-      "Get a monthly report",""],
+    ["<a href=\"../tests/monthly_report.php\">Monthly Report</a>",
+      "Get a monthly report","Move to web dir and update Look and Feel"],
     ["<a href=\"./getAccountId.php\">Get Account Id</a>",
       "Get the account id for an email",""],
     ["<a href=\"./maintain_accounts.php\">Maintain Accounts</a>",
       "Maintain Engagemore Accounts",""],
-    ["<a href=\"./maintain_users.php\">Maintain Users</a>","",""],
-    ["<a href=\"./Consistency.php\">Consistency Report</a>","Find insconsistencies","Change to DataTable and AJAX"]
+    ["<a href=\"./maintain_users.php\">Maintain Users</a>","Maintain User Database table",""],
+    ["<a href=\"./Consistency.php\">Consistency Report</a>","Find insconsistencies","Fix add user"]
     ];
 
      var oTable;
