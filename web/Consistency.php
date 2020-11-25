@@ -96,7 +96,7 @@ $(document).on('click','#accounts tbody tr',function() {
 
 $(document).on('click','#users tbody tr',function() {
 		var row = $(this).closest("tr");
-		editUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text());
+		addUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text());
 });
 
 	function showError(message)
@@ -168,17 +168,17 @@ function saveUser(){
 		success: function(result){
 		//	var result = eval('('+result+')');
 			if (result.errorMsg){
-				alert('Failure: ' + JSON.stringify(result));
+				alert('Failure: ' + result.errorMsg);
 				$.messager.show({
 					title: 'Error',
 					msg: result.errorMsg
 				});
 			} else {
-				alert('Success: ' + JSON.stringify(result));
-			$('#dlg').dialog('close');		// close the dialog
+				alert('Success!');
+			  $('#dlg').dialog('close');		// close the dialog
 				//$("#users").dataTable()._fnAjaxUpdate();
 				pTable.ajax.reload(null, false);
-				oTable.ajax.reload(null, false);	
+				oTable.ajax.reload(null, false);
 			}
 		}
 	});
