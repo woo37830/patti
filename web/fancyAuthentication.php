@@ -6,29 +6,6 @@ if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Login') {
     $user = trim($_REQUEST['userid']);
     $pass = trim($_REQUEST['passwd']);
 }
-?>
-<html>
-<!-- $Author: woo $   -->
-<!-- $Date: 2017/11/14 16:37:22 $     -->
-<!-- $Revision: 1.5 $ -->
-<!-- $Source: /Users/woo/cvsrep/library/index.html,v $   -->
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
-	<title>EngagemoreCRM</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
-    <LINK REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
-    <!-- link rel="stylesheet" href="_css/jquery.tablesorter.pager.css" / -->
-	<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
-	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
-	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
-</head>
-<body>
-<?php
 if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Logout') {
   unset($_REQUEST['submit']);
   unset($_SESSION['loggedIn']);
@@ -48,22 +25,16 @@ if (!$validated ) {
   unset($_REQUEST['submit']);
   unset($_SESSION['loggedIn']);
   ?>
-  <center>
-    <h1>EngagemoreCRM Maintenance</h1>
+         <center>
   <form type='POST' >
       <table>
           <tr><td>UserID:</td><td><input type='text' name='userid' /></td></tr>
           <tr><td>Password</td><td><input type='password' name='passwd' /></td></tr>
       </table>
       <br />
-      <input type='submit' name='submit' value='Login' />
+                  <input type='submit' name='submit' value='Login' />
   </form>
-  </center>
-</div>
-</div>
-</div>
-</body>
-</html>
+                   </center>
 
   <?php
   die;
