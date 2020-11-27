@@ -35,7 +35,8 @@ require('fancyAuthentication.php');
     ["<a href=\"./maintain_accounts.php\">Maintain Accounts</a>",
       "Maintain Engagemore Accounts",""],
     ["<a href=\"./maintain_users.php\">Maintain Users</a>","Maintain User Database table",""],
-    ["<a href=\"./Consistency.php\">Consistency Report</a>","Find insconsistencies","Fix add user"]
+    ["<a href=\"./Consistency.php\">Consistency Report</a>","Find insconsistencies","Fix add user"],
+		["<a href=\"./Tests.php\">Tests</a>","Run Webhook Tests","Simulate Thrivecart Actions"]
     ];
 
      var oTable;
