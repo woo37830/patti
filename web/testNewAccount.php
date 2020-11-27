@@ -49,6 +49,11 @@ require('fancyAuthentication.php');
 						$('#footer-div').append(data);
 				}
 			});
+			function goBack()
+			{
+				window.location = parameters.get('back');
+			}
+			var parameters = new URLSearchParams(window.location.search);
 		</script>
 </head>
 <body>
@@ -58,6 +63,9 @@ require('fancyAuthentication.php');
                 <div class="title">Add New Account</div>
                 <hr/>
 				<div id='info-img'></div>
+				<div id='back'>
+				<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
+			</div>
 				<div id='info-div'>This Test Simulates a user navigating to the Thrivecart site and selecting a product, Entering their information and Credit Card Number and Submitting.</div>
 	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
@@ -65,46 +73,61 @@ require('fancyAuthentication.php');
 			<div class="footer" id="footer-div"> </div>
 	</div> <!-- end of wrapper -->
 
+
 	<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
-			closed="true" buttons="#dlg-buttons">
-		<div class="ftitle">User</div>
+			closed="false" buttons="#dlg-buttons">
+		<div class="ftitle">Account Information</div>
 		<form id="fm" method="post" novalidate>
+			<input type='hidden' name="thrivecart_secret" value="IEYDASLZ8FR7" />
+			<input type='hidden' name="event" value="order.success" />
+			<input type='hidden' name="invoice_id" value="123" />
 			<div class="fitem">
 			<label for="email">Email:</label>
-			<input class="easyui-textbox" name="email" required="true">
-			</div>
-			<div class="fitem">
-				<label for="engagemoreid">AccountID:</label>
-				<input name="engagemoreid" class="easyui-textbox" required="true">
+			<input class="easyui-textbox" name="customer.email" required="true">
 			</div>
 			<div class="fitem">
 				<label for="orderid">Order:</label>
-				<input name="orderid" class="easyui-textbox">
+				<input name="order_id" class="easyui-textbox">
 			</div>
 			<div class="fitem">
 				<label for="product">Product:</label>
-				<input name="product" class="easyui-textbox">
-			</div>
-			<div class="fitem">
-				<label for="status">Status:</label>
-				<input name="status" class="easyui-textbox">
+				<input name="base_product" class="easyui-textbox">
 			</div>
 			<div class="fitem">
 				<label for="accountType">Type:</label>
-				<input name="accountType" class="easyui-textbox">
+				<input name="mode" class="easyui-textbox">
 			</div>
 		</form>
 	</div>
 	<div id="dlg-buttons">
 	    <div id="sql_buttons" class="show-sql">
 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
-	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 	</div>
 	<script type="text/javascript">
 		var url;
 		var row;
+
+				function newUser(){
+					$('#dlg').dialog('open').dialog('setTitle','New User');
+					$('#fm').form('clear');
+					url = '../webhook/thrivecart.php';
+				}
+				function editUser( id, email, engagemoreid, orderid, product, status, accountType, added){
+					if (email){
+						$('#dlg').dialog('open').dialog('setTitle','Edit User');
+						$('#fm').form('load',{
+						    email: email,
+						    engagemoreid: engagemoreid,
+						    orderid: orderid,
+						    product: product,
+						    status: status,
+								accountType: accountType
+						});
+						row = id;
+						url = './update_user.php?id='+id;
+					}
+				}
 		function newUser(){
 			$('#dlg').dialog('open').dialog('setTitle','New User');
 			$('#fm').form('clear');

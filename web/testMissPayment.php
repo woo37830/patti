@@ -25,22 +25,34 @@ require('fancyAuthentication.php');
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
-     <script type="text/javascript" class="init">
-        var oTable;
-        var json;
-        $(document).ready(function() {
-            /*setInterval( function() {
-                oTable.ajax.reload(null, false);
-            }, 30000 );*/
-        });
-				$.ajax({
-					url: "./git-info.php",
-					dataType: "text",
-					success: function(data) {
-						$('#footer-div').append(data);
-				}
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#info-img").click(function() {
+				var $messageDiv = $('#info-div'); // get the reference of the div
+				$messageDiv.slideDown(function() {
+						$messageDiv.css("visibility", "visible"); // show and set the message
+						setTimeout(function() {
+								$messageDiv.slideUp();
+						}, 20000);
+				});
 			});
-		</script>
+			/*setInterval( function() {
+					oTable.ajax.reload(null, false);
+			}, 30000 );*/
+	});
+	$.ajax({
+		url: "./git-info.php",
+		dataType: "text",
+		success: function(data) {
+			$('#footer-div').append(data);
+	}
+});
+function goBack()
+{
+	window.location = parameters.get('back');
+}
+var parameters = new URLSearchParams(window.location.search);
+</script>
 </head>
 <body>
     <div class="wrapper">
@@ -48,6 +60,11 @@ require('fancyAuthentication.php');
             <div id="page" >
                 <div class="title">Rebill Failed for Account</div>
                 <hr/>
+								<div id='info-img'></div>
+								<div id='back'>
+									<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
+								</div>
+								<div id='info-div'>This Test Simulates a user navigating to the Thrivecart site and selecting a product, Entering their information and Credit Card Number and Submitting.</div>
 	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
 			<hr />

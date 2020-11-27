@@ -28,7 +28,16 @@ require('fancyAuthentication.php');
      <script type="text/javascript" class="init">
         var oTable;
         var json;
-        $(document).ready(function() {
+				$(document).ready(function() {
+					$("#info-img").click(function() {
+							var $messageDiv = $('#info-div'); // get the reference of the div
+							$messageDiv.slideDown(function() {
+									$messageDiv.css("visibility", "visible"); // show and set the message
+									setTimeout(function() {
+											$messageDiv.slideUp();
+									}, 20000);
+							});
+						});
             /*setInterval( function() {
                 oTable.ajax.reload(null, false);
             }, 30000 );*/
@@ -40,7 +49,12 @@ require('fancyAuthentication.php');
 						$('#footer-div').append(data);
 				}
 			});
-		</script>
+			function goBack()
+			{
+				window.location = parameters.get('back');
+			}
+			var parameters = new URLSearchParams(window.location.search);
+	</script>
 </head>
 <body>
     <div class="wrapper">
@@ -48,6 +62,11 @@ require('fancyAuthentication.php');
             <div id="page" >
                 <div class="title">Cancel Account</div>
                 <hr/>
+								<div id='info-img'></div>
+								<div id='back'>
+									<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
+								</div>
+								<div id='info-div'>This Test Simulates a user navigating to the Thrivecart site and selecting a product, Entering their information and Credit Card Number and Submitting.</div>
 	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
 			<hr />

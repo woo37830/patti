@@ -22,7 +22,7 @@ $api_key      = $config['MSG_PASSWORD'];
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
 
-$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
+$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund', 'order.rebill_failed');
 $affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
 
 
@@ -61,16 +61,25 @@ switch( $event ) {
   case 'order.subscription_payment':
     handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data);
     break;
+
+  case 'order.rebill_failed':
+    $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+    logit($email,$json_data, "order.rebill_failed, cancelled account, result: $result");
+    break;
+  case 'order.refund':
+      logit($email, $json_data, "order.refund");
+      $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+      logit($email,$json_data, "Subscription_cancelled because of order.refund, result: $result");
+      $theMessage = "Account $email has cancelled!";
+  //    sendNotification($email,'Cancellation Notice',$theMessage);
+      echo "Received order.refund. result = $result<br />" . $email . " - " . $json_data . "<br />";
+      break;
   case 'order.subscription_cancelled':
     $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
     logit($email,$json_data, "Subscription_cancelled, result: $result");
     $theMessage = "Account $email has cancelled!";
 //    sendNotification($email,'Cancellation Notice',$theMessage);
     echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
-    break;
-  case 'order.refund':
-    logit($email, $json_data, "order.refund");
-    echo "Received order.refund<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'affiliate.commission_refund':
     logit($email, $json_data, "affiliate.commission_refund");

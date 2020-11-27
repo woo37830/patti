@@ -29,17 +29,18 @@ require('fancyAuthentication.php');
     var dataSet = [
     [ "<a href=\"../index.html\">Documentation</a>",
       "System Architect", "Update"],
-    ["<a href=\"../web/testNewAccount.php\">New Account</a>",
+    ["<a href=\"../web/testNewAccount.php?back=./Tests.php\">New Account</a>",
       "Create new Account","Simulate Thrivecart New Account"],
-    ["<a href=\"./testCancelAccount.php\">Cancel Account</a>",
+    ["<a href=\"./testCancelAccount.php?back=./Tests.php\">Cancel Account</a>",
       "Cancel an Account","Simulate Thrivecart Cancel Account"],
-    ["<a href=\"./testUpgradeAccount.php\">Upgrade Account</a>",
+    ["<a href=\"./testUpgradeAccount.php?back=./Tests.php\">Upgrade Account</a>",
       "Upgrade an Account","Simulate Thrivecart Upgrade Account"],
-    ["<a href=\"./testMissPayment.php\">Credit Card Rejected</a>","Credit Card Doesn't Renew","Simulate Thrivecart Rebill Failed"],
+    ["<a href=\"./testMissPayment.php?back=./Tests.php\">Credit Card Rejected</a>","Credit Card Doesn't Renew","Simulate Thrivecart Rebill Failed"],
     ];
 
      var oTable;
      var json;
+		 var parameters;
      $(document).ready(function() {
        $('#tests').DataTable( {
         data: dataSet,
@@ -113,7 +114,7 @@ require('fancyAuthentication.php');
 	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 	</div>
-	<script type="text/javascript">
+	<script type="text/javascript>
 		var url;
 		var row;
 		function newUser(){

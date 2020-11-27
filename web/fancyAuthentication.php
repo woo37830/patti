@@ -43,8 +43,8 @@ if (!$validated ) {
 // If arrives here, is a valid user.
 $_SESSION['loggedIn'] = $user;
 }
-echo "<div id='logoutDiv'><div id='welcome'>Welcome ".$_SESSION['loggedIn']."</div><div id='home'>".
-  "<a href='./index.php' class='easyui-linkbutton'>Home</a></div></div>";
+echo "<div id='logoutDiv'><div id='welcome'>Welcome ".$_SESSION['loggedIn']."</div></div><div id='home'>".
+  "<a href='./index.php' class='easyui-linkbutton'>Home</a></div>";
 echo "<br />";
 
 

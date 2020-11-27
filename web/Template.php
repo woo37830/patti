@@ -47,6 +47,15 @@ require('fancyAuthentication.php');
 								{ data: "added", title: "Since" }
             ]
             });
+						$("#info-img").click(function() {
+								var $messageDiv = $('#info-div'); // get the reference of the div
+								$messageDiv.slideDown(function() {
+										$messageDiv.css("visibility", "visible"); // show and set the message
+										setTimeout(function() {
+												$messageDiv.slideUp();
+										}, 20000);
+								});
+							});
             /*setInterval( function() {
                 oTable.ajax.reload(null, false);
             }, 30000 );*/
@@ -63,6 +72,11 @@ require('fancyAuthentication.php');
 						$('#footer-div').append(data);
 				}
 			});
+			function goBack()
+			{
+				window.location = parameters.get('back');
+			}
+			var parameters = new URLSearchParams(window.location.search);
 		</script>
 </head>
 <body>
@@ -71,6 +85,11 @@ require('fancyAuthentication.php');
             <div id="page" >
                 <div class="title">Page Title</div>
                 <hr/>
+								<div id='info-img'></div>
+								<div id='back'>
+									<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
+								</div>
+								<div id='info-div'>This is where you put a description of what this page does and how to use it.</div>
 								<table id="users" class="tablesorter" width="95%"></table>
                 <div id="toolbar" >
                     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
