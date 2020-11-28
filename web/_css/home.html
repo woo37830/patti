@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Home</title>
+
+<script type="text/javascript" src="_js/jquery-1.9.1.js"></script>
+
+<script type="text/javascript" src="_js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/dt/jqc-1.11.3,dt-1.10.10/datatables.min.css"/>
+<script type="text/javascript" src="_js/jquery.dataTables.columnFilter.js"></script>
+
+    <!-- Additional CSS -->
+    <link type="text/css" href="./_js/alpaca/examples/css/960.fluid.css" rel="stylesheet"/>
+
+    <script type="text/javascript" src="https://use.typekit.com/fnm3kpm.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+
+
+<LINK REL="stylesheet" HREF="_css/jquery.dataTables.css" />
+<LINK REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
+<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
+ <script type="text/javascript" class="init">
+        $(document).ready(function() {
+            var oTable = $("#books").DataTable({
+            processing: true,
+            ajax: {
+                processing: true,
+                url: "./get_books.php",
+                dataSrc: "data",
+                dataTpe: "json"
+            },
+            columns: [
+                { data: "id" },
+                { data: "author" },
+                { data:  "title" },
+                { data:  "genre" },
+                { data:  "location" }
+            ]
+        });
+        $(document).on('click','#books tbody tr',function() {
+            var row = $(this).closest("tr");
+            alert("You clicked: "+$(row).find("td:nth-child(2)").text());
+            //editBook($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text());
+        });
+
+    });
+</script>
+   </head>
+    <body>
+        <div class="wrapper">
+            <div class="header">
+                 <!-- %@ include file="header.jsp" % -->
+            </div>
+            <div class="content">
+                <div class="main">
+                   <div id="nav">
+                        <div id="load_me_too">
+                            <!-- %@ include file="navigation.jsp" %  -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="page" >
+
+
+                    <div id="tasklist-div">
+                        <div class="title">My Books</div>
+                        <hr/>
+                        <table id="books" class="tablesorter">
+                            <thead>
+                                <tr><th id="id">ID</th><th id="author">Author</th><th id="title">Title</th><th id="genre">Genre</th><th id="location">Location</th></tr>
+                            </thead>
+                         </table>
+
+	                </div>
+                    <div id="toolbar">
+		                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newBook()">New Book</a>
+		                <a href="javascript:void(0)" id="refresh" iconCls="icon-add" plain="true" >Refresh</a>
+	                </div>
+	                <h3>Output: </h3>
+  <div id="output">this element will be accessed by jquery and this text replaced</div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="footer">
+            <p>JavaScript &amp; jQuery: The Missing Manual.</p>
+        </div>
+    </body>
+</html>
+

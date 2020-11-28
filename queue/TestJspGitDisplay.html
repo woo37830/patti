@@ -1,0 +1,39 @@
+<%@ page import="java.util.*,java.io.*" %>
+<%
+String cmd = "ssh appuser@app-server '/bin/pwd'";
+String outstr = "";
+
+        try {
+                Runtime rt = Runtime.getRuntime();
+                Process p = rt.exec(cmd);
+
+                try {
+InputStreamReader ise = new InputStreamReader(p.getErrorStream());
+BufferedReader bre = new BufferedReader(ise);
+InputStreamReader iso = new InputStreamReader(p.getInputStream());
+BufferedReader bro = new BufferedReader(iso);
+
+String line=null;
+while ( (line = bre.readLine()) != null ) {
+        System.out.println( "ERR>" + line );
+}
+while ( (line = bro.readLine()) != null ) {
+        System.out.println( "OUT>" + line );
+}
+
+                } catch (IOException ioe)
+                {
+                        ioe.printStackTrace();
+                }
+
+                int exitVal = p.waitFor();
+
+                System.out.println( exitVal );
+        }
+        catch (Throwable t) {
+                t.printStackTrace();
+        }
+
+%>
+<HTML>
+<BODY>

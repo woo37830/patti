@@ -1,0 +1,294 @@
+/*
+    Document   : test_user1
+    Created on : Feb 8, 2013, 4:24:32 PM
+    Author     : woo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.btm      {position:absolute; left:0px;}
+.comment  {color:white; }
+a:link    {color:#333399;}
+a:visited {color:#333399;}
+a:hover   {color:#006666;}
+a         {text-decoration:none;}
+b         {font-size:9pt;}
+.txt      {font-size:9pt;color:#333366; font-family:arial; }
+
+html , body{
+    line-height: 1;
+    background : #9999CC;
+
+    /* background-image: url(../_images/elogo.jpg); */
+}
+.login
+{
+    background: #FFFFFF;
+    line-height: 1;
+}
+.wrapper
+{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: auto;
+    height: 700px;
+    /*border: 5px solid red;*/
+}
+.header
+{
+    padding-left: 5px;
+    padding-right: 5px;
+    /*border: 5px solid black;*/
+}
+.content
+{
+    vertical-align: top;
+    padding-left:5px;
+    padding-right: 5px;
+    width: auto;
+    height: 400px;
+    /*border: 5px solid blue;*/
+}
+#page
+{
+    width: 85%;
+    float: right;
+    z-index: -1;
+    /*  border: 5px solid magenta; */
+}
+#debug {
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    padding-top: 2px;
+    /*border: 5px solid purple;*/
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    padding-top: 18px;
+    background: url(../_images/bg-footer.png) repeat-x left top;
+    /*border: 5px solid black;*/
+}
+.footer p {
+    font-size: 14px;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    padding: .5em .25em .5em 1em;
+    color:rgb(55,76,119);
+    background: rgb(110,138,195);
+    border-radius: 2px 0 0 0;
+    margin: 0;
+}
+
+#nav
+{
+    width: 10%;
+    float: left;
+    /*border: 5px solid red;*/
+}
+#title
+{
+    margin-left:20%;
+    margin-right:20%;
+    padding-bottom: 20px;
+    font-size:18pt; font-family:arial;
+    text-align: center;
+    /*border: 5px solid gray;*/
+}
+#login-div
+{
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background : #0099CC;
+    /*border: 5px solid gray;*/
+}
+#message
+{
+    font-family: Arial,Univers,sans-serif;
+    font-size: 18pt;
+    color:#000000;
+    width: 500px;
+    padding-top: 20px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+    /*border: 5px solid gray;*/
+}
+
+#error-div
+{
+    font-family: Arial,Univers,sans-serif;
+    font-size: 18pt;
+    color:#FF0000;
+    margin-left:20%;
+    margin-right:20%;
+    text-align: center;
+    /*border: 5px solid gray;*/
+}
+#activity
+{
+    width:100%;
+    /*border: 5px solid green;*/
+}
+#buttons
+{
+    margin-left: 20%;
+    margin-right: 20%;
+    /*border: 5px solid yellow;*/
+}
+
+#form-div
+{
+    vertical-align: top;
+    position:relative;
+    padding-left:5px;
+    padding-right: 5px;
+    top:0px;
+    z-index:5;
+    /*border: 5px solid pink;*/
+}
+input
+{
+    text-align: right;
+}
+#info-div
+{
+    float: left;
+    margin-top: 20px;
+    padding-left: 50px;
+    padding-right: 15px;
+    width: 100px;
+    height: 50px;
+    /*border: 5px solid black;*/
+}
+
+#info-img
+{
+    background-image: url("../_images/screenhelp.jpg");
+    background-repeat: no-repeat;
+    width: 15px; /*or your image's width*/
+    height: 15px; /*or your image's height*/
+    margin: 0;
+    padding: 0;
+}
+
+.renew-button
+{
+    padding-top: 20px;
+    padding-left: 15px;
+}
+#timer-div
+{
+    float: left;
+    margin-top: 10px;
+    padding-left: 15px;
+    width: 100px;
+    height: 150px;
+    /*border: 5px solid black;*/
+}
+#navigation ul, #navigation li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    z-index: 100;
+}
+#navigation a {
+    background-color: rgb(204,204,204);
+    text-decoration: none;
+    font: 16px 'ColaborateLightRegular', Arial, sans-serif;
+    text-indent: 10px;
+    border-top: 1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #999;
+    border-bottom:1px solid #999;
+    margin: 0px;
+    padding: 0px;
+    color: rgb(53,75,118);
+}
+#navigation a:hover {
+    border-top:1px solid #999;
+    border-left:1px solid #999;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    background-color: #555;
+    color: white;
+}
+#navigation .stack > a {
+    background-image: url(../_images/arrow.png);
+    background-repeat: no-repeat;
+    background-position: 97% 8px;
+}
+#navigation .stack > a:hover {
+    background-position: 97% -78px;
+}
+#navigation ul .stack > a {
+    background-position: 97% -21px;
+}
+#navigation ul .stack > a:hover {
+    background-position: 97% -54px;
+}
+
+#info {visibility:hidden;}
+
+#tasklist-div
+{
+    /*border: 2px solid red;*/
+}
+
+#tasklist
+{
+    /*  border: 2px solid black; */
+}
+.tablesorter
+{
+    width: 80%;
+}
+#tasktable
+{
+    margin-left:5px;
+    width:99%;
+    height:300px;
+    /*   border: 2px solid brown; */
+}
+
+tr {
+    cursor: pointer;
+}
+H1
+{
+    font-family: Arial,Univers,sans-serif;
+    font-size: 24pt;
+    color:#000000;
+}
+
+div#activity-name {        /* this will hide div with id div_id_name */
+    display:none;
+}
+
+div#oid-div {
+    display:none;
+}
+
+
+div#time-div {
+    display:none;
+}
+
+tr#debug-token {
+    display:none;
+}
+
+.hide
+{
+    display:none;
+}
+

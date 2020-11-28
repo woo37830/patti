@@ -10,6 +10,8 @@ date_default_timezone_set('America/New_York');
 
 function connect($db) {
   require 'config.ini.php';
+  require_once 'utilities.php';
+
 $db_host = $config['PATTI_DATABASE_SERVER']; // PROBABLY THIS IS OK
 $db_name = $db;        // GET THESE FROM YOUR HOSTING COMPANY
 $db_user = $config['PATTI_DATABASE_USER'];
@@ -36,12 +38,31 @@ return $mysqli;
 function logit($user, $json, $my_status)
 {
   require 'config.ini.php';
+  require_once 'utilities.php';
+
+  $log_file = "./mysql-errors.log";
+
+  // setting error logging to be active
+  ini_set("log_errors", TRUE);
+
+  // setting the logging file in php.ini
+  ini_set('error_log', $log_file);
+
+  $names = firstAndLastFromEmail($user);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
+//  error_log("Parsed out: $first_name, $last_name, and $from_email_address");
 
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
+
+      $user_email = $from_email_address;
+      $stripped_json = "See json logs for $user_email";
 
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
@@ -55,13 +76,13 @@ function logit($user, $json, $my_status)
 
       ) VALUES
       ( '$datetime'
-      , '$user'
-      , '$json'
+      , '$user_email'
+      , '$stripped_json'
       , '$my_status'
       , '$rev'
       , '$branch'
       )";
-
+      $sql = str_replace("\/","_",$sql);
       if (!$res = $conn->query($sql))
       {
                  $err
@@ -73,6 +94,9 @@ function logit($user, $json, $my_status)
               . $conn->error
               ;
               mysqli_close($conn);
+              // logging the error
+              error_log("An error occurred processing $user");
+
               trigger_error($err, E_USER_ERROR);
        }
        else
@@ -83,9 +107,14 @@ function logit($user, $json, $my_status)
      }
 }
 
-function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
+function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid, $mode)
 {
   require 'config.ini.php';
+
+  $names = firstAndLastFromEmail($user);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
 
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
@@ -99,13 +128,15 @@ function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
       , product
       , invoiceid
       , orderid
+      , accountType
       ) VALUES
       ( '$datetime'
-      , '$user'
+      , '$from_email_address'
       , '$engagemoreid'
       , '$productid'
       , '$invoiceid'
       , '$orderid'
+      , '$mode'
       )";
 
       if (!$res = $conn->query($sql))
@@ -180,11 +211,13 @@ function getStatusFor( $accountid ) {
      }
     return 'inactive';
 }
-
-function getAccountId($email)
-{ // Get the Engagemore(AllClients) engagemoreid from the users database
-  // given the email or the thrivecart id
+function getUserByEmail( $email ) {
   require 'config.ini.php';
+
+  $names = firstAndLastFromEmail($email);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
 
   $value = -1;
   $dbase = $config['PATTI_DATABASE'];
@@ -194,7 +227,7 @@ function getAccountId($email)
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_USERS_TABLE'];
 
-      $query = "SELECT engagemoreid FROM $table WHERE email = '$email' ";
+      $query = "SELECT * FROM $table WHERE email = '$from_email_address' ";
        $results_array = array();
        $result = $conn->query($query);
        while( $row = $result->fetch_assoc() ) {
@@ -202,16 +235,31 @@ function getAccountId($email)
        }
        if( !empty( $results_array[0] ) )
        {
-         $value = (int)$results_array[0]['engagemoreid'];
+         return $results_array[0];
        }
        $result -> close();
        $conn->close();
      }
-    return $value;
+    return null;
+
+}
+function getAccountId($email)
+{ // Get the Engagemore(AllClients) engagemoreid from the users database
+  // given the email or the thrivecart id
+  $user = getUserByEmail( $email );
+  if( $user ) {
+    return $user['engagemoreid'];
+  }
+  return -1;
 }
 function getProductFor( $email ) {
   $value = -1;
   require 'config.ini.php';
+
+  $names = firstAndLastFromEmail($email);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
 
   $dbase = $config['PATTI_DATABASE'];
 
@@ -220,7 +268,7 @@ function getProductFor( $email ) {
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_USERS_TABLE'];
 
-      $query = "SELECT product FROM $table WHERE email = '$email' ";
+      $query = "SELECT product FROM $table WHERE email = '$from_email_address' ";
 
        $results_array = array();
        $result = $conn->query($query);
@@ -314,4 +362,112 @@ function getEmailForInvoiceId( $invoiceid ) {
      }
     return $value;
 }
+
+function getAllUsers() {
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+  $results_array = array();
+
+  if( $conn = connect($dbase) )
+  {
+    $datetime = date_create()->format('Y-m-d H:i:s');
+    $table = $config['PATTI_USERS_TABLE'];
+
+    $query = "SELECT * FROM $table";
+    $result = $conn->query($query);
+    while( $row = $result->fetch_assoc() ) {
+      $results_array[] = $row;
+    }
+    $result -> close();
+    $conn->close();
+   }
+  return $results_array;
+}
+
+function getUser( $id )
+{
+  require 'config.ini.php';
+
+  $dbase = $config['PATTI_DATABASE'];
+  $results_array = array();
+
+  if( $conn = connect($dbase) )
+  {
+    $datetime = date_create()->format('Y-m-d H:i:s');
+    $table = $config['PATTI_USERS_TABLE'];
+
+    $query = "SELECT * FROM $table where id = $id";
+    $result = $conn->query($query);
+    while( $row = $result->fetch_assoc() ) {
+      $results_array[] = $row;
+    }
+    $result -> close();
+    $conn->close();
+   }
+  return $results_array;
+}
+
+function deleteUser( $email ) {
+  $value = -1;
+  require 'config.ini.php';
+
+  $names = firstAndLastFromEmail($email);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
+  $dbase = $config['PATTI_DATABASE'];
+
+  if( $conn = connect($dbase) )
+    {
+      $datetime = date_create()->format('Y-m-d H:i:s');
+      $table = $config['PATTI_USERS_TABLE'];
+
+      $query = "DELETE FROM $table WHERE email = '$from_email_address' ";
+
+      if (mysqli_query($conn, $query)) {
+          echo "Record deleted successfully";
+      } else {
+          echo "Error deleting record: " . mysqli_error($conn);
+      }
+      $conn->close();
+     }
+    return;
+}
+
+function updateUser( $email, $engagemoreid,
+          $orderid, $invoiceid,
+          $product, $type, $status ) {
+            require 'config.ini.php';
+            $user = getUserByEmail( $email );
+            if( $user ) {
+              $ID = $user['id'];
+            } else {
+              return "FAILED: User $email not found!";
+            }
+            $table = $config['PATTI_USERS_TABLE'];
+
+            $sql = " UPDATE $table SET engagemoreid = $engagemoreid, orderid = $orderid,".
+              " invoiceid = $invoiceid,product = '".$product."', status = '".$status."', accountType = '" .
+              $type."'" .
+              " WHERE id = $ID";
+            $status = 'Failed';
+            $dbase = $config['PATTI_DATABASE'];
+
+            if( $conn = connect($dbase) )
+            {
+              if ($conn->query($sql))
+              {
+                $status = "Update for id = $ID Succeeded";
+              }
+              else
+              {
+                $status =  "FAILED: " . mysqli_error($conn);
+              }
+              mysqli_close($conn);
+            }
+            return $status;
+}
+
 ?>

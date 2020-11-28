@@ -1,0 +1,381 @@
+/*
+    Document   : test_user1
+    Created on : Feb 8, 2013, 4:24:32 PM
+    Author     : woo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.btm      {position:absolute; left:0px;}
+.comment  {color:white; }
+a:link    {color:#333399;}
+a:visited {color:#333399;}
+a:hover   {color:#006666;}
+a         {text-decoration:none;}
+b         {font-size:9pt;}
+.txt      {font-size:9pt;color:#333366; font-family:arial; }
+
+html , body{
+    line-height: 1;
+    background: #D8D6D9;
+  /*  background : #9999CC;*/
+  /*  color:#404040; */
+  /* background-image: url(../_images/elogo.jpg); */
+}
+#login
+{
+    background: #FFFFFF;
+    line-height: 1;
+/*    border: 5px solid blue; */
+}
+#home
+{
+  width: 10%;
+  float: right;
+/*  border: 5px solid red; */
+}
+
+#back
+{
+  width: 10%;
+  float: right;
+}
+
+.wrapper
+{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: auto;
+    height: auto;
+  /*  border: 5px solid red;*/
+}
+.header
+{
+    padding-left: 5px;
+    padding-right: 5px;
+    /*border: 5px solid black;*/
+}
+.content
+{
+    vertical-align: top;
+    padding-left:5px;
+    padding-right: 5px;
+    width: auto;
+    height: auto;
+    /*border: 5px solid blue;*/
+    /*background-color: solid yellow;*/
+}
+
+#debug {
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    padding-top: 2px;
+    /*border: 5px solid purple;*/
+}
+#page
+{
+  position: relative;
+  height: 95vh;
+  /*border: 5px solid green;*/
+}
+
+.tab
+{
+  position: relative;
+  height: 95vh;
+}
+
+#content
+{
+  padding-bottom: 1.5rem; /* Footer height */
+}
+
+footer
+{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  padding-top: 3px;
+  background-color: powderblue;
+  text-align: center;
+  height: 1.5rem;
+  font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-style: italic;
+}
+#nav
+{
+    width: 10%;
+    float: left;
+    /*border: 5px solid red;*/
+}
+.title
+{
+    margin-left:20%;
+    margin-right:20%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size:18pt; font-family:arial;
+    text-align: center;
+    /*border: 5px solid gray;*/
+}
+#login-div
+{
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background : #0099CC;
+    /*border: 5px solid gray;*/
+}
+#select-type-div
+{
+    top: 20px;
+    padding-top: 10px;
+    text-align: center;
+    /*border: 5px solid gray;*/
+}
+#message
+{
+    font-family: Arial,Univers,sans-serif;
+    font-size: 18pt;
+    color:#000000;
+    width: 500px;
+    padding-top: 20px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+/*    border: 5px solid gray; */
+}
+
+#error-div
+{
+    font-family: Arial,Univers,sans-serif;
+    font-size: 18pt;
+    color:#FF0000;
+    margin-left:20%;
+    margin-right:20%;
+    text-align: center;
+/*    border: 5px solid orange; */
+}
+#activity
+{
+    width:100%;
+    /*border: 5px solid green;*/
+}
+#buttons
+{
+    margin-left: 20%;
+    margin-right: 20%;
+    /*border: 5px solid yellow;*/
+}
+
+#form-div
+{
+    vertical-align: top;
+    position:relative;
+    padding-left:5px;
+    padding-right: 5px;
+    top:0px;
+    z-index:5;
+    /*border: 5px solid pink;*/
+}
+input
+{
+    text-align: right;
+}
+#info-div
+{
+    float: left;
+    margin-top: 20px;
+    padding-left: 50px;
+    padding-right: 15px;
+    width: 80%;
+    height: 50px;
+    visibility: hidden;
+    /*border: 5px solid black;*/
+}
+
+#info-img
+{
+    background-image: url("../_images/screenhelp.jpg");
+    background-repeat: no-repeat;
+    width: 35px; /*or your image's width*/
+    height: 35px; /*or your image's height*/
+    margin: 0;
+    padding: 0;
+}
+
+.renew-button
+{
+    padding-top: 20px;
+    padding-left: 15px;
+}
+#timer-div
+{
+    float: left;
+    margin-top: 10px;
+    padding-left: 15px;
+    width: 100px;
+    height: 150px;
+    /*border: 5px solid black;*/
+}
+#navigation ul, #navigation li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    z-index: 100;
+}
+#navigation a {
+    background-color: rgb(204,204,204);
+    text-decoration: none;
+    font: 16px 'ColaborateLightRegular', Arial, sans-serif;
+    text-indent: 10px;
+    border-top: 1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #999;
+    border-bottom:1px solid #999;
+    margin: 0px;
+    padding: 0px;
+    color: rgb(53,75,118);
+}
+#navigation a:hover {
+    border-top:1px solid #999;
+    border-left:1px solid #999;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+    background-color: #555;
+    color: white;
+}
+#navigation .stack > a {
+    background-image: url(../_images/arrow.png);
+    background-repeat: no-repeat;
+    background-position: 97% 8px;
+}
+#navigation .stack > a:hover {
+    background-position: 97% -78px;
+}
+#navigation ul .stack > a {
+    background-position: 97% -21px;
+}
+#navigation ul .stack > a:hover {
+    background-position: 97% -54px;
+}
+
+#info {visibility:hidden;}
+
+#tasklist-div
+{
+    /*border: 2px solid red;*/
+}
+
+#tasklist
+{
+    /*  border: 2px solid black; */
+}
+.tablesorter
+{
+    width: 90%;
+}
+#tasktable
+{
+    margin-left:5px;
+    width:99%;
+    height:500px;
+    /*   border: 2px solid brown; */
+}
+
+tr:nth-child(even) {
+          background-color: Lightblue;
+}
+
+tr {
+    cursor: pointer;
+}
+H1
+{
+    font-family: Arial,Univers,sans-serif;
+    font-size: 24pt;
+    color:#000000;
+}
+
+div#activity-name {        /* this will hide div with id div_id_name */
+    display:none;
+}
+
+div#oid-div {
+    display:none;
+}
+
+
+div#time-div {
+    display:none;
+}
+
+tr#debug-token {
+    display:none;
+}
+
+.hide
+{
+    display:none;
+}
+
+.show
+{
+    display: block;
+}
+
+#log_in,#log_out {
+    float:  left;
+}
+#dlg-buttons div {
+    float: left;
+    clear: none;
+}
+ #toolbar.hide {
+    display: none;
+}
+#toolbar.show {
+    display: block;
+}
+#sql-buttons.hide {
+    display: none;
+}
+#sql-buttons.show {
+    display: block;
+}
+#fm{
+margin:0;
+padding:10px 30px;
+}
+.ftitle{
+font-size:14px;
+font-weight:bold;
+padding:5px 0;
+margin-bottom:10px;
+border-bottom:1px solid #ccc;
+}
+.fitem{
+margin-bottom:5px;
+}
+.fitem label{
+display:inline-block;
+width:80px;
+}
+.fitem input{
+width:160px;
+}
+.datatable td {
+    overflow: hidden; /* this is what fixes the expansion */
+    text-overflow: ellipsis; /* not supported in all browsers, but I accepted the tradeoff */
+    white-space: nowrap;
+}
+table.tablesorter { /* So it won't keep expanding */
+  table-layout: fixed
+}

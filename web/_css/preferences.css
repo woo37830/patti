@@ -1,0 +1,26 @@
+/* 
+    Document   : preferences
+    Created on : Jun 23, 2013, 12:02:15 PM
+    Author     : woo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+
+#preferences table
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#preferences table td
+{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+

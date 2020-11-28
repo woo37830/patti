@@ -12,3 +12,8 @@ consume_json.php where at this time it is output back to the browser as a string
 This will be changed to send any needed json data back to AllClients or the Credit card handler, etc. as necessary.
 
 I suppose that the rest-form.php should also update the client using the clientid provided to note that the text was sent.
+
+Once the testGetAllAccounts.php is working, then create another php file
+that will look at each account returned by the get_all_accounts.php and look it up
+in the users_db.users and note any that are in one place and not another and also
+their status if not the same.  Add check their group to make sure it is the same also.

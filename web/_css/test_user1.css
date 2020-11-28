@@ -1,0 +1,55 @@
+/* 
+    Document   : test_user1
+    Created on : Feb 8, 2013, 4:24:32 PM
+    Author     : woo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+ 
+#tasklist
+{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+width:100%;
+border-collapse:collapse;
+}
+#tasklist td, #tasklist th 
+{
+font-size:0.5em;
+border:1px solid #98bf21;
+padding:3px 7px 2px 7px;
+}
+#tasklist th 
+{
+font-size:1.0em;
+text-align:left;
+padding-top:5px;
+padding-bottom:4px;
+background-color:#A7C942;
+color:#ffffff;
+}
+#tasklist tr:nth-child(odd) 
+{
+color:#000000;
+background-color:#EAF2D3;
+}
+#tasktable
+{
+    margin-left:150px;
+    width:80%;
+    height:300px;
+}
+H1
+{ font-family: Arial,Univers,sans-serif;
+  font-size: 24pt;
+  color:#000000;
+}
+
+
+
+

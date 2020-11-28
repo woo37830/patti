@@ -8,6 +8,12 @@ require 'change_account_status.php';
 require 'upgrade_account.php';
 require 'utilities.php';
 require '../smtp/notify.php';
+require_once 'mylib.php';
+
+$log_file = "./mysql-errors.log";
+$log = new Logging();
+$log->lfile("./json-data.log");
+
 /**
  * AllClients Account ID and API Key.
  */
@@ -16,12 +22,10 @@ $api_key      = $config['MSG_PASSWORD'];
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
 
-$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund');
+$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund', 'order.rebill_failed');
 $affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
 
-$email_limits = array("product-9" => 5000, "product-12" => 5000, "product-13" => 10000,
-                      "product-14" => 10000, "product-15" => 10000, "product-16" => 10000,
-                      "product-17" => 10000);
+
 echo "<html><head></head><body><h1>OK</h1></body></html>";
 $json_data = json_encode($_REQUEST);
 
@@ -47,41 +51,51 @@ if( empty( $event ) ) {
   logit("INVALID", $json_data, "No event provided");
    die('No event provided');
 }
+$log->lwrite("$email,$json_data");
+
+//$email = get_email_from_rfc_email($email);
 switch( $event ) {
   case 'order.success':
-    echo "Received order.success<br />" . $email . " - " . $json_data . "<br />";
     handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data);
     break;
   case 'order.subscription_payment':
-    logit($email, $json_data, "order.subscription_payment");
-    echo "Received order.subscription_payment<br />" . $email . " - " . $json_data . "<br />";
+    handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data);
     break;
+
+  case 'order.rebill_failed':
+    $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+    logit($email,$json_data, "order.rebill_failed, cancelled account, result: $result");
+    break;
+  case 'order.refund':
+      logit($email, $json_data, "order.refund");
+      $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+      logit($email,$json_data, "Subscription_cancelled because of order.refund, result: $result");
+      $theMessage = "Account $email has cancelled!";
+  //    sendNotification($email,'Cancellation Notice',$theMessage);
+      echo "Received order.refund. result = $result<br />" . $email . " - " . $json_data . "<br />";
+      break;
   case 'order.subscription_cancelled':
     $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
     logit($email,$json_data, "Subscription_cancelled, result: $result");
     $theMessage = "Account $email has cancelled!";
-    sendNotification($email,'Cancellation Notice',$theMessage);
+//    sendNotification($email,'Cancellation Notice',$theMessage);
     echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
     break;
-  case 'order.refund':
-  echo "Received order.refund<br />" . $email . " - " . $json_data . "<br />";
-    logit($email, $json_data, "order.refund");
-    break;
   case 'affiliate.commission_refund':
-    echo "Received affiliate.commission_refund<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "affiliate.commission_refund");
+    echo "Received affiliate.commission_refund<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'affiliate.commission_earned':
-    echo "Received affiliate.commission_earned<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "affiliate.commission_earned");
+    echo "Received affiliate.commission_earned<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'affiliate.commission_payout':
-    echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "affiliate.commission_payout");
+    echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
     break;
   default:
-    echo "Invalid event - $event<br />" . $email . " - " . $json_data . "<br />";
     logit($email, $json_data, "Invalid event- $event");
+    echo "Invalid event - $event<br />" . $email . " - " . $json_data . "<br />";
     die();
 }
   //echo "Received event: $event with email: $email</br/>";
@@ -89,42 +103,108 @@ switch( $event ) {
   require 'git-info.php';
   die('All Done');
 
-
-
-function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data) {
-  //echo "Check if account_exists for: $email <br />";
-  //echo "json_data :  " . $json_data . "<br />";
+function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data) {
+  echo "Check if account_exists for: $email <br />";
+//  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
+  echo "product: ". $product . "<br />";
   require 'product_data.php';
-  if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
-
-    $group_name = getProductName($product, $email, $json_data);
-
+/*  if( $product != 'product-29' )
+  {
+    if( $product != 'product-24' ) {
+    logit($email, $json_data, "order.subscription_payment for " . $product);
+    echo "Received order.subscription_payment<br />" . $email . " - " . $json_data . "<br />";
+    return;
+    }
+  }
+  */
+// We are here because we are looking at payment for product-29 or product-24.
     if( account_exists($email) ) {
       echo "It does!<br />";
       if( account_isInactive($email) )
       {
-        // reactivate account
-        reactivate_account($email, $api_endpoint, $account_id, $api_key);
+        echo "order.subscription_payment for inactive account<br>";
+      //  logit($email, $json_data, "FAILURE: order.subscription_payment for inactive account " . $product);
+        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
+        logit($email,$json_data, "Subscription_reactivated, result: $result");
+
+        return;
       }
       else
       {
-        // account is active
+        // account is active and the product on record is product-29 or product-24
+        // then we want to change it to product-13
         if( product_isTheSame($email, $product) )
-        {
-          // It is a payment and just let it go.
-          echo "Payment received for product: $product<br />";
-          logit( $email, $json_data, "Payment was received for product: $product");
-        }
-        else
-        {
+        { // i.e. product-29 or product-24 is the current product for the $email
           // different product, then cnange the group for the account
+          $product = 'product-13'; // change it to product-13
+          $group_name = getProductName($product, $email, $json_data);
+          echo "group_name: " . $group_name . "<br />";
+
           $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
            if( $engagemoreacct != -1 ) {
              echo "Changed subscription to product: $product<br />";
             logit($email, $json_data,  "SUCCESS: Changed product to $product");
-            //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
+          }
+        } else { // This should not happen as it means the product being paid for is product-29
+          // AND the user already has product-29 recorded.
+          // This should have been changed the first subscription payment to product-13
+          echo "Failure: $product on record should have been changed for $email<br />";
+         logit($email, $json_data,  "FAILURE: $product should have already been changed!");
+         return;
+        }
+      }
+    }
+    else { // account does not exist
+      echo "FAILURE: the account $email does not exist<br>";
+      logit($email, $json_data,  "FAILURE: Changing product to $product because account does not exist.");
+      return;
+    }
+    return;
+}
+
+
+function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data) {
+  $names = firstAndLastFromEmail($email);
+  $first_name = $names[0];
+  $last_name = $names[1];
+  $from_email_address = $names[2];
+
+  echo "Check if account_exists for: $from_email_address <br />";
+  echo "json_data :  " . $json_data . "<br />";
+  $product = getProductId($_REQUEST);
+  echo "product: ". $product . "<br />";
+  require 'product_data.php';
+  if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
+
+    $group_name = getProductName($product, $from_email_address, $json_data);
+ 	echo "group_name: " . $group_name . "<br />";
+
+    if( account_exists($from_email_address) ) {
+      echo "It does!<br />";
+      if( account_isInactive($from_email_address) )
+      {
+        // reactivate account
+        reactivate_account($from_email_address, $api_endpoint, $account_id, $api_key);
+      }
+      else
+      {
+        // account is active
+        if( product_isTheSame($from_email_address, $product) )
+        {
+          // It is a payment and just let it go.
+          echo "Payment received for product: $product<br />";
+          logit( $from_email_address, $json_data, "Payment was received for product: $product");
+        }
+        else
+        {
+          // different product, then cnange the group for the account
+          $engagemoreacct = (int)change_account_group($from_email_address, $api_endpoint, $account_id, $api_key,
+           $group_name, $product);
+           if( $engagemoreacct != -1 ) {
+             echo "Changed subscription to product: $product<br />";
+            logit($from_email_address, $json_data,  "SUCCESS: Changed product to $product");
           }
         }
       }
@@ -140,28 +220,31 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
         );
         $message = " with productid: $product";
         $invoiceId = getInvoiceId();
+	echo "invoidid: " . $invoiceId . "<br />";
         $orderId = getOrderId();
-        $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $email, $product, $invoiceId, $orderId, $json_data);
+	echo "orderid: " . $orderId . "<br />";
+        $mode = getMode();
+        $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $from_email_address, $product, $invoiceId, $orderId, $json_data, $mode);
+		echo "engagemoreacct: " . $engagemoreacct . "<br />";
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product
-            $message = " - One month free/$99 mo. for product $product";
+            $message = " - One month free\/$99 mo. for product $product";
           }
           if( $product == "product-16") { // 2 months free and discounted rate
-            $message = " - Special $990/yr. for $690/yr. product $product";
+            $message = " - Special $990\/yr. for $690/yr. product $product";
           }
           if( $product == "product-17") { // discounted rate
-            $message = " - Special $99/mo. for $69/mo. product $product";
+            $message = " - Special $99\/mo. for $69/mo. product $product";
           }
-          logit($email, $json_data, "SUCCESS: Added to account: $group_name, $message");
-
-        //adjust_email_limits($api_endpoint, $account_id, $api_key, $engagemoreacct, $email, $product, $email_limits);
-      } // end not invalid engagemoreid, so it was created.
+  logit($from_email_address, $json_data, "SUCCESS: Added to account: $group_name - $message");
+	echo "SUCCESS: Added " . $from_email_address . " to account " . $group_name . " " . $message . "<br />";
+      } // end not invadelid engagemoreid, so it was created.
     } // end account does not exist - create it
   } // end valid product
   else {
-    logit($email, $json_data, "NOT TRACKED: $product is not tracked by this webhook.");
+    logit($from_email_address, $json_data, "NOT TRACKED: $product is not tracked by this webhook.");
     echo "<br /><h3>NOT TRACKED: $product is not tracked by this webhook.</h3>";
-    echo "<br />for " . $email . ", " . $json_data. "<br />";
+    echo "<br />for " . $from_email_address . ", " . $json_data. "<br />";
   }
 }
 

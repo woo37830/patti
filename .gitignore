@@ -1,5 +1,7 @@
 textmagic-rest-php/
 webhook/config.ini.php
+tests/config.ini.php
+web/config.ini.php
 .DS_Store
 *.response.txt
 *.DS_Store
@@ -11,3 +13,5 @@ webhook/config.ini.php
 *.log
 *.gz
 *.toc
+config.ini.php
+/nbproject/private/

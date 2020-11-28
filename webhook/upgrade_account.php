@@ -18,7 +18,7 @@ $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string obj
 if ($results_xml === false) {
 
 	logit($email, $json_data, "failure parsing xml: ".$results_xml);
-  http_response_code(400);
+//  http_response_code(400);
 	exit;
 }
 if (isset($results_xml->message)) {
@@ -36,13 +36,13 @@ if (isset($results_xml->message)) {
 
 if (isset($results_xml->error)) {
   logit($email,$json_data, "Failure: " . $results_xml->error );
-  http_response_code(400);
+//  http_response_code(400);
   exit;
 }
 
   // Here I write the account information using updateProduct in mysql_common.php
   updateProduct($account, $productid);
-  logit($email, $json_data, "Success upgraded account to: " . $productid);
+  //logit($email, $json_data, "Success upgraded account to: " . $productid);
   return $account;
 }
 ?>
