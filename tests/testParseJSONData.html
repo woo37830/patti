@@ -1,0 +1,29 @@
+<html>
+<head>
+<script type="text/javascript">
+
+var json = '{"row": {"event":"cart.abandoned"}, "row": {"event":"cart.abandoned"}, "row": {"event":"cart.abandoned"}, "row": {"event":"order.success","mode":"live"}}';
+
+
+// Define recursive function to print nested values
+function printValues(obj) {
+    for(var k in obj) {
+        if(obj[k] instanceof Object) {
+            printValues(obj[k]);
+        } else {
+            document.write(obj[k] + "<br>");
+        };
+    }
+};
+function printIt() {
+  var obj = JSON.parse(json);
+  printValues(obj);
+};
+// Printing all the values from the resulting object
+
+</script>
+</head>
+<body onload="printIt();">
+  <h1>Test Parsing JSON data similar to log data from thrivecart.php</h1>
+</body>
+</html>

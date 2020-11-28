@@ -61,7 +61,6 @@ switch( $event ) {
   case 'order.subscription_payment':
     handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data);
     break;
-
   case 'order.rebill_failed':
     $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
     logit($email,$json_data, "order.rebill_failed, cancelled account, result: $result");
@@ -104,10 +103,10 @@ switch( $event ) {
   die('All Done');
 
 function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data) {
-  echo "Check if account_exists for: $email <br />";
+//  echo "Check if account_exists for: $email <br />";
 //  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
-  echo "product: ". $product . "<br />";
+//  echo "product: ". $product . "<br />";
   require 'product_data.php';
 /*  if( $product != 'product-29' )
   {
@@ -120,10 +119,10 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
   */
 // We are here because we are looking at payment for product-29 or product-24.
     if( account_exists($email) ) {
-      echo "It does!<br />";
+//      echo "It does!<br />";
       if( account_isInactive($email) )
       {
-        echo "order.subscription_payment for inactive account<br>";
+//        echo "order.subscription_payment for inactive account<br>";
       //  logit($email, $json_data, "FAILURE: order.subscription_payment for inactive account " . $product);
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
         logit($email,$json_data, "Subscription_reactivated, result: $result");
@@ -139,7 +138,7 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
           // different product, then cnange the group for the account
           $product = 'product-13'; // change it to product-13
           $group_name = getProductName($product, $email, $json_data);
-          echo "group_name: " . $group_name . "<br />";
+  //        echo "group_name: " . $group_name . "<br />";
 
           $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
@@ -171,18 +170,18 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
   $last_name = $names[1];
   $from_email_address = $names[2];
 
-  echo "Check if account_exists for: $from_email_address <br />";
-  echo "json_data :  " . $json_data . "<br />";
+//  echo "Check if account_exists for: $from_email_address <br />";
+//  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
-  echo "product: ". $product . "<br />";
+//  echo "product: ". $product . "<br />";
   require 'product_data.php';
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
 
     $group_name = getProductName($product, $from_email_address, $json_data);
- 	echo "group_name: " . $group_name . "<br />";
+// 	echo "group_name: " . $group_name . "<br />";
 
     if( account_exists($from_email_address) ) {
-      echo "It does!<br />";
+//      echo "It does!<br />";
       if( account_isInactive($from_email_address) )
       {
         // reactivate account
@@ -220,12 +219,12 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
         );
         $message = " with productid: $product";
         $invoiceId = getInvoiceId();
-	echo "invoidid: " . $invoiceId . "<br />";
+//	echo "invoidid: " . $invoiceId . "<br />";
         $orderId = getOrderId();
-	echo "orderid: " . $orderId . "<br />";
+//	echo "orderid: " . $orderId . "<br />";
         $mode = getMode();
         $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $from_email_address, $product, $invoiceId, $orderId, $json_data, $mode);
-		echo "engagemoreacct: " . $engagemoreacct . "<br />";
+//		echo "engagemoreacct: " . $engagemoreacct . "<br />";
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product
             $message = " - One month free\/$99 mo. for product $product";

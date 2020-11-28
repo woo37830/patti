@@ -1,0 +1,6 @@
+{
+  "row": {"event":"cart.abandoned"},
+  "row": {"event":"cart.abandoned"},
+  "row": {"event":"cart.abandoned"},
+  "row": {"event":"order.success","mode":"live"}
+}

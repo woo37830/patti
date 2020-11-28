@@ -29,19 +29,11 @@ require('fancyAuthentication.php');
       var json;
       $(document).ready(function() {
           oTable = $('#logs').DataTable({
-          processing: true,
-          bStateSave: true,
-          ajax: {
-              url: "./ajaxLogEntriesForEmail.php",
-              dataSrc: "data",
-              data: { email: 'jwooten37830@icloud.com'},
-          },
-          columns: [
-              { data: "time" , title: "Time" },
-              { data: "email", title: "Email"},
-              { data: "query.values", title: "Event"},
-            ]
-          });
+              ajax: {
+                  url: "testAjaxData.json",
+                  dataSrc: "data"
+              }
+            });
           $("#info-img").click(function() {
               var $messageDiv = $('#info-div'); // get the reference of the div
               $messageDiv.slideDown(function() {
@@ -77,10 +69,6 @@ require('fancyAuthentication.php');
                 <div class="title">EngagemoreCRM Users</div>
                 <hr/>
                 <table id="logs" class="tablesorter" width="95%"></table>
-
-                <div id="toolbar" >
-                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
-                </div>
 	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
 			<hr />
