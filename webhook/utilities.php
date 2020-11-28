@@ -41,6 +41,10 @@ function product_isTheSame($thrivecartid, $product) {
   return $product == $saved_product;
 }
 
+function getMode()  {
+  return $_REQUEST['mode'];
+}
+
 function getProductId() {
    $pmf = (int)$_REQUEST['base_product'];
    $product = "product-$pmf";

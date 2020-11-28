@@ -105,11 +105,11 @@ switch( $event ) {
 
 function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data) {
   echo "Check if account_exists for: $email <br />";
-  echo "json_data :  " . $json_data . "<br />";
+//  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
   echo "product: ". $product . "<br />";
   require 'product_data.php';
-  if( $product != 'product-29' )
+/*  if( $product != 'product-29' )
   {
     if( $product != 'product-24' ) {
     logit($email, $json_data, "order.subscription_payment for " . $product);
@@ -117,15 +117,17 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
     return;
     }
   }
+  */
 // We are here because we are looking at payment for product-29 or product-24.
     if( account_exists($email) ) {
       echo "It does!<br />";
       if( account_isInactive($email) )
       {
         echo "order.subscription_payment for inactive account<br>";
-        logit($email, $json_data, "FAILURE: order.subscription_payment for inactive account " . $product);
-      // reactivate account
-      //  reactivate_account($email, $api_endpoint, $account_id, $api_key);
+      //  logit($email, $json_data, "FAILURE: order.subscription_payment for inactive account " . $product);
+        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
+        logit($email,$json_data, "Subscription_reactivated, result: $result");
+
         return;
       }
       else
@@ -147,7 +149,7 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
           }
         } else { // This should not happen as it means the product being paid for is product-29
           // AND the user already has product-29 recorded.
-          // This should have been changed the first subscription payment to produt-13
+          // This should have been changed the first subscription payment to product-13
           echo "Failure: $product on record should have been changed for $email<br />";
          logit($email, $json_data,  "FAILURE: $product should have already been changed!");
          return;
@@ -221,7 +223,8 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
 	echo "invoidid: " . $invoiceId . "<br />";
         $orderId = getOrderId();
 	echo "orderid: " . $orderId . "<br />";
-        $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $from_email_address, $product, $invoiceId, $orderId, $json_data);
+        $mode = getMode();
+        $engagemoreacct = (int)add_account($api_endpoint, $account_id, $api_key, $account, $group_name, $from_email_address, $product, $invoiceId, $orderId, $json_data, $mode);
 		echo "engagemoreacct: " . $engagemoreacct . "<br />";
         if( $engagemoreacct != -1 ) {
           if( $product == "product-15") { // One month free for Impact product

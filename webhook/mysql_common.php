@@ -107,7 +107,7 @@ function logit($user, $json, $my_status)
      }
 }
 
-function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
+function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid, $mode)
 {
   require 'config.ini.php';
 
@@ -128,6 +128,7 @@ function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
       , product
       , invoiceid
       , orderid
+      , accountType
       ) VALUES
       ( '$datetime'
       , '$from_email_address'
@@ -135,6 +136,7 @@ function addUser($user, $engagemoreid, $productid, $invoiceid, $orderid)
       , '$productid'
       , '$invoiceid'
       , '$orderid'
+      , '$mode'
       )";
 
       if (!$res = $conn->query($sql))

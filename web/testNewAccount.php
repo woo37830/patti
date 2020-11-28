@@ -1,6 +1,6 @@
 <?php
 session_start(); //don't forget to do this
-$location = "/patti/web/Template.php";
+$location = "/patti/web/testNewAccount.php";
 
 require('fancyAuthentication.php');
 
@@ -25,36 +25,59 @@ require('fancyAuthentication.php');
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
-     <script type="text/javascript" class="init">
-        var oTable;
-        var json;
-        $(document).ready(function() {
-					$("#info-img").click(function() {
-							var $messageDiv = $('#info-div'); // get the reference of the div
-							$messageDiv.slideDown(function() {
-									$messageDiv.css("visibility", "visible"); // show and set the message
-									setTimeout(function() {
-											$messageDiv.slideUp();
-									}, 20000);
-							});
-						});
-            /*setInterval( function() {
-                oTable.ajax.reload(null, false);
-            }, 30000 );*/
-        });
-				$.ajax({
-					url: "./git-info.php",
-					dataType: "text",
-					success: function(data) {
-						$('#footer-div').append(data);
-				}
-			});
-			function goBack()
-			{
-				window.location = parameters.get('back');
-			}
-			var parameters = new URLSearchParams(window.location.search);
-		</script>
+	<script type="text/javascript" class="init">
+		 var oTable;
+		 var json;
+		 $(document).ready(function() {
+				 oTable = $('#users').DataTable({
+				 processing: true,
+				 bStateSave: true,
+				 ajax: {
+						 url: "./ajaxUsers.php",
+						 dataSrc: "data"
+				 },
+				 columns: [
+						 { data: "id", width: "5%", title: "ID" },
+						 { data: "email" , width: "25%", title: "Email" },
+						 { data: "engagemoreid" , title: "CRM" },
+						 { data: "orderid" , title: "Order" },
+						 { data: "product", title: "Product" },
+						 { data: "status", title: "Status" },
+						 { data: "accountType", title: "Type" },
+						 { data: "added", title: "Since" }
+				 ]
+				 });
+				 $("#info-img").click(function() {
+						 var $messageDiv = $('#info-div'); // get the reference of the div
+						 $messageDiv.slideDown(function() {
+								 $messageDiv.css("visibility", "visible"); // show and set the message
+								 setTimeout(function() {
+										 $messageDiv.slideUp();
+								 }, 20000);
+						 });
+					 });
+				 /*setInterval( function() {
+						 oTable.ajax.reload(null, false);
+				 }, 30000 );*/
+
+				 $(document).on('click','#users tbody tr',function() {
+						 var row = $(this).closest("tr");
+						 editUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text(),  $(row).find("td:nth-child(8)").text());
+				 });
+		 });
+		 $.ajax({
+			 url: "./git-info.php",
+			 dataType: "text",
+			 success: function(data) {
+				 $('#footer-div').append(data);
+		 }
+	 });
+	 function goBack()
+	 {
+		 window.location = parameters.get('back');
+	 }
+	 var parameters = new URLSearchParams(window.location.search);
+ </script>
 </head>
 <body>
     <div class="wrapper">
@@ -64,8 +87,8 @@ require('fancyAuthentication.php');
                 <hr/>
 				<div id='info-img'></div>
 				<div id='back'>
-				<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
-			</div>
+					<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
+				</div>
 				<div id='info-div'>This Test Simulates a user navigating to the Thrivecart site and selecting a product, Entering their information and Credit Card Number and Submitting.</div>
 	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
@@ -83,7 +106,7 @@ require('fancyAuthentication.php');
 			<input type='hidden' name="invoice_id" value="123" />
 			<div class="fitem">
 			<label for="email">Email:</label>
-			<input class="easyui-textbox" name="customer.email" required="true">
+			<input class="easyui-textbox" name="customer[email]" required="true">
 			</div>
 			<div class="fitem">
 				<label for="orderid">Order:</label>
@@ -101,53 +124,12 @@ require('fancyAuthentication.php');
 	</div>
 	<div id="dlg-buttons">
 	    <div id="sql_buttons" class="show-sql">
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+			</div>
 	</div>
 	<script type="text/javascript">
-		var url;
-		var row;
-
-				function newUser(){
-					$('#dlg').dialog('open').dialog('setTitle','New User');
-					$('#fm').form('clear');
-					url = '../webhook/thrivecart.php';
-				}
-				function editUser( id, email, engagemoreid, orderid, product, status, accountType, added){
-					if (email){
-						$('#dlg').dialog('open').dialog('setTitle','Edit User');
-						$('#fm').form('load',{
-						    email: email,
-						    engagemoreid: engagemoreid,
-						    orderid: orderid,
-						    product: product,
-						    status: status,
-								accountType: accountType
-						});
-						row = id;
-						url = './update_user.php?id='+id;
-					}
-				}
-		function newUser(){
-			$('#dlg').dialog('open').dialog('setTitle','New User');
-			$('#fm').form('clear');
-			url = './save_user.php';
-		}
-		function editUser( id, email, engagemoreid, orderid, product, status, accountType, added){
-			if (email){
-				$('#dlg').dialog('open').dialog('setTitle','Edit User');
-				$('#fm').form('load',{
-				    email: email,
-				    engagemoreid: engagemoreid,
-				    orderid: orderid,
-				    product: product,
-				    status: status,
-						accountType: accountType
-				});
-				row = id;
-				url = './update_user.php?id='+id;
-			}
-		}
+		var url = '../webhook/thrivecart.php';
 		function saveUser(){
 			$('#fm').form('submit',{
 				url: url,
@@ -166,7 +148,7 @@ require('fancyAuthentication.php');
 						alert('Success: ' + JSON.stringify(result));
 						$('#dlg').dialog('close');		// close the dialog
 						//$("#users").dataTable()._fnAjaxUpdate();
-            oTable.ajax.reload(null, false);
+            //oTable.ajax.reload(null, false);
                     }
 				}
 			});
