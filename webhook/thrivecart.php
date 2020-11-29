@@ -7,6 +7,8 @@ require 'add_account.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
 require 'utilities.php';
+require 'add_contact_note.php';
+require 'get_contacts.php';
 require '../smtp/notify.php';
 require_once 'mylib.php';
 
@@ -149,8 +151,28 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
         } else { // This should not happen as it means the product being paid for is product-29
           // AND the user already has product-29 recorded.
           // This should have been changed the first subscription payment to product-13
-          echo "Failure: $product on record should have been changed for $email<br />";
-         logit($email, $json_data,  "FAILURE: $product should have already been changed!");
+          if( $product == 'product-24' || $product == 'product-29' )
+          {
+            $today = date("D M j G:i:s T Y");
+            $from = "jwooten37830@icloud.com";
+            $to = "log_notes@gmail.com";
+            $messageId = $today;
+            $subject = "Failure: Changing product";
+            $message = "Failure: $product on record should have already been changed for $email";
+            $attachmentLog = $json_data;
+            $postArray = "The complete <a >data</a> received in the request";
+              $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+            echo "Failure: $product on record should have already been changed for $email<br />";
+            logit($email, $json_data,  "FAILURE: $product should have already been changed!");
+          } else {
+            $group_name = getProductName($product, $email, $json_data);
+            $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
+            $group_name, $product);
+            if( $engagemoreacct != -1 ) {
+              echo "Changed subscription to product: $product<br />";
+              logit($email, $json_data,  "SUCCESS: Changed product to $product");
+            }
+          }
          return;
         }
       }
