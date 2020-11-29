@@ -49,6 +49,6 @@ echo "<br />";
 
 
 ?>
-<form id='logoutForm' type='POST' action="<?=$action ?>" >
+<form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
   <input type='submit' name='submit' value='Logout'  />
 </form>
