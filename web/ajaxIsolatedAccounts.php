@@ -52,8 +52,10 @@
  foreach($accounts->accounts->account as $account)
  {
    if(  getAUserById( $account->accountid, $users ) == -1 )
-   {
- 			array_push($isolated_accounts,$account);
+   {  // This removes those accounts that are management accounts and not related to users
+     if( strpos($account->email, '@' ) != false ) {
+   			array_push($isolated_accounts,$account);
+      }
    }
  }
  echo json_encode($isolated_accounts);
