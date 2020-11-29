@@ -74,7 +74,11 @@ require('fancyAuthentication.php');
 			});
 			function goBack()
 			{
+				if( parameters.get('back') != null ) {
 				window.location = parameters.get('back');
+			} else {
+					window.location = "./index.php";
+				}
 			}
 			var parameters = new URLSearchParams(window.location.search);
 		</script>

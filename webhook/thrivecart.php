@@ -94,6 +94,23 @@ switch( $event ) {
     logit($email, $json_data, "affiliate.commission_payout");
     echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
     break;
+  case 'cart.abandoned':
+    $today = date("D M j G:i:s T Y");
+    $from = "jwooten37830@icloud.com";
+    $to = "cart_abandoned@gmail.com";
+    $messageId = $today;
+    $subject = "Cart Abandoned by: $email";
+    $arr = json_decode($json_data);
+    $base_product_label = $arr->base_product_label;
+    $name = $arr->viewer->name;
+    $viewer_email = $arr->viewer->email;
+    $confirmation = $arr->viewer->checkbox_confirmation;
+    $message = "$name abandoned cart at $base_product_label, email is: $viewer_email and checkbox is: $confirmation";
+    $attachmentLog = $json_data;
+    $postArray = "The complete <a >data</a> received in the request";
+    $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+    echo "Result of cart.abandoned addContactNote was: $result " . "<br />";
+    break;
   default:
     logit($email, $json_data, "Invalid event- $event");
     echo "Invalid event - $event<br />" . $email . " - " . $json_data . "<br />";
@@ -128,7 +145,6 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
       //  logit($email, $json_data, "FAILURE: order.subscription_payment for inactive account " . $product);
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
         logit($email,$json_data, "Subscription_reactivated, result: $result");
-
         return;
       }
       else
@@ -141,7 +157,6 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
           $product = 'product-13'; // change it to product-13
           $group_name = getProductName($product, $email, $json_data);
   //        echo "group_name: " . $group_name . "<br />";
-
           $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
            $group_name, $product);
            if( $engagemoreacct != -1 ) {
