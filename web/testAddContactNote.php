@@ -1,9 +1,33 @@
 <?php
 session_start(); //don't forget to do this
-$location = "/patti/web/Template.php";
+$location = "/patti/web/testAddContactNote.php";
 
 require('fancyAuthentication.php');
 
+require '../webhook/add_contact_note.php';
+require '../webhook/get_contacts.php';
+
+$today = date("D M j G:i:s T Y");
+$from = "jwooten37830@icloud.com";
+$to = "log_notes@gmail.com";
+$messageId = $today;
+$subject = "Log message";
+$message = "Data from the log to help figure out what went wrong";
+$attachmentLog = "Perhaps the json data";
+$postArray = "The complete <a >data</a> received in the request";
+
+
+//$result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+//echo "\nResult addContactNote: $result <br />\n";
+
+try
+{
+  $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+  echo "\n<br />Result addContactNote: $result<br/>\n";
+} catch( Exception $e )
+{
+  echo "\n<br />An Exception occurred in testAddContactNote.php: $e\n<br />";
+}
 ?>
 <html>
 <!-- $Author: woo $   -->
@@ -25,54 +49,49 @@ require('fancyAuthentication.php');
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
-	<script type="text/javascript" class="init">
-    var dataSet = [
-    [ "<a href=\"../index.html\">Documentation</a>",
-      "System Architect", "Update"],
-    ["<a href=\"../web/testNewAccount.php?back=./Tests.php\">New Account</a>",
-      "Create new Account","Simulate Thrivecart New Account"],
-    ["<a href=\"./testCancelAccount.php?back=./Tests.php\">Cancel Account</a>",
-      "Cancel an Account","Simulate Thrivecart Cancel Account"],
-			["<a href=\"./testAddContactNote.php?back=./Tests.php\">Add Contact Note</a>",
-	      "Add a Contact Note","Simulate a Cart.Abandoned when completed"],
-    ["<a href=\"./testUpgradeAccount.php?back=./Tests.php\">Upgrade Account</a>",
-      "Upgrade an Account","Simulate Thrivecart Upgrade Account"],
-    ["<a href=\"./testMissPayment.php?back=./Tests.php\">Credit Card Rejected</a>","Credit Card Doesn't Renew","Simulate Thrivecart Rebill Failed"],
-    ];
+     <script type="text/javascript" class="init">
+        var oTable;
+        var json;
+        $(document).ready(function() {
+  						$("#info-img").click(function() {
+								var $messageDiv = $('#info-div'); // get the reference of the div
+								$messageDiv.slideDown(function() {
+										$messageDiv.css("visibility", "visible"); // show and set the message
+										setTimeout(function() {
+												$messageDiv.slideUp();
+										}, 20000);
+								});
+							});
+            /*setInterval( function() {
+                oTable.ajax.reload(null, false);
+            }, 30000 );*/
 
-     var oTable;
-     var json;
-		 var parameters;
-     $(document).ready(function() {
-       $('#tests').DataTable( {
-        data: dataSet,
-        columns: [
-            { title: "Test" },
-            { title: "Purpose" },
-            { title: "Comment" }
-        ]
-    } );
-       $.ajax({
-      url: "./git-info.php",
-      dataType: "text",
-      success: function(data) {
-        $('#footer-div').append(data);
-    }
-  });
-});
-</script>
+          });
+				$.ajax({
+					url: "./git-info.php",
+					dataType: "text",
+					success: function(data) {
+						$('#footer-div').append(data);
+				}
+			});
+			function goBack()
+			{
+				window.location = parameters.get('back');
+			}
+			var parameters = new URLSearchParams(window.location.search);
+		</script>
 </head>
 <body>
     <div class="wrapper">
 	    <div class="content">
             <div id="page" >
-							<center>
-						    <br />
-						    <h1>Tests</h1>
-						    <hr />
-						    <br />
-						    <table id="tests" class="tablesorter" width="95%"></table>
-						  </center>
+                <div class="title">Add Contact Note</div>
+                <hr/>
+								<div id='info-img'></div>
+								<div id='back'>
+									<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
+								</div>
+								<div id='info-div'>This page shows the result of sending a contact note to a specified agent.</div>
 	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
 			<hr />
@@ -116,7 +135,7 @@ require('fancyAuthentication.php');
 	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 	</div>
-	<script type="text/javascript>
+	<script type="text/javascript">
 		var url;
 		var row;
 		function newUser(){
@@ -184,12 +203,7 @@ require('fancyAuthentication.php');
 				});
 			}
 		}
-		var logged_in = true;
-		if ( logged_in ) {
-				sql_buttons.className = 'show';
-		} else {
-				sql_buttons.className = 'hide';
-		}
+
 
 </script>
 
