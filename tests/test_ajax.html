@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" /><!-- Write Javascript code here -->
+<script type="text/javascript">
+var dataSet = [
+  [
+    "Tiger Nixon",
+    "System Architect",
+    "Edinburgh",
+    "5421",
+    "2011/04/25",
+    "$320,800"
+  ],
+  [
+    "Garrett Winters",
+    "Accountant",
+    "Tokyo",
+    "8422",
+    "2011/07/25",
+    "$170,750"
+  ],
+  [
+    "Ashton Cox",
+    "Junior Technical Author",
+    "San Francisco",
+    "1562",
+    "2009/01/12",
+    "$86,000"
+  ]
+];
+
+$(document).ready(function(){
+  var oTable;
+  oTable = $('#logs').DataTable({
+      ajax: {
+        data: dataSet,
+        dataSrc: ""
+      }
+    });
+  });
+</script>
+
+</head>
+
+<body>
+  <div id="page">
+      <div class="title">Example</div>
+      <hr />
+      <table id="logs" class="display" width="95%"></table>
+    </div> <!-- end of page -->
+
+
+</body>
+</html>
