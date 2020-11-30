@@ -37,14 +37,22 @@ if (!$validated ) {
                    </center>
 
   <?php
-  exit;
+  die;
 }
 
 // If arrives here, is a valid user.
 $_SESSION['loggedIn'] = $user;
 }
+echo "<div id='logoutDiv'><div id='welcome'>Welcome ".$_SESSION['loggedIn']."</div></div><div id='home'>".
+  "<a href='./index.php' class='easyui-linkbutton'>Home</a></div>";
+echo "<br />";
+
+
 ?>
-<script type='text/javascript'>
+<form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
+  <input type='submit' name='submit' value='Logout'  />
+</form>
+<!-- script type='text/javascript'>
 //highlight colors for background and foreground
 var	highlightColor = "#ffd700";
 var	highlightFColor = "#ffffff";
@@ -164,8 +172,7 @@ function supportCenter(menuObj)
               <tr>
                 <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" src="./_images/Home.gif" width="27" height="25"></td>
                 <td ONCLICK="goEditPrefs();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="User Preferences" src="./_images/News.gif" width="27" height="25"></td>
-                <td ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><!--webbot bot="ImageMap" startspan rectangle=" (6,3) (24, 19)  https://support.adp.com/homepage.asp##_blank" src="http://xanadu.local:8080/sc_app/images/supportCenter.gif" alt="Support Center" border="0" width="27" height="25" -->
-                  <MAP NAME="FrontPageMap0"><AREA SHAPE="RECT" COORDS="6, 3, 24, 19" HREF="https://jwooten37830.com/blog" TARGET="_blank"></MAP><img src="./_images/support.gif" alt="Support Center" border="0" width="27" height="25" usemap="#FrontPageMap0"><!--webbot bot="ImageMap" i-checksum="3673" endspan --></td>
+                  <MAP NAME="FrontPageMap0"><AREA SHAPE="RECT" COORDS="6, 3, 24, 19" HREF="https://jwooten37830.com/blog" TARGET="_blank"></MAP><img src="./_images/support.gif" alt="Support Center" border="0" width="27" height="25" usemap="#FrontPageMap0"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Site Map" src="./_images/sitemap.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Products" src="./_images/products.gif"  width="27" height="25"></td>
                 <td ONCLICK="logout();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Log Out" src="./_images/logout.gif"  width="27" height="25"></td>
@@ -184,3 +191,4 @@ function supportCenter(menuObj)
 
   </tr>
 </table>
+-->
