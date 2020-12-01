@@ -87,11 +87,6 @@ function goHome()
   document.location = './index.php?loggedin=true';
 }
 
-function goEditPrefs()
-{
-  alert('Edit Prefs.  TBD');
-}
-
 function logout()
 {
 	if (isDirty())
@@ -144,6 +139,39 @@ function supportCenter(menuObj)
 	document.location.href='http://www.blivenow.com/live/352187325499';
 }
 
+function editPrefs( user ){
+    $('#dlg').dialog('open').dialog('setTitle','Edit Prefs');
+    $('#fm').form('load',{
+        user: 'woo',
+        skin: 'preferred',
+        logo: 'green_logo.gif'
+    });
+    url = './update_prefs.php?user='+user;
+}
+function savePrefs(){
+  $('#fm').form('submit',{
+    url: url,
+    onSubmit: function(){
+      return $(this).form('validate');
+    },
+    success: function(result){
+    //	var result = eval('('+result+')');
+      if (result.errorMsg){
+        alert('Error: ' + JSON.stringify(result));
+        $.messager.show({
+          title: 'Error',
+          msg: result.errorMsg
+        });
+      } else {
+        alert('Success: ' + JSON.stringify(result));
+        $('#dlg').dialog('close');		// close the dialog
+        //$("#users").dataTable()._fnAjaxUpdate();
+        //oTable.ajax.reload(null, false);
+                }
+    }
+  });
+}
+
 </script>
 
 <table name="logo" cellpadding="0" cellspacing="0" width="100%" bgcolor="#DCDCF0">
@@ -164,9 +192,9 @@ function supportCenter(menuObj)
             <table border="0" cellPadding="2" cellSpacing="4">
               <tr>
                 <td CLASS="labelStyle" nowrap>User:</td>
-                <td CLASS="fieldStyle" nowrap ONCLICK="goEditPrefs();">woo</td>
+                <td CLASS="fieldStyle" nowrap ONCLICK="editPrefs();">woo</td>
                 <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" src="./_images/Home.gif" width="27" height="25"></td>
-                <td ONCLICK="goEditPrefs();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="User Preferences" src="./_images/News.gif" width="27" height="25"></td>
+                <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="User Preferences" src="./_images/News.gif" width="27" height="25"></td>
                 <td ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><!--webbot bot="ImageMap" startspan rectangle=" (6,3) (24, 19)  https://support.adp.com/homepage.asp##_blank" src="http://xanadu.local:8080/sc_app/images/supportCenter.gif" alt="Support Center" border="0" width="27" height="25" -->
                 <MAP NAME="FrontPageMap0"><AREA SHAPE="RECT" COORDS="6, 3, 24, 19" HREF="https://jwooten37830.com/blog" TARGET="_blank"></MAP><img src="./_images/support.gif" alt="Support Center" border="0" width="27" height="25" usemap="#FrontPageMap0"><!--webbot bot="ImageMap" i-checksum="3673" endspan --></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Site Map" src="./_images/sitemap.gif"  width="27" height="25"></td>
@@ -187,8 +215,3 @@ function supportCenter(menuObj)
 
   </tr>
 </table>
-<div id='logoutDiv' style='display:block' align='right'>
-   <form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
-     <input type='submit' id='sub_btn' name='submit' value='Logout'  />
-   </form>
- </div>
