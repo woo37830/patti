@@ -76,7 +76,17 @@ switch( $event ) {
       echo "Received order.refund. result = $result<br />" . $email . " - " . $json_data . "<br />";
       break;
   case 'order.subscription_cancelled':
-    $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+    $cancelling_productid = getProductId();
+    $current_productid = getProductFor($email);
+    if( $current_productid == -1 ) {
+      $result = "Failed: Could not locate user";
+    } else {
+      if( $current_productid != $cancelling_productid ) {
+        $result = "Failed: Cancellation requested for $cancelling_productid, but subscription is for $current_productid";
+      } else {
+        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+      }
+    }
     logit($email,$json_data, "Subscription_cancelled, result: $result");
     $theMessage = "Account $email has cancelled!";
 //    sendNotification($email,'Cancellation Notice',$theMessage);
