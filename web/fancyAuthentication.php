@@ -32,9 +32,9 @@ if (!$validated ) {
           <tr><td>Password</td><td><input type='password' name='passwd' /></td></tr>
       </table>
       <br />
-                  <input type='submit' name='submit' value='Login' />
+    <input type='submit' name='submit' value='Login' />
   </form>
-                   </center>
+</center>
 
   <?php
   exit;
@@ -44,6 +44,7 @@ if (!$validated ) {
 $_SESSION['loggedIn'] = $user;
 }
 ?>
+
 <script type='text/javascript'>
 //highlight colors for background and foreground
 var	highlightColor = "#ffd700";
@@ -86,6 +87,11 @@ function goHome()
   document.location = './index.php?loggedin=true';
 }
 
+function goEditPrefs()
+{
+  alert('Edit Prefs.  TBD');
+}
+
 function logout()
 {
 	if (isDirty())
@@ -94,8 +100,8 @@ function logout()
 		return;
 	}
 
-	document.location = './index.php?submit=logout';
-	//document.location.href = 'login.jsp';
+	var link = document.getElementById('sub_btn');
+  link.click();
 }
 
 function showTaskList(menuObj)
@@ -143,7 +149,7 @@ function supportCenter(menuObj)
 <table name="logo" cellpadding="0" cellspacing="0" width="100%" bgcolor="#DCDCF0">
   <tr>
     <td width="300" height="86" align="center" valign="middle" bgcolor="#DCDCF0">
-    		<IMG SRC="./SkinServer.jsp?skin=<%=preferredSkin%>&id=logo" width="200" height="60" alt="Logo"></td>
+    		<IMG SRC="./_images/green_logo.gif" width="200" height="60" alt="Logo"></td>
     <td align="right" width="100%">
 
       <table cellPadding="0" cellSpacing="0" width="100%" bgcolor="#9999CC" align="left">
@@ -151,21 +157,18 @@ function supportCenter(menuObj)
          <td height="35" valign="center">
            <table cellspacing="8" cellpadding="0" border="0">
              <tr>
-               <td CLASS="labelStyle" nowrap>User:</td>
-               <td CLASS="fieldStyle" nowrap>woo</td>
-               <td><img src="./_images/spacer.gif" height="20" width="5"></td>
-               <td CLASS="labelStyle" nowrap>Last Login:</td>
-               <td CLASS="fieldStyle" nowrap></td>
-             </tr>
+               </tr>
            </table>
          </td>
          <td align="right" valign="middle" bgcolor="#9999CC">
             <table border="0" cellPadding="2" cellSpacing="4">
               <tr>
+                <td CLASS="labelStyle" nowrap>User:</td>
+                <td CLASS="fieldStyle" nowrap ONCLICK="goEditPrefs();">woo</td>
                 <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" src="./_images/Home.gif" width="27" height="25"></td>
                 <td ONCLICK="goEditPrefs();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="User Preferences" src="./_images/News.gif" width="27" height="25"></td>
                 <td ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><!--webbot bot="ImageMap" startspan rectangle=" (6,3) (24, 19)  https://support.adp.com/homepage.asp##_blank" src="http://xanadu.local:8080/sc_app/images/supportCenter.gif" alt="Support Center" border="0" width="27" height="25" -->
-                  <MAP NAME="FrontPageMap0"><AREA SHAPE="RECT" COORDS="6, 3, 24, 19" HREF="https://jwooten37830.com/blog" TARGET="_blank"></MAP><img src="./_images/support.gif" alt="Support Center" border="0" width="27" height="25" usemap="#FrontPageMap0"><!--webbot bot="ImageMap" i-checksum="3673" endspan --></td>
+                <MAP NAME="FrontPageMap0"><AREA SHAPE="RECT" COORDS="6, 3, 24, 19" HREF="https://jwooten37830.com/blog" TARGET="_blank"></MAP><img src="./_images/support.gif" alt="Support Center" border="0" width="27" height="25" usemap="#FrontPageMap0"><!--webbot bot="ImageMap" i-checksum="3673" endspan --></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Site Map" src="./_images/sitemap.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Products" src="./_images/products.gif"  width="27" height="25"></td>
                 <td ONCLICK="logout();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Log Out" src="./_images/logout.gif"  width="27" height="25"></td>
@@ -184,3 +187,8 @@ function supportCenter(menuObj)
 
   </tr>
 </table>
+<div id='logoutDiv' style='display:block' align='right'>
+   <form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
+     <input type='submit' id='sub_btn' name='submit' value='Logout'  />
+   </form>
+ </div>

@@ -36,14 +36,14 @@ require('fancyAuthentication.php');
                 dataSrc: "data"
             },
             columns: [
-                { data: "id", width: "5%" },
-                { data: "email" , width: "25%" },
-                { data: "engagemoreid" },
-                { data: "orderid" },
-                { data: "product" },
-								{ data: "status" },
-								{ data: "accountType" },
-								{ data: "added" }
+                { data: "id", width: "5%", title: "ID" },
+                { data: "email" , width: "25%", title: "Email" },
+                { data: "engagemoreid" , title: "CRM"},
+                { data: "orderid" , title: "Order"},
+                { data: "product", title: "Product" },
+								{ data: "status" , title: "Status"},
+								{ data: "accountType" , title: "Type"},
+								{ data: "added" , title: "Since"}
             ]
             });
             /*setInterval( function() {
@@ -70,19 +70,8 @@ require('fancyAuthentication.php');
             <div id="page" >
                 <div class="title">EngagemoreCRM Users</div>
                 <hr/>
-                <table id="users" class="tablesorter">
-                    <thead>
-                        <tr>
-                            <th class="id_name">ID</th>
-                            <th class="author_name">Email</th>
-                            <th class="title_name">CRM</th>
-                            <th class="genre_name">Order</th>
-                            <th class="product_name">Product</th>
-														<th class="status_name">Status</th>
-														<th class="type_name">Type</th>
-														<th class="since_name">Since</th>
-                        </tr>
-                 </table>
+								<div id='info-img'></div>
+	              <table id="users" class="tablesorter"></table>
                 <div id="toolbar" >
                     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
                 </div>

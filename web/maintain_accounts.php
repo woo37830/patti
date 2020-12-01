@@ -37,14 +37,14 @@ require('fancyAuthentication.php');
                 dataSrc: "accounts.account"
             },
             columns: [
-                { data: "accountid", width: "5%" },
-                { data:  "email" , width: "25%" },
+                { data: "accountid", width: "5%" , title: "ID"},
+                { data:  "email" , width: "25%", title: "Email" },
 								{ data: "mailmerge_fullname",
-									"defaultContent": ""},
-                { data:  "group_name" },
-								{ data: "account_status" },
-								{ data: "license_type", width: "10%" },
-								{ data: "create_date" }
+									"defaultContent": "", title: "Name"},
+                { data:  "group_name" , title: "Product"},
+								{ data: "account_status", title: "Status" },
+								{ data: "license_type", width: "10%", title: "Type" },
+								{ data: "create_date", title: "Added" }
             ]
             });
 
@@ -77,18 +77,8 @@ require('fancyAuthentication.php');
 									<div id="error_div"></div>
 								</div>
                 <hr/>
-                <table id="users" class="tablesorter">
-                    <thead>
-                        <tr>
-                            <th class="id_name">ID</th>
-                            <th class="author_name">Email</th>
-														<th class="author_name">Name</th>
-                            <th class="genre_name">Product</th>
-  													<th class="status_name">Status</th>
-														<th class="type_name">License</th>
-														<th class="since_name">Since</th>
-                        </tr>
-                 </table>
+								<div id='info-img'></div>
+	              <table id="users" class="tablesorter"></table>
       <!-- div id="toolbar" >
           <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newAccount()">New Account</a>
       </div -->

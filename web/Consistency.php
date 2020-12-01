@@ -37,7 +37,6 @@ require('fancyAuthentication.php');
 	<div id='wrapper'>
 	<div id='content'>
   <div id='page'>
-      <br />
 <script type="text/javascript">
 var groups = [];
 var oTable;
