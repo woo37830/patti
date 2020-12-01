@@ -21,11 +21,12 @@ if (!$validated ) {
 //  header('WWW-Authenticate: Basic realm="My Realm"');
 //  header('HTTP/1.0 401 Unauthorized');
 //  echo "user: '".$user."', pass: '".$pass."'<br />";
-  echo "You must be logged in to access the intended page.";
+  echo "You must be logged in to access the intended page(s).";
   unset($_REQUEST['submit']);
   unset($_SESSION['loggedIn']);
   ?>
-         <center>
+     <center>
+      <h1>EngagemoreCRM Account Management Panel</h1>
   <form type='POST' >
       <table>
           <tr><td>UserID:</td><td><input type='text' name='userid' /></td></tr>
