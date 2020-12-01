@@ -43,15 +43,128 @@ if (!$validated ) {
 // If arrives here, is a valid user.
 $_SESSION['loggedIn'] = $user;
 }
-echo "<div id='logoutDiv'><div id='welcome'>Welcome ".$_SESSION['loggedIn']."</div></div><div id='home'>".
-  "<a href='./index.php' class='easyui-linkbutton'>Home</a></div>";
-echo "<br />";
+//echo "<div id='logoutDiv'><div id='welcome'>Welcome ".$_SESSION['loggedIn']."</div></div><div id='home'>".
+//  "<a href='./index.php' class='easyui-linkbutton'>Home</a></div>";
+//echo "<br />";
 
 
 ?>
-<form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
-  <input type='submit' name='submit' value='Logout'  />
-</form>
+<script type="text/javascript">
+//highlight colors for background and foreground
+var	highlightColor = "#ffd700";
+var	highlightFColor = "#ffffff";
+
+//normal colors for background and foreground
+var	normalColor = "#9999CC";
+var	normalFColor = "#000000";
+
+//comma delimited list of chosen item values
+var     str = "";
+
+//Highlight a menu tab
+function mouseOver_Color(myObj)
+{
+	myObj.style.backgroundColor = highlightColor;
+	myObj.style.color = highlightFColor;
+	myObj.style.cursor = "hand";
+}
+
+//Show the normal menu tab
+function mouseOut_Color(myObj)
+{
+	myObj.style.backgroundColor = normalColor;
+	myObj.style.color = normalFColor;
+	myObj.style.cursor = "default";
+}
+function disabledMenuClick(menuObj)
+{
+	alert('This function is not available.');
+}
+function isDirty()
+{
+  return false;
+}
+
+function goEditPrefs()
+{
+  alert('Edit Prefs, TBD');
+}
+
+function goHome()
+{
+  document.location = './index.php?loggedin=true';
+}
+
+function logout()
+{
+	if (isDirty())
+	{
+		alert("The data you entered has not been saved. You must save or cancel to continue.");
+		return;
+	}
+//  var link = document.getElementById('logoutDiv');
+//  link.style.display = 'block';
+  var link = document.getElementById('sub_btn');
+  link.click();
+	//document.location.href = './index.php?submit=logout';
+	//document.location.href = 'login.jsp';
+}
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = mm + '/' + dd + '/' + yyyy;
+</script>
+<table name="logo" cellpadding="0" cellspacing="0" width="100%" bgcolor="#DCDCF0">
+  <tr>
+    <td width="300" height="86" align="center" valign="middle" bgcolor="#DCDCF0">
+    		<IMG SRC="./SkinServer.jsp?skin=<%=preferredSkin%>&id=logo" width="200" height="60" alt="Logo"></td>
+    <td align="right" width="100%">
+
+      <table cellPadding="0" cellSpacing="0" width="100%" bgcolor="#9999CC" align="left">
+        <tr bgcolor="#9999cc" valign="top" height="60">
+         <td height="35" valign="center">
+           <table cellspacing="8" cellpadding="0" border="0">
+             <tr>
+               <!-- td CLASS="labelStyle" nowrap>User:</td>
+               <td CLASS="fieldStyle" nowrap ONCLICK="goEditPrefs();">woo</td>
+               <td><img src="./_images/spacer.gif" height="20" width="5"></td>
+               <td CLASS="labelStyle" nowrap>Last Login:</td>
+               <td CLASS="fieldStyle" nowrap></td -->
+             </tr>
+           </table>
+         </td>
+         <td align="right" valign="middle" bgcolor="#9999CC">
+            <table border="0" cellPadding="2" cellSpacing="4">
+              <tr>
+                <td CLASS="labelStyle" nowrap>User:</td>
+                <td CLASS="fieldStyle" nowrap ONCLICK="goEditPrefs();">woo</td>
+                <!-- td><img src="./_images/spacer.gif" height="20" width="5"></td>
+                <td CLASS="labelStyle" nowrap>Last Login:</td>
+                <td CLASS="fieldStyle" nowrap ></div></td -->
+
+                <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" src="./_images/Home.gif" width="27" height="25"></td>
+                <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="User Preferences" src="./_images/News.gif" width="27" height="25"></td>
+                <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Site Map" src="./_images/sitemap.gif"  width="27" height="25"></td>
+                <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Support" src="./_images/support.gif"  width="27" height="25"></td>
+                <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Products" src="./_images/products.gif"  width="27" height="25"></td>
+                <td ONCLICK="logout();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Log Out" src="./_images/logout.gif"  width="27" height="25"></td>
+          </tr>
+          </table>
+        </td>
+      </tr>
+      <tr bgcolor="#FFFFFF" height="1">
+        <td colspan="3"><img src="./_images/spacer.gif" height="1"></td>
+      </tr>
+
+      </tr>
+    </table>
+    <div id='logoutDiv' style='display:block'>
+      <form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
+        <input type='submit' id='sub_btn' name='submit' value='Logout'  />
+      </form>
+    </div>
 <!-- script type='text/javascript'>
 //highlight colors for background and foreground
 var	highlightColor = "#ffd700";

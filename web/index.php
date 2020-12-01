@@ -30,8 +30,6 @@ require('fancyAuthentication.php');
       "System Architect", "Update"],
     ["<a href=\"../tests/monthly_report.php\">Monthly Report</a>",
       "Get a monthly report","Move to web dir and update Look and Feel"],
-    ["<a href=\"./getAccountId.php\">Get Account Id</a>",
-      "Get the account id for an email",""],
     ["<a href=\"./maintain_accounts.php\">Maintain Accounts</a>",
       "Maintain Engagemore Accounts",""],
     ["<a href=\"./maintain_users.php\">Maintain Users</a>","Maintain User Database table",""],
