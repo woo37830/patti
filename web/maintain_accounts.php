@@ -77,7 +77,6 @@ require('fancyAuthentication.php');
 									<div id="error_div"></div>
 								</div>
                 <hr/>
-								<div id='info-img'></div>
 	              <table id="users" class="tablesorter"></table>
       <!-- div id="toolbar" >
           <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newAccount()">New Account</a>

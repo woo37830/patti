@@ -70,7 +70,6 @@ require('fancyAuthentication.php');
             <div id="page" >
                 <div class="title">EngagemoreCRM Users</div>
                 <hr/>
-								<div id='info-img'></div>
 	              <table id="users" class="tablesorter"></table>
                 <div id="toolbar" >
                     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
