@@ -109,13 +109,13 @@ require('fancyAuthentication.php');
 				success: function(result){
 				//	var result = eval('('+result+')');
 					if (result.errorMsg){
-						alert('Error: ' + JSON.stringify(result));
+						alert('Error: ' + result.errorMsg + ', ' + JSON.stringify(result));
 						$.messager.show({
 							title: 'Error',
 							msg: result.errorMsg
 						});
 					} else {
-						alert('Success: ' + JSON.stringify(result));
+						alert(JSON.stringify(result));
 						$('#dlg').dialog('close');		// close the dialog
 						//$("#users").dataTable()._fnAjaxUpdate();
             //oTable.ajax.reload(null, false);

@@ -1,0 +1,11 @@
+{
+    "uris": [
+        "file:///Library/WebServer/Documents/patti"
+    ],
+    "indexDatabaseUri": "file:///Users/woo/Library/Preferences/php-ide-serenata/index-1127615457cec294809acc6a827d6765.sqlite",
+    "phpVersion": 7.3,
+    "excludedPathExpressions": [],
+    "fileExtensions": [
+        "php"
+    ]
+}
