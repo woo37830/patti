@@ -85,7 +85,7 @@ require('fancyAuthentication.php');
 			<input class="easyui-textbox" name="customer[email]" required="true">
 			</div>
 			<div class="fitem">
-				<label for="product">Product:</label>
+				<label for="product">Base Product:</label>
 				<input name="base_product" class="easyui-textbox">
 			</div>
 		</form>

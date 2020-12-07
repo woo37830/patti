@@ -113,7 +113,7 @@ require('fancyAuthentication.php');
 				<input name="order_id" class="easyui-textbox">
 			</div>
 			<div class="fitem">
-				<label for="product">Product:</label>
+				<label for="product">Base Product:</label>
 				<input name="base_product" class="easyui-textbox">
 			</div>
 		</form>
@@ -141,7 +141,7 @@ require('fancyAuthentication.php');
 							msg: result.errorMsg
 						});
 					} else {
-						alert('Success: ' + JSON.stringify(result));
+						alert(JSON.stringify(result));
 						$('#dlg').dialog('close');		// close the dialog
 						//$("#users").dataTable()._fnAjaxUpdate();
             //oTable.ajax.reload(null, false);

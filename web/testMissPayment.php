@@ -111,7 +111,7 @@ require('fancyAuthentication.php');
 							msg: result.errorMsg
 						});
 					} else {
-						alert('Success: ' + JSON.stringify(result));
+						alert(JSON.stringify(result));
 						$('#dlg').dialog('close');		// close the dialog
 						//$("#users").dataTable()._fnAjaxUpdate();
             //oTable.ajax.reload(null, false);
