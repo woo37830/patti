@@ -186,9 +186,28 @@ function savePrefs(){
          <td height="35" valign="center">
            <table cellspacing="8" cellpadding="0" border="0">
              <tr>
-               </tr>
+            </tr>
            </table>
          </td>
+         <td>
+           <nav id="hamnav">
+             <!-- [THE HAMBURGER] -->
+             <label for="hamburger">&#9776;</label>
+             <input type="checkbox" id="hamburger"/>
+
+             <!-- [MENU ITEMS] -->
+             <div id="hamitems">
+               <a href="index.php">Home</a>
+               <a href="../index.html">About</a>
+               <a href="Consistency.php">Sync</a>
+               <a href="maintain_accounts.php">Accounts</a>
+               <a href="maintain_users.php">Users</a>
+               <a href="MonitorLogs.php">Logs</a>
+               <a href="../tests/monthly_report.php">Report</a>
+               <a href="Tests.php">Tests</a>
+         </div>
+           </nav>
+</td>
          <td align="right" valign="middle" bgcolor="#9999CC">
             <table border="0" cellPadding="2" cellSpacing="4">
               <tr>

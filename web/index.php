@@ -56,6 +56,7 @@ require('fancyAuthentication.php');
         $('#footer-div').append(data);
     }
   });
+	
 });
 </script>
 </head>
