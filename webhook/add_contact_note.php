@@ -123,11 +123,11 @@ try {
       $contactId = addContact($today, $from_email_address, $to_email_address); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
-        echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
+      //  echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
         logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
         return false;
       }
-      echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
+      //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
 
   $data = array(
@@ -150,13 +150,9 @@ try {
    *   </results>
    */
 
-  if (isset($results_xml->error) || $results_xml == false)
+  if (isset($results_xml->error) )
   {
-    if( $results_xml != false ) {
     logit($from_email_address,strip_tags($postArray), "FAILURE: (add_contact_note) $results_xml->error" );
-  } else {
-    logit($from_email_address, "results were false", "FAILURE: (add_contact_note)");
-  }
     return false;
   }
 

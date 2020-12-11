@@ -73,7 +73,7 @@ switch( $event ) {
       logit($email,$json_data, "Subscription_cancelled because of order.refund, result: $result");
       $theMessage = "Account $email has cancelled!";
   //    sendNotification($email,'Cancellation Notice',$theMessage);
-      echo "Received order.refund. result = $result<br />" . $email . " - " . $json_data . "<br />";
+  //    echo "Received order.refund. result = $result<br />" . $email . " - " . $json_data . "<br />";
       break;
   case 'order.subscription_cancelled':
     $cancelling_productid = getProductId(); // e.g. 29
@@ -127,12 +127,12 @@ switch( $event ) {
     $base_product_label = $arr->base_product_label;
     $name = $arr->viewer->name;
     $viewer_email = $arr->viewer->email;
-    $confirmation = $arr->viewer->checkbox_confirmation;
-    $message = "$name abandoned cart at $base_product_label, email is: $viewer_email and checkbox is: $confirmation";
+  //  $confirmation = $arr->viewer->checkbox_confirmation;
+    $message = "$name abandoned cart at $base_product_label, email is: $viewer_email";
     $attachmentLog = $json_data;
     $postArray = "The complete <a >data</a> received in the request";
     $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-    echo "Result of cart.abandoned addContactNote was: $result " . "<br />";
+    //echo "Result of cart.abandoned addContactNote was: $result " . "<br />";
     break;
   default:
     logit($email, $json_data, "Invalid event- $event");
@@ -140,8 +140,8 @@ switch( $event ) {
     die();
 }
   //echo "Received event: $event with email: $email</br/>";
-  echo "<br /><hr />";
-  require 'git-info.php';
+//  echo "<br /><hr />";
+//  require 'git-info.php';
   die('All Done');
 
 function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key, $json_data) {
