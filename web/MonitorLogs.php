@@ -99,7 +99,11 @@ require('fancyAuthentication.php');
 			<hr />
 			<div class="footer" id="footer-div"> </div>
 	</div> <!-- end of wrapper -->
-
+	<div id='logoutDiv' style='display:block' align='right'>
+	   <form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
+	     <input type='submit' id='sub_btn' name='submit' value='Logout'  />
+	   </form>
+	 </div>
 	<script type="text/javascript">
 		var url;
 		var row;

@@ -1,6 +1,6 @@
 <?php
 session_start(); //don't forget to do this
-$location = "/patti/web/documents.php";
+$location = "/patti/web/index.php";
 
 require('fancyAuthentication.php');
 
@@ -26,10 +26,16 @@ require('fancyAuthentication.php');
 	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
   <script type="text/javascript" class="init">
     var dataSet = [
-    [ "<a href=\"../webhook/documentation/technical.pdf\">Technical Manual</a>",
+    [ "<a href=\"../index.html\">Documentation</a>",
       "System Architect", "Update"],
-    ["<a href=\"../webhook/documentation/webhost.pdf\">Webhost Installation</a>",
-      "Get a monthly report","Move to web dir and update Look and Feel"]
+    ["<a href=\"../tests/monthly_report.php\">Monthly Report</a>",
+      "Get a monthly report","Move to web dir and update Look and Feel"],
+    ["<a href=\"./maintain_accounts.php\">Maintain Accounts</a>",
+      "Maintain Engagemore Accounts",""],
+    ["<a href=\"./maintain_users.php\">Maintain Users</a>","Maintain User Database table",""],
+    ["<a href=\"./Consistency.php\">Consistency Report</a>","Find insconsistencies","Fix add user"],
+		["<a href=\"./Tests.php\">Tests</a>","Run Webhook Tests","Simulate Thrivecart Actions"],
+		["<a href=\"./MonitorLogs.php\">Monitor Logs</a>","Monitor Server Logs", "Clean this up"]
     ];
 
      var oTable;
@@ -38,7 +44,7 @@ require('fancyAuthentication.php');
        $('#index').DataTable( {
         data: dataSet,
         columns: [
-            { title: "Document" },
+            { title: "Application" },
             { title: "Purpose" },
             { title: "Comment" }
         ]
@@ -59,7 +65,7 @@ require('fancyAuthentication.php');
 <div class='content'>
   <div id='page'>
   <center>
-    <h1>Documentation</h1>
+    <h1>Applications</h1>
     <hr />
     <br />
     <table id="index" class="tablesorter" width="95%"></table>

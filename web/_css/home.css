@@ -329,6 +329,13 @@ input {
   visibility: hidden;
 }
 
+#docs {
+  visibility: block;
+}
+
+#about {
+  visibility: hidden;
+}
 #tasklist-div {
   /*border: 2px solid red;*/
 }

@@ -1,6 +1,6 @@
 <?php
 session_start(); //don't forget to do this
-$location = "/patti/web/documents.php";
+$location = "/patti/web/about.php";
 
 require('fancyAuthentication.php');
 
@@ -25,24 +25,6 @@ require('fancyAuthentication.php');
 	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
   <script type="text/javascript" class="init">
-    var dataSet = [
-    [ "<a href=\"../webhook/documentation/technical.pdf\">Technical Manual</a>",
-      "System Architect", "Update"],
-    ["<a href=\"../webhook/documentation/webhost.pdf\">Webhost Installation</a>",
-      "Get a monthly report","Move to web dir and update Look and Feel"]
-    ];
-
-     var oTable;
-     var json;
-     $(document).ready(function() {
-       $('#index').DataTable( {
-        data: dataSet,
-        columns: [
-            { title: "Document" },
-            { title: "Purpose" },
-            { title: "Comment" }
-        ]
-    } );
        $.ajax({
       url: "./git-info.php",
       dataType: "text",
@@ -59,10 +41,25 @@ require('fancyAuthentication.php');
 <div class='content'>
   <div id='page'>
   <center>
-    <h1>Documentation</h1>
+    <h1>About</h1>
     <hr />
     <br />
-    <table id="index" class="tablesorter" width="95%"></table>
+		<pre>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+sed diam nonummy nibh euismod tincidunt ut laoreet dolore
+magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
+quis nostrud exerci tation ullamcorper suscipit lobortis
+nisl ut aliquip ex ea commodo consequat.
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate
+velit esse molestie consequat, vel illum dolore eu feugiat
+nulla facilisis at vero eros et accumsan et iusto odio
+dignissim qui blandit praesent luptatum zzril delenit augue
+duis dolore te feugait nulla facilisi.Lorem ipsum dolor sit
+amet, consectetuer adipiscing elit, sed diam nonummy nibh
+euismod tincidunt ut laoreet dolore magna aliquam erat
+volutpat.
+	  </pre>
   </center>
 </div> <!-- end of page -->
 </div> <!-- end of content div -->

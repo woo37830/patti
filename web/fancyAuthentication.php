@@ -198,7 +198,7 @@ function savePrefs(){
              <!-- [MENU ITEMS] -->
              <div id="hamitems">
                <a href="index.php">Home</a>
-               <a href="../index.html">About</a>
+               <a href="about.php">About</a>
                <a href="Consistency.php">Sync</a>
                <a href="maintain_accounts.php">Accounts</a>
                <a href="maintain_users.php">Users</a>
