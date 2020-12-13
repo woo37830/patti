@@ -1,0 +1,1102 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	Home
+</title><span id="ctl00_StyleSheet1_lblStyleSheet"><link href="/css/StylesCore.css?127202054634PM" rel="stylesheet" type="text/css" />
+<script language="text/javascript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script language="text/javascript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<link href="/css/font-awesome-all.css?v=5.12" rel="stylesheet"/>
+<script src="/js/Shared.js" type="text/javascript"></script>
+<script src="/js/jquery.growl.js" type="text/javascript"></script>
+<link href="/js/jquery.growl.css" rel="stylesheet" type="text/css" />
+</span>
+
+
+
+
+    <script src="js/jquery.jcountdown.min.js" type="text/javascript"></script>
+    <style>
+        .timehead {
+            background-color: #015b99;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px 0px;
+        }
+
+        .time {
+            border: 1px solid #015b99;
+            padding: 14px 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: Arial;
+            min-height: 22px;
+        }
+
+        .cd-time {
+            font-size: 11px;
+            font-weight: normal;
+            color: #666;
+        }
+
+
+
+        .homecol1 {
+            float: left;
+            width: 32%;
+            padding-right: 2%;
+        }
+
+        .homecol2 {
+            float: left;
+            width: 32%;
+            padding-right: 2%;
+        }
+
+        .homecol3 {
+            float: left;
+            width: 32%;
+        }
+
+
+        .h_sub {
+            font-size: 14px !important;
+            font-weight: bold !important;
+        }
+
+        .h_sub2 {
+            font-size: 14px !important;
+            line-height: 14px !important;
+        }
+
+        .widget_divider {
+            height: 15px !important;
+        }
+
+        .portlet-placeholder {
+            border: 2px solid #ddd;
+            background-color: #eee;
+            border-radius:10px;
+            height: 110px;
+            margin-bottom: 15px;
+        }
+
+        .sortcol {
+            min-height: 575px;
+            padding-bottom: 50px;
+        }
+
+
+        .widget_delete {
+            position: relative;
+            float: right;
+            top: 3px;
+            right: 6px;
+            z-index: 1;
+            color: #000;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 1px 7px 2px 7px;
+            opacity: 0.5;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+
+        .widget_edit {
+            position: relative;
+            float: right;
+            top: 3px;
+            right: 8px;
+            z-index: 1;
+            color: #000;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 1px 7px 2px 7px;
+            opacity: 0.5;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+
+            .widget_delete:hover, .widget_edit:hover {
+                opacity: 1;
+            }
+
+        .addwidget_wrap {
+            float: left;
+            width: 46%;
+            padding: 10px 2%;
+        }
+
+        .addwidget_title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .addwidget_desc {
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .addwidget_button {
+            float: right;
+            position: relative;
+            top: -28px;
+        }
+
+
+        .newwidget {
+            position: relative;
+            opacity: 0;
+        }
+
+        .appear {
+            opacity: 1;
+            position: relative;
+            transition: opacity ease-in 1s;
+        }
+
+        .jschapter {
+            -webkit-filter: opacity(75%); 
+            filter: opacity(75%);           
+        }
+
+        .jsbackground {
+            background: #ffffff; /* Old browsers */
+            background: -moz-linear-gradient(-45deg, #ffffff 52%, #ededed 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(-45deg, #ffffff 52%,#ededed 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(135deg, #ffffff 52%,#ededed 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+        }
+
+
+    </style>
+
+
+
+    
+
+    <script src="/js/jquery.contextmenu.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.ui.position.min.js" type="text/javascript"></script>
+
+
+
+        
+        <link href="/js/jquery.contextmenu.css" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript">
+            $(function () {
+                $.contextMenu({
+                    selector: '.context-menu',
+                    items: {
+                        "edit": {
+                            name: "Customize This Screen", icon: "fa-cog",
+                            callback: function (itemKey, opt) {
+                                window.location.href = 'Home2.aspx?Action=Edit&Tab=';
+                            }
+
+                        }
+                    }
+                });
+
+            });
+        </script>
+
+        <link href='/css/theme_2018_base.css?127202054634PM' rel='stylesheet' type='text/css' />
+<link href='/css/customizations.css?127202054634PM' rel='stylesheet' type='text/css' />
+<link href='/css/theme_2018_orange.css?127202054634PM' rel='stylesheet' type='text/css' />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,400italic,700italic' rel='stylesheet' type='text/css'></head>
+<body style="margin:0px; padding:0px;">
+
+    <form name="aspnetForm" method="post" action="./Home2.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTIwMTY4MDY4Nw9kFgJmD2QWBGYPZBYCAgEPZBYCZg8PFgIeBFRleHQF8gQ8bGluayBocmVmPSIvY3NzL1N0eWxlc0NvcmUuY3NzPzEyNzIwMjA1NDYzNFBNIiByZWw9InN0eWxlc2hlZXQiIHR5cGU9InRleHQvY3NzIiAvPg0KPHNjcmlwdCBsYW5ndWFnZT0idGV4dC9qYXZhc2NyaXB0IiB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiIHNyYz0iLy9hamF4Lmdvb2dsZWFwaXMuY29tL2FqYXgvbGlicy9qcXVlcnkvMy4xLjAvanF1ZXJ5Lm1pbi5qcyI+PC9zY3JpcHQ+DQo8c2NyaXB0IGxhbmd1YWdlPSJ0ZXh0L2phdmFzY3JpcHQiIHR5cGU9InRleHQvamF2YXNjcmlwdCIgc3JjPSIvL2FqYXguZ29vZ2xlYXBpcy5jb20vYWpheC9saWJzL2pxdWVyeXVpLzEuMTEuMS9qcXVlcnktdWkubWluLmpzIj48L3NjcmlwdD4NCjxsaW5rIGhyZWY9Ii9jc3MvZm9udC1hd2Vzb21lLWFsbC5jc3M/dj01LjEyIiByZWw9InN0eWxlc2hlZXQiLz4NCjxzY3JpcHQgc3JjPSIvanMvU2hhcmVkLmpzIiB0eXBlPSJ0ZXh0L2phdmFzY3JpcHQiPjwvc2NyaXB0Pg0KPHNjcmlwdCBzcmM9Ii9qcy9qcXVlcnkuZ3Jvd2wuanMiIHR5cGU9InRleHQvamF2YXNjcmlwdCI+PC9zY3JpcHQ+DQo8bGluayBocmVmPSIvanMvanF1ZXJ5Lmdyb3dsLmNzcyIgcmVsPSJzdHlsZXNoZWV0IiB0eXBlPSJ0ZXh0L2NzcyIgLz4NCmRkAgEPZBYKAgMPDxYCHgdWaXNpYmxlZ2RkAgUPDxYCHwFoZBYGAgEPDxYCHwAFDkVuZ2FnZU1vcmUgQ1JNZGQCAw8PFgIfAAUXandvb3RlbjM3ODMwQGljbG91ZC5jb21kZAIFDw8WAh8BaGRkAgcPZBYEAgMPDxYCHwFoZGQCBQ8PFgIfAAWeCw0KICA8ZGl2IGNsYXNzPSJ0YiIgaWQ9InRiaG9tZTIiIG9uY2xpY2s9IndpbmRvdy5sb2NhdGlvbi5ocmVmPScvSG9tZTIuYXNweCciPjxkaXYgY2xhc3M9InRiX3R4IiBpZD0idGJob21lMiI+SG9tZTwvZGl2Pg0KPC9kaXY+DQoNCiAgPGRpdiBjbGFzcz0idGIiIGlkPSJ0YmNvbnRhY3RsaXN0IiBvbmNsaWNrPSJ3aW5kb3cubG9jYXRpb24uaHJlZj0nL0NvbnRhY3RMaXN0LmFzcHgnIj48ZGl2IGNsYXNzPSJ0Yl90eCIgaWQ9InRiY29udGFjdGxpc3QiPkNvbnRhY3RzPC9kaXY+DQo8L2Rpdj4NCg0KICA8ZGl2IGNsYXNzPSJ0YiIgaWQ9InRidG9kbyIgb25jbGljaz0id2luZG93LmxvY2F0aW9uLmhyZWY9Jy9Ub0RvLmFzcHgnIj48ZGl2IGNsYXNzPSJ0Yl90eCIgaWQ9InRidG9kbyI+VG8tRG88L2Rpdj4NCjwvZGl2Pg0KDQogIDxkaXYgY2xhc3M9InRiIiBpZD0idGJjYWxlbmRhcmZ1bGwiIG9uY2xpY2s9IndpbmRvdy5sb2NhdGlvbi5ocmVmPScvQ2FsZW5kYXJGdWxsLmFzcHgnIj48ZGl2IGNsYXNzPSJ0Yl90eCIgaWQ9InRiY2FsZW5kYXJmdWxsIj5DYWxlbmRhcjwvZGl2Pg0KPC9kaXY+DQoNCiAgPGRpdiBjbGFzcz0idGIiIGlkPSJ0YmRlYWxsaXN0IiBvbmNsaWNrPSJ3aW5kb3cubG9jYXRpb24uaHJlZj0nL0RlYWxMaXN0LmFzcHgnIj48ZGl2IGNsYXNzPSJ0Yl90eCIgaWQ9InRiZGVhbGxpc3QiPkRlYWxzPC9kaXY+DQo8L2Rpdj4NCg0KICA8ZGl2IGNsYXNzPSJ0YiIgaWQ9InRiY2xpZW50dG91Y2giIG9uY2xpY2s9IndpbmRvdy5sb2NhdGlvbi5ocmVmPScvQ2xpZW50VG91Y2guYXNweCciPjxkaXYgY2xhc3M9InRiX3R4IiBpZD0idGJjbGllbnR0b3VjaCI+Q2xpZW50VG91Y2g8L2Rpdj4NCjwvZGl2Pg0KDQogIDxkaXYgY2xhc3M9InRiIiBpZD0idGJ2b2ljZXRvdWNoIiBvbmNsaWNrPSJ3aW5kb3cubG9jYXRpb24uaHJlZj0nL1ZvaWNlVG91Y2guYXNweCciPjxkaXYgY2xhc3M9InRiX3R4IiBpZD0idGJ2b2ljZXRvdWNoIj5W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SE9STiBMRUFEUx8GBSZDb250YWN0TGlzdC5hc3B4P01vZGU9QWR2YW5jZWQmc3M9NzcwOGRkAgkPZBYCZg9kFgJmDw8WBB8ABQ5GaW5kQnlDbGllbnRJZB8GBSZDb250YWN0TGlzdC5hc3B4P01vZGU9QWR2YW5jZWQmc3M9NjAwMmRkAgoPZBYCZg9kFgJmDw8WBB8ABQtGTEFHIC0gQ09MRB8GBSZDb250YWN0TGlzdC5hc3B4P01vZGU9QWR2YW5jZWQmc3M9NTk3OGRkAgsPZBYCZg9kFgJmDw8WBB8ABQpGTEFHIC0gSE9UHwYFJkNvbnRhY3RMaXN0LmFzcHg/TW9kZT1BZHZhbmNlZCZzcz01OTc2ZGQCDA9kFgJmD2QWAmYPDxYEHwAFC0ZMQUcgLSBXQVJNHwYFJkNvbnRhY3RMaXN0LmFzcHg/TW9kZT1BZHZhbmNlZCZzcz01OTc3ZGQCDQ9kFgJmD2QWAmYPDxYEHwAFHElMIC0gQ0xJQ0tFRCBTQ09UVFNEQUxFIExJU1QfBgUmQ29udGFjdExpc3QuYXNweD9Nb2RlPUFkdmFuY2VkJnNzPTc3MDZkZAIOD2QWAmYPZBYCZg8PFgQfAAUeSUwgLSBDTElDS0VEIFdISVRFSE9STiBMSVNUSU5HHwYFJkNvbnRhY3RMaXN0LmFzcHg/TW9kZT1BZHZhbmNlZCZzcz03NzA3ZGQCDw9kFgJmD2QWAmYPDxYEHwAFHUlOVEVMTElHRU5UIExJTkstIFZJUlRVQUwgQ01BHwYFJkNvbnRhY3RMaXN0LmFzcHg/TW9kZT1BZHZhbmNlZCZzcz01OTg1ZGQCEA9kFgJmD2QWAmYPDxYEHwAFGk9wZW5lZCBFbWFpbCBpbiBMYXN0IDEgRGF5HwYFJkNvbnRhY3RMaXN0LmFzcHg/TW9kZT1BZHZhbmNlZCZzcz01OTgxZGQCEQ9kFgJmD2QWAmYPDxYEHwAFGE9wZW5lZCBFbWFpbCBMYXN0IDcgRGF5cx8GBSZDb250YWN0TGlzdC5hc3B4P01vZGU9QWR2YW5jZWQmc3M9NTk4MmRkAhIPZBYCZg9kFgJmDw8WBB8ABQxVTlNVQlNDUklCRUQfBgUmQ29udGFjdExpc3QuYXNweD9Nb2RlPUFkdmFuY2VkJnNzPTU5NzlkZAIFD2QWAmYPZBYCAgMPDxYCHwFoZGQCIw9kFgZmD2QWAmYPZBYCAgEPFgIfAwIOFhxmD2QWAgIBDw8WBh4GVGFyZ2V0BQRfdG9wHgdUb29sVGlwBSxWaWV3LCBmaWx0ZXIsIHNlZ21lbnQgYW5kIHNvcnQgeW91ciBjb250YWN0cx8GBRBDb250YWN0TGlzdC5hc3B4ZBYCZg8VAh5mYSBmYS11c2VycyBmYS1sZyBoX2FjdGlvbml0ZW0NTGlzdCBDb250YWN0c2QCAQ9kFgICAQ8PFgYfBwUEX3RvcB8IBSVBZGQgYSBzaW5nbGUgY29udGFjdCB0byB5b3VyIGRhdGFiYXNlHwYFHkNvbnRhY3REZXRhaWxzLmFzcHg/QWN0aW9uPUFkZGQWAmYPFQIdZmEgZmEtcGx1cyBmYS1sZyBoX2FjdGlvbml0ZW0LQWRkIENvbnRhY3RkAgIPZBYCAgEPDxYGHwcFBF90b3AfCAUlUXVpY2sgZmluZCBhIGNvbnRhY3QgaW4geW91ciBkYXRhYmFzZR8GBQtTZWFyY2guYXNweGQWAmYPFQIfZmEgZmEtc2VhcmNoIGZhLWxnIGhfYWN0aW9uaXRlbQxGaW5kIENvbnRhY3RkAgMPZBYCAgEPDxYGHwcFBF90b3AfCAUZTmV2ZXIgZm9yZ2V0IHRvIGZvbGxvdyB1cB8GBQlUb0RvLmFzcHhkFgJmDxUCHmZhIGZhLWNoZWNrIGZhLWxnIGhfYWN0aW9uaXRlbQpUby1EbyBMaXN0ZAIED2QWAgIBDw8WBh8HBQRfdG9wHwgFHE1hbmFnZSBhcHBvaW50bWVudHMgJiBldmVudHMfBgURQ2FsZW5kYXJGdWxsLmFzcHhkFgJmDxUCIWZhIGZhLWNhbGVuZGFyIGZhLWxnIGhfYWN0aW9uaXRlbQhDYWxlbmRhcmQCBQ9kFgICAQ8PFgYfBwUEX3RvcB8IBRVUaGUgYmVzdCB3YXkgdG8gbGVhcm4fBgUNL3BhZ2UvVmlkZW9zL2QWAmYPFQIdZmEgZmEtcGxheSBmYS1sZyBoX2FjdGlvbml0ZW0PVmlkZW8gVHV0b3JpYWxzZAIGD2QWAgIBDw8WBh8HBQRfdG9wHwgFJVB1dCB5b3VyIGVtYWlsIGNhbXBhaWducyBvbiBhdXRvcGlsb3QfBgUTQXV0b3Jlc3BvbmRlcnMuYXNweGQWAmYPFQIlZmFyIGZhLXBhcGVyLXBsYW5lIGZhLWxnIGhfYWN0aW9uaXRlbQ5BdXRvcmVzcG9uZGVyc2QCBw9kFgICAQ8PFgYfBwUEX3RvcB8IBShBdXRvbWF0aWNhbGx5IGNhcHR1cmUgbGVhZHMgZnJvbSB0aGUgd2ViHwYFDVdlYkZvcm1zLmFzcHhkFgJmDxUCHmZhIGZhLXNoYXJlIGZhLWxnIGhfYWN0aW9uaXRlbQ1MYW5kaW5nIFBhZ2VzZAIID2QWAgIBDw8WBh8HBQRfdG9wHwgFJVN0YXkgaW4gdG91Y2ggd2l0aCBjbGllbnRzIGVhY2ggbW9udGgfBgUVTmV3c2xldHRlckZvcm1hdC5hc3B4ZBYCZg8VAiNmYXIgZmEtbmV3c3BhcGVyIGZhLWxnIGhfYWN0aW9uaXRlbQpOZXdzbGV0dGVyZAIJD2QWAgIBDw8WBh8HBQRfdG9wHwgFKUN1c3RvbWl6ZSB0aGUgc3lzdGVtIGp1c3QgaG93IHlvdSBsaWtlIGl0HwYFDVNldHRpbmdzLmFzcHhkFgJmDxUCHGZhIGZhLWNvZyBmYS1sZyBoX2FjdGlvbml0ZW0IU2V0dGluZ3NkAgoPZBYCAgEPDxYGHwcFBF90b3AfCAUuQ3JlYXRlIGNvbXBlbGxpbmcgZW1haWxzIGFuZCBzYXZlIGFzIHRlbXBsYXRlcx8GBRNFbWFpbFRlbXBsYXRlcy5hc3B4ZBYCZg8VAiFmYSBmYS1lbnZlbG9wZSBmYS1sZyBoX2FjdGlvbml0ZW0PRW1haWwgVGVtcGxhdGVzZAILD2QWAgIBDw8WBh8HBQRfdG9wHwgFLFZpc3VhbGl6ZSB5b3VyIGJ1c2luZXNzIHdpdGggZ3JhcGhzICYgY2hhcnRzHwYFC0dyYXBocy5hc3B4ZBYCZg8VAiJmYSBmYS1jaGFydC1waWUgZmEtbGcgaF9hY3Rpb25pdGVtB1JlcG9ydHNkAgwPZBYCAgEPDxYGHwcFBF90b3AfCAUjQWRkIGEgZ3JvdXAgb2YgY29udGFjdHMgZnJvbSBhIGZpbGUfBgUTSW1wb3J0Q29udGFjdHMuYXNweGQWAmYPFQIlZmEgZmEtY2xvdWQtdXBsb2FkIGZhLWxnIGhfYWN0aW9uaXRlbQ9JbXBvcnQgQ29udGFjdHNkAg0PZBYCAgEPDxYGHwcFBF90b3AfCAUcTWFuYWdlIHlvdXIgYWNjb3VudCBzZXR0aW5ncx8GBQ5NeUFjY291bnQuYXNweGQWAmYPFQIdZmEgZmEtbG9jayBmYS1sZyBoX2FjdGlvbml0ZW0KTXkgQWNjb3VudGQCAQ9kFgJmD2QWAgIBDw8WAh8BaGQWAgIBDw8WAh8AZWRkAgIPZBYCZg9kFgICAQ8PFgIfAWdkFgICAQ9kFgwCAQ9kFgQCAQ8PFgYeCUZvcmVDb2xvcgpPHwAFCVZlcnkgR29vZB4EXyFTQgIEZGQCBA8PFggfAAUBMB8JCiMeB0VuYWJsZWRoHwoCBGRkAgUPDxYCHwAFBjEwLDAwMGRkAgcPDxYCHwAFATBkZAIJDw8WAh8ABQYxMCwwMDBkZAILDw8WAh8ABQEwZGQCDQ8PFgIfAWhkZAIFD2QWAgIBD2QWCgIDD2QWAgIBD2QWBGYPZBYCAgEPEGRkFgFmZAIED2QWAgIBD2QWAmYPEGRkFgBkAgUPZBYCAgMPEGRkFgBkAgcPZBYCAgMPEGRkFgBkAgkPZBYCAgMPEGRkFgBkAg0PZBYIAgEPEGRkFgFmZAIDDxBkZBYBZmQCBw8QZGQWAWZkAgkPEGRkFgFmZAIPD2QWBgIBDw8WAh8BaGRkAgUPDxYCHwFnZGQCBw9kFgICBQ8QZGQWAWZkZEB1A0iXASlOjFsX3yK4Ae96CEcx/DiH++tPUmNZ2mPe" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=DuA1OMmoScWEPaPKVPlGl_QmSIKmuK9iTpfVoqWVqdUEvhITssYRENwJnrpELL31vRTLZgnqKjgkJKxoXZNwYmMVeYpB_JvoJtxA3OI6zY81&amp;t=637291883051870913" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=nEjutqW6EDm-dCEFVtPGIOLFk6OwblC7fp_zctWiJcvV9Rzfys2mz-HhdDoCb8OVKK3hYKFoXQx2_bzBpPFBbrSIeK2OM_RKAl7zvtQYrI64jVWXbLaZ-wZvQyfs6tnrQhyf2KGnpdfzdMZ78AHb_t3OQm-o1ZsF-zlH6QYSXtA1&amp;t=127f3acd" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=XCfhrL9b7ZukPOqkoDqOdnaKaE8sOGAT97pyUuOPn1BWkk1HENjAl4bQhfPhyNijAVdmLGy12gKFcrZ8BIze0rskX6mWPT981wHdaJFdOCYb2uC6sfgV5SZGi-Vc3rCp_GK-AM-n5TGrZuAhq5lw2vBx8HzDgUYdutr5f7ie9gtzEkZkpdZfIioGMmH2wrEx0&amp;t=127f3acd" type="text/javascript"></script>
+<script src="webkit.js" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="9E1418CF" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEdAA7wYeDWuEifMK921rNn1ReAJUtJCJAfkfCfSir8U0PI+irey3WEZpL2C1aUCI7XySDplEurUtLKwh0iSRimg7SdBh1ZneSXwB+9nDNIUtPkMeBQi3XXNoXsHKhMdBt1VLDEkDs4Q9ynKw+ewzqix8rpmXMtn/ZIzSL3BLPxjKpphe1l1xitfQpXFGpYNNf0cko5BDsGlWDTX/XUZo1E9Oz/vZ8E1OQIRgzvVxvA0fPsIBMUff7AUDGqHqDjOkM9MRiHfVmrwZ0fIXxed/Ats89dnAHlUxl0IUfVXiSqhGC2bQpqxlPj4Y0e1TsRWBhkDf9wqekSqt5YpBjbw1Vb7/DK" />
+</div>
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManagerBorder', 'aspnetForm', ['tctl00$ContentPlaceHolder1$UpdatePanel1','','tctl00$UpdatePanelGrowl',''], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+
+    <div style="overflow:auto;">
+        
+        <div id="ctl00_PanelCustomTopDiv" class="customtopdiv">
+	
+            <div style="display:none;">
+            </div>
+
+
+<div style='background-color: #fff;'>
+
+    <div style='width:1040px; margin: 0 auto; padding: 10px 0; overflow:auto;' >
+
+        <div style="padding: 10px 10px; float:right; margin-top:11px; font-size:1.3em;">
+            <a href="/ChangeUser.aspx">jwooten37830@icloud.com</a> &nbsp;&nbsp; <a href="/Logout.aspx" style="color:#b4571f;">Sign Out</a>
+        </div>
+
+
+        <div style="padding: 10px 0; float:left;">
+            <img src="https://secure.engagemorecrm.com/images/wlcrm/headerlogo.png" height="40"/>
+        </div>
+        <div style="padding: 10px 10px; float:left; margin-left:40px; margin-top:11px; font-size:1.3em;">
+            <a href="https://secure.engagemorecrm.com/page/QuickLinkTrainingLessons/" target="_blank" style="color:#b4571f;">TRAINING</a> | 
+            <a href="	https://secure.engagemorecrm.com/page/REIntegrations/" target="_blank" style="color:#B4571f;">INTEGRATIONS</a> | 
+            <a href="https://engagemorecrm.helpscoutdocs.com/article/50-how-to-upgrade-your-engagemore-crm-account" target="_blank" style="color:#B4571f;">UPGRADE</a> | 
+            <a href="https://engagemorecrm.helpscoutdocs.com/category/64-love-engagemore---become-an-affiliate" target="_blank" style="color:#B4571f;">AFFILIATES</a> |
+            <a href="https://engagemorecrm.helpscoutdocs.com/category/51-contact-us" target="_blank" style="color:#B4571f;">SUPPORT</a>
+        </div>
+
+
+    </div>
+
+</div>
+</div>
+
+        
+        
+        </div>
+        <div id="ctl00_PanelToolbar">
+	
+            <div style="" align="center" class="bToolbar">
+                <div class="bWidth">
+                    <div class="bHelp0">
+                        <div class="bHelp1">
+                            
+                            
+                        </div>
+                        <div class="bToolbar1">
+                           <span id="ctl00_lblToolbar">
+  <div class="tb" id="tbhome2" onclick="window.location.href='/Home2.aspx'"><div class="tb_tx" id="tbhome2">Home</div>
+</div>
+
+  <div class="tb" id="tbcontactlist" onclick="window.location.href='/ContactList.aspx'"><div class="tb_tx" id="tbcontactlist">Contacts</div>
+</div>
+
+  <div class="tb" id="tbtodo" onclick="window.location.href='/ToDo.aspx'"><div class="tb_tx" id="tbtodo">To-Do</div>
+</div>
+
+  <div class="tb" id="tbcalendarfull" onclick="window.location.href='/CalendarFull.aspx'"><div class="tb_tx" id="tbcalendarfull">Calendar</div>
+</div>
+
+  <div class="tb" id="tbdeallist" onclick="window.location.href='/DealList.aspx'"><div class="tb_tx" id="tbdeallist">Deals</div>
+</div>
+
+  <div class="tb" id="tbclienttouch" onclick="window.location.href='/ClientTouch.aspx'"><div class="tb_tx" id="tbclienttouch">ClientTouch</div>
+</div>
+
+  <div class="tb" id="tbvoicetouch" onclick="window.location.href='/VoiceTouch.aspx'"><div class="tb_tx" id="tbvoicetouch">VoiceTouch</div>
+</div>
+
+  <div class="tb" id="tbgraphs" onclick="window.location.href='/Graphs.aspx'" title="Reports">  <i class="tbfa fa fa-chart-pie"></i>
+</div>
+
+  <div class="tb" id="tbsettings" onclick="window.location.href='/Settings.aspx'" title="Settings">  <i class="tbfa fa fa-cog"></i>
+</div>
+
+  <div class="tb" id="tbsearch" onclick="window.location.href='/Search.aspx'" title="Search">  <i class="tbfa fa fa-search"></i>
+</div>
+</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        
+</div>
+        
+    </div>
+    
+    <div align="center" class="MainTableWrap">
+        <table cellSpacing="0" cellPadding="0" class="mainTable" border="0" width="985">
+          <TR>
+            <TD valign="top" width="30" class="axdTD"><div id="ctl00_PanelRolodex">
+	<a class="axd" href="/Addr/A">A</a><br />
+              <a class="axd" href="/Addr/B">B</a><br/>
+              <a class="axd" href="/Addr/C">C</a><br/>
+              <a class="axd" href="/Addr/D">D</a><br/>
+              <a class="axd" href="/Addr/E">E</a><br/>
+              <a class="axd" href="/Addr/F">F</a><br/>
+              <a class="axd" href="/Addr/G">G</a><br/>
+              <a class="axd" href="/Addr/H">H</a><br/>
+              <a class="axd" href="/Addr/I">I</a><br/>
+              <a class="axd" href="/Addr/J">J</a><br/>
+              <a class="axd" href="/Addr/K">K</a><br/>
+              <a class="axd" href="/Addr/L">L</a><br/>
+              <a class="axd" href="/Addr/M">M</a><br/>
+              <a class="axd" href="/Addr/N">N</a><br/>
+              <a class="axd" href="/Addr/O">O</a><br/>
+              <a class="axd" href="/Addr/P">P</a><br/>
+              <a class="axd" href="/Addr/Q">Q</a><br/>
+              <a class="axd" href="/Addr/R">R</a><br/>
+              <a class="axd" href="/Addr/S">S</a><br/>
+              <a class="axd" href="/Addr/T">T</a><br/>
+              <a class="axd" href="/Addr/U">U</a><br/>
+              <a class="axd" href="/Addr/V">V</a><br/>
+              <a class="axd" href="/Addr/W">W</a><br/>
+              <a class="axd" href="/Addr/X">X</a><br/>
+              <a class="axd" href="/Addr/Y">Y</a><br/>
+              <a class="axd" href="/Addr/Z">Z</a><br/>
+</div></TD>
+            <TD></TD>
+            <TD vAlign="top"><div id="ctl00_PanelBorderContent" class="bContent">
+	
+                
+                
+
+    <div id="ctl00_ContentPlaceHolder1_UpdatePanel1">
+		
+
+            
+
+            <div id="ctl00_ContentPlaceHolder1_PanelDashboard">
+			
+
+                <div style="display: none; border: 1px solid black; padding: 5px; margin-bottom: 10px; position: fixed; bottom: 50px; left: 0px; background-color: white;">
+                    <input name="ctl00$ContentPlaceHolder1$Order1" type="text" id="Order1" style="width:250px;" /><br />
+                    <input name="ctl00$ContentPlaceHolder1$Order2" type="text" id="Order2" style="width:250px;" /><br />
+                    <input name="ctl00$ContentPlaceHolder1$Order3" type="text" id="Order3" style="width:250px;" /><br />
+                    <input type="submit" name="ctl00$ContentPlaceHolder1$btnSaveOrder" value="Save Order" id="btnSaveOrder" /><br />
+                    <input name="ctl00$ContentPlaceHolder1$DeleteID" type="text" id="DeleteID" />
+                    <input type="submit" name="ctl00$ContentPlaceHolder1$btnDeleteItem" value="Delete Item" id="btnDeleteItem" /><br />
+                    <input name="ctl00$ContentPlaceHolder1$EditID" type="text" id="EditID" />
+                    <input type="submit" name="ctl00$ContentPlaceHolder1$btnEditItem" value="Edit Item" id="btnEditItem" /><br />
+                </div>
+
+                
+
+                
+
+                <span id="ctl00_ContentPlaceHolder1_content_hometop"></span>
+
+
+
+
+                <div style="overflow: auto;" class="context-menu">
+
+                    
+
+                    <div class="homecol1 sortable sortcol">
+
+                        
+
+                        
+
+
+                        <div id="6189" class="widget">
+
+<div>
+    <div class="h_sub2">
+        <i class="fa fa-user"></i>
+        New Contacts
+    </div>
+    <div class="h_box widget_font widget_box" style="overflow:auto;">
+
+        <a id="ctl00_ContentPlaceHolder1_ctl01_link1Day" class="widget_tds_wrap" href="/ContactList.aspx?Mode=Advanced&amp;q=all%7c22D31%7c"><span id="ctl00_ContentPlaceHolder1_ctl01_lbl1DayCount" class="widget_medium_num">0</span>
+            <div class='widget_tds_label'>24 Hours</div>
+
+        </a>
+
+        <a id="ctl00_ContentPlaceHolder1_ctl01_link7Day" class="widget_tds_wrap" href="/ContactList.aspx?Mode=Advanced&amp;q=all%7c22D37%7c"><span id="ctl00_ContentPlaceHolder1_ctl01_lbl7DayCount" class="widget_medium_num">0</span>
+            <div class='widget_tds_label'>7 Days</div>
+
+        </a>
+
+        <a id="ctl00_ContentPlaceHolder1_ctl01_link30Day" class="widget_tds_wrap" href="/ContactList.aspx?Mode=Advanced&amp;q=all%7c22D330%7c"><span id="ctl00_ContentPlaceHolder1_ctl01_lbl30DayCount" class="widget_medium_num">2</span>
+                <div class='widget_tds_label'>30 Days</div>
+        </a>
+    </div>
+    <div class="widget_divider"></div>
+</div>
+</div><div id="6188" class="widget">
+
+<div>
+    <div id="ctl00_ContentPlaceHolder1_ctl02_PanelBirthdays">
+				
+        <div class="h_sub2">
+            <i class="fa fa-calendar"></i>
+            Upcoming Appointments
+        </div>
+
+        <div class="h_box widget_font widget_box" style="max-height: 240px; overflow: auto;">
+
+
+                <span id="ctl00_ContentPlaceHolder1_ctl02_lblCalendar"><div class='widget_low'>No upcoming appointments</div></span>
+
+
+        </div>
+        <div class="widget_divider"></div>
+
+
+    
+			</div>
+</div>
+</div><div id="6185" class="widget">
+
+<div>
+    <div class="h_sub2">
+        <i class="fa fa-check"></i>
+        To-Do Summary
+    </div>
+    <div class="h_box widget_font widget_box" style="overflow:auto;">
+
+        <a id="ctl00_ContentPlaceHolder1_ctl03_linkOverdue" class="widget_tds_wrap" href="ToDo.aspx?View=Overdue"><span id="ctl00_ContentPlaceHolder1_ctl03_OverdueCount" class="widget_medium_num">0</span>
+            <div class='widget_tds_label'>Overdue</div>
+
+        </a>
+
+        <a id="ctl00_ContentPlaceHolder1_ctl03_linkDueToday" class="widget_tds_wrap" href="ToDo.aspx?View=DueToday"><span id="ctl00_ContentPlaceHolder1_ctl03_DueTodayCount" class="widget_medium_num">0</span>
+            <div class='widget_tds_label'>Due Today</div>
+
+        </a>
+
+        <a id="ctl00_ContentPlaceHolder1_ctl03_linkOpen" class="widget_tds_wrap" href="ToDo.aspx?View=AllOpen"><span id="ctl00_ContentPlaceHolder1_ctl03_OpenCount" class="widget_medium_num">0</span>
+                <div class='widget_tds_label'>All Open</div>
+        </a>
+    </div>
+    <div class="widget_divider"></div>
+</div>
+</div><div id="6186" class="widget">
+
+<div>
+
+
+<div class="h_sub2">
+        <span id="ctl00_ContentPlaceHolder1_ctl04_lblIcon"><i class='far fa-clock'></i></span>
+        <span id="ctl00_ContentPlaceHolder1_ctl04_lblTitle">Recently Viewed Contacts</span>
+</div>
+<div class="h_box widget_font widget_box">
+
+    <table cellspacing="1" cellpadding="0" border="0" id="ctl00_ContentPlaceHolder1_ctl04_dgRecent" style="width:100%;">
+				<tr valign="middle" style="background-color:Transparent;">
+					<td><a href=ContactDetails.aspx?ID=546570>Cart Abandoned</a></td>
+				</tr><tr valign="middle" style="background-color:Transparent;">
+					<td><a href=ContactDetails.aspx?ID=546553>Log Notes</a></td>
+				</tr>
+			</table>
+</div>
+<div class="widget_divider"></div>
+</div></div><div id="6187" class="widget">
+
+<div>
+    <div id="ctl00_ContentPlaceHolder1_ctl05_PanelBirthdays">
+				
+        <div class="h_sub2">
+            <i class="fa fa-birthday-cake"></i>
+            Birthdays
+        </div>
+
+        <div class="h_box widget_font widget_box" style="max-height: 200px; overflow: auto; padding-top:10px;">
+
+
+            <div style="float: left; width: 48%; margin-left:2%;">
+                <span id="ctl00_ContentPlaceHolder1_ctl05_lblBirthdays">Today
+<ul class="tightlist">
+  <li class='widget_low'>No Birthdays</li>
+</ul>
+</span>
+
+            </div>
+            <div style="float: left; width: 46%; margin-left:4%;">
+                <span id="ctl00_ContentPlaceHolder1_ctl05_lblBirthdaysTomorrow">Tomorrow
+<ul class="tightlist">
+  <li class='widget_low'>No Birthdays</li>
+</ul>
+</span>
+            </div>
+
+        </div>
+        <div class="widget_divider"></div>
+
+
+    
+			</div>
+</div>
+</div>
+                    </div>
+                    <div class="homecol2 sortable sortcol">
+                        <div id="7635" class="widget">
+
+<div>
+<div class="h_sub2"><i class="fa fa-user"></i>&nbsp;
+    <span id="ctl00_ContentPlaceHolder1_ctl06_lblTitle" title="Contact Counter">FB - WHITEHORN LEADS</span>
+</div>
+<div id="ctl00_ContentPlaceHolder1_ctl06_h_box_wrap" class="h_box widget_font widget_box">
+
+    <div id="ctl00_ContentPlaceHolder1_ctl06_PanelCount">
+				
+
+
+        <div style="overflow:hidden; height:35px;">
+
+            <div style="position:relative; z-index:1; float:right; min-width:15px; right:1px; top:20px;">
+                &nbsp;<a id="ctl00_ContentPlaceHolder1_ctl06_lbRefresh" title="This counter updates every 15 minutes, or click to force refresh" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$ctl06$lbRefresh&#39;,&#39;&#39;)"><i class='fas fa-sync' style='color:#ccc; font-size:15px;'></i></a>
+            </div>
+
+           <div style="font-weight:bold; position:relative; top:-2px; text-align:center; z-index:0;" class="widget_big_num">
+                <a id="ctl00_ContentPlaceHolder1_ctl06_hlCount" href="/ContactList.aspx?Mode=Advanced&amp;ss=7708" style="padding:0 90px;">0</a>
+            </div>
+
+        </div>
+
+
+    
+			</div>
+    
+
+</div>
+<div class="widget_divider"></div>
+</div></div><div id="6195" class="widget">
+
+<div>
+<div class="h_sub2"><i class="fa fa-user"></i>&nbsp;
+    <span id="ctl00_ContentPlaceHolder1_ctl07_lblTitle" title="Contact Counter">Clicked Any Link - Past 7 Days</span>
+</div>
+<div id="ctl00_ContentPlaceHolder1_ctl07_h_box_wrap" class="h_box widget_font widget_box">
+
+    <div id="ctl00_ContentPlaceHolder1_ctl07_PanelCount">
+				
+
+
+        <div style="overflow:hidden; height:35px;">
+
+            <div style="position:relative; z-index:1; float:right; min-width:15px; right:1px; top:20px;">
+                &nbsp;<a id="ctl00_ContentPlaceHolder1_ctl07_lbRefresh" title="This counter updates every 15 minutes, or click to force refresh" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$ctl07$lbRefresh&#39;,&#39;&#39;)"><i class='fas fa-sync' style='color:#ccc; font-size:15px;'></i></a>
+            </div>
+
+           <div style="font-weight:bold; position:relative; top:-2px; text-align:center; z-index:0;" class="widget_big_num">
+                <a id="ctl00_ContentPlaceHolder1_ctl07_hlCount" href="/ContactList.aspx?Mode=Advanced&amp;ss=5983" style="padding:0 90px;">0</a>
+            </div>
+
+        </div>
+
+
+    
+			</div>
+    
+
+</div>
+<div class="widget_divider"></div>
+</div></div><div id="6198" class="widget">
+
+<div>
+<div class="h_sub2"><i class="fa fa-user"></i>&nbsp;
+    <span id="ctl00_ContentPlaceHolder1_ctl08_lblTitle" title="Contact Counter">Opened Email in Last 1 Day</span>
+</div>
+<div id="ctl00_ContentPlaceHolder1_ctl08_h_box_wrap" class="h_box widget_font widget_box">
+
+    <div id="ctl00_ContentPlaceHolder1_ctl08_PanelCount">
+				
+
+
+        <div style="overflow:hidden; height:35px;">
+
+            <div style="position:relative; z-index:1; float:right; min-width:15px; right:1px; top:20px;">
+                &nbsp;<a id="ctl00_ContentPlaceHolder1_ctl08_lbRefresh" title="This counter updates every 15 minutes, or click to force refresh" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$ctl08$lbRefresh&#39;,&#39;&#39;)"><i class='fas fa-sync' style='color:#ccc; font-size:15px;'></i></a>
+            </div>
+
+           <div style="font-weight:bold; position:relative; top:-2px; text-align:center; z-index:0;" class="widget_big_num">
+                <a id="ctl00_ContentPlaceHolder1_ctl08_hlCount" href="/ContactList.aspx?Mode=Advanced&amp;ss=5981" style="padding:0 90px;">0</a>
+            </div>
+
+        </div>
+
+
+    
+			</div>
+    
+
+</div>
+<div class="widget_divider"></div>
+</div></div><div id="6196" class="widget">
+
+<div>
+<div class="h_sub2"><i class="fa fa-user"></i>&nbsp;
+    <span id="ctl00_ContentPlaceHolder1_ctl09_lblTitle" title="Contact Counter">Opened Email Last 7 Days</span>
+</div>
+<div id="ctl00_ContentPlaceHolder1_ctl09_h_box_wrap" class="h_box widget_font widget_box">
+
+    <div id="ctl00_ContentPlaceHolder1_ctl09_PanelCount">
+				
+
+
+        <div style="overflow:hidden; height:35px;">
+
+            <div style="position:relative; z-index:1; float:right; min-width:15px; right:1px; top:20px;">
+                &nbsp;<a id="ctl00_ContentPlaceHolder1_ctl09_lbRefresh" title="This counter updates every 15 minutes, or click to force refresh" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$ctl09$lbRefresh&#39;,&#39;&#39;)"><i class='fas fa-sync' style='color:#ccc; font-size:15px;'></i></a>
+            </div>
+
+           <div style="font-weight:bold; position:relative; top:-2px; text-align:center; z-index:0;" class="widget_big_num">
+                <a id="ctl00_ContentPlaceHolder1_ctl09_hlCount" href="/ContactList.aspx?Mode=Advanced&amp;ss=5982" style="padding:0 90px;">0</a>
+            </div>
+
+        </div>
+
+
+    
+			</div>
+    
+
+</div>
+<div class="widget_divider"></div>
+</div></div><div id="6190" class="widget">
+
+<div>
+<div id="ctl00_ContentPlaceHolder1_ctl10_PanelSavedSearches">
+				
+    <div class="h_sub2">
+        <i class="fa fa-search"></i>
+        Saved Searches
+    </div>
+
+    <div class="h_box widget_font widget_box" style="max-height: 250px; overflow: auto;">
+
+
+
+
+        <table cellspacing="0" cellpadding="2" border="0" id="ctl00_ContentPlaceHolder1_ctl10_dgSavedSearches" style="width:100%;border-collapse:collapse;">
+					<tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5972">All Buyers</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5973">All Sellers</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5984">Clicked Any Link - Past 1 Day</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5983">Clicked Any Link - Past 7 Days</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5980">Clicked Video Link</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5974">Clicked Website Button</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5975">Drip Flow Off/Completed</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=7708">FB - WHITEHORN LEADS</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=6002">FindByClientId</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5978">FLAG - COLD</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5976">FLAG - HOT</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5977">FLAG - WARM</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=7706">IL - CLICKED SCOTTSDALE LIST</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=7707">IL - CLICKED WHITEHORN LISTING</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5985">INTELLIGENT LINK- VIRTUAL CMA</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5981">Opened Email in Last 1 Day</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5982">Opened Email Last 7 Days</a></td>
+					</tr><tr style="background-color:Transparent;">
+						<td><a href="ContactList.aspx?Mode=Advanced&amp;ss=5979">UNSUBSCRIBED</a></td>
+					</tr>
+				</table>
+
+        
+
+
+    </div>
+    <div class="widget_divider"></div>
+
+
+
+			</div>
+</div></div><div id="6191" class="widget">
+
+<div>
+    <div class="h_sub2">
+        <i class="fa fa-globe"></i>
+        <span id="ctl00_ContentPlaceHolder1_ctl11_lblTitle">Landing Page Stats</span>
+    </div>
+    <div class="h_box widget_font widget_box" style="overflow:auto;">
+
+        
+
+        <div id="ctl00_ContentPlaceHolder1_ctl11_PanelNoLandingPageSelected" class="widget_low">
+				
+
+            Edit this widget and select a Landing Page
+
+        
+			</div>
+
+    </div>
+    <div class="widget_divider"></div>
+</div>
+</div>
+                    </div>
+                    <div class="homecol3 sortable sortcol">
+
+                        
+
+                        <div id="6183" class="widget">
+<div>
+    <div class="">
+        <div class="h_sub2">Action Center</div>
+        <div class="h_box widget_font widget_box"  style="overflow: auto;">
+            
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl00_hlItem" title="View, filter, segment and sort your contacts" class="h_actiona2" href="ContactList.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-users fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                List Contacts</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl01_hlItem" title="Add a single contact to your database" class="h_actiona2" href="ContactDetails.aspx?Action=Add" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-plus fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Add Contact</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl02_hlItem" title="Quick find a contact in your database" class="h_actiona2" href="Search.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-search fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Find Contact</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl03_hlItem" title="Never forget to follow up" class="h_actiona2" href="ToDo.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-check fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                To-Do List</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl04_hlItem" title="Manage appointments &amp; events" class="h_actiona2" href="CalendarFull.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-calendar fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Calendar</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl05_hlItem" title="The best way to learn" class="h_actiona2" href="/page/Videos/" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-play fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Video Tutorials</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl06_hlItem" title="Put your email campaigns on autopilot" class="h_actiona2" href="Autoresponders.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='far fa-paper-plane fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Autoresponders</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl07_hlItem" title="Automatically capture leads from the web" class="h_actiona2" href="WebForms.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-share fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Landing Pages</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl08_hlItem" title="Stay in touch with clients each month" class="h_actiona2" href="NewsletterFormat.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='far fa-newspaper fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Newsletter</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl09_hlItem" title="Customize the system just how you like it" class="h_actiona2" href="Settings.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-cog fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Settings</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl10_hlItem" title="Create compelling emails and save as templates" class="h_actiona2" href="EmailTemplates.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-envelope fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Email Templates</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl11_hlItem" title="Visualize your business with graphs &amp; charts" class="h_actiona2" href="Graphs.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-chart-pie fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Reports</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl12_hlItem" title="Add a group of contacts from a file" class="h_actiona2" href="ImportContacts.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-cloud-upload fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                Import Contacts</div>
+                    </div>
+                    </a>
+                
+                    <a id="ctl00_ContentPlaceHolder1_ctl12_rptActions_ctl13_hlItem" title="Manage your account settings" class="h_actiona2" href="MyAccount.aspx" target="_top">
+                    <div class="h_actionwrap2">
+
+                            <i class='fa fa-lock fa-lg h_actionitem2'></i>
+                            <div class="h_actiontitle2">
+                                My Account</div>
+                    </div>
+                    </a>
+                
+        </div>
+    </div>
+    <div class="widget_divider"></div>
+</div>
+</div><div id="6192" class="widget">
+<div>
+
+</div></div><div id="6193" class="widget">
+<div>
+    <div id="ctl00_ContentPlaceHolder1_ctl14_PanelEmailCreditsWidget">
+				
+        <div class="h_sub2">
+            <i class="fa fa-envelope"></i>
+            Email Info Center
+        </div>
+
+        <div id="ctl00_ContentPlaceHolder1_ctl14_PanelStats">
+					
+
+
+            <div class="h_box widget_font widget_box" style="">
+
+                
+
+                <table style="width: 100%;">
+                    <tr>
+                        <td colspan="2" style="font-weight: bold;">
+
+                            <div style="float: right;">
+                                <a id="ctl00_ContentPlaceHolder1_ctl14_linkRefresh" title="Refresh" href="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$ctl14$linkRefresh&#39;,&#39;&#39;)">
+                            <i class="fas fa-sync"></i> 
+                                </a>
+                            </div>
+                            <div style="margin-bottom: 2px;">
+                                Available Email Credits
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;&nbsp;Free Credits
+                        </td>
+                        <td align="right">
+                            <span id="ctl00_ContentPlaceHolder1_ctl14_lblFreeCreditAvailable">10,000</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;&nbsp;Purchased
+                        </td>
+                        <td align="right">
+                            <span id="ctl00_ContentPlaceHolder1_ctl14_lblPurchasedCredits">0</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;&nbsp;<strong>Total Available</strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                                <span id="ctl00_ContentPlaceHolder1_ctl14_lblTotalAvailable">10,000</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-weight: bold;">
+
+                            <div style="margin-top: 6px; margin-bottom: 1px;">
+                                Used Email Credits
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;&nbsp;Credits used<br />
+                            &nbsp;&nbsp;(month-to-date)
+                        </td>
+                        <td align="right">
+                            <a href="Graphs.aspx?Type=EMU">
+                                <span id="ctl00_ContentPlaceHolder1_ctl14_lblUsedMonthToDate" title="Click for reports">0</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="left">
+
+                            <div style="padding: 2px 0px 5px 0; text-align: center;">
+                                <br />
+                            </div>
+
+                            <div align="center">
+                                
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="width: 180px; margin-left: auto; margin-right: auto;"></div>
+
+            
+
+            
+        
+				</div>
+        
+
+
+        <div class="widget_divider"></div>
+    
+			</div>
+</div>
+</div>
+                    </div>
+
+
+                </div>
+
+                <div id="ctl00_ContentPlaceHolder1_PanelEditThisPage">
+				
+                    <div style="text-align: center;">
+                        <a href="?Action=Edit" style="text-decoration: none;">
+                            <i class="fa fa-cog" /></i> Customize This Screen</a><br />
+                        <br />
+                    </div>
+                
+			</div>
+
+            
+		</div>
+
+            
+
+            
+
+            <div style="width: 375px; margin: 0 auto;">
+                
+
+
+                
+
+
+            </div>
+
+
+            
+
+        
+	</div>
+
+
+
+
+          
+</div>
+        </TD>
+        <TD>
+          </TD>
+      </TR>
+      <tr>
+        <td colspan="5" class="formlabel">
+            <br />
+            <div class="bFooter">
+                <div id="ctl00_PanelFooter">
+	
+                    
+
+                    
+
+                
+                    <div id="ctl00_PanelFooterBasic">
+		
+                        <a href="/m/" style='text-decoration:none;'><i class="fa fa-tablet fa-lg"></i> Mobile Version</a>
+<script type="text/javascript">!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});</script>
+<script type="text/javascript">window.Beacon('init', 'a45a25b7-3bb9-490e-a1a3-f7739c8b3472')</script>
+
+
+	</div>
+                
+                    
+                
+</div>
+            </div>
+            <br />
+         </td>
+      </tr>
+    </TABLE>
+
+
+
+    </div>
+
+
+    <div id="ctl00_UpdatePanelGrowl">
+	
+            
+        
+</div>
+
+
+    </form>
+
+    
+
+
+</body>
+</html>
