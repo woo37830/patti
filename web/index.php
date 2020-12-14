@@ -19,11 +19,12 @@ require('fancyAuthentication.php');
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
     <LINK REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
     <!-- link rel="stylesheet" href="_css/jquery.tablesorter.pager.css" / -->
-	  <LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
-    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+  	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
 	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
 	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	  <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+		<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
+		<LINK REL="stylesheet" HREF="_css/hamburger.css" id="styleid"/>
   <script type="text/javascript" class="init">
     var dataSet = [
     [ "<a href=\"../webhook/documentation/technical.pdf\">Technical Manual</a>",

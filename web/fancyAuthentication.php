@@ -190,24 +190,22 @@ function savePrefs(){
            </table>
          </td>
          <td>
-           <nav id="hamnav">
-             <!-- [THE HAMBURGER] -->
-             <label for="hamburger">&#9776;</label>
-             <input type="checkbox" id="hamburger"/>
-
-             <!-- [MENU ITEMS] -->
-             <div id="hamitems">
-               <a href="index.php">Home</a>
-               <a href="about.php">About</a>
-               <a href="Consistency.php">Sync</a>
-               <a href="maintain_accounts.php">Accounts</a>
-               <a href="maintain_users.php">Users</a>
-               <a href="MonitorLogs.php">Logs</a>
-               <a href="../tests/monthly_report.php">Report</a>
-               <a href="Tests.php">Tests</a>
-         </div>
+           <label for="toggle-1" class="toggle-menu"><ul><li></li> <li></li> <li></li></ul></label>
+           <input type="checkbox" id="toggle-1" >
+         <nav>
+           <ul>
+           <li><a href="./index.php"><i class="icon-home"></i>Home</a></li>
+           <li><a href="./about.php"><i class="icon-user"></i>About</a></li>
+           <li><a href="./Consistency.php"><i class="icon-thumbs-up-alt"></i>Sync</a></li>
+           <li><a href="./maintain_accounts.php"><i class="icon-gear"></i>Accounts</a></li>
+           <li><a href="./maintain_users.php"><i class="icon-picture"></i>Users</a></li>
+           <li><a href="./MonitorLogs.php"><i class="icon-phone"></i>Logs</a></li>
+           <li><a href="./MonthlyReport.php"><i class="icon-phone"></i>Report</a></li>
+           <li><a href="./Tests.php"><i class="icon-phone"></i>Tests</a></li>
+           </ul>
            </nav>
-</td>
+
+    </td>
          <td align="right" valign="middle" bgcolor="#9999CC">
             <table border="0" cellPadding="2" cellSpacing="4">
               <tr>
