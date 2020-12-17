@@ -24,7 +24,7 @@ $api_key      = $config['MSG_PASSWORD'];
 $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
 
 
-$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund', 'order.rebill_failed');
+$events = array('order.success', 'order.subscription_payment', 'order.subscription_cancelled', 'order.refund', 'order.rebill_failed', 'order.subscription_resumed');
 $affiliate_events = array('affiliate.commission_refund', 'affiliate.commission_earned', 'affiliate.commission_payout');
 
 
@@ -80,7 +80,7 @@ switch( $event ) {
     $current_productid = getProductFor($email); // e.g. 13
     if( $current_productid == -1 )
     {
-      $result = "Failed: Could not locate user";
+      $result = "Failed: Could not locate user($email) to cancel subscription";
     }
     else
     {
@@ -104,6 +104,33 @@ switch( $event ) {
     $theMessage = "Account $email has cancelled!";
 //    sendNotification($email,'Cancellation Notice',$theMessage);
     echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
+    break;
+  case 'order.subscription_resumed':
+    $resumming_productid = getProductId(); // e.g. 29
+    $current_productid = getProductFor($email); // e.g. 13
+    if( $current_productid == -1 )
+    {
+      $result = "Failed: Could not locate user($email) to resume subscription";
+    }
+    else
+    {
+      if( $resumming_productid == 'product-24' || $resumming_productid == 'product-29' )
+      {
+        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
+      }
+      else
+      {
+        if( $current_productid != $resumming_productid ) // e.g. 13 != 29 T
+        {
+          $result = "Failed: Subscription_resume requested for $resumming_productid, but subscription is for $current_productid";
+        }
+        else
+        {
+          $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
+        }
+      }
+    }
+    logit($email,$json_data, "Subscription_resume, result: $result");
     break;
   case 'affiliate.commission_refund':
     logit($email, $json_data, "affiliate.commission_refund");

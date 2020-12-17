@@ -28,18 +28,20 @@ require('fancyAuthentication.php');
 	<LINK REL="stylesheet" HREF="_css/hamburger.css" id="styleid"/>
 	<script type="text/javascript" class="init">
     var dataSet = [
-    [ "<a href=\"../index.html\">Documentation</a>",
-      "System Architect", "Update"],
     ["<a href=\"../web/testNewAccount.php?back=./Tests.php\">New Account</a>",
       "Create new Account","Simulate Thrivecart New Account"],
     ["<a href=\"./testCancelAccount.php?back=./Tests.php\">Cancel Account</a>",
       "Cancel an Account","Simulate Thrivecart Cancel Account"],
+		["<a href=\"./testResumeAccount.php?back=./Tests.php\">Resume Account</a>",
+	      "Resume a Suspended Account","Simulate Thrivecart order.subscription_resume"],
 		["<a href=\"./testAddContactNote.php?back=./Tests.php\">Add Contact Note</a>",
 	      "Add a Contact Note","Simulate adding a contact note"],
 		["<a href=\"./testCartAbandoned.php?back=./Tests.php\">Abandon Cart</a>",
 			   "Abandon cart while shopping","Simulate a Cart.Abandoned"],
     ["<a href=\"./testUpgradeAccount.php?back=./Tests.php\">Upgrade Account</a>",
       "Upgrade an Account","Simulate Thrivecart Upgrade Account"],
+		["<a href=\"./TestGroupName.html?back=./Tests.php\">Test Group Name from Product-Id</a>",
+				"Test Group Name","Test Getting Group Name from product-id"],
     ["<a href=\"./testMissPayment.php?back=./Tests.php\">Credit Card Rejected</a>","Credit Card Doesn't Renew","Simulate Thrivecart Rebill Failed"],
     ];
 

@@ -44,11 +44,12 @@ try
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css"/>
   <LINK REL="stylesheet" HREF="_css/jquery.dataTables_themeroller.css" />
   <!-- link rel="stylesheet" href="_css/jquery.tablesorter.pager.css" / -->
-	<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+  <LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
+	<LINK REL="stylesheet" HREF="_css/hamburger.css" id="styleid"/>
      <script type="text/javascript" class="init">
         var oTable;
         var json;
@@ -86,6 +87,10 @@ try
 	    <div class="content">
             <div id="page" >
                 <div class="title">Add Contact Note</div>
+                <center>
+                <h2>This page is under Construction</h2>
+                <h3>The Contact email and note need to be added to the form</h3>
+              </center>
                 <hr/>
 								<div id='info-img'></div>
 								<div id='back'>
@@ -131,7 +136,6 @@ try
 	<div id="dlg-buttons">
 	    <div id="sql_buttons" class="show-sql">
 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
 	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
 	</div>
