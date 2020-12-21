@@ -122,7 +122,7 @@ switch( $event ) {
       {
         if( $current_productid != $resumming_productid ) // e.g. 13 != 29 T
         {
-          $result = "Failed: Subscription_resume requested for $resumming_productid, but subscription is for $current_productid";
+          $result = "Failed: Subscription_resumed requested for $resumming_productid, but subscription is for $current_productid";
         }
         else
         {
@@ -130,7 +130,7 @@ switch( $event ) {
         }
       }
     }
-    logit($email,$json_data, "Subscription_resume, result: $result");
+    logit($email,$json_data, "Subscription_resumed, result: $result");
     break;
   case 'affiliate.commission_refund':
     logit($email, $json_data, "affiliate.commission_refund");

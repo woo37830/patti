@@ -77,7 +77,7 @@ require('fancyAuthentication.php');
 		<div class="ftitle">Account Information</div>
 		<form id="fm" method="post" novalidate>
 			<input type='hidden' name="thrivecart_secret" value="IEYDASLZ8FR7" />
-			<input type='hidden' name="event" value='order.subscription_resume' />
+			<input type='hidden' name="event" value='order.subscription_resumed' />
 			<input type='hidden' name="invoice_id" value="123" />
 			<div class="fitem">
 			<label for="email">Email:</label>
