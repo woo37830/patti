@@ -140,18 +140,17 @@ function supportCenter(menuObj)
 	document.location.href='http://www.blivenow.com/live/352187325499';
 }
 
-function editPrefs( user ){
+function editPrefs( ){
     $('#dlg').dialog('open').dialog('setTitle','Edit Prefs');
     $('#fm').form('load',{
         user: 'woo',
         skin: 'preferred',
         logo: 'green_logo.gif'
     });
-    url = './update_prefs.php?user='+user;
 }
 function savePrefs(){
   $('#fm').form('submit',{
-    url: url,
+    url: './update_prefs.php',
     onSubmit: function(){
       return $(this).form('validate');
     },
@@ -165,10 +164,8 @@ function savePrefs(){
         });
       } else {
         alert('Success: ' + JSON.stringify(result));
-        $('#dlg').dialog('close');		// close the dialog
-        //$("#users").dataTable()._fnAjaxUpdate();
-        //oTable.ajax.reload(null, false);
-                }
+        $('#dlg').dialog('close');		// close the dialoG
+      }
     }
   });
 }
@@ -210,7 +207,7 @@ function savePrefs(){
             <table border="0" cellPadding="2" cellSpacing="4">
               <tr>
                 <td CLASS="labelStyle" nowrap>User:</td>
-                <td CLASS="fieldStyle" nowrap ONCLICK="editPrefs();">woo</td>
+                <td CLASS="fieldStyle" nowrap ONCLICK="editPrefs();"><? echo $_SESSION['loggedIn']?></td>
                 <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" title="Home" src="./_images/Home.gif" width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="News" alt="News" src="./_images/News.gif" width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Support" alt="Support" src="./_images/support.gif"  width="27" height="25"></td>
@@ -232,3 +229,23 @@ function savePrefs(){
 
   </tr>
 </table>
+<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
+    closed="true" buttons="#dlg-buttons">
+  <div class="ftitle">User Preferences</div>
+  <form id="fm" method="post" novalidate>
+    <div class="fitem">
+    <label for="skin">Skin:</label>
+    <input class="easyui-textbox" name="default" required="true">
+    </div>
+    <div class="fitem">
+    <label for="logo">Logo:</label>
+    <input class="easyui-textbox" name="GreenFron" required="true">
+    </div>
+  </form>
+</div>
+<div id="dlg-buttons">
+    <div id="sql_buttons" class="show-sql">
+  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destroy" onclick="savePrefs()" style="width:90px">Save</a>
+   </div>
+  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+</div>

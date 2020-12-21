@@ -75,29 +75,6 @@ require('fancyAuthentication.php');
      <input type='submit' id='sub_btn' name='submit' value='Logout'  />
    </form>
  </div>
- <div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
-     closed="true" buttons="#dlg-buttons">
-   <div class="ftitle">Preferences</div>
-   <form id="fm" method="post" novalidate>
-     <div class="fitem">
-       <label for="user">User:</label>
-       <input name="user" class="easyui-textbox" required="true">
-     </div>
-     <div class="fitem">
-       <label for="skin">Skin:</label>
-       <input name="skin" class="easyui-textbox" required="true">
-     </div>
-     <div class="fitem">
-       <label for="logo">Logo:</label>
-       <input name="logo" class="easyui-textbox">
-     </div>
-   </form>
- </div>
- <div id="dlg-buttons">
-     <div id="sql_buttons" class="show-sql">
-   <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="savePrefs()" style="width:90px">Save</a>
-   <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
- </div>
 
 </body>
 </html>
