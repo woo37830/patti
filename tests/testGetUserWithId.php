@@ -4,8 +4,8 @@
 
 function getAUser( $id )
 {
-  require 'config.ini.php';
-  require 'mysql_common.php';
+  require '../web/config.ini.php';
+  require '../webhook/mysql_common.php';
 
   $dbase = $config['PATTI_DATABASE'];
 
