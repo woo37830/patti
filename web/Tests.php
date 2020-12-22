@@ -25,7 +25,6 @@ require('fancyAuthentication.php');
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
 	<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
-	<LINK REL="stylesheet" HREF="_css/hamburger.css" id="styleid"/>
 	<script type="text/javascript" class="init">
     var dataSet = [
     ["<a href=\"../web/testNewAccount.php?back=./Tests.php\">New Account</a>",

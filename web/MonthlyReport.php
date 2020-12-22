@@ -227,7 +227,6 @@ while( $row = $rows->fetch_assoc() ) {
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
 	<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
 	<LINK REL="stylesheet" HREF="_css/home.css" id="styleid"/>
-	<LINK REL="stylesheet" HREF="_css/hamburger.css" id="styleid"/>
      <script type="text/javascript" class="init">
         var oTable;
         var json;
@@ -290,18 +289,14 @@ while( $row = $rows->fetch_assoc() ) {
     <div class="wrapper">
 	    <div class="content">
             <div id="page" >
-                <div class="title">Montyly Report</div>
+                <div class="title">Monthly Report</div>
                 <hr/>
 								<div id='info-img'></div>
 								<div id='back'>
 									<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
 								</div>
 								<div id='info-div'>Produce a monthly report with the option of selecting the month and year.</div>
-								<table id="users" class="tablesorter" width="95%"></table>
-                <div id="toolbar" >
-                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
-                </div>
-	    		</div> <!-- end of page -->
+		    		</div> <!-- end of page -->
 					<form action="" method="post">
 					Month(e.g. 6): <input type="text" name="month"><br /><br />
 					<input type="submit" name="submit" value="Submit">
