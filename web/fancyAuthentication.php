@@ -141,12 +141,7 @@ function supportCenter(menuObj)
 }
 
 function editPrefs( ){
-    $('#dlg').dialog('open').dialog('setTitle','Edit Prefs');
-    $('#fm').form('load',{
-        user: 'woo',
-        skin: 'preferred',
-        logo: 'green_logo.gif'
-    });
+    document.location.href = './userPrefs.php?back=./index.php';
 }
 function savePrefs(){
   $('#fm').form('submit',{
@@ -193,7 +188,7 @@ function savePrefs(){
            <a href="./maintain_accounts.php">Accounts</a> |
            <a href="./maintain_users.php">Users</a> |
            <a href="./MonitorLogs.php">Logs</a> |
-           <a href="./MonthlyReport.php">Report</a> |
+           <a href="./Monthly_Report.php">Report</a> |
            <a href="./Tests.php">Tests</a>
          </td>
          <td align="right" valign="middle" bgcolor="#9999CC">
@@ -222,23 +217,3 @@ function savePrefs(){
 
   </tr>
 </table>
-<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
-    closed="true" buttons="#dlg-buttons">
-  <div class="ftitle">User Preferences</div>
-  <form id="fm" method="post" novalidate>
-    <div class="fitem">
-    <label for="skin">Skin:</label>
-    <input class="easyui-textbox" name="default" required="true">
-    </div>
-    <div class="fitem">
-    <label for="logo">Logo:</label>
-    <input class="easyui-textbox" name="GreenFron" required="true">
-    </div>
-  </form>
-</div>
-<div id="dlg-buttons">
-    <div id="sql_buttons" class="show-sql">
-  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destroy" onclick="savePrefs()" style="width:90px">Save</a>
-   </div>
-  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
-</div>

@@ -27,9 +27,9 @@ require('fancyAuthentication.php');
   <script type="text/javascript" class="init">
     var dataSet = [
     [ "<a href=\"../webhook/documentation/technical.pdf\">Technical Manual</a>",
-      "System Architect", "Update"],
+      "System Architect", "Update docs"],
     ["<a href=\"../webhook/documentation/webhost.pdf\">Webhost Installation</a>",
-      "Get a monthly report","Move to web dir and update Look and Feel"]
+      "How to install application","Update docs"]
     ];
 
      var oTable;
