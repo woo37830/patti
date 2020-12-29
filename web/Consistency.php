@@ -33,7 +33,7 @@ require('fancyAuthentication.php');
  		</div> <!-- end of error-div -->
   <h1>EngagemoreCRM Consistency Report</h1>
 	<div id="debug"></div>
-	<div id="info"></div>
+	<div id="info-div">This report shows the accounts not in the users table and also the users that don't have accounts.</div>
 	<div id='wrapper'>
 	<div id='content'>
   <div id='page'>

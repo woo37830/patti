@@ -70,15 +70,7 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
 									]
 						});
 
-						$("#info-img").click(function() {
-								var $messageDiv = $('#info-div'); // get the reference of the div
-								$messageDiv.slideDown(function() {
-										$messageDiv.css("visibility", "visible"); // show and set the message
-										setTimeout(function() {
-												$messageDiv.slideUp();
-										}, 20000);
-								});
-							});
+
               $(document).on('click','#users tbody tr',function() {
                   var row = $(this).closest("tr");
                   editAccount($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text());
@@ -99,18 +91,6 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
 					}
 				});
 
-			function goBack()
-			{
-				if( parameters.get('back') != null )
-				{
-					window.location = parameters.get('back');
-				}
-				else
-				{
-					window.location = "./index.php";
-				}
-			}
-      var parameters = new URLSearchParams(window.location.search);
       function editAccount( time, email, crm){
         if (email){
           $('#dlg').dialog('open').dialog('setTitle','Edit Account');
@@ -129,17 +109,15 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
 	    <div class="content">
             <div id="page" >
                 <div class="title">Monthly Report </div>
-                <hr/>
+                <div>
+                <div id='info-div'>Provide a report of the Monthly Activity</div>
+            <hr/>
 								<center><form action="" method="post">
 								Month(e.g. 6): <input id='month' type="text" name="month" value="">
 								<input type="submit" name="submit" value="Submit">
 								</form>
 							</center>
-								<div id='info-img'></div>
-								<div id='back'>
-									<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
-								</div>
-							<div id='info-div'>This is where you put a description of what this page does and how to use it.</div>
+            </div>
               <div class="easyui-tabs" style="width:90%;height:80%">
                 <div title="New Users" class="tablesorter" width="95%" class="tab">
                   <h1>New Users</h1>
