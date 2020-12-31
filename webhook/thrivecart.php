@@ -53,7 +53,7 @@ if( empty( $event ) ) {
   logit("INVALID", $json_data, "No event provided");
    die('No event provided');
 }
-$log->lwrite("$email,$json_data");
+//$log->lwrite("$email,$json_data");
 
 //$email = get_email_from_rfc_email($email);
 switch( $event ) {
