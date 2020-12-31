@@ -57,6 +57,7 @@ var	normalFColor = "#000000";
 
 //comma delimited list of chosen item values
 var     str = "";
+var parameters = new URLSearchParams(window.location.search);
 
 //Highlight a menu tab
 function mouseOver_Color(myObj)
@@ -210,7 +211,7 @@ function savePrefs(){
                 <td CLASS="fieldStyle" nowrap ONCLICK="editPrefs();"><? echo $_SESSION['loggedIn']?></td>
                 <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" title="Home" src="./_images/Home.gif" width="27" height="25"></td>
                 <td ONCLICK="goBack();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Prev" alt="Prev" src="./_images/previous.gif" width="27" height="25"></td>
-                <td ONCLICK="showInfo(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Info" alt="Info" src="./_images/icon_question.gif"  width="27" height="25"></td>
+                <td id='info-img' ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Info" alt="Info" src="./_images/icon_question.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Site Map" alt="Site Map" src="./_images/sitemap.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Products" alt="Products" src="./_images/products.gif"  width="27" height="25"></td>
                 <td ONCLICK="logout();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Log Out" src="./_images/logout.gif"  title="Log Out" width="27" height="25"></td>

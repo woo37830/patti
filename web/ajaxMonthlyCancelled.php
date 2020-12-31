@@ -1,6 +1,6 @@
 <?php
 
-function getCancelledUsers($mon) {
+function getCancelledUsers($mon,$year) {
 	require 'config.ini.php';
 	require_once 'conn.php';
 	//$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
@@ -12,9 +12,12 @@ function getCancelledUsers($mon) {
 		$datetime = date_create()->format('Y-m-d H:i:s');
 		$table = $config['PATTI_LOG_TABLE'];
 		$users = $config['PATTI_USERS_TABLE'];
-		$sql = "SELECT t.email, u.engagemoreid, received,MONTH(received)  FROM $table t "
+		$sql = "SELECT email, engagemoreid, invoiceid, product, added,MONTH(added),YEAR(added)  as 'added. MONTH' " .
+			"FROM `$table` WHERE MONTH(added) =  " . $mon . " AND YEAR(added) = ". $year . " AND status = 'active'";
+
+		$sql = "SELECT t.email, u.engagemoreid, received,MONTH(received),YEAR(received)  FROM $table t "
 		. " JOIN $users u ON u.email = t.email "
-		. " WHERE MONTH(received) =  " . $mon . " AND t.status LIKE '%Subscription_cancelled, result: Succeeded%'";
+		. " WHERE MONTH(received) =  " . $mon . " AND YEAR(added) = ". $year . " AND t.status LIKE '%Subscription_cancelled, result: Succeeded%'";
 
 		$rs = $conn -> query( $sql );
 
@@ -31,10 +34,13 @@ function getCancelledUsers($mon) {
 
 	return $items;
 }
-$mon = isset($_REQUEST['month']) ? intval($_REQUEST['month']) : (int)date("m");
 
 $results = array();
+$mon = isset($_REQUEST['month']) ? intval($_REQUEST['month']) : (int)date("m");
+$year = isset($_REQUEST['year']) ? intval($_REQUEST['year']) : (int)date("Y");
+$results = array();
 $result["month"] = $mon;
-$result["data"] = getCancelledUsers($mon);
+$result["year"] = $year;
+$result["data"] = getCancelledUsers($mon, $year);
 echo json_encode($result);
 ?>

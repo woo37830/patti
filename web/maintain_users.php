@@ -69,7 +69,12 @@ require('fancyAuthentication.php');
 	    <div class="content">
             <div id="page" >
                 <div class="title">EngagemoreCRM Users</div>
+								<div id="messages">
+									<div id="message"></div>
+									<div id="error_div"></div>
+								</div>
                 <hr/>
+								<div id='info-div'>This page provides a list of users and allows editing their entries.</div>
 	              <table id="users" class="tablesorter"></table>
                 <div id="toolbar" >
                     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>

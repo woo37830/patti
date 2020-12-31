@@ -46,15 +46,6 @@ require('fancyAuthentication.php');
 								{ data: "status", title: "Status" }
             ]
             });
-						$("#info-img").click(function() {
-								var $messageDiv = $('#info-div'); // get the reference of the div
-								$messageDiv.slideDown(function() {
-										$messageDiv.css("visibility", "visible"); // show and set the message
-										setTimeout(function() {
-												$messageDiv.slideUp();
-										}, 20000);
-								});
-							});
             /*setInterval( function() {
                 oTable.ajax.reload(null, false);
             }, 30000 );*/
@@ -71,15 +62,6 @@ require('fancyAuthentication.php');
 						$('#footer-div').append(data);
 				}
 			});
-			function goBack()
-			{
-				if( parameters.get('back') != null ) {
-				window.location = parameters.get('back');
-			} else {
-					window.location = "./index.php";
-				}
-			}
-			var parameters = new URLSearchParams(window.location.search);
 		</script>
 </head>
 <body>
@@ -87,12 +69,12 @@ require('fancyAuthentication.php');
 	    <div class="content">
             <div id="page" >
                 <div class="title">Monitor Server Logs</div>
-                <hr/>
-								<div id='info-img'></div>
-								<div id='back'>
-									<a href="javascript:void(0)" class="easyui-linkbutton" [plain]="true" iconCls="icon-back" onclick="goBack()" style="width:90px">Back</a>
+								<div id="messages">
+									<div id="message"></div>
+									<div id="error_div"></div>
 								</div>
-								<div id='info-div'>This page allows the user to examine the database logs and look at the request data via the json-data.log file.</div>
+                <hr/>
+									<div id='info-div'>This page allows the user to examine the database logs and look at the request data via the json-data.log file.</div>
 								<table id="logs" class="tablesorter" width="95%"></table>
   	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
