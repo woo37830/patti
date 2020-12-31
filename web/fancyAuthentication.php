@@ -78,6 +78,8 @@ function disabledMenuClick(menuObj)
 	alert('This function is not available.');
 }
 
+var parameters = new URLSearchParams(window.location.search);
+
 function isDirty()
 {
   return false;
@@ -100,14 +102,23 @@ function logout()
   link.click();
 }
 
-function showTaskList(menuObj)
+function goBack(menuObj)
 {
 	if (isDirty())
 	{
 		alert("The data you entered has not been saved. You must save or cancel to continue.");
 		return;
 	}
-	document.location.href = 'dispatcher?event=startProcess&app=HR&process=Home';
+
+  if( parameters.get('back') != null )
+  {
+    window.location = parameters.get('back');
+  }
+  else
+  {
+    window.location = "./index.php";
+  }
+
 }
 
 function showBugList(menuObj)
@@ -130,23 +141,19 @@ function showNoteList(menuObj)
 	document.location.href = 'dispatcher?event=startProcess&app=Notes&process=NoteTracker';
 }
 
-function supportCenter(menuObj)
+function showInfo(menuObj)
 {
-	if (isDirty())
-	{
-		alert("The data you entered has not been saved. You must save or cancel to continue.");
-		return;
-	}
-	document.location.href='http://www.blivenow.com/live/352187325499';
+  var state = document.getElementById('info-div').style.display; // get the reference of the div
+  if (state == 'block') {
+        document.getElementById('info-div').style.display = 'none';
+    } else {
+        document.getElementById('info-div').style.display = 'block';
+    }
 }
 
+
 function editPrefs( ){
-    $('#dlg').dialog('open').dialog('setTitle','Edit Prefs');
-    $('#fm').form('load',{
-        user: 'woo',
-        skin: 'preferred',
-        logo: 'green_logo.gif'
-    });
+    document.location.href = './userPrefs.php?back=./index.php';
 }
 function savePrefs(){
   $('#fm').form('submit',{
@@ -186,14 +193,14 @@ function savePrefs(){
             </tr>
            </table>
          </td>
-         <td height="35" valign="center">
+         <td valign="middle">
            <a href="./index.php">Home</a> |
            <a href="./about.php">About</a> |
            <a href="./Consistency.php"></i>Sync</a> |
            <a href="./maintain_accounts.php">Accounts</a> |
            <a href="./maintain_users.php">Users</a> |
            <a href="./MonitorLogs.php">Logs</a> |
-           <a href="./MonthlyReport.php">Report</a> |
+           <a href="./Monthly_Report.php">Report</a> |
            <a href="./Tests.php">Tests</a>
          </td>
          <td align="right" valign="middle" bgcolor="#9999CC">
@@ -202,8 +209,8 @@ function savePrefs(){
                 <td CLASS="labelStyle" nowrap>User:</td>
                 <td CLASS="fieldStyle" nowrap ONCLICK="editPrefs();"><? echo $_SESSION['loggedIn']?></td>
                 <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" title="Home" src="./_images/Home.gif" width="27" height="25"></td>
-                <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="News" alt="News" src="./_images/News.gif" width="27" height="25"></td>
-                <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Support" alt="Support" src="./_images/support.gif"  width="27" height="25"></td>
+                <td ONCLICK="goBack();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Prev" alt="Prev" src="./_images/previous.gif" width="27" height="25"></td>
+                <td ONCLICK="showInfo(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Info" alt="Info" src="./_images/icon_question.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Site Map" alt="Site Map" src="./_images/sitemap.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Products" alt="Products" src="./_images/products.gif"  width="27" height="25"></td>
                 <td ONCLICK="logout();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Log Out" src="./_images/logout.gif"  title="Log Out" width="27" height="25"></td>
@@ -222,23 +229,3 @@ function savePrefs(){
 
   </tr>
 </table>
-<div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
-    closed="true" buttons="#dlg-buttons">
-  <div class="ftitle">User Preferences</div>
-  <form id="fm" method="post" novalidate>
-    <div class="fitem">
-    <label for="skin">Skin:</label>
-    <input class="easyui-textbox" name="default" required="true">
-    </div>
-    <div class="fitem">
-    <label for="logo">Logo:</label>
-    <input class="easyui-textbox" name="GreenFron" required="true">
-    </div>
-  </form>
-</div>
-<div id="dlg-buttons">
-    <div id="sql_buttons" class="show-sql">
-  <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destroy" onclick="savePrefs()" style="width:90px">Save</a>
-   </div>
-  <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
-</div>
