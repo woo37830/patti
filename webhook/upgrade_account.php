@@ -21,9 +21,6 @@ if ($results_xml === false) {
 //  http_response_code(400);
 	exit;
 }
-if (isset($results_xml->message)) {
-  logit($email,$json_data,"Upgrade result: $results_xml->message");
-}
 /**
  * If an API error has occurred, the results object will contain a child 'error'
  * SimpleXMLElement parsed from the error response:
