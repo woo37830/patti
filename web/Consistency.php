@@ -27,12 +27,13 @@ require('fancyAuthentication.php');
 </head>
 <body>
 	 <center>
-		 <div id="error-div">
- 		    <!-- if (request.getParameter( "_error" ) != null)
- 		        {%> <%=request.getParameter( "_error" )%> <% }% -->
- 		</div> <!-- end of error-div -->
   <h1>EngagemoreCRM Consistency Report</h1>
-	<div id="debug"></div>
+	<div id="messages">
+		<div id="debug"></div>
+		<div id="message"></div>
+		<div id="error-div">
+	 	</div> <!-- end of error-div -->
+	</div>
 	<div id="info-div">This report shows the accounts not in the users table and also the users that don't have accounts.</div>
 	<div id='wrapper'>
 	<div id='content'>
@@ -43,9 +44,6 @@ var oTable;
 var json;
 var k = 0;
 	$(document).ready(function() {
-		$("#error-div").css("visibility", "visible"); // show and set the error
-		$("#error-div").text("");
-
 			oTable = $('#accounts').DataTable({
 			processing: true,
 			bStateSave: true,
@@ -98,13 +96,6 @@ $(document).on('click','#users tbody tr',function() {
 		addUser($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text(),$(row).find("td:nth-child(4)").text(), $(row).find("td:nth-child(5)").text(), $(row).find("td:nth-child(6)").text(),  $(row).find("td:nth-child(7)").text());
 });
 
-	function showError(message)
-	{
-		$('#error-div').append(message);
-		setTimeout( function() {
-			$('#error-div').fadeOut('fast');
-		}, 3000);
-	}
 
 $.ajax({
 	url: "./git-info.php",

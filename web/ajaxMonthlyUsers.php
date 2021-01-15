@@ -1,6 +1,6 @@
 <?php
 
-function getMonthlyUsers($mon) {
+function getMonthlyUsers($mon, $year) {
 	require 'config.ini.php';
 	require_once 'conn.php';
 	//$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
@@ -11,8 +11,8 @@ function getMonthlyUsers($mon) {
 	{
 		$datetime = date_create()->format('Y-m-d H:i:s');
 		$table = $config['PATTI_USERS_TABLE'];
-		$sql = "SELECT email, engagemoreid, invoiceid, product, added,MONTH(added)  as 'added. MONTH' " .
-			"FROM `$table` WHERE MONTH(added) =  " . $mon . " AND status = 'active'";
+		$sql = "SELECT email, engagemoreid, invoiceid, product, added,MONTH(added),YEAR(added)  as 'added. MONTH' " .
+			"FROM `$table` WHERE MONTH(added) =  " . $mon . " AND YEAR(added) = ". $year . " AND status = 'active'";
 
 		$rs = $conn -> query( $sql );
 
@@ -29,10 +29,11 @@ function getMonthlyUsers($mon) {
 
 	return $items;
 }
-$mon = isset($_REQUEST['mon']) ? intval($_REQUEST['mon']) : (int)date("m");
-
+$mon = isset($_REQUEST['month']) ? intval($_REQUEST['month']) : (int)date("m");
+$year = isset($_REQUEST['year']) ? intval($_REQUEST['year']) : (int)date("Y");
 $results = array();
 $result["month"] = $mon;
-$result["data"] = getMonthlyUsers($mon);
+$result["year"] = $year;
+$result["data"] = getMonthlyUsers($mon, $year);
 echo json_encode($result);
 ?>

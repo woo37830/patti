@@ -36,6 +36,17 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
         var json;
         $(document).ready(function()
 				{
+          $('#month_select option').each(function() {
+            if($(this).val() == parameters.get('month')) {
+              $(this).prop("selected", true);
+            }
+          });
+          $('#year_select option').each(function() {
+            if($(this).val() == parameters.get('year')) {
+              $(this).prop("selected", true);
+            }
+          });
+
             oTable = $('#users').DataTable(
 						{
 	            processing: true,
@@ -43,7 +54,7 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
 	            ajax:
 							{
 	                url: "./ajaxMonthlyUsers.php",
-	                dataSrc: "data"
+	                dataSrc: "data",
 	            },
 	            columns: [
 									{ data: "added", title: "Added" },
@@ -69,7 +80,6 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
               { data: "engagemoreid", title: "EngagemoreID"}
 									]
 						});
-
 
               $(document).on('click','#users tbody tr',function() {
                   var row = $(this).closest("tr");
@@ -109,11 +119,35 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
 	    <div class="content">
             <div id="page" >
                 <div class="title">Monthly Report </div>
+                <div id="messages">
+									<div id="message"></div>
+									<div id="error_div"></div>
+								</div>
                 <div>
                 <div id='info-div'>Provide a report of the Monthly Activity</div>
             <hr/>
 								<center><form action="" method="post">
-								Month(e.g. 6): <input id='month' type="text" name="month" value="">
+								<select name='month' id='month_select'>
+                  <option value='1'>Jan</option>
+                  <option value='2'>Feb</option>
+                  <option value='3'>Mar</option>
+                  <option value='4'>Apr</option>
+                  <option value='5'>May</option>
+                  <option value='6'>Jun</option>
+                  <option value='7'>Jul</option>
+                  <option value='8'>Aug</option>
+                  <option value='9'>Sep</option>
+                  <option value='10'>Oct</option>
+                  <option value='11'>Nov</option>
+                  <option value='12'>Dec</option>
+                </select>
+                <select name='year' id='year_select'>
+                  <option value='2018'>2018</option>
+                  <option value='2019'>2019</option>
+                  <option value='2020'>2020</option>
+                  <option value='2021'>2021</option>
+                  <option value='2022'>2022</option>
+                </select>
 								<input type="submit" name="submit" value="Submit">
 								</form>
 							</center>
