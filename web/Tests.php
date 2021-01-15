@@ -42,7 +42,8 @@ require('fancyAuthentication.php');
 		["<a href=\"./TestGroupName.html?back=./Tests.php\">Test Group Name from Product-Id</a>",
 				"Test Group Name","Test Getting Group Name from product-id"],
     ["<a href=\"./testMissPayment.php?back=./Tests.php\">Credit Card Rejected</a>","Credit Card Doesn't Renew","Simulate Thrivecart Rebill Failed"],
-    ];
+    ["<a href=\"./testAddTwillioPhoneNumberToAccount.php?back=./Tests.php\">Add Twillio Number To Account</a>","Add Number", "Add number in form +1NNNMMM9999"],
+		];
 
      var oTable;
      var json;
