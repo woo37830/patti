@@ -113,10 +113,13 @@ $url = 'https://secure.engagemorecrm.com/api/2/AddExistingPhoneNumber.aspx';
 						alert('Error: ' + JSON.stringify(result));
 						$.messager.show({
 							title: 'Error',
-							msg: result.errorMsg
+							msg: "Failure to add number"
+							//msg: result.errorMsg
 						});
 					} else {
-						alert(JSON.stringify(result));
+						//$results_xml = simplexml_load_string($result_xml_string);
+						//alert(JSON.stringify(result));
+						alert("Success");
 						$('#dlg').dialog('close');		// close the dialog
           }
 				}
