@@ -17,5 +17,6 @@ $products = array( "product-9" => "RE - BUZZ ($69)",
 								   "product-49" => "TNT SPEARMAN REALTYONE- GROWTH DEFAULT",
 								   "product-50" => "TNT SPEARMAN REALTYONE- BUZZ DEFAULT",
 								   "product-51" => "TNT SPEARMAN REALTYONE- BUZZ DEFAULT",
-								   "product-52" => "TNT SPEARMAN REALTYONE- TRIAL DEFAULT");
+								   "product-52" => "TNT SPEARMAN REALTYONE- TRIAL DEFAULT",
+									 "product-53" => "RE - IMPACT ($99)");
 ?>
