@@ -145,21 +145,26 @@ switch( $event ) {
     echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'cart.abandoned':
+    $source = 'cart.abandoned';
+    $agentId = '2172';
     $today = date("D M j G:i:s T Y");
-    $from = "jwooten37830@icloud.com";
-    $to = "cart_abandoned@gmail.com";
-    $messageId = $today;
-    $subject = "Cart Abandoned by: $email";
     $arr = json_decode($json_data);
     $base_product_label = $arr->base_product_label;
     $name = $arr->viewer->name;
+    $thePieces = explode(" ", $name);
+    if( sizeof($thePieces) == 2 )
+    {
+      $firstName = $thePieces[0];
+      $lastName = $thePieces[1];
+    } else {
+      $firstName = "Made Up";
+      $lastName = "Ditto";
+    }
     $viewer_email = $arr->viewer->email;
+    echo "cart.abandoned by $email with name: $name, view_email: $viewer_email, base_product: $base_product_label<br />";
   //  $confirmation = $arr->viewer->checkbox_confirmation;
-    $message = "$name abandoned cart at $base_product_label, email is: $viewer_email";
-    $attachmentLog = $json_data;
-    $postArray = "The complete <a >data</a> received in the request";
-    $result = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-    //echo "Result of cart.abandoned addContactNote was: $result " . "<br />";
+    $result = addContact($today, $agentId, $firstName, $lastName, $email,$source);
+    echo "Result of cart.abandoned addContact was: $result " . "<br />";
     break;
   default:
     logit($email, $json_data, "Invalid event- $event");

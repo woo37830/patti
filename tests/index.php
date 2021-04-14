@@ -69,7 +69,8 @@ footer
   <tr><td><a href="./GetAllAccounts.php">Listing/Edit Accounts</a></td><td>Maintain Engagemore Accounts</td><td></td></tr>
   <tr><td><a href="./GetAllUsers.php">Maintain User Table</a></td><td>List, Update, delete users_db.users</td><td>Add DataTables and nav at top and new user</td></tr>
   <tr><td><a href="./Consistency.php">Consistency Report</a></td><td>Check for extra or missing account information,csv files to tmp</td><td>Add check for order id, etc., Add links to Update User</td></tr>
-  <tr><td><a href="./testAddContact.php">Add Contact</a></td><td>Add a contact to an account</td><td>Style info?</td></tr>
+  <tr><td><a href="./testAddContactByEmail.php">Add Contact Using Email</a></td><td>Add a contact to an account</td><td>Style info?</td></tr>
+  <tr><td><a href="./testAddContact.php">Add Contact as from Abandon Cart</a></td><td>Add a contact to an account</td><td>Style info?</td></tr>
   <tr><td>Add Contact Note</td><td>Create a note and add it to a contact</td><td>Working with login</td></tr>
   <tr><td>GetContact</td><td>Get a contact using their email</td><td>Add login</td></tr>
   <tr><td>Get Contacts</td><td>Get the list of contacts for an account</td><td>Add login and links to Add Contact Note</td></tr>

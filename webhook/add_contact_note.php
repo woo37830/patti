@@ -48,7 +48,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
 {
   require '../webhook/config.ini.php';
   require_once '../webhook/thrivecart_api.php';
-  require_once '../webhook/add_contact.php';
+  require_once '../webhook/add_contactFromEmail.php';
   require_once '../webhook/get_contact.php';
   require_once '../webhook/mysql_common.php';
   require_once '../webhook/utilities.php';
@@ -120,7 +120,7 @@ try {
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
       //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
-      $contactId = addContact($today, $from_email_address, $to_email_address); // Use full to get first and last
+      $contactId = addContactFromEmail($today, $from_email_address, $to_email_address); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
       //  echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";

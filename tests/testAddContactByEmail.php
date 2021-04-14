@@ -51,7 +51,7 @@ footer
   <br />
   <h1>Add Contact</h1>
 <?php
-require '../webhook/add_contact.php';
+require '../webhook/add_contactByEmail.php';
 require '../webhook/config.ini.php';
 require '../webhook/mysql_common.php';
 require '../webhook/utilities.php';
@@ -60,24 +60,21 @@ $today = date("D M j G:i:s T Y");
 
 echo "<center>$today<br /><hr />";
 if(isset($_POST['submit'])){
-    $firstName = trim($_POST['first']);
-    $lastName = trim($_POST['last']);
-    $email = trim($_POST['email']);
-    $agent = trim($_POST['agent']);
-    $source = trim($_POST['source']);
-    $result = addContact($today, $firstName, $lastName, $email, $source);
-    echo "<br />Result addedContact $email to $agent: <br />Contact ID: $result <br />\n";
-
+    $from = trim($_POST['email']);
+    $new_contact = trim($_POST['contact']);
+    if( strlen($from) > 0 && strlen($new_contact) > 0 && account_exists($from) ) {
+        $result = addContactByEmail($today, $from, $new_contact);
+        echo "<br />Result addedContact $new_contact to $from: <br />Contact ID: $result <br />\n";
+    } else {
+        echo "<br />You must provide an account and a contact email!<br />";
+    }
 }
 ?>
   <hr />
   <br />
 <form action="" method="post">
-First Name: <input type="text" name="first"><br />
-Last Name: <input type="text" name="last"><br />
-Email: <input type="text" name="email"><br />
-Agent: <input type="text" name="agent"><br />
-Source: <input type="text" name="source"><br />
+Account Email: <input type="text" name="email"><br />
+Contact Email: <input type="text" name ="contact"><br /><br />
 <input type="submit" name="submit" value="Submit">
 </form>
 <br /><br /><a href='index.php' />Home</a>
@@ -87,7 +84,7 @@ Source: <input type="text" name="source"><br />
 <?php
   include '../webhook/git-info.php';
 ?>
-  <p>Last Update: 2021-04-14 15:47    <a href="mailto:jwooten37830@me.com?Subject=EngagemoreCRM%20Problem">webmaster</a>
+  <p>Last Update: 2020-03-13 11:07    <a href="mailto:jwooten37830@me.com?Subject=EngagemoreCRM%20Problem">webmaster</a>
   <!-- Footer end -->
 </footer>
 
