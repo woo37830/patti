@@ -84,7 +84,7 @@ switch( $event ) {
     }
     else
     {
-      if( $cancelling_productid == 'product-24' || $cancelling_productid == 'product-29' )
+/*      if( $cancelling_productid == 'product-24' || $cancelling_productid == 'product-29' )
       {
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
       }
@@ -95,15 +95,15 @@ switch( $event ) {
           $result = "Failed: Cancellation requested for $cancelling_productid, but subscription is for $current_productid";
         }
         else
-        {
+        { */
           $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
-        }
-      }
+//       }
+//      }
     }
     logit($email,$json_data, "Subscription_cancelled, result: $result");
     $theMessage = "Account $email has cancelled!";
 //    sendNotification($email,'Cancellation Notice',$theMessage);
-    echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
+//    echo "Received order.subscription_cancelled. result = $result<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'order.subscription_resumed':
     $resumming_productid = getProductId(); // e.g. 29
@@ -114,7 +114,7 @@ switch( $event ) {
     }
     else
     {
-      if( $resumming_productid == 'product-24' || $resumming_productid == 'product-29' )
+/*      if( $resumming_productid == 'product-24' || $resumming_productid == 'product-29' )
       {
         $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
       }
@@ -125,10 +125,10 @@ switch( $event ) {
           $result = "Failed: Subscription_resumed requested for $resumming_productid, but subscription is for $current_productid";
         }
         else
-        {
+        { */
           $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
-        }
-      }
+//        }
+//      }
     }
     logit($email,$json_data, "Subscription_resumed, result: $result");
     break;
