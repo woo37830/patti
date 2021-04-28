@@ -5,8 +5,10 @@ $location = "/patti/web/Monthly_Report.php";
 require('fancyAuthentication.php');
 $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
-if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
+if( isset($_REQUEST['month']) ) {
    $mon = (int)$_REQUEST['month'];
+} else {
+	alert("You must select a month!");
 }
 
 ?>
@@ -147,6 +149,7 @@ if( isset($_REQUEST['month']) && !isset($_POST['month'])) {
                   <option value='2020'>2020</option>
                   <option value='2021'>2021</option>
                   <option value='2022'>2022</option>
+                  <option value='2023'>2023</option>
                 </select>
 								<input type="submit" name="submit" value="Submit">
 								</form>
