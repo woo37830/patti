@@ -8,7 +8,7 @@ $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 if( isset($_REQUEST['month']) ) {
    $mon = (int)$_REQUEST['month'];
 } else {
-	alert("You must select a month!");
+	echo "You must select a month!";
 }
 
 ?>
