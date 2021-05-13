@@ -42,14 +42,12 @@ if( isset($_REQUEST['month']) ) {
             if($(this).val() == parameters.get('month')) {
               $(this).prop("selected", true);
               alert('this.val set to '+parameters.get('month'));
-              break;
             }
           });
           $('#year_select option').each(function() {
             if($(this).val() == parameters.get('year')) {
               $(this).prop("selected", true);
               alert('this.val set to '+parameters.get('year'));
-            break;
             }
           });
 
