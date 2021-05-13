@@ -10,10 +10,11 @@ $mon = (int)date("m");
 if( isset($_REQUEST['month']) ) {
    $mon = (int)$_REQUEST['month'];
 }
-$year = (int)date["y"]
+$year = (int)date['Y']
 if( isset($_REQUEST['year']) ) {
   $year = (int)$_REQUEST['year']
 }
+echo "<h1>Month: $mon, Year: $year</h1>"
 ?>
 <html>
 <!-- $Author: woo $   -->
@@ -41,18 +42,9 @@ if( isset($_REQUEST['year']) ) {
         var json;
         $(document).ready(function()
 				{
-          $('#month_select option').each(function() {
-            if($(this).val() == parameters.get('month')) {
-              $(this).prop("selected", true);
-              alert('month set to '+parameters.get('month'));
-            }
-          });
-          $('#year_select option').each(function() {
-            if($(this).val() == parameters.get('year')) {
-              $(this).prop("selected", true);
-              alert('year set to '+parameters.get('year'));
-            }
-          });
+          $("#month_select").val(parameters.get('month'));
+
+          $("#year_select").val(parameters.get('year'));
 
             oTable = $('#users').DataTable(
 						{
