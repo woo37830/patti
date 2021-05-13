@@ -10,9 +10,9 @@ $mon = (int)date("m");
 if( isset($_REQUEST['month']) ) {
    $mon = (int)$_REQUEST['month'];
 }
-$year = (int)date['Y']
+$year = (int)date('Y');
 if( isset($_REQUEST['year']) ) {
-  $year = (int)$_REQUEST['year']
+  $year = (int)$_REQUEST['year'];
 }
 echo "<h1>Month: $mon, Year: $year</h1>"
 ?>
@@ -42,7 +42,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var json;
         $(document).ready(function()
 				{
-          $("#month_select").val(parameters.get('month'));
+          $("#month_select").val(parameters.get('mon'));
 
           $("#year_select").val(parameters.get('year'));
 
