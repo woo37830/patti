@@ -43,13 +43,13 @@ echo "<h1>Month set to: $mon, and year set to $year</h1>"
         $(document).ready(function()
 				{
           $('#month_select option').each(function() {
-            if($(this).val() == document.getElementById('month_select_option').value) {
+            if($(this).val() == (int)parameters.get('month')) {
               $(this).prop("selected", true);
               alert('month set to '+parameters.get('month'));
             }
           });
           $('#year_select option').each(function() {
-            if($(this).val() == document.getElementById('year_select_option').value ) {
+            if($(this).val() == (int)parameters.get('year') ) {
               $(this).prop("selected", true);
               alert('year set to '+parameters.get('year'));
             }
