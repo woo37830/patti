@@ -5,10 +5,10 @@ $location = "/patti/web/Monthly_Report.php";
 require('fancyAuthentication.php');
 $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+$mon = (int)date("m");
+
 if( isset($_REQUEST['month']) ) {
    $mon = (int)$_REQUEST['month'];
-} else {
-	alert("You must select a month!");
 }
 
 ?>

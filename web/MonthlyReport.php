@@ -16,7 +16,7 @@ $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 $mon = (int)date("m");
 if(isset($_POST['submit']) && strlen($_POST['month']) > 0 ){
-    $mon = $_POST['month'];
+    $mon = (int)$_POST['month'];
   }
 $cr = "\n";
 $h1="";
