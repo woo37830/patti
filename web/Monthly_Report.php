@@ -42,9 +42,17 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var json;
         $(document).ready(function()
 				{
-          $("#month_select").val(parameters.get('mon'));
+          var _mon = parameters.get('mon');
+          if( typeof _mon === 'undefined' ) {
+            _mon = Date.getMonth()+1;
+          }
+          $("#month_select").val(_mon);
 
-          $("#year_select").val(parameters.get('year'));
+          var _year = parameters.get('year');
+          if( typeof _year === 'undefined' ) {
+            _year = Data.getYear();
+          }
+          $("#year_select").val(_year);
 
             oTable = $('#users').DataTable(
 						{
