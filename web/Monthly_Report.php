@@ -14,6 +14,7 @@ $year = (int)date["y"]
 if( isset($_REQUEST['year']) ) {
   $year = (int)$_REQUEST['year']
 }
+echo "<h1>Month set to: $mon, and year set to $year</h1>"
 ?>
 <html>
 <!-- $Author: woo $   -->
