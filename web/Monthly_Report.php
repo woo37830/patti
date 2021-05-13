@@ -10,7 +10,10 @@ $mon = (int)date("m");
 if( isset($_REQUEST['month']) ) {
    $mon = (int)$_REQUEST['month'];
 }
-
+$year = (int)date["y"]
+if( isset($_REQUEST['year']) ) {
+  $year = (int)$_REQUEST['year']
+}
 ?>
 <html>
 <!-- $Author: woo $   -->
@@ -39,15 +42,15 @@ if( isset($_REQUEST['month']) ) {
         $(document).ready(function()
 				{
           $('#month_select option').each(function() {
-            if($(this).val() == parameters.get('month')) {
+            if($(this).val() == document.getElementById('month_select_option').value) {
               $(this).prop("selected", true);
-              alert('this.val set to '+parameters.get('month'));
+              alert('month set to '+parameters.get('month'));
             }
           });
           $('#year_select option').each(function() {
-            if($(this).val() == parameters.get('year')) {
+            if($(this).val() == document.getElementById('year_select_option').value ) {
               $(this).prop("selected", true);
-              alert('this.val set to '+parameters.get('year'));
+              alert('year set to '+parameters.get('year'));
             }
           });
 
