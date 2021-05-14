@@ -21,7 +21,6 @@ function getMonthlyUsers($mon, $year) {
 		    //echo json_encode($row);
 			array_push($items, $row);
 		}
-		echo json_encode($items);
 	}
 	else {
 		echo json_encode(array('errorMsg'=>'Some errors occured.'));
