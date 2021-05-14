@@ -42,7 +42,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var json;
 
       //Check is string null or empty
-      isStringNullOrEmpty: function (val) {
+      function isStringNullOrEmpty(val) {
           switch (val) {
               case "":
               case 0:
@@ -57,12 +57,12 @@ echo "<h1>Month: $mon, Year: $year</h1>"
       };
 
       //Check is string null or whitespace
-      isStringNullOrWhiteSpace: function (val) {
+      function isStringNullOrWhiteSpace (val) {
           return this.isStringNullOrEmpty(val) || val.replace(/\s/g, "") === '';
       };
 
       //If string is null or empty then return Null or else original value
-      nullIfStringNullOrEmpty: function (val) {
+      function nullIfStringNullOrEmpty(val) {
           if (this.isStringNullOrEmpty(val)) {
               return null;
           }
