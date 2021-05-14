@@ -7,12 +7,12 @@ $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 $mon = (int)date("m");
 
-if( isset($_REQUEST['month']) ) {
-   $mon = (int)$_REQUEST['month'];
+if( isset($_POST['month']) ) {
+   $mon = (int)$_POST['month'];
 }
 $year = (int)date('Y');
-if( isset($_REQUEST['year']) ) {
-  $year = (int)$_REQUEST['year'];
+if( isset($_POST['year']) ) {
+  $year = (int)$_POST['year'];
 }
 echo "<h1>Month: $mon, Year: $year</h1>"
 ?>
@@ -81,13 +81,13 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           if( isStringNullOrEmpty(_mon) ) {
             _mon = Date.getMonth()+1;
           }
-          $("#month_select").val(_mon);
+          document.getElementById('month_select').options[_mon].selected=true;
 
           var _year = getUrlParameter('year');
           if( isStringNullOrEmpty(_year) ) {
             _year = Data.getYear();
           }
-          $("#year_select").val(_year);
+          document.getElementById('year_select').options[_year].selected=true;
 
             oTable = $('#users').DataTable(
 						{
