@@ -42,14 +42,43 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var json;
         $(document).ready(function()
 				{
+          _helpers: {
+        //Check is string null or empty
+        isStringNullOrEmpty: function (val) {
+            switch (val) {
+                case "":
+                case 0:
+                case "0":
+                case null:
+                case false:
+                case undefined:
+                case typeof this === 'undefined':
+                    return true;
+                default: return false;
+            }
+        },
+
+        //Check is string null or whitespace
+        isStringNullOrWhiteSpace: function (val) {
+            return this.isStringNullOrEmpty(val) || val.replace(/\s/g, "") === '';
+        },
+
+        //If string is null or empty then return Null or else original value
+        nullIfStringNullOrEmpty: function (val) {
+            if (this.isStringNullOrEmpty(val)) {
+                return null;
+            }
+            return val;
+        }
+    },
           var _mon = parameters.get('month');
-          if( typeof _mon === 'undefined' ) {
+          if( isStringNullOrEmpty(_mon) === 'undefined' ) {
             _mon = Date.getMonth()+1;
           }
           $("#month_select").val(_mon);
 
           var _year = parameters.get('year');
-          if( typeof _year === 'undefined' ) {
+          if( isStringNullOrEmpty(_year) === 'undefined' ) {
             _year = Data.getYear();
           }
           $("#year_select").val(_year);
