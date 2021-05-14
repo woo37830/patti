@@ -40,7 +40,8 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var oTable;
 				var pTable;
         var json;
-
+        document.getElementById('month_field').value = '<?=$_POST['month']?>';
+        document.getElementById('year_field').value =  '<?=$_POST['year']?>';
       //Check is string null or empty
       function isStringNullOrEmpty(val) {
           switch (val) {
@@ -77,17 +78,17 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         $(document).ready(function()
 				{
           var d = new Date();
-          var _mon = getUrlParameter('month');
+          var _mon = document.getElementById('month_field').value;
           if( isStringNullOrEmpty(_mon) ) {
             _mon = d.getMonth()+1;
-            document.getElementById('month_select').options[_mon].selected=true;
           }
+          document.getElementById('month_select').options[_mon].selected=true;
 
-          var _year = getUrlParameter('year');
+          var _year = document.getElementbyId('year_field').value;
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
-            document.getElementById('year_select').options[_year].selected=true;
           }
+          document.getElementById('year_select').options[_year].selected=true;
 
             oTable = $('#users').DataTable(
 						{
@@ -95,7 +96,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
 	            bStateSave: true,
 	            ajax:
 							{
-	                url: "./ajaxMonthlyUsers.php?month=$mon&year=$year",
+	                url: "./ajaxMonthlyUsers.php?month="+_mon+"&year="+_year,
 	                dataSrc: "data",
 	            },
 	            columns: [
@@ -113,7 +114,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
 							bStateSave: true,
 							ajax:
 							{
-									url: "./ajaxMonthlyCancelled.php?month=$mon&year=$year",
+									url: "./ajaxMonthlyCancelled.php?month="+_mon+"&year="+_year,
 									dataSrc: "data"
 							},
 							columns: [
@@ -168,6 +169,8 @@ echo "<h1>Month: $mon, Year: $year</h1>"
                 <div>
                 <div id='info-div'>Provide a report of the Monthly Activity</div>
             <hr/>
+                <input type='hidden' id='month_field' value=''></input>
+                <input type='hidden' id='year_field'  value=''></input>
 								<center><form action="" method="post">
 								<select name='month' id='month_select'>
                   <option value='1'>Jan</option>
