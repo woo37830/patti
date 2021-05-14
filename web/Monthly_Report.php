@@ -78,7 +78,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           var d = new Date();
           var _mon = document.getElementById('_mon').value;
           if( isStringNullOrEmpty(_mon) ) {
-            _mon = d.getMonth()+1;
+            _mon = d.getMonth();
           }
           document.getElementById('month_select').options[_mon].selected=true;
 
@@ -86,7 +86,8 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
           }
-          document.getElementById('year_select').options[_year].selected=true;
+          alert('_year = '+_year);
+          document.getElementById('year_select').options['_year'].selected=true;
 
             oTable = $('#users').DataTable(
 						{
