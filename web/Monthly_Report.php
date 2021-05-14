@@ -86,8 +86,8 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
           }
-          alert('_year = '+_year);
-          document.getElementById('year_select').options['_year'].selected=true;
+          alert("_year = '"+_year+"'");
+          document.getElementById('year_select').options[_year].selected=true;
 
             oTable = $('#users').DataTable(
 						{
