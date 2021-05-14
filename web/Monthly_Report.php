@@ -42,7 +42,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var json;
         $(document).ready(function()
 				{
-          var _mon = parameters.get('mon');
+          var _mon = parameters.get('month');
           if( typeof _mon === 'undefined' ) {
             _mon = Date.getMonth()+1;
           }
