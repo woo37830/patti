@@ -78,13 +78,13 @@ echo "<h1>Month: $mon, Year: $year</h1>"
 				{
 
           var _mon = getUrlParameter('month');
-          if( isStringNullOrEmpty(_mon) === 'undefined' ) {
+          if( isStringNullOrEmpty(_mon) ) {
             _mon = Date.getMonth()+1;
           }
           $("#month_select").val(_mon);
 
           var _year = getUrlParameter('year');
-          if( isStringNullOrEmpty(_year) === 'undefined' ) {
+          if( isStringNullOrEmpty(_year) ) {
             _year = Data.getYear();
           }
           $("#year_select").val(_year);
