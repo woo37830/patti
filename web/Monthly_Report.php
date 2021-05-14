@@ -89,7 +89,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
 	            bStateSave: true,
 	            ajax:
 							{
-	                url: "./ajaxMonthlyUsers.php",
+	                url: "./ajaxMonthlyUsers.php?month=$mon&year=$year",
 	                dataSrc: "data",
 	            },
 	            columns: [
@@ -107,7 +107,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
 							bStateSave: true,
 							ajax:
 							{
-									url: "./ajaxMonthlyCancelled.php",
+									url: "./ajaxMonthlyCancelled.php?month=$mon&year=$year",
 									dataSrc: "data"
 							},
 							columns: [
