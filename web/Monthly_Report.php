@@ -14,8 +14,7 @@ $year = (int)date('Y');
 if( isset($_REQUEST['year']) ) {
   $year = (int)$_REQUEST['year'];
 }
-$m = (int)date("m");
-echo "<h1>Month: $mon, Year: $year, $m: </h1>"
+echo "<h1>Month: $mon, Year: $year</h1>"
 ?>
 <html>
 <!-- $Author: woo $   -->
