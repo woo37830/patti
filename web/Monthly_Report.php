@@ -67,8 +67,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
               return null;
           }
           return val;
-      }
-    };
+      };
         $(document).ready(function()
 				{
 
