@@ -73,22 +73,22 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
+    var d = new Date();
+    var _mon = document.getElementById('_mon').value;
+    if( isStringNullOrEmpty(_mon) ) {
+      _mon = d.getMonth();
+    }
+    document.getElementById('month_select').options[_mon].selected=true;
+
+    var _year = document.getElementById('_year').value;
+    if( isStringNullOrEmpty(_year) ) {
+      _year = d.getYear();
+    }
+    alert("_year = '"+_year+"'");
+    document.getElementById('year_select').options[_year].selected=true;
+
         $(document).ready(function()
 				{
-          var d = new Date();
-          var _mon = document.getElementById('_mon').value;
-          if( isStringNullOrEmpty(_mon) ) {
-            _mon = d.getMonth();
-          }
-          document.getElementById('month_select').options[_mon].selected=true;
-
-          var _year = document.getElementById('_year').value;
-          if( isStringNullOrEmpty(_year) ) {
-            _year = d.getYear();
-          }
-          alert("_year = '"+_year+"'");
-          document.getElementById('year_select').options[_year].selected=true;
-
             oTable = $('#users').DataTable(
 						{
 	            processing: true,
