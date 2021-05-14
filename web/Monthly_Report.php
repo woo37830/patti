@@ -68,16 +68,22 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           }
           return val;
       };
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
         $(document).ready(function()
 				{
 
-          var _mon = parameters.get('month');
+          var _mon = getUrlParameter('month');
           if( isStringNullOrEmpty(_mon) === 'undefined' ) {
             _mon = Date.getMonth()+1;
           }
           $("#month_select").val(_mon);
 
-          var _year = parameters.get('year');
+          var _year = getUrlParameter('year');
           if( isStringNullOrEmpty(_year) === 'undefined' ) {
             _year = Data.getYear();
           }
@@ -89,7 +95,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
 	            bStateSave: true,
 	            ajax:
 							{
-	                url: "./ajaxMonthlyUsers.php?month=$mon&year=$year",
+	                url: "./ajaxMonthlyUsers.php?month="+_mon+"&year="+_year,
 	                dataSrc: "data",
 	            },
 	            columns: [
@@ -107,7 +113,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
 							bStateSave: true,
 							ajax:
 							{
-									url: "./ajaxMonthlyCancelled.php?month=$mon&year=$year",
+									url: "./ajaxMonthlyCancelled.php?month="+_mon+"&year="_year,
 									dataSrc: "data"
 							},
 							columns: [
