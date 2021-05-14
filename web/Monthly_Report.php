@@ -80,14 +80,14 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           var _mon = getUrlParameter('month');
           if( isStringNullOrEmpty(_mon) ) {
             _mon = Date.getMonth()+1;
+            document.getElementById('month_select').options[_mon].selected=true;
           }
-          document.getElementById('month_select').options[_mon].selected=true;
 
           var _year = getUrlParameter('year');
           if( isStringNullOrEmpty(_year) ) {
             _year = Data.getYear();
+            document.getElementById('year_select').options[_year].selected=true;
           }
-          document.getElementById('year_select').options[_year].selected=true;
 
             oTable = $('#users').DataTable(
 						{
