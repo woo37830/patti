@@ -82,7 +82,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           }
           document.getElementById('month_select').options[_mon].selected=true;
 
-          var _year = document.getElementbyId('_year').value;
+          var _year = document.getElementById('_year').value;
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
           }
