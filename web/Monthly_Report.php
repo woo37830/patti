@@ -40,8 +40,6 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var oTable;
 				var pTable;
         var json;
-        document.getElementById('month_field').value = '<?=$_POST['month']?>';
-        document.getElementById('year_field').value =  '<?=$_POST['year']?>';
       //Check is string null or empty
       function isStringNullOrEmpty(val) {
           switch (val) {
@@ -78,13 +76,13 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         $(document).ready(function()
 				{
           var d = new Date();
-          var _mon = document.getElementById('month_field').value;
+          var _mon = document.getElementById('_mon').value;
           if( isStringNullOrEmpty(_mon) ) {
             _mon = d.getMonth()+1;
           }
           document.getElementById('month_select').options[_mon].selected=true;
 
-          var _year = document.getElementbyId('year_field').value;
+          var _year = document.getElementbyId('_year').value;
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
           }
@@ -169,8 +167,8 @@ echo "<h1>Month: $mon, Year: $year</h1>"
                 <div>
                 <div id='info-div'>Provide a report of the Monthly Activity</div>
             <hr/>
-                <input type='hidden' id='month_field' value=''></input>
-                <input type='hidden' id='year_field'  value=''></input>
+                <input type='hidden' id='_mon' value="<?php echo $mon ?>">
+                <input type='hidden' id='_year'  value="<?php echo $year ?>">
 								<center><form action="" method="post">
 								<select name='month' id='month_select'>
                   <option value='1'>Jan</option>
