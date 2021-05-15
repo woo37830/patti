@@ -14,7 +14,8 @@ $year = (int)date('Y');
 if( isset($_POST['year']) ) {
   $year = (int)$_POST['year'];
 }
-echo "<h1>Month: $mon, Year: $year</h1>"
+$year = $yeaar + 2017;
+echo "<h1>Month: $months[$mon], Year: $year</h1>"
 ?>
 <html>
 <!-- $Author: woo $   -->
