@@ -193,12 +193,12 @@ echo "<h1>Month: $mon, Year: $year</h1>"
                   <option value='12'>Dec</option>
                 </select>
                 <select name='year' id='year_select'>
-                  <option value='2018'>2018</option>
-                  <option value='2019'>2019</option>
-                  <option value='2020'>2020</option>
-                  <option value='2021'>2021</option>
-                  <option value='2022'>2022</option>
-                  <option value='2023'>2023</option>
+                  <option value='1'>2018</option>
+                  <option value='2'>2019</option>
+                  <option value='3'>2020</option>
+                  <option value='4'>2021</option>
+                  <option value='5'>2022</option>
+                  <option value='6'>2023</option>
                 </select>
 								<input type="submit" name="submit" value="Submit">
 								</form>
