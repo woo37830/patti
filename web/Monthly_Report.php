@@ -95,7 +95,7 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
           }
-          setSelectedIndex(document.getElementById('year_select'), _year);
+          setSelectedIndex(document.getElementById('year_select'), _year-2017);
 
           oTable = $('#users').DataTable(
 						{
