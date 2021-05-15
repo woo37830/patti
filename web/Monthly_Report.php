@@ -40,6 +40,9 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var oTable;
 				var pTable;
         var json;
+        var d = new Date();
+        var _mon = d.getMonth();
+        var _year = d.getYear();
       //Check is string null or empty
       function isStringNullOrEmpty(val) {
           switch (val) {
@@ -81,14 +84,13 @@ echo "<h1>Month: $mon, Year: $year</h1>"
     }
         $(document).ready(function()
 				{
-          var d = new Date();
-          var _mon = 2; //document.getElementById('_mon').value;
+          _mon = document.getElementById('_monField').value;
           if( isStringNullOrEmpty(_mon) ) {
             _mon = d.getMonth();
           }
           setSelectedIndex(document.getElementById('month_select'), _mon);
 
-          var _year = 2020; //document.getElementById('_year').value;
+          _year = document.getElementById('_yearField').value;
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
           }
@@ -173,8 +175,8 @@ echo "<h1>Month: $mon, Year: $year</h1>"
                 <div>
                 <div id='info-div'>Provide a report of the Monthly Activity</div>
             <hr/>
-                <input type='hidden' id='_mon' value="<?php echo $mon ?>">
-                <input type='hidden' id='_year'  value="<?php echo $year ?>">
+                <input type='hidden' id='_monField' value="<?php echo $mon ?>">
+                <input type='hidden' id='_yearField'  value="<?php echo $year ?>">
 								<center><form action="" method="post">
 								<select name='month' id='month_select'>
                   <option value='1'>Jan</option>
