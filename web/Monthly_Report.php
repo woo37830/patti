@@ -75,6 +75,7 @@ echo "<h1>Month: $mon, Year: $year</h1>"
     };
 
     function setSelectedIndex( s, i ) {
+      alert("i = "+i);
       s.options[i-1].selected = true;
       return;
     }
