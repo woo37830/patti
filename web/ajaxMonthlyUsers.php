@@ -34,7 +34,7 @@ $year = isset($_REQUEST['year']) ? intval($_REQUEST['year']) : (int)date("Y");
 $results = array();
 $result["month"] = $mon;
 $result["year"] = $year;
-$result["sql"] = $sql;
+
 $result["data"] = getMonthlyUsers($mon, $year);
 echo json_encode($result);
 ?>
