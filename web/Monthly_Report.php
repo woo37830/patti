@@ -73,6 +73,11 @@ echo "<h1>Month: $mon, Year: $year</h1>"
         var results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     };
+
+    function setSelectedIndex( s, i ) {
+      s.options[i-1].selected = true;
+      return;
+    }
         $(document).ready(function()
 				{
           var d = new Date();
@@ -80,16 +85,13 @@ echo "<h1>Month: $mon, Year: $year</h1>"
           if( isStringNullOrEmpty(_mon) ) {
             _mon = d.getMonth();
           }
-          document.getElementById('month_select').options[_mon].selected=true;
+          setSelectedIndex(document.getElementById('month_select'), _mon);
 
           var _year = 2020; //document.getElementById('_year').value;
           if( isStringNullOrEmpty(_year) ) {
             _year = d.getYear();
           }
-          var selector = document.getElementById('year_select');
-          alert("_year = '"+_year+"', selector = "+isStringNullOrEmpty(selector));
-          alert("selector_year = "+isStringNullOrEmpty(selector.options[_year]));
-          selector.options[_year].selected=true;
+          setSelectedIndex(document.getElementById('year_select'), _year);
 
           oTable = $('#users').DataTable(
 						{
