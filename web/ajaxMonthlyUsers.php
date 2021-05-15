@@ -9,7 +9,7 @@ function getMonthlyUsers($mon, $year) {
 	$dbase = $config['PATTI_DATABASE'];
 	if( $conn = connect($dbase) )
 	{
-		$datetime = date_create()->format('Y-m-d H:i:s');
+		$datetime = date_create()->format('Y-m-d'); //  H:i:s
 		$table = $config['PATTI_USERS_TABLE'];
 		$sql = "SELECT email, engagemoreid, invoiceid, product, added " .
 			"FROM '$table' WHERE MONTH(added) =  " . $mon . " AND YEAR(added) = " . $year . " AND status = 'active'";
@@ -34,6 +34,7 @@ $year = isset($_REQUEST['year']) ? intval($_REQUEST['year']) : (int)date("Y");
 $results = array();
 $result["month"] = $mon;
 $result["year"] = $year;
+$result["sql"] = $sql;
 $result["data"] = getMonthlyUsers($mon, $year);
 echo json_encode($result);
 ?>
