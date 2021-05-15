@@ -11,8 +11,8 @@ function getMonthlyUsers($mon, $year) {
 	{
 		$datetime = date_create()->format('Y-m-d'); //  H:i:s
 		$table = $config['PATTI_USERS_TABLE'];
-		$sql = "SELECT email, engagemoreid, invoiceid, product, added as theDate " .
-			"FROM '$table' WHERE MONTH(theDate) =  " . $mon . " AND YEAR(theDate) = " . $year . " AND status = 'active'";
+		$sql = "SELECT email, engagemoreid, invoiceid, product, added " .
+			"FROM '$table' WHERE status = 'active'";
 
 		$rs = $conn -> query( $sql );
 
