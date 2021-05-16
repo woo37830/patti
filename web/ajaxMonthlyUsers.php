@@ -9,10 +9,8 @@ function getMonthlyUsers($mon, $year) {
 	$dbase = $config['PATTI_DATABASE'];
 	if( $conn = connect($dbase) )
 	{
-		$datetime = date_create()->format('Y-m-d'); //  H:i:s
 		$table = $config['PATTI_USERS_TABLE'];
-		$sql = "SELECT email, engagemoreid, invoiceid, product, added " .
-			"FROM `$table` WHERE status = 'active'";
+		$sql = "SELECT * FROM $table WHERE status = 'active' AND YEAR(added) = $year AND MONTH(added) =  $mon ORDER BY id";
 
 		$rs = $conn -> query( $sql );
 

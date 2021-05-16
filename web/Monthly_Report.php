@@ -102,7 +102,7 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
 	            bStateSave: true,
 	            ajax:
 							{
-	                url: "./ajaxMonthlyUsers.php?month=$mon&year=$year",
+	                url: "./ajaxMonthlyUsers.php?month=3&year=2021",
 	                dataSrc: "data",
 	            },
 	            columns: [
@@ -120,7 +120,7 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
 							bStateSave: true,
 							ajax:
 							{
-									url: "./ajaxMonthlyCancelled.php?month=$mon&year=$year",
+									url: "./ajaxMonthlyCancelled.php?month=3&year=2021",
 									dataSrc: "data"
 							},
 							columns: [
@@ -175,10 +175,10 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
                 <div>
                 <div id='info-div'>Provide a report of the Monthly Activity</div>
             <hr/>
-                <input type='hidden' id='_monField' value="<?php echo $mon ?>">
-                <input type='hidden' id='_yearField'  value="<?php echo $year ?>">
-								<center><form action="" method="post">
-								<select name='month' id='month_select'>
+  						<center><form action="" method="post">
+                    <input type='hidden' name='month' id='_monField' value="<?php echo $mon ?>">
+                    <input type='hidden' name='year' id='_yearField'  value="<?php echo $year ?>">
+							<select name='month' id='month_select'>
                   <option value='1'>Jan</option>
                   <option value='2'>Feb</option>
                   <option value='3'>Mar</option>
