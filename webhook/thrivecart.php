@@ -208,15 +208,20 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
         // then we want to change it to product-13
         if( product_isTheSame($email, $product) )
         { // i.e. product-29 or product-24 is the current product for the $email
-          // different product, then cnange the group for the account
+          // different product, then change the group for the account
           $product = 'product-13'; // change it to product-13
           $group_name = getProductName($product, $email, $json_data);
-  //        echo "group_name: " . $group_name . "<br />";
-          $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
-           $group_name, $product);
-           if( $engagemoreacct != -1 ) {
-             echo "Changed subscription to product: $product<br />";
-            logit($email, $json_data,  "SUCCESS: Changed product to $product");
+          if( strlen( $group_name ) > 0 ) {
+    //        echo "group_name: " . $group_name . "<br />";
+            $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
+             $group_name, $product);
+             if( $engagemoreacct != -1 ) {
+               echo "Changed subscription to product: $product<br />";
+              logit($email, $json_data,  "SUCCESS: Changed product to $product");
+            }
+          } else {
+            logit($email, $json_data, "FAILURE: There is not group_name for product: $product");
+            return;
           }
         } else { // This should not happen as it means the product being paid for is product-29
           // AND the user already has product-29 recorded.
@@ -236,13 +241,17 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
             logit($email, $json_data,  "FAILURE: $product should have already been changed!");
           } else {
             $group_name = getProductName($product, $email, $json_data);
-            $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
-            $group_name, $product);
-            if( $engagemoreacct != -1 ) {
-              echo "Changed subscription to product: $product<br />";
-              logit($email, $json_data,  "SUCCESS: Changed product to $product");
+            if( strlen($group_name) > 0 ) {
+              $engagemoreacct = (int)change_account_group($email, $api_endpoint, $account_id, $api_key,
+              $group_name, $product);
+              if( $engagemoreacct != -1 ) {
+                echo "Changed subscription to product: $product<br />";
+                logit($email, $json_data,  "SUCCESS: Changed product to $product");
+              }
+            } else {
+              logit($email, $json_data, "FAILURE: There is no group_name for $product");
+              return;
             }
-          }
          return;
         }
       }
