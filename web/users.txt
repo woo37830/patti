@@ -1,1 +1,0 @@
-{"user":"woo", "passwd":"random1", "role":"sysadmin", "preferences":{"theme":"default", "rows":"10"}}

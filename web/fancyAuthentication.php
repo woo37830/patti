@@ -1,7 +1,7 @@
 <?php
-
-$valid_passwords = array ('woo' => 'random1');
-$valid_users = array_keys($valid_passwords);
+require './users.php';
+//$valid_passwords = array ('woo' => 'random1');
+$valid_users = array_keys($users);
 if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Login') {
     $user = trim($_REQUEST['userid']);
     $pass = trim($_REQUEST['passwd']);
@@ -14,8 +14,11 @@ if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Logout') {
   echo "You have been logged out.<br />";
 }
 
+$user = 'woo';
+$pass = 'random1';
+
 if( !isset($_SESSION['loggedIn']) ) {
-$validated = (in_array($user, $valid_users)) && ($pass == $valid_passwords[$user]);
+$validated = (in_array($user, $valid_users)) && ($pass == $users[$user]['passwd']);
 
 if (!$validated ) {
 //  header('WWW-Authenticate: Basic realm="My Realm"');
@@ -43,6 +46,7 @@ if (!$validated ) {
 
 // If arrives here, is a valid user.
 $_SESSION['loggedIn'] = $user;
+$_SESSION['role'] = $users[$user]['role'];
 }
 ?>
 
