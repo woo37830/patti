@@ -256,11 +256,12 @@ function handleSubscriptionPayment($email, $api_endpoint, $account_id, $api_key,
         }
       }
     }
-    else { // account does not exist
-      echo "FAILURE: the account $email does not exist<br>";
-      logit($email, $json_data,  "FAILURE: Changing product to $product because account does not exist.");
-      return;
-    }
+  }
+  else { // account does not exist
+    echo "FAILURE: the account $email does not exist<br>";
+    logit($email, $json_data,  "FAILURE: Changing product to $product because account does not exist.");
+    return;
+  }
     return;
 }
 
