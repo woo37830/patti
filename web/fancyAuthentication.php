@@ -13,10 +13,18 @@ if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Logout') {
   $pass = "";
   echo "You have been logged out.<br />";
 }
+/*
+var_dump($valid_users);
+var_dump($users);
+var_dump($users['woo']['passwd']);
+var_dump($users['woo']['role']);
 
-$user = 'woo';
-$pass = 'random1';
-
+var_dump(in_array($user, $valid_users));
+var_dump($users[$user]['passwd']);
+var_dump($users[$user]['passwd']);
+var_dump($pass);
+var_dump($pass == $users[$user]['passwd']);
+*/
 if( !isset($_SESSION['loggedIn']) ) {
 $validated = (in_array($user, $valid_users)) && ($pass == $users[$user]['passwd']);
 
@@ -24,9 +32,11 @@ if (!$validated ) {
 //  header('WWW-Authenticate: Basic realm="My Realm"');
 //  header('HTTP/1.0 401 Unauthorized');
 //  echo "user: '".$user."', pass: '".$pass."'<br />";
-  echo "You must be logged in to access the intended page.";
+  echo "You must be logged in to use this site.";
   unset($_REQUEST['submit']);
   unset($_SESSION['loggedIn']);
+  unset($_SESSION['role']);
+
   ?>
          <center>
            <h1>EngagemoreCRM Maintenance</h1>
