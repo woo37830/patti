@@ -9,6 +9,7 @@ if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Login') {
 if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Logout') {
   unset($_REQUEST['submit']);
   unset($_SESSION['loggedIn']);
+  unset($_SESSION['role']);
   $user = "";
   $pass = "";
   echo "You have been logged out.<br />";
