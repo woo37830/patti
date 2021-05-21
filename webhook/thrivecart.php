@@ -35,11 +35,11 @@ $json_data = json_encode($_REQUEST);
  * The API endpoint and time zone.
  */
 // Verify the webhook origin by checking for the Webhook Key value you defined in SurveyTown
-/*if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
+if( empty( $_REQUEST['thrivecart_secret' ]) || $_REQUEST['thrivecart_secret'] != $config['THRIVECART_SECRET'] ){
 logit("INVALID", $json_data, "No key supplied");
  die('Invalid request, no key supplied');
 }
-*/
+
 $email = 'Undefined';
 if( isset( $_REQUEST['event'] ) ) {
   $event = $_REQUEST['event'];
@@ -53,7 +53,7 @@ if( empty( $event ) ) {
   logit("INVALID", $json_data, "No event provided");
    die('No event provided');
 }
-//$log->lwrite("$email,$json_data");
+$log->lwrite("$email,$json_data");
 
 //$email = get_email_from_rfc_email($email);
 switch( $event ) {
