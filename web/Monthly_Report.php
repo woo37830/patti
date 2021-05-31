@@ -10,12 +10,14 @@ $mon = (int)date("m");
 if( isset($_POST['month']) ) {
    $mon = (int)$_POST['month'];
 }
-$year = (int)date('Y');
 if( isset($_POST['year']) ) {
   $year = (int)$_POST['year'];
+  $year = $year + 2017;
+
+} else {
+  $year = (int)date("Y");
 }
-$year = $year + 2017;
-echo "<h1>Month: $months[$mon], Year: $year</h1>"
+//echo "<h1>Month: $months[$mon], Year: $year</h1>"
 ?>
 <html>
 <!-- $Author: woo $   -->
@@ -102,7 +104,7 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
 	            bStateSave: true,
 	            ajax:
 							{
-	                url: "./ajaxMonthlyUsers.php?month=3&year=2021",
+	                url: "./ajaxMonthlyUsers.php?month="+_mon+"&year="+_year,
 	                dataSrc: "data",
 	            },
 	            columns: [
@@ -120,7 +122,7 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
 							bStateSave: true,
 							ajax:
 							{
-									url: "./ajaxMonthlyCancelled.php?month=3&year=2021",
+									url: "./ajaxMonthlyCancelled.php?month="+_mon+"&year="+_year,
 									dataSrc: "data"
 							},
 							columns: [
@@ -132,11 +134,11 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
 
               $(document).on('click','#users tbody tr',function() {
                   var row = $(this).closest("tr");
-                  editAccount($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text());
+              //    editAccount($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text());
               });
               $(document).on('click','#cancelled tbody tr',function() {
                   var row = $(this).closest("tr");
-                  editAccount($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text());
+              //    editAccount($(row).find("td:nth-child(1)").text(),$(row).find("td:nth-child(2)").text(),$(row).find("td:nth-child(3)").text());
               });
 
 				});
@@ -217,15 +219,15 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
   								<br />
   								<table id="cancelled" class="tablesorter" width="95%"></table>
 								</div> <!-- end of tab 2 -->
-                <div title="Payments Received" style="padding:10px" class="tab">
+                <!-- div title="Payments Received" style="padding:10px" class="tab">
                   <h1>Payments Received</h1>
                   <hr />
                   <br />
                   <center><h2>Under Construction</h2></center>
-                </div> <!-- end of tab 3 -->
+                </div --> <!-- end of tab 3 -->
               </div>
 
-         			</div> <!-- end of page -->
+            </div --> <!-- end of page -->
 			</div> <!-- end of content -->
 			<hr />
 			<div class="footer" id="footer-div"> </div>
@@ -237,7 +239,7 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
 	 </div>
    <div id="dlg" class="easyui-dialog" style="width:400px;height:380px;padding:10px 20px"
  			closed="true" buttons="#dlg-buttons">
- 		<div class="ftitle">Account</div>
+ 		<div class="ftitle">Us</div>
  		<form id="fm" method="post" novalidate>
  			<div class="fitem">
  				<label for="email">Email:</label>
@@ -247,10 +249,13 @@ echo "<h1>Month: $months[$mon], Year: $year</h1>"
  	</div>
  	<div id="dlg-buttons">
  	    <div id="sql_buttons" class="show-sql">
- 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveAccount()" style="width:90px">Save</a>
- 		<!-- a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyAccount()" style="width:90px">Remove</a -->
- 	   </div>
- 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+      <?php if( $_SESSION['role'] == 'sysadmin' ) { ?>
+     		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveAccount()" style="width:90px">Save</a>
+     		<!-- a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyAccount()" style="width:90px">Remove</a -->
+      <?php } ?>
+     		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+    </div>
+
  	</div>
 
 </body>

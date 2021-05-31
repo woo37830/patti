@@ -217,17 +217,18 @@ function savePrefs(){
            <a href="./maintain_accounts.php">Accounts</a> |
            <a href="./maintain_users.php">Users</a> |
            <a href="./MonitorLogs.php">Logs</a> |
-           <a href="./Monthly_Report.php">Report</a> |
-           <a href="./Tests.php">Tests</a>
+           <a href="./Monthly_Report.php">Report</a>
+           <?php if( $_SESSION['role'] == 'sysadmin' )  { ?>
+             | <a href="./Tests.php">Tests</a>
+           <?php } ?>
          </td>
          <td align="right" valign="middle" bgcolor="#9999CC">
             <table border="0" cellPadding="2" cellSpacing="4">
               <tr>
                 <td CLASS="labelStyle" nowrap>User:</td>
-                <td CLASS="fieldStyle" nowrap ONCLICK="editPrefs();"><? echo $_SESSION['loggedIn']?></td>
+                <td CLASS="fieldStyle" nowrap ONCLICK="editPrefs();"><?php echo $_SESSION['loggedIn']; ?></td>
                 <td ONCLICK="goHome();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Home" title="Home" src="./_images/Home.gif" width="27" height="25"></td>
                 <td ONCLICK="goBack();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Prev" alt="Prev" src="./_images/previous.gif" width="27" height="25"></td>
-                <td id='info-img' ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Info" alt="Info" src="./_images/icon_question.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Site Map" alt="Site Map" src="./_images/sitemap.gif"  width="27" height="25"></td>
                 <td ONCLICK="disabledMenuClick(this);" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img title="Products" alt="Products" src="./_images/products.gif"  width="27" height="25"></td>
                 <td ONCLICK="logout();" ONMOUSEOVER="mouseOver_Color(this);" ONMOUSEOUT="mouseOut_Color(this);" nowrap><img alt="Log Out" src="./_images/logout.gif"  title="Log Out" width="27" height="25"></td>

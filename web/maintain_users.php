@@ -77,13 +77,17 @@ require('fancyAuthentication.php');
 								<div id='info-div'>This page provides a list of users and allows editing their entries.</div>
 	              <table id="users" class="tablesorter"></table>
                 <div id="toolbar" >
+									<?php if( $_SESSION['role'] == 'sysadmin' ) { ?>
+
                     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
+									<?php } ?>
                 </div>
 	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
 			<hr />
 			<div class="footer" id="footer-div"> </div>
 	</div> <!-- end of wrapper -->
+
 	<div id='logoutDiv' style='display:block' align='right'>
 	   <form id='logoutForm' type='POST' action="./index.php?<?=$action ?>" >
 	     <input type='submit' id='sub_btn' name='submit' value='Logout'  />
@@ -120,13 +124,13 @@ require('fancyAuthentication.php');
 		</form>
 	</div>
 	<div id="dlg-buttons">
-	    <div id="sql_buttons" class="show-sql">
-		<? if( $_SESSION['role'] == 'sysadmin' ) { ?>
+	  <div id="sql_buttons" class="show-sql">
+		<?php if( $_SESSION['role'] == 'sysadmin' ) { ?>
 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveAccount()" style="width:90px">Save</a>
-	
+
 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
 		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-destoy" onclick="destroyUser()" style="width:90px">Remove</a>
-		<? } ?>
+		<?php } ?>
 
 	   </div>
 		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
