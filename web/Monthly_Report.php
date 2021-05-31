@@ -210,7 +210,6 @@ if( isset($_POST['year']) ) {
                 <div title="New Users" class="tablesorter" width="95%" class="tab">
                   <h1>New Users</h1>
                   <hr />
-                  <br />
                   <table id="users" class="tablesorter" width="95%"></table>
                 </div> <!-- end of tab 1 -->
 								<div title="Cancelled Users" style="padding:10px" class="tab">
