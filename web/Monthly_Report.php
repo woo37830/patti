@@ -3,6 +3,8 @@ session_start(); //don't forget to do this
 $location = "/patti/web/Monthly_Report.php";
 
 require('fancyAuthentication.php');
+//require('./ReportAllActiveAccounts.php');
+
 $months = array('','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 $mon = (int)date("m");
@@ -204,6 +206,8 @@ if( isset($_POST['year']) ) {
                 </select>
 								<input type="submit" name="submit" value="Submit">
 								</form>
+                <button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
+
 							</center>
             </div>
               <div class="easyui-tabs" style="width:90%;height:80%">
@@ -218,11 +222,11 @@ if( isset($_POST['year']) ) {
   								<br />
   								<table id="cancelled" class="tablesorter" width="95%"></table>
 								</div> <!-- end of tab 2 -->
-                <!-- div title="Payments Received" style="padding:10px" class="tab">
-                  <h1>Payments Received</h1>
+                <div title="All Accounts" style="padding:10px" class="tab">
+                  <h1>All Accounts</h1>
                   <hr />
                   <br />
-                  <center><h2>Under Construction</h2></center>
+                  <button onclick="exportTableToCSV('members.csv')">Export HTML Table To CSV File</button>
                 </div --> <!-- end of tab 3 -->
               </div>
 

@@ -10,7 +10,7 @@ $jsonDecoded = json_decode($jsonString, true);
 $accounts = $jsonDecoded['accounts'];
 //var_dump($accounts);
 //Give our CSV file a name.
-$csvFileName = 'example.csv';
+$csvFileName = 'all_accounts.csv';
 
 //Open file pointer.
 $fp = fopen($csvFileName, 'w');
