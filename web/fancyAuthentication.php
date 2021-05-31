@@ -2,6 +2,7 @@
 
 $valid_passwords = array ('woo' => 'random1');
 $valid_users = array_keys($valid_passwords);
+$user = "";
 if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Login') {
     $user = trim($_REQUEST['userid']);
     $pass = trim($_REQUEST['passwd']);
