@@ -1,7 +1,7 @@
 <?php
-
-$valid_passwords = array ('woo' => 'random1');
-$valid_users = array_keys($valid_passwords);
+require './users.php';
+//$valid_passwords = array ('woo' => 'random1');
+$valid_users = array_keys($users);
 $user = "";
 if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Login') {
     $user = trim($_REQUEST['userid']);
@@ -10,21 +10,35 @@ if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Login') {
 if( isset($_REQUEST['submit']) && $_REQUEST['submit'] == 'Logout') {
   unset($_REQUEST['submit']);
   unset($_SESSION['loggedIn']);
+  unset($_SESSION['role']);
   $user = "";
   $pass = "";
   echo "You have been logged out.<br />";
 }
+/*
+var_dump($valid_users);
+var_dump($users);
+var_dump($users['woo']['passwd']);
+var_dump($users['woo']['role']);
 
+var_dump(in_array($user, $valid_users));
+var_dump($users[$user]['passwd']);
+var_dump($users[$user]['passwd']);
+var_dump($pass);
+var_dump($pass == $users[$user]['passwd']);
+*/
 if( !isset($_SESSION['loggedIn']) ) {
-$validated = (in_array($user, $valid_users)) && ($pass == $valid_passwords[$user]);
+$validated = (in_array($user, $valid_users)) && ($pass == $users[$user]['passwd']);
 
 if (!$validated ) {
 //  header('WWW-Authenticate: Basic realm="My Realm"');
 //  header('HTTP/1.0 401 Unauthorized');
 //  echo "user: '".$user."', pass: '".$pass."'<br />";
-  echo "You must be logged in to access the intended page.";
+  echo "You must be logged in to use this site.";
   unset($_REQUEST['submit']);
   unset($_SESSION['loggedIn']);
+  unset($_SESSION['role']);
+
   ?>
          <center>
            <h1>EngagemoreCRM Maintenance</h1>
@@ -44,6 +58,7 @@ if (!$validated ) {
 
 // If arrives here, is a valid user.
 $_SESSION['loggedIn'] = $user;
+$_SESSION['role'] = $users[$user]['role'];
 }
 ?>
 

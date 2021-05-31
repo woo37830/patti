@@ -31,6 +31,8 @@ function change_account_group($thrivecartid, $api_endpoint, $account_id, $api_ke
   if( $accountid != -1 ) {
       upgrade_account($api_endpoint, $account_id, $api_key, $accountid,
         $group_name, $productid, $thrivecartid);
+      logit($email, $json_data,  "SUCCESS: Changed product to $productid, with groupname: $group_name");
+
    } else {
      logit($thrivecartid, "","FAILURE in change_account_group: Did not find email for $thrivecartid");
    }
@@ -67,7 +69,7 @@ function getProductName($product, $email, $json_data) {
     return $products[$product];
   }
   logit($email, $json_data, "Invalid product: $product");
-  die("Invalid product: $product");
+  return "";
 }
 
 function delete_all_between($beginning, $end, $string) {
