@@ -145,8 +145,8 @@ switch( $event ) {
     echo "Received affiliate.commission_payout<br />" . $email . " - " . $json_data . "<br />";
     break;
   case 'cart.abandoned':
-    $source = 'cart.abandoned';
-    $agentId = '2172';
+    $agentId = $config['PATTI_CANCEL_CART_USER'];
+    $source = $config['PATTI_CANCEL_CART_SOURCE'];
     $today = date("D M j G:i:s T Y");
     $arr = json_decode($json_data);
     $base_product_label = $arr->base_product_label;
