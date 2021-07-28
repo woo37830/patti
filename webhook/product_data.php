@@ -23,5 +23,7 @@ $products = array( "product-9" => "RE - BUZZ ($69)",
                         "product-58" => "AGENT LEADER IMPACT $89",
                         "product-59" => "AGENT LEADER BUZZ $69",
                         "product-60" => "AGENT LEADER IMPACT $89",
-                        "product-61" => "AGENT LEADER BUZZ $69" )
+                        "product-61" => "AGENT LEADER BUZZ $69" ,
+                        "product-62" => "RE - IMPACT ($99)", 
+                        "product-63" => "RE - BUZZ ($69)"  )
 ?>
