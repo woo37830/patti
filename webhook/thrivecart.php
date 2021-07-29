@@ -166,6 +166,7 @@ switch( $event ) {
   //  $confirmation = $arr->viewer->checkbox_confirmation;
     $result = addContact($today, $agentId, $firstName, $lastName, $viewer_email,$source);
     echo "Result of cart.abandoned addContact was: $result " . "<br />";
+    logit($viewer_email, $json_data, "cart.abandoned: $result");
     break;
   default:
     logit($email, $json_data, "Invalid event- $event");
