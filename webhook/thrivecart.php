@@ -4,6 +4,7 @@ require 'config.ini.php';
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
+require 'add_contact.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
 require 'utilities.php';

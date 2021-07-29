@@ -60,13 +60,13 @@ $today = date("D M j G:i:s T Y");
 
 echo "<center>$today<br /><hr />";
 if(isset($_POST['submit'])){
+    $agentId = $config['PATTI_CANCEL_CART_USER'];
+    $source = $config['PATTI_CANCEL_CART_SOURCE'];
     $firstName = trim($_POST['first']);
     $lastName = trim($_POST['last']);
     $email = trim($_POST['email']);
-    $agent = trim($_POST['agent']);
-    $source = trim($_POST['source']);
-    $result = addContact($today, $firstName, $lastName, $email, $source);
-    echo "<br />Result addedContact $email to $agent: <br />Contact ID: $result <br />\n";
+    $result = addContact($today, $agentId, $firstName, $lastName, $email, $source);
+    echo "<br />Result addedContact $email to $agentId: <br />Contact ID: $result <br />\n";
 
 }
 ?>
