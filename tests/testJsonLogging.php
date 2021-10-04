@@ -1,6 +1,6 @@
 <?php
 // Test the addContactNote
-require '../webhook/config.ini.php';
+//require '../webhook/config.ini.php';
 require '../webhook/mysql_common.php';
 
 

@@ -74,7 +74,7 @@ require('fancyAuthentication.php');
 									<div id="error_div"></div>
 								</div>
                 <hr/>
-									<div id='info-div'>This page allows the user to examine the database logs and look at the request data via the json-data.log file.</div>
+									<div id='info-div'>This page allows the user to examine the database logs.</div>
 								<table id="logs" class="tablesorter" width="95%"></table>
   	    		</div> <!-- end of page -->
 			</div> <!-- end of content -->
@@ -95,7 +95,7 @@ require('fancyAuthentication.php');
 			url = './save_user.php';
 		}
 		function viewLog( id, added, email, engagemoreid, orderid, product, status){
-			alert('View the selected log with id: '+id+' for email: '+email+'. Use php to grep log entry from file with that id');
+			alert(engagemoreid);
 
 		}
 </script>
