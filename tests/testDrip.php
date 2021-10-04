@@ -1,7 +1,8 @@
 <?php
-// Test the addContactNote
+// Test the postCurl function usiing drip for email contact
 require '../webhook/config.ini.php';
 require '../webhook/mysql_common.php';
+require '../webhook/curlPost.php';
 
 $email = 'ralph.test1@testers.com';
 
@@ -14,20 +15,9 @@ $url = 'https://secure.engagemorecrm.com/api/t/wf/r9zo6543z2/18a1ca9de57ecbc0227
        'email' => $email,
     );
 
-    // build the urlencoded data
-    $postvars = http_build_query($fields);
-
-    // open connection
-    $ch = curl_init();
-
-    // set the url, number of POST vars, POST data
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, count($fields));
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
 
     // execute post
-    $result = curl_exec($ch);
+    $result = curlPost($url, $fields);
 
     // close connection
-    curl_close($ch)
 ?>
