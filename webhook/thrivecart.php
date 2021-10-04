@@ -4,6 +4,7 @@ require 'config.ini.php';
 require 'thrivecart_api.php';
 require 'mysql_common.php';
 require 'add_account.php';
+require 'add_contact.php';
 require 'change_account_status.php';
 require 'upgrade_account.php';
 require 'utilities.php';
@@ -163,8 +164,9 @@ switch( $event ) {
     $viewer_email = $arr->viewer->email;
     echo "cart.abandoned by $viewer_email with name: $name, base_product: $base_product_label<br />";
   //  $confirmation = $arr->viewer->checkbox_confirmation;
-    $result = addContact($today, $agentId, $firstName, $lastName, $viewer_email,$source);
-    echo "Result of cart.abandoned addContact was: $result " . "<br />";
+//    $result = addContact($today, $agentId, $firstName, $lastName, $viewer_email,$source);
+ //   echo "Result of cart.abandoned addContact was: $result " . "<br />";
+    logit($viewer_email, $json_data, "cart.abandoned: Method suspended");
     break;
   default:
     logit($email, $json_data, "Invalid event- $event");

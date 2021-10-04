@@ -62,7 +62,7 @@ function logit($user, $json, $my_status)
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
       $user_email = $from_email_address;
-      $stripped_json = "See json logs for $user_email";
+      $stripped_json = serialize($json);
 
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
