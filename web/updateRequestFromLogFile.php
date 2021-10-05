@@ -41,10 +41,10 @@ function updateRequestJsonForId( $id, $jsonData ) {
       $table = $config['PATTI_LOG_TABLE'];
       $sql = "UPDATE `$table` SET request_json = '$jsonData'   WHERE id = $id";
       if(mysqli_query($conn, $sql)) {
-        echo "id: $id was updated successfully.";
+        echo "\nid: $id was updated successfully.";
         return true;
       } else {
-          echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
+          echo "\nERROR: Could not execute $sql. " . mysqli_error($conn);
           return false;
       }
       // Close connection
@@ -75,8 +75,8 @@ if ( $handle ) {
       $sqlDate = date_format( $timestamp, "Y-m-d H:i:s" );
       $result = getRowMatchingJsonFile($m[2], $sqlDate, $m[3]);
       if( sizeof($result) > 0 && stripos($result[0][3],"See json logs") !== false ) {
-        print_r( $result );
-        print_r( $m[3] );
+      //  print_r( $result );
+      //  print_r( $m[3] );
         if( updateRequestJsonForId($result[0][0], "{$m[3]}") ) {
           $successful++;
         };
