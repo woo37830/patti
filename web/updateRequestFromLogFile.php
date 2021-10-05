@@ -39,10 +39,13 @@ function updateRequestJsonForId( $id, $jsonData ) {
   if( $conn = connect($dbase) ) {
   //    $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
-      $sql = "UPDATE `$table` SET request_json = '$jsonData'   WHERE id = $id";
-      if(mysqli_query($conn, $sql)) {
-        echo "\nid: $id was updated successfully.";
-        return true;
+      $sql = "UPDATE `$table` SET request_json = ?   WHERE id = ?";
+      $stmt = $conn->prepare($sql);
+      if ($stmt) {
+          $stmt->bind_param('si', $jsonData, $id);
+          $stmt->execute();
+          echo "\nid: $id was updated successfully.";
+          return true;
       } else {
           echo "\nERROR: Could not execute $sql. " . mysqli_error($conn);
           return false;
