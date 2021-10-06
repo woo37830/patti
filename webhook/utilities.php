@@ -32,7 +32,7 @@ function change_account_group($thrivecartid, $api_endpoint, $account_id, $api_ke
       upgrade_account($api_endpoint, $account_id, $api_key, $accountid,
         $group_name, $productid, $thrivecartid);
       $json_data = "function:change_account_group,account_id:$account_id,group:$group_name,productid:$productid";
-      logit($email, $json_data,  "SUCCESS: Changed product to $productid, with groupname: $group_name");
+      logit($thrivecartid, $json_data,  "SUCCESS: Changed product to $productid, with groupname: $group_name");
 
    } else {
      logit($thrivecartid, "","FAILURE in change_account_group: Did not find email for $thrivecartid");
