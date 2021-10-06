@@ -54,7 +54,7 @@ if( empty( $event ) ) {
   logit("INVALID", $json_data, "No event provided");
    die('No event provided');
 }
-$log->lwrite("$email,$json_data");
+//$log->lwrite("$email,$json_data");
 
 //$email = get_email_from_rfc_email($email);
 switch( $event ) {
@@ -148,6 +148,7 @@ switch( $event ) {
   case 'cart.abandoned':
     $arr = json_decode($json_data);
     $viewer_email = $arr->viewer->email;
+    $log->lwrite("$viewer_email,$json_data");
     $url = 'https://secure.engagemorecrm.com/api/t/wf/r9zo6543z2/18a1ca9de57ecbc02279';
 
         $fields = array(
