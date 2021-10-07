@@ -12,6 +12,7 @@ $log = new Logging();
 
 $today = date("D M j G:i:s T Y");
    try {
+    $log->lwrite('Beginning of curlPost');
     // build the urlencoded data
     $postvars = http_build_query($fields);
 
