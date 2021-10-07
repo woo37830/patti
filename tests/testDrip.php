@@ -1,5 +1,5 @@
 <?php
-// Test the addContactNote
+// Test Drip webhook
 require '../webhook/config.ini.php';
 require '../webhook/mysql_common.php';
 require '../webhook/curlPost.php';
