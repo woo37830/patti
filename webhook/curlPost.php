@@ -11,8 +11,8 @@ require 'mysql_common.php';
 date_default_timezone_set('America/New_York');
 
 $today = date("D M j G:i:s T Y");
-   try {
-     logit("TEST"",$url, "Begin curlPostr" );
+
+     logit("TEST",$url, "Begin curlPostr" );
     // build the urlencoded data
     $postvars = http_build_query($fields);
 
@@ -30,10 +30,7 @@ $today = date("D M j G:i:s T Y");
     $response_data = json_decode($result);
     // close connection
     curl_close($ch);
-  }
-  catch( Exception $e) {
-    logit("EXCEPTION"",$e->getMessage(), "Exception occurred." );
-  }
+
     return $response_data;
 
 }
