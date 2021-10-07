@@ -157,8 +157,6 @@ switch( $event ) {
         );
 
         $result = curlPost($url, $fields);
-    //    $result = "{results:{message:Success,contactid:705932,isduplicate:True}}";
-        $log->lwrite("\nAfter curlPost: \n$viewer_email,\nresult: $result\n");
 
         logit($viewer_email, $result, "cart.abandoned");
     break;
