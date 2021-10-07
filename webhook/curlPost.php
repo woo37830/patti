@@ -29,7 +29,7 @@ $today = date("D M j G:i:s T Y");
     curl_close($ch);
   }
   catch( Exception $e) {
-    echo 'Error Message: '.$e->getMessage());
+    echo 'Error Message: '.$e->getMessage();
     return $response_data;
 }
 ?>
