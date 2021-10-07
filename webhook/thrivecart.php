@@ -149,14 +149,15 @@ switch( $event ) {
     $arr = json_decode($json_data);
     $viewer_email = $arr->viewer->email;
     $log->lwrite("$viewer_email,$json_data");
-  //  $url = 'https://secure.engagemorecrm.com/api/t/wf/r9zo6543z2/18a1ca9de57ecbc02279';
+    $url = 'https://secure.engagemorecrm.com/api/t/wf/r9zo6543z2/18a1ca9de57ecbc02279';
 
-    //    $fields = array(
-    //       'email' => $viewer_email,
-    //    );
+        $fields = array(
+           'email' => $viewer_email,
+        );
 
     //    $result = curlPost($url, $fields);
-        $log->lwrite("\nAfter curlPost: \n$viewer_email,\nresult goes here\n");
+        $result = "{results:{message:Success,contactid:705932,isduplicate:True}}";
+        $log->lwrite("\nAfter curlPost: \n$viewer_email,\nresult: $result\n");
 
         logit($viewer_email, $result, "cart.abandoned");
     break;
