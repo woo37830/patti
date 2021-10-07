@@ -174,13 +174,13 @@ switch( $event ) {
         // execute post
         $result = curl_exec($ch);
         logit("TEST","result", "after curl_exec, $result" );
-        $response_data = json_decode($result);
-        logit("TEST","response_data", "after decode, $response_data" );
+        //$response_data = json_decode($result);
+        //logit("TEST","response_data", "after decode, $response_data" );
 
         // close connection
         curl_close($ch);
 
-        logit($viewer_email, $response_data, "cart.abandoned");
+        logit($viewer_email, $result, "cart.abandoned");
     break;
   default:
     logit($email, $json_data, "Invalid event- $event");
