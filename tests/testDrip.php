@@ -4,7 +4,7 @@ require '../webhook/config.ini.php';
 require '../webhook/mysql_common.php';
 require '../webhook/curlPost.php';
 
-$email = 'ralph.test1@testers.com';
+$email = 'ralph.test2@testers.com';
 
 $today = date("D M j G:i:s T Y");
 // where are we posting to?
