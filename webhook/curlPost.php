@@ -5,8 +5,11 @@ function curlPost($url, $fields) {
 
 require 'config.ini.php';
 // SET ERROR REPORTING SO WE CAN DEBUG OUR SCRIPTS EASILY
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 date_default_timezone_set('America/New_York');
+$log_file = "./json-errors.log";
+$log = new Logging();
+$log->lfile("./json-data.log");
 
 
 set_error_handler(function($errno, $errstr, $errfile, $errline ){
@@ -34,9 +37,7 @@ $today = date("D M j G:i:s T Y");
     curl_close($ch);
   }
   catch( Exception $e) {
-  //  echo 'Error Message: '.$e->getMessage();
-    trigger_error($e, E_USER_ERROR);
-
+    $log->lwrite('Error Message: '.$e->getMessage());
   }
     return $response_data;
 
