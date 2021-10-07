@@ -4,10 +4,12 @@
 function curlPost($url, $fields) {
 
 require 'config.ini.php';
-
+set_error_handler(function($errno, $errstr, $errfile, $errline ){
+    throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+});
 
 $today = date("D M j G:i:s T Y");
-
+   try {
     // build the urlencoded data
     $postvars = http_build_query($fields);
 
@@ -25,6 +27,9 @@ $today = date("D M j G:i:s T Y");
     $response_data = json_decode($result);
     // close connection
     curl_close($ch);
+  }
+  catch( Exception $e) {
+    echo 'Error Message: '.$e->getMessage());
     return $response_data;
 }
 ?>
