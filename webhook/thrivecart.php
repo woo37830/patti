@@ -156,6 +156,7 @@ switch( $event ) {
         );
 
         $result = curlPost($url, $fields);
+        $log->lwrite("\nAfter curlPost: \n$viewer_email,$json_data\n");
 
         logit($viewer_email, $result, "cart.abandoned");
     break;
