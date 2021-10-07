@@ -9,12 +9,6 @@ require 'config.ini.php';
 date_default_timezone_set('America/New_York');
 $log_file = "./json-errors.log";
 $log = new Logging();
-$log->lfile("./json-data.log");
-
-
-set_error_handler(function($errno, $errstr, $errfile, $errline ){
-    throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-});
 
 $today = date("D M j G:i:s T Y");
    try {
