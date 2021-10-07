@@ -149,38 +149,15 @@ switch( $event ) {
   case 'cart.abandoned':
     $arr = json_decode($json_data);
     $viewer_email = $arr->viewer->email;
-    $log->lwrite("$viewer_email,$json_data");
     $url = 'https://secure.engagemorecrm.com/api/t/wf/r9zo6543z2/18a1ca9de57ecbc02279';
 
         $fields = array(
            'email' => $viewer_email,
         );
 
-      //  $result = curlPost($url, $fields);
-        $postvars = http_build_query($fields);
-        logit("TEST","postvars", "after postvars" );
+      $result = curlPost($url, $fields);
 
-        // open connection
-        $ch = curl_init();
-        logit("TEST","ch", "after curl_init" );
-
-        // set the url, number of POST vars, POST data
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, count($fields));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
-        logit("TEST","setopt", "after curl_setopts" );
-
-        // execute post
-        $result = curl_exec($ch);
-        logit("TEST","result", "after curl_exec, $result" );
-        //$response_data = json_decode($result);
-        //logit("TEST","response_data", "after decode, $response_data" );
-
-        // close connection
-        curl_close($ch);
-
-        logit($viewer_email, $result, "cart.abandoned");
+      logit($viewer_email, $result, "cart.abandoned");
     break;
   default:
     logit($email, $json_data, "Invalid event- $event");
