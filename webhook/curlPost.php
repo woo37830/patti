@@ -30,6 +30,8 @@ $today = date("D M j G:i:s T Y");
   }
   catch( Exception $e) {
     echo 'Error Message: '.$e->getMessage();
+  }
     return $response_data;
+
 }
 ?>
