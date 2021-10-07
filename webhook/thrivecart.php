@@ -11,6 +11,7 @@ require 'utilities.php';
 require 'add_contact_note.php';
 require 'get_contacts.php';
 require '../smtp/notify.php';
+require 'curlPost.php';
 require_once 'mylib.php';
 
 $log_file = "./mysql-errors.log";
@@ -155,8 +156,8 @@ switch( $event ) {
            'email' => $viewer_email,
         );
 
-    //    $result = curlPost($url, $fields);
-        $result = "{results:{message:Success,contactid:705932,isduplicate:True}}";
+        $result = curlPost($url, $fields);
+    //    $result = "{results:{message:Success,contactid:705932,isduplicate:True}}";
         $log->lwrite("\nAfter curlPost: \n$viewer_email,\nresult: $result\n");
 
         logit($viewer_email, $result, "cart.abandoned");
