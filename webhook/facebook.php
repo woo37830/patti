@@ -1,7 +1,22 @@
 <?php
 
-header('Content-Type: application/json');
-$request = file_get_contents('php://input');
-$req_dump = print_r( $request, true );
-$fp = file_put_contents( 'request.log', $req_dump );
+$verify_token = 'meatyhamhock';
+$json_data = json_encode($_REQUEST);
+if( $verify_token != $_REQUEST['hub_verify_token'] ) {
+	die("Invalid verify token");
+}
 ?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset="UTR-8">
+<script type="text/javascript" class="init">
+const params = new URL(location.href).searchParams;
+let challenge=params.get("hub.challenge");
+document.write(challenge);
+</script>
+</head>
+<body>
+   
+
+</body>
+</html>
