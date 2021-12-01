@@ -19,7 +19,7 @@ let name=params.get("name");
 document.write(name);
 let email=params.get("email");
 document.write(email);
-let form=params.get("formid");
+let form=params.get("formId");
 document.write(form);
 </script>
 </head>
