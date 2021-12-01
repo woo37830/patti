@@ -16,9 +16,11 @@ document.write(challenge);
 let client=params.get("clientId");
 document.write(client);
 let name=params.get("name");
-document.write("Name: ".name);
+document.write(name);
 let email=params.get("email");
-document.write("Email: ".email);
+document.write(email);
+let form=params.get("formid");
+document.write(form);
 </script>
 </head>
 <body>
