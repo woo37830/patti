@@ -149,14 +149,15 @@ switch( $event ) {
   case 'cart.abandoned':
     $arr = json_decode($json_data);
     $viewer_email = $arr->viewer->email;
+    $result = "User exists";
+    if ( getUserByEmail($viewer_email) == null ) {
     $url = 'https://secure.engagemorecrm.com/api/t/wf/r9zo6543z2/18a1ca9de57ecbc02279';
+          $fields = array(
+             'email' => $viewer_email,
+          );
 
-        $fields = array(
-           'email' => $viewer_email,
-        );
-
-      $result = curlPost($url, $fields);
-
+        $result = curlPost($url, $fields);
+      }
       logit($viewer_email, $result, "cart.abandoned");
     break;
   default:
