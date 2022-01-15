@@ -30,7 +30,7 @@
  function getAccountEmailById( $id, $accounts ) {
    foreach( $accounts->accounts->account as $account ) {
      if( $account->accountid == $id ) {
-       echo "\naccount->email = $account->email\n";
+//       echo "\naccount->email = $account->email\n";
        return $account->email;
      }
    }
@@ -70,15 +70,14 @@
       $ac = getAccountByEmail( $db_email, $accounts);
       if( $ac == -1 )
       {
-        echo "\nAccountByEmail $db_email, ac: $ac\n";
-        echo $db_email;
-        echo $acct_id;
+//        echo "\nAccountByEmail $db_email, ac: $ac\n";
+//        echo $db_email;
+//        echo $acct_id;
         {
-            $str = getAccountEmailById($acct_id,$accounts);
-            $user['ac_email'] = "";
+            $str = (array)getAccountEmailById($acct_id,$accounts);
+            $user['ac_email'] = $str;
   					$user['db_email'] = $db_email;
      			array_push($isolated_users,$user);
-          break;
         }
       }
    }
