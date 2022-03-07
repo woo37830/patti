@@ -21,13 +21,12 @@
  function getAccountById( $id, $accounts ) {
    $k = 0;
    if( $id = 2607 ) {
-     echo "\nStarting $id\n";
      echo "\naccountid ".$accounts->accounts->account->accountid."\n";
    }
    foreach( $accounts->accounts->account as $account ) {
      if( $account->accountid == $id ) {
        if( $id = 2607  ) {
-         echo "2607 : $account->email";
+         echo "Account Email : $account->email";
        }
        return $id;
      }
@@ -37,12 +36,23 @@
  }
 
  function getAccountByEmail( $email, $accounts ) {
-   foreach( $accounts as $account ) {
-     if( $account->email == $email ) {
+//   echo "Looking for $email";
+   foreach( $accounts->accounts->account as $account ) {
+//     echo "Checking: $account->email";
+     if( strcmp($account->email,$email) == 0 ) {
        return $account;
      }
    }
    return -1;
+ }
+
+ function getAccountEmailById( $id, $accounts ) {
+   foreach( $accounts->accounts->account as $account ) {
+     if( $account->accountid == $id ) {
+       return $account->email;
+     }
+   }
+   return "";
  }
 
  $accounts = getAccounts(); // The collection of all accounts in CRM (accounts.account.[id,email...])
@@ -63,7 +73,13 @@
  }
 
  $aUser = getAUserById( 2607, $users);
- echo "\n".$aUser."\n";
+ echo "\nUser: ".$aUser."\n";
  $anAccount = getAccountById( 2607, $accounts);
- echo "\n".$anAccount."\n";
+ echo "\nAccount: ".$anAccount."\n";
+
+ $byEmail = getAccountByEmail( 'jwooten37830@icloud.com', $accounts );
+ echo "\nEmail: ".$byEmail->email."\n";
+
+ $byId = getAccountEmailById( $anAccount, $accounts);
+ echo "\nEmailById: ".$byId."\n";
  ?>

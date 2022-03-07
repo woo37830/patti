@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# create the subscriptions for the app
+#
+appId=""
+apiVersion="12.1"
+url="https://www.yourcallbackurl.com"
+verifyToken=""
+accessToken="" # this is obtained from the getAccessToken script after
+#                creating the app
+curl \
+  -F "object=page" \
+  -F "callback_url=$url" \
+  -F "fields=leadgen" \
+  -F "verify_token=$verifyToken" \
+  -F "access_token=$accessToken" \
+  "https://graph.facebook.com/$apiVersion/$appId/subscriptions"

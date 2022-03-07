@@ -84,6 +84,24 @@ var k = 0;
 			]
 			});
 
+			pTable = $('#emails').DataTable({
+			processing: true,
+			bStateSave: true,
+			ajax: {
+					url: "./ajaxChangedSignupEmail.php",
+					dataType: "json",
+					dataSrc: "data",
+			},
+			columns: [
+					{ data: "engagemoreid",  width: "10%", title: "Account" },
+					{ data: "ac_email" , width: "25%" , title: "Current"},
+					{ data: "db_email" , width: "25%" , title: "Sign In"},
+					{ data: "product", title: "Product" },
+					{ data: "status",  width: "10%", title: "Status" },
+					{ data: "added", title: "Since" }
+			]
+			});
+
 });
 
 $(document).on('click','#accounts tbody tr',function() {
@@ -276,20 +294,30 @@ function groupNameToProduct( groupName ) {
 			}
 </style>
 <div class="easyui-tabs" style="width:90%;height:80%">
-		<div title="Accounts" style="padding:10px" class="tab">
 
-<h1>Isolated Accounts</h1>
-<hr />
-<br />
-<table id="accounts" class="tablesorter" width="95%"></table>
-</div>
-<div title="Users" class="tablesorter" width="95%" class="tab">
+	<div title="Accounts" style="padding:10px" class="tab">
 
-<h1>Isolated Users</h1>
-<hr />
-<br />
-<table id="users" class="tablesorter" width="95%"></table>
-</div>
+		<h1>Isolated Accounts</h1>
+		<hr />
+		<br />
+		<table id="accounts" class="tablesorter" width="95%"></table>
+	</div>
+
+	<div title="Users" class="tablesorter" width="95%" class="tab">
+
+		<h1>Isolated Users</h1>
+		<hr />
+		<br />
+		<table id="users" class="tablesorter" width="95%"></table>
+	</div>
+
+	<div title="Changed Emails" class="tablesorter" width="95%" class="tab">
+
+		<h1>Accounts with Changed Emails from Signup</h1>
+		<hr />
+		<br />
+		<table id="emails" class="tablesorter" width="95%"></table>
+	</div>
 </div>
 
 </center>
