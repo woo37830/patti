@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+#  Verify RTU subscriptions for pages
+#
+apiVersion="12.1"
+pageId="123"
+pageAccessToken="<PAGE_ACCESS_TOKEN>"
+curl  -G \
+ -d "access_token=$pageAccessToken" \
+  "https://graph.facebook.com/$apiVersion/$pageId/subscribed_apps"
