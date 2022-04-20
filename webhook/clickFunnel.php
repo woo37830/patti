@@ -10,7 +10,7 @@ require 'upgrade_account.php';
 require 'utilities.php';
 require 'add_contact_note.php';
 require 'get_contacts.php';
-require '../smtp/notify.php';
+//require '../smtp/notify.php';
 require 'curlPost.php';
 require_once 'mylib.php';
 
@@ -41,24 +41,55 @@ $json_data = json_encode($_REQUEST);
 //logit("INVALID", $json_data, "No key supplied");
 // die('Invalid request, no key supplied');
 //}
-
+$test = FALSE;
 $email = 'Undefined';
 if( isset( $_REQUEST['email'] ) ) {
   $email = $_REQUEST['email'];
 }
 // Message seems to be from ClickFunnels so log it.
 // Look for the order.success webhook event. Make sure the response is complete before processing.
-if( ! isset( $_REQUEST['event'] ) ) {
-  logit("INVALID", $json_data, "No event provided");
-   die('No event provided');
+if( ! $test ) {
+  if( ! isset( $_REQUEST['event'] ) ) {
+    logit("INVALID", $json_data, "No event provided");
+     die('No event provided');
+  }
+  $event = $_REQUEST['event'];
+} else {
+  $event = 'order.subscription.cancelled';
 }
-
-$event = $_REQUEST['event'];
 switch( $event ) {
   case 'order.success':
-    handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data);
+      handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_data);
+    break;
+  case 'order.subscription.cancelled':
+      $cancelling_productid = getProductId(); // e.g. 29
+      $current_productid = getProductFor($email); // e.g. 13
+      if( $current_productid == -1 )
+      {
+        $result = "Failed: Could not locate user($email) to cancel subscription";
+      }
+      else
+      {
+        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+        echo "The account for Email: $email was cancelled with result: $result<br />";
+      }
+      logit($email,$json_data, "Subscription_cancelled, result: $result");
+    break;
+    case 'order.subscription_resumed':
+      $resumming_productid = getProductId(); // e.g. 29
+      $current_productid = getProductFor($email); // e.g. 13
+      if( $current_productid == -1 )
+      {
+        $result = "Failed: Could not locate user($email) to resume subscription";
+      }
+      else
+      {
+        $result = change_account_status($api_endpoint,$account_id, $api_key, $email,1);
+        echo "The account for Email: $email was resummed with result: $result<br />";
+      }
+      logit($email,$json_data, "Subscription_resumed, result: $result");
       break;
-    default:
+  default:
       logit($email, $json_data, "Invalid event- $event");
       echo "Invalid event - $event<br />" . $email . " - " . $json_data . "<br />";
       die();
@@ -94,7 +125,7 @@ switch( $event ) {
           if( product_isTheSame($from_email_address, $product) )
           {
             // It is a payment and just let it go.
-            echo "Payment received for product: $product<br />";
+            echo "Payment received for product: $product from Email: $email<br />";
             logit( $from_email_address, $json_data, "Payment was received for product: $product");
           }
           else

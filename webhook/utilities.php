@@ -49,16 +49,26 @@ function getMode()  {
 }
 
 function getProductId() {
+  if( ! isset($_REQUEST['base_product'])) {
+    $pmf = (int)13;
+  } else {
    $pmf = (int)$_REQUEST['base_product'];
+ }
    $product = "product-$pmf";
    return $product;
 }
 
 function getInvoiceId() {
+  if( ! isset($_REQUEST['invoice_id'])) {
+    return 0;
+  }
   return $_REQUEST['invoice_id'];
 }
 
 function getOrderId() {
+  if( ! isset($_REQUEST['order_id'])) {
+    return 0;
+  }
   return $_REQUEST['order_id'];
 }
 
