@@ -270,9 +270,9 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
 //  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
 //  echo "product: ". $product . "<br />";
-if( (strcmp($product,'product-62) == 0) || (strcmp($product,'product-63') == 0) ) {
+if( (strcmp($product,'product-62') == 0) || (strcmp($product,'product-63') == 0) ) {
   logit($from_email_address, $json_data,  "SUCCESS: order.success processed for $product");
-  echo "Products for EAP don not add new accounts";
+  echo "Products for EAP do not add new accounts";
   return;
 }
   require 'product_data.php';
