@@ -305,6 +305,11 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
       }
     }
     else { // account does not exist
+		if( $product == 'product-62' || $product == 'product-63' ) {
+      logit($from_email_address, $json_data,  "SUCCESS: order.success processed for $product");
+			echo "Products for EAP don't add new accounts";
+			return;
+		}
       /**
        * The contact information to insert.
        *
