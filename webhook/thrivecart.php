@@ -270,11 +270,7 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
 //  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
 //  echo "product: ". $product . "<br />";
-if( (strcmp($product,'product-62') == 0) || (strcmp($product,'product-63') == 0) ) {
-  logit($from_email_address, $json_data,  "SUCCESS: order.success processed for $product");
-  echo "Products for EAP do not add new accounts";
-  return;
-}
+
   require 'product_data.php';
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
 
@@ -315,6 +311,12 @@ if( (strcmp($product,'product-62') == 0) || (strcmp($product,'product-63') == 0)
        *
        * Information will be added to your AllClients contacts!
        */
+       if( (strcmp($product,'product-62') == 0) || (strcmp($product,'product-63') == 0) )
+       {
+         logit($from_email_address, $json_data,  "SUCCESS: order.success processed for $product");
+         echo "Products for EAP do not add new accounts";
+         return;
+       }
       $account = array(
           'password'  => 'engage123',
         );
