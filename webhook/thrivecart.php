@@ -71,10 +71,10 @@ switch( $event ) {
     break;
   case 'order.refund':
       logit($email, $json_data, "order.refund");
-      $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
-      logit($email,$json_data, "Subscription_cancelled because of order.refund, result: $result");
-      $theMessage = "Account $email has cancelled!";
-  //    sendNotification($email,'Cancellation Notice',$theMessage);
+  //    $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+      logit($email,$json_data, "order.refund received");
+      $theMessage = "Account $email was issued a refund!";
+      sendNotification($email,'Refund issued to $email',$theMessage);
   //    echo "Received order.refund. result = $result<br />" . $email . " - " . $json_data . "<br />";
       break;
   case 'order.subscription_cancelled':
