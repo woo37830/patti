@@ -153,19 +153,19 @@ try {
   if (isset($results_xml->error) )
   {
     logit($from_email_address,strip_tags($postArray), "FAILURE: (add_contact_note) $results_xml->error" );
-    return false;
+    return "FAILURE: (add_contact_note) $results_xml->error" ;
   }
 
 //  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address, contact of $agentId\n";
   logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address" );
-  return true;
+  return "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address";
 
 }
 
 catch( exception $e )
 {
   logit($from_email_address,strip_tags($postArray), "FAILURE: Exception $e");
-  return false;
+  return "FAILURE: Exception $e";
 }
 }
 
