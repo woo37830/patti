@@ -8,7 +8,7 @@ require '../webhook/add_contact_note.php';
 require '../webhook/get_contacts.php';
 
 $today = date("D M j G:i:s T Y");
-$from = "jwooten37830@icloud.com";
+$from = "<John Wooten>jwooten37830@icloud.com";
 $to = "log_notes@gmail.com";
 $messageId = $today;
 $subject = "Log message";
