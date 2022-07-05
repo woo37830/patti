@@ -62,7 +62,10 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $url = $api_endpoint . 'AddContactNote.aspx';
 
   $names = firstAndLastFromEmail($from);
+  $size = sizeof($names);
   //echo "from_email_address: $from_email_address\n";
+  logit($from, "$from, sizeof names = $size", "LOG: (add_contact_note)");
+
   if ( sizeof( $names) < 3 )
   {
     $first_name = $names[0];
@@ -76,6 +79,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   }
 
   $names = firstAndLastFromEmail($to);
+  logit($from, "$to, sizeof names = $size", "LOG: (add_contact_note)");
 
   if ( sizeof( $names) < 3 )
   {
@@ -102,6 +106,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $email .= "\nsubject:\t$subject\n";
   $email .= "\nmessage:\t$message\n";
   $email .= "\nAttachments:\t$attachmentLog\n";
+  logit($from, "$from, email = $email", "LOG: (add_contact_note)");
 
   // Get the agents engagemorecrm id from the users table
 try {
