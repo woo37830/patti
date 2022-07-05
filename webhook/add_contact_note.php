@@ -106,10 +106,11 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $email .= "\nsubject:\t$subject\n";
   $email .= "\nmessage:\t$message\n";
   $email .= "\nAttachments:\t$attachmentLog\n";
-  logit($from, "$from, email = $email", "LOG: (add_contact_note)-109");
+  logit($from, "email = $email", "LOG: (add_contact_note)-109");
 
   // Get the agents engagemorecrm id from the users table
 try {
+  try {
   $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
@@ -118,8 +119,13 @@ try {
     logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     return false;
   }
+} catch (Exception $e1) {
+  return "FAILURE: Exception $e1 in getAccountId add contact note";
+
+}
   // getContact will either return the id of an existing contact OR
   // it will create the contact and return the  new id.
+  try {
   $contactId = getContact( $today, $from_email_address, $to );
 //  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
   if( $contactId == "-1" ) // Contact does not exist in agents list
@@ -134,6 +140,9 @@ try {
       }
       //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
+} catch (Exception $e2) {
+  return "FAILURE: Exception $e2 in getAccountId getContact";  
+}
 
   $data = array(
   	'apiusername' => $account_id,
@@ -169,7 +178,7 @@ try {
 
 catch( exception $e )
 {
-  logit($from_email_address,strip_tags($postArray), "FAILURE: Exception $e");
+//  logit($from_email_address,strip_tags($postArray), "FAILURE: Exception $e");
   return "FAILURE: Exception $e";
 }
 }
