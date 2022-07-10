@@ -62,7 +62,12 @@ function logit($user, $json, $my_status)
       $branch = exec('git rev-parse --abbrev-ref HEAD');
 
       $user_email = $from_email_address;
+      try {
       $stripped_json = serialize($json);
+    } catch( Exception $e) {
+      error_log("An error occurred processing $json");
+      $stripped_json = $json;
+    }
 
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
