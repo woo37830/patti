@@ -64,7 +64,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $names = firstAndLastFromEmail($from);
   $size = sizeof($names);
   //echo "from_email_address: $from_email_address\n";
-  logit($from, "$from, sizeof names = $size", "LOG: (add_contact_note)-67");
+  logit($from, "$to, sizeof names = $size", "LOG: (add_contact_note)-67");
 
   if ( sizeof( $names) < 3 )
   {
@@ -141,7 +141,7 @@ try {
       //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
 } catch (Exception $e2) {
-  return "FAILURE: Exception $e2 in getAccountId getContact";  
+  return "FAILURE: Exception $e2 in getAccountId getContact";
 }
 
   $data = array(
