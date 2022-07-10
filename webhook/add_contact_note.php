@@ -126,7 +126,7 @@ try {
   // getContact will either return the id of an existing contact OR
   // it will create the contact and return the  new id.
   try {
-  $contactId = getContact( $today, $from_email_address, $to );
+  $contactId = getContact( $today, $from_email_address, $to_email_address );
 //  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
