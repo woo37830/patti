@@ -11,23 +11,10 @@ class EmailExtractor
 {
 
 	private $inputFile;
-//	private $data;
+	private $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
 
-	/**
-	 * EmailExtract
-	 *
-	 * @param mixed $inFile
-	 * @access public
-	 * @return void
-	 */
-	public function __construct($data)
-	{
-//		this.data = $data;
-//		$this->extractEmailFromText($data);
-		$this->writeList($this->extractEmailFromText($data));
-//		$this->setinputFile($inFile);
-//		$this->writeList($this->process());
-	}
+	private $regexPhone = '/.*(\([2-9][0-9][0-9]\)\s[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]).*/';
+//	private $data;
 
 	/**
 	 * process
@@ -47,19 +34,30 @@ class EmailExtractor
 		return array_unique($emailList);
 	}
 
-	protected function extractEmailFromText($data)
+  protected function extractPatternFromText( $pattern, $data)
 	{
-		$emailList = array();
-		$pattern = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
+		$list = array();
 		preg_match_all($pattern, $data, $matches);
 		if(count($matches) != 0)
 		{
 			foreach($matches[1] as $item)
 			{
-				array_push($emailList, $item);
+				array_push($list, $item);
 			}
 		}
-		return array_unique($emailList);
+		return array_unique($list);
+
+	}
+	public function extractEmailFromText($data)
+	{
+		return $this->extractPatternFromText($this->regexEmail, $data);
+	}
+
+	public function extractPhoneFromText($data)
+	{
+		$formatted = preg_replace($this->regexPhone, '$1', $data);
+
+		return $formatted;
 	}
 	/**
 	 * writeList
@@ -86,6 +84,23 @@ class EmailExtractor
 	protected function setinputFile($inFile)
 	{
 		$this->inputFile = $inFile;
+	}
+
+	/**
+	 * EmailExtract
+	 *
+	 * @param mixed $inFile
+	 * @access public
+	 * @return void
+	 */
+	public function __construct()
+	{
+//		this.data = $data;
+//		$this->extractEmailFromText($data);
+//		$this->writeList($this->extractPatternFromText($this->regexPhone, $data));
+//		$this->writeList($this->extractPatternFromText($this->regexEmail, $data));
+//		$this->setinputFile($inFile);
+//		$this->writeList($this->process());
 	}
 }
 ?>
