@@ -13,7 +13,7 @@ class EmailExtractor
 	private $inputFile;
 	private $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
 
-	private $regexPhone = '/.*(\([2-9][0-9][0-9]\)\s[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]).*/';
+	private $regexPhone = '/.*(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}).*/';
 //	this matches (ddd) ddd-dddd
 
 	/**
