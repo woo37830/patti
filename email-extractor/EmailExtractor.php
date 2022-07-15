@@ -16,8 +16,8 @@ class EmailExtractor
 	private $regexPhone = '/.*(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}).*/';
 //	this matches (ddd) ddd-dddd
 
-	private $regexAddr = '/.*(103 Balboa Circle Oak Ridge TN 37830).*/';
-
+//	private $regexAddr = '/.*(103 Balboa Circle Oak Ridge TN 37830).*/';
+ 	private $regexAddr = '/.*(103 :\p{L}+ :+TN 37830).*/';
 	/**
 	 * process
 	 *
@@ -64,7 +64,17 @@ class EmailExtractor
 
 	public function extractAddrFromText($data)
 	{
-		return preg_replace($this->regexAddr, '$1', $data);
+		$input = strip_tags($data);
+		preg_match('/
+		(\d++)    # Number (one or more digits) -> $matches[1]
+		\s++      # Whitespace
+		([^,]++), # Building + City (everything up until a comma) -> $matches[2]
+		\s++      # Whitespace
+		(\S++)    # "DC" part (anything but whitespace) -> $matches[3]
+		\s++      # Whitespace
+		(\d++)    # Number (one or more digits) -> $matches[4]
+		/x', $input, $matches);
+	return $matches;
 	}
 
 	/**
