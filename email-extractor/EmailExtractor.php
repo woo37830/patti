@@ -14,7 +14,7 @@ class EmailExtractor
 	private $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
 
 	private $regexPhone = '/.*(\([2-9][0-9][0-9]\)\s[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]).*/';
-//	private $data;
+//	this matches (ddd) ddd-dddd
 
 	/**
 	 * process
