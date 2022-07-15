@@ -38,6 +38,8 @@ class EmailExtractor
 
   protected function extractPatternFromText( $pattern, $data)
 	{
+		$data = strip_tags($data);
+
 		$list = array();
 		preg_match_all($pattern, $data, $matches);
 		if(count($matches) != 0)
@@ -52,11 +54,13 @@ class EmailExtractor
 	}
 	public function extractEmailFromText($data)
 	{
+		$data = strip_tags($data);
 		return $this->extractPatternFromText($this->regexEmail, $data);
 	}
 
 	public function extractPhoneFromText($data)
 	{
+		$data = strip_tags($data);
 		$formatted = preg_replace($this->regexPhone, '$1', $data);
 
 		return $formatted;
@@ -77,6 +81,19 @@ class EmailExtractor
 	return $matches;
 	}
 
+public function extractNameFromText($data)
+{
+	$addr = $this->extractAddrFromText($data);
+	$item = $addr[0];
+//	print $item."\n";
+	$data = preg_replace('/'.$item.'/'," ", $data);
+//	print $data."\n";
+	$email = $this->extractEmailFromText($data);
+	$data = preg_replace('/'.$email[0].'/'," ",$data);
+//	print $data."\n";
+	$name = preg_match('/([A-Z]\S++) ([A-Z]\S++)/', $data, $matches);
+	return $matches[0];
+}
 	/**
 	 * writeList
 	 *
