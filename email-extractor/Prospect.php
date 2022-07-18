@@ -12,8 +12,10 @@ class Prospect
 
 	private $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
 
-	private $regexPhone = '/.*(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}|[2-9]\d{2}[.-]?\d{3}[.-]?\d{4}).*/';
+	private $regexPhone = '/(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}|[2-9]\d{2}[.-]?\d{3}[.-]?\d{4})/';
 //	this matches (ddd) ddd-dddd
+
+	private $inputStr;
 
 	private $email = "";
 
@@ -27,11 +29,36 @@ class Prospect
 
 	private $debug = false;
 
+  public function get_name()
+	{
+		return $this->name;
+	}
+
+	public function get_addr()
+	{
+		return $this->addr;
+	}
+
+	public function get_phone()
+	{
+		return $this->phone;
+	}
+
+	public function get_email()
+	{
+		return $this->email;
+	}
+
+	public function get_inputStr()
+	{
+		return $this->inputStr;
+	}
+
 	protected function setDebug($value)
 	{
 		$this->debug = $value;
 	}
-  protected function extractPatternFromText( $pattern, $data)
+  private function extractPatternFromText( $pattern, $data)
 	{
 		$data = strip_tags($data);
 
@@ -47,15 +74,13 @@ class Prospect
 		return array_unique($list);
 
 	}
-	public function extractEmailFromText($data)
+	private function extractEmailFromText($data)
 	{
-		$data = strip_tags($data);
 		return $this->extractPatternFromText($this->regexEmail, $data);
 	}
 
-	public function extractPhoneFromText($data)
+	private function extractPhoneFromText($data)
 	{
-		$data = strip_tags($data);
 		$temp = $this->extractPatternFromText($this->regexPhone, $data);
 		if( count($temp) > 0 )
 		{
@@ -64,9 +89,8 @@ class Prospect
 		return "";
 	}
 
-	public function extractAddrFromText($data)
+	private function extractAddrFromText($input)
 	{
-		$input = strip_tags($data);
 		preg_match('/
 		(\d++)    # Number (one or more digits) -> $matches[1]
 		\s++      # Whitespace
@@ -79,7 +103,7 @@ class Prospect
 	return $matches;
 	}
 
-public function extractNameFromText($data)
+private function extractNameFromText($data)
 {
 	$addr = $this->extractAddrFromText($data);
 	$item = $addr[0];
@@ -122,6 +146,8 @@ public function extractNameFromText($data)
 		{
 			return;
 		}
+		$this->inputStr = $email_body;
+
 		$this->data = strip_tags($email_body);
 		if( $this->debug ) {
 			print "\n..........".$this->data;
@@ -130,10 +156,18 @@ public function extractNameFromText($data)
 		if( count($temp) > 0 )
 		{
 			$this->email = $temp[0];
-			$this->data = preg_replace('/'.$this->email.'/',"",$this->data);
+			$this->data = str_replace($this->email, "", $this->data);
 		}
 		if( $this->debug ) {
 			print "\n..........<".$this->email.">".$this->data;
+		}
+
+		$this->phone = $this->extractPhoneFromText($this->data);
+//		print "\nphone: '".$this->phone."'";
+		$this->data = str_replace($this->phone, "", $this->data);
+//		print "\n..........<".$this->data.">\n";
+		if( $this->debug ) {
+			print "\n............<".$this->phone.">".$this->data;
 		}
 		$temp = $this->extractAddrFromText($this->data);
 		if( count($temp) > 0 )
@@ -146,14 +180,6 @@ public function extractNameFromText($data)
 			print "\n............<".$this->addr.">".$this->data;
 		}
 
-		$this->phone = $this->extractPhoneFromText($this->data);
-		$this->data = preg_replace('/'.$this->phone.'/',"",$this->data);
-		if( $this->debug ) {
-			print "\n............<".$this->phone.">".$this->data;
-		}
-	//	print $data."\n";
-	//	print $data."\n";
-
 		$temp = preg_match('/([A-Z]\S++) ([A-Z]\S++)/', $this->data, $matches);
 		if( count($matches) > 0 )
 		{
@@ -165,6 +191,15 @@ public function extractNameFromText($data)
 		}
 	}
 
+  public function get_info()
+	{
+		$last = exec('git log -1 --date=format:"%Y/%m/%d" --format="%ad"');
+		$rev = exec('git rev-parse --short HEAD');
+		$branch = exec('git rev-parse --abbrev-ref HEAD');
+
+		return "\n---------------- $last ---- $rev ------ $branch --------\n";
+	}
+	
 	public function __toString()
 	{
 		return "Name: ".$this->name."\nAddr: ".$this->addr."\nEmail: ".$this->email."\nPhone: ".$this->phone."\n";
