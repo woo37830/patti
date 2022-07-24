@@ -1,5 +1,41 @@
 Usage:
-$ea = new EmailExtractor("input");
+\$ea = new EmailExtractor("input");
 
 Where input is for example a text, html or other file and it prints all unique email adresses.
 
+This is used as a part of obtaining a 'lead' from a lead provider.
+That lead comes as the body of an email to the subscriber to the lead provider, e.g. realEstate.com
+In the body, there will be the name, address, phone, and email of a 'lead'
+It will be sent to the sucscribe e.g
+To: jwooten37830@icloud.com
+From: leads@realestate.com
+Subject: A lead
+Body:
+Ralph Gonzalez
+101 N East Street Baylor TX, 33905
+888-555-1212
+rgonzalex@gmail.com
+
+The subscribe, who is assummed to have an account in EngagemoreCRM under the email: jwooten37830@icloud.com
+sets his email so that mail from 'leads@realestte.com' is forwarded to
+leads@engagemorecrm.com including the body
+
+At that email address, it then forwards the email to mail@mail.mailnuggers.com
+(This is done to hide the actual mechanism from the account holder)
+
+mail@mail.mailnuggets.com then sends the email with it's body to the url provided
+which will be http://aws.web.site/patti/leadHandler.php ( TBD )
+The program in leadHandler.php then gets the address of the subscribe
+from the headers of the eamil and the original sender, realestate.com and
+uses the EmailExtractor to
+get the name, address, phone, and email from the body of the email.
+
+    It then checks that the subscriber exists in the user database
+    and gets its account number.
+    It then adds the information from the email parser as a contact to
+    the subscribers account in EngagemoreCRM and gives where it came from.
+    It will have a source in EngagemoreCRM of XXXXXX ( TBD ).
+
+TODO: (20220724) 1. Add rule to jwooten37830@icloud.com that any email with 'TEST_LEAD'
+in the subject is forwarded to patti's email, which forwards to mailnuggets 2. Test first by forwarding to wooten.666@gmail.com, which then forwards to
+mailnuggets and thence to aws webserver test package. 3. Write leadHandler.php and test.
