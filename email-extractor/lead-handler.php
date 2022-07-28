@@ -58,14 +58,14 @@ if($useTestEmail == TRUE)
 
 	} else {
 		// strip slashes away if magic_quotes_gpc is on
-		if(get_magic_quotes_gpc() == 1)
-			{
+//		if(get_magic_quotes_gpc() == 1)
+//			{
 				$postedEmail = stripslashes($_POST['email']);
-			}
-		else
-			{
-				$postedEmail = $_POST['email'];
-			}
+//			}
+//		else
+//			{
+//				$postedEmail = $_POST['email'];
+//			}
 	}
 
 
