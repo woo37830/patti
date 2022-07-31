@@ -49,6 +49,10 @@ $saveAttachments = 1;
 
 // Set to TRUE for testing
 $useTestEmail = FALSE;
+
+if(count($_POST) < 1) {
+	$useTestEmail = TRUE;
+}
 $error = 0;
 
 if($useTestEmail == TRUE)
