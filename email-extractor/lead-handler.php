@@ -395,10 +395,10 @@ $log = "Email post log:\n$email \n";
 $prospect = new Prospect($message);
 echo "\n---------------------Prospect-----------------\n";
 echo $prospect;
-
+echo "\n----------------------------------------------\n";
 if( ! $useTestEmail ) {
 	try {
-		$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
+		$added = addContactNote($today, $from, $to, $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
 		$log .= "Email added as contact note to $to: $added \n";
 	}
 	catch (exception $e) {

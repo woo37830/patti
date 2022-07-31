@@ -16,19 +16,19 @@ Ralph Gonzalez
 888-555-1212
 rgonzalex@gmail.com
 
-The subscribe, who is assummed to have an account on EngagemoreCRM under the email: jwooten37830@icloud.com
+The subscriber, who is assummed to have an account on EngagemoreCRM under the email: jwooten37830@icloud.com
 sets his email so that mail from 'leads@realestate.com' is forwarded to
 leads@engagemorecrm.com including the body
 
-At that email address, it then forwards the email to mail@mail.mailnuggers.com
+At that email address, it then forwards the email to mail@leads.woo37830.mailnuggets.com
 (This is done to hide the actual mechanism from the account holder)
 
-mail@mail.mailnuggets.com then sends the email with it's body to the url provided
-which will be http://aws.web.site/patti/leadHandler.php ( TBD )
-The program in leadHandler.php then gets the address of the subscribe
-from the headers of the eamil and the original sender, realestate.com and
+mail@leads.woo37830.mailnuggets.com then sends the email with it's body to the url provided
+which will be http://aws.web.site/patti/email-extractor/lead-handler.php ( TBD )
+The program in lead-handler.php then gets the address of the subscribe
+from the headers of the email and the original sender, e.g. realestate.com, and
 uses the EmailExtractor to
-get the name, address, phone, and email from the body of the email.
+get the name, address, phone, and email from the body of the email and creates a Prospect.
 
     It then checks that the subscriber exists in the user database
     and gets its account number.
@@ -41,5 +41,5 @@ TODO: (20220724)
 1. Add rule to jwooten37830@icloud.com that any email with 'TEST_LEAD'
    in the subject is forwarded to patti's email, which forwards to mailnuggets
 2. Test first by forwarding to wooten.666@gmail.com, which then forwards to
-   mailnuggets and thence to aws webserver test package.
+   mailnuggets and thence to aws webserver test package currently this is to jwooten37830,com for testing.
 3. Write leadHandler.php and test.

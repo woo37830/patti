@@ -53,5 +53,5 @@ print "get_phone: ".$prospect->get_phone()."\n";
 print "get_email: ".$prospect->get_email()."\n";
 print "get_inputStr: ".$prospect->get_inputStr()."\n";
 
-print "\nget_info: ".$prospect->get_info()."\n";
+print "\n\nEnd of testProspect.php\n\n".$prospect->get_info()."\n";
 ?>
