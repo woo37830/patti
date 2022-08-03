@@ -366,7 +366,7 @@ $postArray = print_r($_POST, 1);
 
 $email = "Processed on: $today";
 $email .= "\n------------\n\$_POST array:\n------------\n$postArray";
-if($error != 1)
+if(isset($from))
 {
 	$email .= "\n****************\n";
 	$email .= "Decoded values: ";
