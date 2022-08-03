@@ -68,6 +68,8 @@ function logit($user, $json, $my_status)
       error_log("An error occurred processing $json");
       $stripped_json = $json;
     }
+    //      , '$stripped_json'
+    //      , '$my_status'
 
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
@@ -82,8 +84,8 @@ function logit($user, $json, $my_status)
       ) VALUES
       ( '$datetime'
       , '$user_email'
-      , '$stripped_json'
-      , '$my_status'
+      , ''
+      , 'Testing'
       , '$rev'
       , '$branch'
       )";
