@@ -64,11 +64,11 @@ if($useTestEmail == TRUE)
 		// strip slashes away if magic_quotes_gpc is on
 //		if(get_magic_quotes_gpc() == 1)
 //			{
-				$postedEmail = stripslashes($_POST['email']);
+	//			$postedEmail = stripslashes($_POST['email']);
 //			}
 //		else
 //			{
-//				$postedEmail = $_POST['email'];
+				$postedEmail = $_POST['email'];
 //			}
 	}
 
@@ -366,25 +366,26 @@ $postArray = print_r($_POST, 1);
 
 $email = "Processed on: $today";
 $email .= "\n------------\n\$_POST array:\n------------\n$postArray";
-
-$email .= "\n****************\n";
-$email .= "Decoded values: ";
-$email .= "\n****************";
-$email .= "\n------------\n\$_POST['email'] value (JSON only):\n------------\n$postedEmail";
-$email .= "\n------------\nEmail object (JSON only):\n------------\n$logEmailArray\n";
-$email .= "\n------------\nfrom:\n------------\n$from\n";
-$email .= "\n------------\nto:\n------------\n$to\n";
-$email .= "\n------------\ndelivered-to:\n------------\n$deliveredTo\n";
-$email .= "\n------------\nreturn-path:\n------------\n$returnPath\n";
-$email .= "\n------------\nreplyTo:\n------------\n$replyTo\n";
-$email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
-$email .= "\n------------\ncontent-type:\n------------\n$contentType\n";
-$email .= "\n------------\ncontent-transfer-encoding:\n------------\n$contentTransferEncoding\n";
-$email .= "\n------------\nsubject:\n------------\n$subject\n";
-$email .= "\n------------\nmessage:\n------------\n$message\n";
-$email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
-$email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
-
+if($error != 1)
+{
+	$email .= "\n****************\n";
+	$email .= "Decoded values: ";
+	$email .= "\n****************";
+	$email .= "\n------------\n\$_POST['email'] value (JSON only):\n------------\n$postedEmail";
+	$email .= "\n------------\nEmail object (JSON only):\n------------\n$logEmailArray\n";
+	$email .= "\n------------\nfrom:\n------------\n$from\n";
+	$email .= "\n------------\nto:\n------------\n$to\n";
+	$email .= "\n------------\ndelivered-to:\n------------\n$deliveredTo\n";
+	$email .= "\n------------\nreturn-path:\n------------\n$returnPath\n";
+	$email .= "\n------------\nreplyTo:\n------------\n$replyTo\n";
+	$email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
+	$email .= "\n------------\ncontent-type:\n------------\n$contentType\n";
+	$email .= "\n------------\ncontent-transfer-encoding:\n------------\n$contentTransferEncoding\n";
+	$email .= "\n------------\nsubject:\n------------\n$subject\n";
+	$email .= "\n------------\nmessage:\n------------\n$message\n";
+	$email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
+	$email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
+}
 $added = "Starting";
 $time = time();
 
@@ -392,20 +393,22 @@ $myFile = "lead-handler-Log-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
 
-$prospect = new Prospect($message);
-echo "\n---------------------Prospect-----------------\n";
-echo $prospect;
-echo "\n----------------------------------------------\n";
-if( ! $useTestEmail ) {
-	try {
-		$added = addContactNote($today, $from, $to, $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
-		$log .= "Email added as contact note to $to: $added \n";
-	}
-	catch (exception $e) {
-		$log .= "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
+if( $error !== 1 )
+{
+	$prospect = new Prospect($message);
+	echo "\n---------------------Prospect-----------------\n";
+	echo $prospect;
+	echo "\n----------------------------------------------\n";
+	if( ! $useTestEmail ) {
+		try {
+			$added = addContactNote($today, $from, $to, $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
+			$log .= "Email added as contact note to $to: $added \n";
+		}
+		catch (exception $e) {
+			$log .= "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
+		}
 	}
 }
-
 fwrite($fh, $log);
 fclose($fh);
 
