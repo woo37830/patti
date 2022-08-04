@@ -82,7 +82,7 @@ if(count($_POST) < 1)
 
 if(function_exists('json_decode') && $postedEmail != null)
 	{
-		if(!($emailObject = json_decode($postedEmail)))
+		if(!($emailObject == json_decode($postedEmail)))
 			{
 				// the string is not valid JSON
 				echo " ERROR: Not valid JSON. ";
