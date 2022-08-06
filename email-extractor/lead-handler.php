@@ -294,7 +294,7 @@ if($error != 1)
 		$to = $emailArray['headers']['to'];
 		$messageId = $emailArray['headers']['message-id'];
 
-		echo "from: ".$emailArray['headers']['from']."\nto: ".$_POST['to']."\nmessage: ".$emailArray['parts']['body'];
+		echo "return-path: ".$emailArray['headers']['return-path']."\nto: ".$_POST['to']."\nmessage: ".$emailArray['parts']['body'];
 		// This may be an array
 		$deliveredTo = $emailArray['headers']['delivered-to'];
 
@@ -385,14 +385,15 @@ $time = time();
 $myFile = "lead-handler-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
-echo "Email post log:\n$email";
+echo "Email error=$error";
 if( $error !== 1 )
 {
 	$prospect = new Prospect($message);
 	echo "\n---------------------Prospect-----------------\n";
 	echo $prospect;
 	echo "\n----------------------------------------------\n";
-	if( ! $useTestEmail ) {
+	if( ! $useTestEmail )
+	{
 		try {
 			$added = addContactNote($today, $from, $prospect.get_email(), $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
 			$log .= "Prospect $prospect.get_email() created for $from at $added \n";
