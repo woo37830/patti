@@ -380,17 +380,26 @@ $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 $added = "Starting";
 $time = time();
 
-$myFile = "postTestLog-$time.txt";
+$myFile = "lead-handler-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
-try {
-	$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-	$log .= "Email added as contact note to $to: $added \n";
-}
-catch (exception $e) {
-	$log .= "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
-}
 
+if( $error !== 1 )
+{
+	$prospect = new Prospect($message);
+	echo "\n---------------------Prospect-----------------\n";
+	echo $prospect;
+	echo "\n----------------------------------------------\n";
+	if( ! $useTestEmail ) {
+		try {
+			$added = addContactNote($today, $from, $prospect.get_email(), $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
+			$log .= "Prospect $prospect.get_email() created for $to at $added \n";
+		}
+		catch (exception $e) {
+			$log .= "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
+		}
+	}
+}
 fwrite($fh, $log);
 fclose($fh);
 
