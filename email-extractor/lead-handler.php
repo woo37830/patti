@@ -294,7 +294,7 @@ if($error != 1)
 		$to = $emailArray['headers']['to'];
 		$messageId = $emailArray['headers']['message-id'];
 
-		echo "from: $from\nto: $to\nbody: ".$_POST['body'];
+		echo "from: ".$emailArray['headers']['from']."\nto: ".$_POST['to']."\nmessage: ".$emailArray['parts']['body'];
 		// This may be an array
 		$deliveredTo = $emailArray['headers']['delivered-to'];
 
@@ -306,6 +306,7 @@ if($error != 1)
 		// if the key-value posting option is used get that data
 		if($_POST['to'] != null)
 			{
+				echo "post to is not null";
 				$returnPath = $_POST['return-path'];
 				$messageId = $_POST['message-id'];
 				$subject = $_POST['subject'];
