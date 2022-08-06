@@ -29,6 +29,13 @@ class Prospect
 
 	private $debug = false;
 
+	private $for = "";
+
+	public function get_for()
+	{
+		return $this->for;
+	}
+
   public function get_name()
 	{
 		return $this->name;
@@ -140,8 +147,10 @@ private function extractNameFromText($data)
 	 * @return void
 	 */
 
-	public function __construct( $email_body )
+	public function __construct( $account, $email_body )
 	{
+		$this->for = $account;
+
 		if ( $email_body === "" )
 		{
 			return;
@@ -199,10 +208,10 @@ private function extractNameFromText($data)
 
 		return "\n---------------- $last ---- $rev ------ $branch --------\n";
 	}
-	
+
 	public function __toString()
 	{
-		return "Name: ".$this->name."\nAddr: ".$this->addr."\nEmail: ".$this->email."\nPhone: ".$this->phone."\n";
+		return "Name: ".$this->name."\nAddr: ".$this->addr."\nProspect Email: ".$this->email."\nPhone: ".$this->phone."\nProspect for: ".$this->for."\n";
 	}
 }
 ?>

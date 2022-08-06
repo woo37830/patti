@@ -294,6 +294,7 @@ if($error != 1)
 		$to = $emailArray['headers']['to'];
 		$messageId = $emailArray['headers']['message-id'];
 
+		echo "from: $from\nto: $to\nbody: ".$_POST['body'];
 		// This may be an array
 		$deliveredTo = $emailArray['headers']['delivered-to'];
 
@@ -383,7 +384,7 @@ $time = time();
 $myFile = "lead-handler-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
-
+echo "Email post log:\n$email";
 if( $error !== 1 )
 {
 	$prospect = new Prospect($message);
@@ -393,10 +394,12 @@ if( $error !== 1 )
 	if( ! $useTestEmail ) {
 		try {
 			$added = addContactNote($today, $from, $prospect.get_email(), $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
-			$log .= "Prospect $prospect.get_email() created for $to at $added \n";
+			$log .= "Prospect $prospect.get_email() created for $from at $added \n";
+			echo "\nProspect $prospect.get_email() created for $from at $added \n";
 		}
 		catch (exception $e) {
-			$log .= "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
+			$log .= "#Posted $today#, Exception $e occurred attempting to add $prospect.get_email() for $from";
+			echo "\n#Posted $today#, Exception $e occurred attempting to add $prospect.get_email() for $from\n";
 		}
 	}
 }
