@@ -55,7 +55,7 @@ $error = 0;
 		$testEmail = '{"headers":{"from jwooten37830@icloud.com  sun aug  7 14":"26:40 2022","return-path":"<jwooten37830@icloud.com>","x-original-to":"mail@leads.woo37830.mailnuggets.com","delivered-to":"mail@leads.woo37830.mailnuggets.com","received":["from st43p00im-ztfb10063301.me.com (st43p00im-ztfb10063301.me.com [17.58.63.179]) by mail.mailnuggets.com (Postfix) with ESMTP id 2BD4641817 for <mail@leads.woo37830.mailnuggets.com>; Sun,  7 Aug 2022 14:26:40 +0000 (UTC)","from [10.0.0.197] (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41]) by st43p00im-ztfb10063301.me.com (Postfix) with ESMTPSA id 88C287001C3 for <mail@leads.woo37830.mailnuggets.com>; Sun,  7 Aug 2022 14:26:39 +0000 (UTC)"],"dkim-signature":"v=1; a=rsa-sha256; c=relaxed\/relaxed; d=icloud.com; s=1a1hai; t=1659882399; bh=VdcXYmUWZl7h4MHOj0tMy\/GditxPcxbsn676Qmw77RY=; h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=02R034dtY7hZCBiKlD9fVINNn78nlelZ6XnD93oBB5IBtDfw4zL2IJgGHS5RAX1F3 tzNQIY+HJ4nP++is9FhWzbOYGQq5Ydd8rVGUd1ydla2jl1CRh6lpqsEM7I+S9HLo4Y iC8wXY8uhEolwTU9mlC0gVdL0l0AZarYdM9rWdIp4185dAznn4grzTPDfMxki2edTo wbpzpdRDoLmzfh7tEg91\/KWsyOFzlY3j1WmKM5s7kuYh0rF1GcRwsnpD1sU0Ny+Zx\/ +onj7CcvWMVdrl9uumYmLpVfcMBrr2nojdDnkyXWZuVLeZl1T+rLuqpQI8CdRixyS7 NO5t5mCuCCl1w==","from":"John Wooten <jwooten37830@icloud.com>","content-type":"multipart\/alternative; boundary=\"Apple-Mail=_E09D50C6-BF8A-4AF2-8D66-7540EACC5B06\"","mime-version":"1.0 (Mac OS X Mail 13.4 \\(3608.120.23.2.7\\))","subject":"Test9","message-id":"<B58E7329-71D8-4628-B994-E3FE018AAFC5@icloud.com>","date":"Sun, 7 Aug 2022 10:26:38 -0400","to":"mail@leads.woo37830.mailnuggets.com","x-mailer":"Apple Mail (2.3608.120.23.2.7)","x-proofpoint-guid":"1DE6kmJ46h0ZWwGF2P0WskX9wakfX0TT","x-proofpoint-orig-guid":"1DE6kmJ46h0ZWwGF2P0WskX9wakfX0TT","x-proofpoint-virus-version":"vendor=fsecure engine=1.1.170-22c6f66c430a71ce266a39bfe25bc2903e8d5c8f:6.0.138,18.0.883,17.11.64.514.0000000 definitions=2022-06-21_08:2020-02-14_02,2022-06-21_08,2022-02-23_01 signatures=0","x-proofpoint-spam-details":"rule=notspam policy=default score=0 mlxlogscore=234 mlxscore=0 clxscore=1015 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0 malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2206140000 definitions=main-2208070078"},"ctype_primary":"multipart","ctype_secondary":"alternative","ctype_parameters":{"boundary":"Apple-Mail=_E09D50C6-BF8A-4AF2-8D66-7540EACC5B06"},"parts":[{"headers":{"content-transfer-encoding":"quoted-printable","content-type":"text\/plain; charset=us-ascii"},"ctype_primary":"text","ctype_secondary":"plain","ctype_parameters":{"charset":"us-ascii"},"body":"Test that (865) 300-4774 for wooten.666@gmail.com =\n<mailto:wooten.666@gmail.com> John Wooten 106 Crestview Lane Oak Ridge =\nTN, 37830 gets parsed.\n\n\n"},{"headers":{"content-transfer-encoding":"7bit","content-type":"text\/html; charset=us-ascii"},"ctype_primary":"text","ctype_secondary":"html","ctype_parameters":{"charset":"us-ascii"},"body":"<html><head><meta http-equiv=\"Content-Type\" content=\"text\/html; charset=us-ascii\"><\/head><body style=\"word-wrap: break-word; -webkit-nbsp-mode: space; line-break: after-white-space;\" class=\"\">Test that (865) 300-4774 for&nbsp;<a href=\"mailto:wooten.666@gmail.com\" class=\"\">wooten.666@gmail.com<\/a>&nbsp;John Wooten 106 Crestview Lane Oak Ridge TN, 37830 gets parsed.<div class=\"\"><br class=\"\"><\/div><\/body><\/html>\n"}]}';
 
 $data = '{"Coords":[{"Accuracy":"65","Latitude":"53.277720488429026","Longitude":"-9.012038778269686","Timestamp":"Fri Jul 05 2013 11:59:34 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.277720488429026","Longitude":"-9.012038778269686","Timestamp":"Fri Jul 05 2013 11:59:34 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27770755361785","Longitude":"-9.011979642121824","Timestamp":"Fri Jul 05 2013 12:02:09 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27769091555766","Longitude":"-9.012051410095722","Timestamp":"Fri Jul 05 2013 12:02:17 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27769091555766","Longitude":"-9.012051410095722","Timestamp":"Fri Jul 05 2013 12:02:17 GMT+0100 (IST)"}]}';
-	
+
 
 	if(count($_POST) < 1 && !$useTestEmail)
 		{
@@ -75,7 +75,7 @@ if( count($_POST) > 1 )
 else
 {
 		$postedEmail = $testEmail;
-		echo "Using testEmail";
+		echo "Using testEmail\nWhich is\n^".$testEmail."^\n";
 }
 
 if(!(function_exists('json_decode')))
@@ -159,17 +159,17 @@ if($error != 1)
 		  echo "postedEmail is: ".getType($postedEmail)."\n";
 
 			$emailObject = json_decode($postedEmail, true);
+			if( $emailObject == null )
+			{
+				die("ERROR: emailObject is null");
+			}
+			echo "emailObject is: ".getType($emailObject)."\n";
 			if(!($emailObject == json_decode($postedEmail)))
 				{
 					// the string is not valid JSON
 					die("ERROR: Not valid JSON \n\n".$postedEmail."\n");
 				}
 
-		if( $emailObject == null )
-		{
-			die("ERROR: emailObject is null");
-		}
-		echo "emailObject is: ".getType($emailObject)."\n";
 		print_r($emailObject);
 		$emailArray = $emailObject;
 //		$subject = $emailArray['headers']['subject'];
