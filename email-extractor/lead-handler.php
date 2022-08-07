@@ -159,6 +159,14 @@ if($error != 1)
 		// convert object to an array recursively
 		  echo "postedEmail is: ".getType($postedEmail)."\n";
 
+			$emailObject = json_decode($postedEmail);
+			if(!($emailObject == json_decode($postedEmail)))
+				{
+					// the string is not valid JSON
+					die("ERROR: Not valid JSON \n\n".$postedEmail."\n");
+					$error = 1;
+				}
+
 		$emailObject = json_decode( $postedEmail, true ); // emailObject is JSON object
 		if( $emailObject == null )
 		{
