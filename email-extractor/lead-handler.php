@@ -71,6 +71,7 @@ function stripQuotes($text) {
 		}
 if( count($_POST) > 1 )
 {
+	echo "\nThere is a POST argument\n";
 		if( get_magic_quotes_gpc() == 1)
 			{
 				$postedEmail = stripslashes($_POST['email']);
@@ -79,11 +80,12 @@ if( count($_POST) > 1 )
 			{
 				$postedEmail = $_POST['email'];
 			}
+			$postedEmail = stripQuotes($postedEmail);
 }
 else
 {
 		$postedEmail = stripQuotes($testEmail);
-		echo "Using testEmail\nWhich is\n^".$postedEmail."^\n";
+		echo "Using testEmail\n";
 }
 
 if(!(function_exists('json_decode')))
@@ -94,8 +96,8 @@ if(!(function_exists('json_decode')))
 
 if(function_exists('json_decode') && $postedEmail != null)
 	{
-		$emailObject = json_decode($postedEmail);
-		if(!($emailObject == json_decode($postedEmail)))
+		$emailObject = json_decode($postedEmail, true);
+		if(!($emailObject == json_decode($postedEmail, true)))
 			{
 				// the string is not valid JSON
 				echo " ERROR: Not valid JSON. ";
