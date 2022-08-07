@@ -166,12 +166,12 @@ function decodeQuotedPrintable ($message)
 if($error != 1)
 	{
 		// convert object to an array recursively
-		  echo "postedEmail is: ".getType($postedEmail)."\n";
+		  echo "postedEmail is: ".getType($postedEmail)."\n of length ".strlen($postedEmail)."\n";
 
 			$emailObject = json_decode($postedEmail, true);
 			if( $emailObject == null )
 			{
-				die("ERROR: emailObject is null");
+				die("ERROR: emailObject is null, postedEmail is:\n*".$postedEmail."*\n");
 			}
 			echo "emailObject is: ".getType($emailObject)."\n";
 			if(!($emailObject == json_decode($postedEmail)))
