@@ -56,6 +56,14 @@ $error = 0;
 
 $data = '{"Coords":[{"Accuracy":"65","Latitude":"53.277720488429026","Longitude":"-9.012038778269686","Timestamp":"Fri Jul 05 2013 11:59:34 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.277720488429026","Longitude":"-9.012038778269686","Timestamp":"Fri Jul 05 2013 11:59:34 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27770755361785","Longitude":"-9.011979642121824","Timestamp":"Fri Jul 05 2013 12:02:09 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27769091555766","Longitude":"-9.012051410095722","Timestamp":"Fri Jul 05 2013 12:02:17 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27769091555766","Longitude":"-9.012051410095722","Timestamp":"Fri Jul 05 2013 12:02:17 GMT+0100 (IST)"}]}';
 
+/**
+ * Remove the first and last quote from a quoted string of text
+ *
+ * @param mixed $text
+ */
+function stripQuotes($text) {
+  return preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $text);
+}
 
 	if(count($_POST) < 1 && !$useTestEmail)
 		{
@@ -74,8 +82,8 @@ if( count($_POST) > 1 )
 }
 else
 {
-		$postedEmail = $testEmail;
-		echo "Using testEmail\nWhich is\n^".$testEmail."^\n";
+		$postedEmail = stripQuotes($testEmail);
+		echo "Using testEmail\nWhich is\n^".$postedEmail."^\n";
 }
 
 if(!(function_exists('json_decode')))
