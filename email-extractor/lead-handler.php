@@ -40,7 +40,7 @@ require_once 'Prospect.php';
 $saveAttachments = 1;
 $attachmentLog = "log";
 // Set to TRUE for testing
-$useTestEmail = TRUE;
+$useTestEmail = FALSE;
 $error = 0;
 
 ######################################################
@@ -204,14 +204,14 @@ if($error != 1)
 			}
 			echo "emailObject is: ".getType($emailObject)."\n";
 
-		print_r($emailObject);
+//		print_r($emailObject);
 		$emailArray = $emailObject;
 //		$subject = $emailArray['headers']['subject'];
 
 		if($emailArray['parts'][0]['body'] != null)
 			{
 				$message = $emailArray['parts'][0]['body'];
-				echo "STATUS 213: $message\n";
+//				echo "STATUS 213: $message\n";
 			}
 			else
 			{
@@ -271,7 +271,7 @@ $email .= "\n------------\nEmail object (JSON only):\n------------\n$logEmailArr
 $email .= "\n------------\nto:\n------------\n$to\n";
 $email .= "\n------------\ndelivered-to:\n------------\n$deliveredTo\n";
 $email .= "\n------------\nreturn-path:\n------------\n$returnPath\n";
-//$email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
+$email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
 //$email .= "\n------------\ncontent-type:\n------------\n$contentType\n";
 //$email .= "\n------------\ncontent-transfer-encoding:\n------------\n$contentTransferEncoding\n";
 //$email .= "\n------------\nsubject:\n------------\n$subject\n";
@@ -289,19 +289,19 @@ echo "Email error=$error";
 if( $error !== 1 )
 {
 	$prospect = new Prospect($returnPath, $message);
-	echo "\n---------------------Prospect-----------------\n";
-	echo $prospect;
-	echo "\n----------------------------------------------\n";
+//	echo "\n---------------------Prospect-----------------\n";
+//	echo $prospect;
+//	echo "\n----------------------------------------------\n";
 	if( ! $useTestEmail )
 	{
 		try {
 			$added = addContactNote($today, $returnPath, $prospect.get_email(), $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
-			$log .= "Prospect $prospect.get_email() created for $from at $added \n";
-			echo "\nProspect $prospect.get_email() created for $from at $added \n";
+			$log .= "Prospect $prospect.get_email() created for $returnPath at $added \n";
+			echo "\nProspect $prospect.get_email() created for $returnPath at $added \n";
 		}
 		catch (exception $e) {
-			$log .= "#Posted $today#, Exception $e occurred attempting to add $prospect.get_email() for $from";
-			echo "\n#Posted $today#, Exception $e occurred attempting to add $prospect.get_email() for $from\n";
+			$log .= "#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath";
+			echo "\n#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath\n";
 		}
 	}
 }
