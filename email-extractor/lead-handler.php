@@ -89,7 +89,7 @@ function stripQuotes($text) {
 
 if( count($_POST) > 1 )
 {
-	echo "\nThere is a POST argument\n";
+//	echo "\nThere is a POST argument\n";
 		if( get_magic_quotes_gpc() == 1)
 			{
 				$postedEmail = stripslashes($_POST['email']);
@@ -195,14 +195,14 @@ function decodeQuotedPrintable ($message)
 if($error != 1)
 	{
 		// convert object to an array recursively
-		  echo "postedEmail is: ".getType($postedEmail)."\n of length ".strlen($postedEmail)."\n";
+//		  echo "postedEmail is: ".getType($postedEmail)."\n of length ".strlen($postedEmail)."\n";
 
 			$emailObject = json_decode($postedEmail, true);
 			if( $emailObject == null )
 			{
 				die("ERROR: emailObject is null, postedEmail is:\n*".$postedEmail."*\n");
 			}
-			echo "emailObject is: ".getType($emailObject)."\n";
+//			echo "emailObject is: ".getType($emailObject)."\n";
 
 //		print_r($emailObject);
 		$emailArray = $emailObject;
@@ -254,6 +254,10 @@ if($error != 1)
 ## 	log the processed email to postTestLog.txt
 ##	(Make sure directory and/or file is writtable)
 ######################################################
+$added = "Starting";
+$time = time();
+$myFile = "lead-handler-$time.txt";
+$fh = fopen($myFile, 'w') or die("can't open file");
 
 $today = date("D M j G:i:s T Y");
 $logEmailArray = print_r($emailArray, 1);
@@ -279,31 +283,31 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 //$email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
 //$email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
-$added = "Starting";
-$time = time();
 
-$myFile = "lead-handler-$time.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
-$log = "Email post log:\n$email \n";
 echo "Email error=$error";
-if( $error !== 1 )
-{
-	$prospect = new Prospect($returnPath, $message);
-//	echo "\n---------------------Prospect-----------------\n";
-//	echo $prospect;
-//	echo "\n----------------------------------------------\n";
-	if( ! $useTestEmail )
+$log = "Email post log:\n$email \n";
+try {
+	if( $error !== 1 )
 	{
-		try {
-			$added = addContactNote($today, $returnPath, $prospect.get_email(), $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
-			$log .= "Prospect $prospect.get_email() created for $returnPath at $added \n";
-			echo "\nProspect $prospect.get_email() created for $returnPath at $added \n";
-		}
-		catch (exception $e) {
-			$log .= "#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath";
-			echo "\n#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath\n";
+		$prospect = new Prospect($returnPath, $message);
+	//	echo "\n---------------------Prospect-----------------\n";
+	//	echo $prospect;
+	//	echo "\n----------------------------------------------\n";
+		if( ! $useTestEmail )
+		{
+			try {
+				$added = addContactNote($today, $returnPath, $prospect.get_email(), $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
+				$log .= "Prospect $prospect.get_email() created for $returnPath at $added \n";
+				echo "\nProspect $prospect.get_email() created for $returnPath at $added \n";
+			}
+			catch (exception $e) {
+				$log .= "#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath";
+				echo "\n#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath\n";
+			}
 		}
 	}
+} catch( exception $e1) {
+	$log .= "An exception $e1 was thrown!";
 }
 fwrite($fh, $log);
 fclose($fh);
