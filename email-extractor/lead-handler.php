@@ -296,7 +296,7 @@ try {
 		if( ! $useTestEmail )
 		{
 			try {
-				$added = addContactNote($today, $returnPath, $prospect.get_email(), $messageId, $subject, "\n------\n$prospect\n---------\n", $attachmentLog, $postArray);
+				$added = addContactNote($today, $returnPath, $prospect.get_email(), $messageId, "Test", "\n------\n$prospect\n---------\n", "", "");
 				$log .= "Prospect $prospect.get_email() created for $returnPath at $added \n";
 				echo "\nProspect $prospect.get_email() created for $returnPath at $added \n";
 			}
@@ -308,6 +308,7 @@ try {
 	}
 } catch( exception $e1) {
 	$log .= "An exception $e1 was thrown!";
+	echo "\nException $e1 was thrown";
 }
 fwrite($fh, $log);
 fclose($fh);
