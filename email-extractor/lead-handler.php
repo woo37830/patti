@@ -28,6 +28,12 @@
 ##	  for saving attachments and logging.
 ##
 ######################################################
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 require_once '../webhook/add_contact_note.php';
 require_once '../webhook/mysql_common.php';
 require_once 'Prospect.php';
@@ -237,6 +243,9 @@ if($error != 1)
 		$deliveredTo = $emailArray['headers']['delivered-to'];
 
 		$returnPath = $emailArray['headers']['return-path'];
+		if( strpos($returnPath, '<') === 0 ) {
+		$returnPath = substr($returnPath, 1, -1);
+	}
 //		$replyTo = $emailArray['headers']['reply-to'];
 //		$contentType = $emailArray['headers']['content-type'];
 //		$contentTransferEncoding = $emailArray['headers']['transfer-encoding'];
@@ -256,14 +265,14 @@ if($error != 1)
 ######################################################
 $added = "Starting";
 $time = time();
-$myFile = "lead-handler-$time.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
+//$myFile = "lead-handler-$time.txt";
+//$fh = fopen($myFile, 'w') or die("can't open file");
 
 $today = date("D M j G:i:s T Y");
 $logEmailArray = print_r($emailArray, 1);
 $postArray = print_r($_POST, 1);
 
-$email = "Processed on: $today";
+$email = "\nProcessed on: $today";
 $email .= "\n------------\n\$_POST array:\n------------\n$postArray";
 
 $email .= "\n****************\n";
@@ -284,7 +293,7 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 //$email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
 
-echo "Email error=$error";
+echo "Email error=$error\n";
 $log = "Email post log:\n$email \n";
 try {
 	if( $error !== 1 )
@@ -293,28 +302,28 @@ try {
 	//	echo "\n---------------------Prospect-----------------\n";
 	//	echo $prospect;
 	//	echo "\n----------------------------------------------\n";
-		if( ! $useTestEmail )
-		{
+	$added = "Not activated";
+
 			try {
-				$added = addContactNote($today, $returnPath, $prospect.get_email(), $messageId, "Test", "\n------\n$prospect\n---------\n", "", "");
-				$log .= "Prospect $prospect.get_email() created for $returnPath at $added \n";
-				echo "\nProspect $prospect.get_email() created for $returnPath at $added \n";
+				$added = addContactNote($today, $returnPath, $prospect->get_email(), $messageId, "Test", "\n------\n$prospect\n---------\n", "", "");
+				$log .= "Prospect ".$prospect->get_email()." created for $returnPath at $added \n";
+				echo "\nProspect ".$prospect->get_email()." created for $returnPath at $added \n";
 			}
 			catch (exception $e) {
-				$log .= "#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath";
-				echo "\n#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath\n";
+				$log .= "#Posted $today, Exception $e occurred attempting to add ".$prospect->get_email()." for $returnPath";
+				echo "\n#Posted $today, Exception $e occurred attempting to add ".$prospect->get_email()." for $returnPath\n";
 			}
-		}
 	}
 } catch( exception $e1) {
 	$log .= "An exception $e1 was thrown!";
 	echo "\nException $e1 was thrown";
 }
-fwrite($fh, $log);
-fclose($fh);
+//fwrite($fh, $log);
+//fclose($fh);
 
 // return a confirmation to mailnuggets
-echo "#Posted $today#, $log";
+//echo "\n#Posted $today#, $log";
+echo "All Done!\n";
 
 
 
