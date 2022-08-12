@@ -296,9 +296,10 @@ try {
 		if( ! $useTestEmail )
 		{
 			try {
+		echo "\nAdding contact note";
 				$added = addContactNote($today, $returnPath, $prospect.get_email(), $messageId, "Test", "\n------\n$prospect\n---------\n", "", "");
-				$log .= "Prospect $prospect.get_email() created for $returnPath at $added \n";
 				echo "\nProspect $prospect.get_email() created for $returnPath at $added \n";
+				$log .= "Prospect $prospect.get_email() created for $returnPath at $added \n";
 			}
 			catch (exception $e) {
 				$log .= "#Posted $today, Exception $e occurred attempting to add $prospect.get_email() for $returnPath";
