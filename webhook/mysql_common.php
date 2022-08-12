@@ -85,7 +85,7 @@ function logit($user, $json, $my_status)
       ( '$datetime'
       , '$user_email'
       , ''
-      , '$my_statue'
+      , '$my_status'
       , '$rev'
       , '$branch'
       )";
