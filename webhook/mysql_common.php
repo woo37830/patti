@@ -60,14 +60,15 @@ function logit($user, $json, $my_status)
     {
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
-
-      $user_email = $from_email_address;
-      try {
-      $stripped_json = serialize($json);
-    } catch( Exception $e) {
-      error_log("An error occurred processing $json");
-      $stripped_json = $json;
-    }
+//      echo "user_email = ".$user_email;
+ //     $user_email = $from_email_address;
+ //     try {
+  //    $stripped_json = serialize($json);
+   // } catch( Exception $e) {
+//	echo "Ann error happended processing serialize(json)"
+ //     error_log("An error occurred processing $json");
+//      $stripped_json = $json;
+//    }
     //      , '$stripped_json'
     //      , '$my_status'
 
@@ -83,13 +84,14 @@ function logit($user, $json, $my_status)
 
       ) VALUES
       ( '$datetime'
-      , '$user_email'
+      , 'jwooten37830@icloud.com'
       , ''
-      , '$my_status'
+      , 'STATUS'
       , '$rev'
       , '$branch'
       )";
       $sql = str_replace("\/","_",$sql);
+      echo "sql = $sql";
       if (!$res = $conn->query($sql))
       {
                  $err
@@ -102,7 +104,10 @@ function logit($user, $json, $my_status)
               ;
               mysqli_close($conn);
               // logging the error
-              error_log("An error occurred processing $user");
+//              error_log("An error occurred processing $json");
+//		echo $user_email;
+		echo $my_status;
+		echo $rev;
 
               trigger_error($err, E_USER_ERROR);
        }

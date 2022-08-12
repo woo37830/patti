@@ -52,7 +52,7 @@ function addContactFromEmail($today, $from, $to)
   $email_address = $names[2];
 
   try {
-  $results_xml = addContact($today, $agentId, $first_name, $last_name, $email_address);
+  $results_xml = addContact($today, $agentId, $first_name, $last_name, $email_address, 'SOURCE');
 } catch (Exception $e3 ) {
   logit($email_address, $results_xml,"FAILURE: Exception $e3");
   return "-1";

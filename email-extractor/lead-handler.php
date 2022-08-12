@@ -74,7 +74,7 @@ $testEmail = '{"headers":{
 			"ctype_primary":"text",
 			"ctype_secondary":"plain",
 			"ctype_parameters":{"charset":"us-ascii"},
-			"body":"Test that (865) 300-4774 for wooten.666@gmail.com =\n<mailto:wooten.666@gmail.com> John Wooten 106 Crestview Lane Oak Ridge =\nTN, 37830 gets parsed.\n\n\n"
+			"body":"Test that (800) 300-4774 for ralph.jones@gmail.com John Wooten \n\n\n"
 		}
 	]
 }';
@@ -305,7 +305,7 @@ try {
 	$added = "Not activated";
 
 			try {
-				$added = addContactNote($today, $returnPath, $prospect->get_email(), $messageId, "Test", "\n------\n$prospect\n---------\n", "", "");
+				$added = addContactNote($today, $returnPath, $prospect->get_email(), $messageId, "Test", "\n------\n".$prospect."\n---------\n", "", "");
 				$log .= "Prospect ".$prospect->get_email()." created for $returnPath at $added \n";
 				echo "\nProspect ".$prospect->get_email()." created for $returnPath at $added \n";
 			}
