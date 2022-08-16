@@ -95,7 +95,7 @@ function stripQuotes($text) {
 
 if( count($_POST) > 1 )
 {
-//	echo "\nThere is a POST argument\n";
+	echo "\nThere is a POST argument\n";
 		if( get_magic_quotes_gpc() == 1)
 			{
 				$postedEmail = stripslashes($_POST['email']);
