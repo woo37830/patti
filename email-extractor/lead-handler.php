@@ -112,7 +112,7 @@ echo "\nPost: ".count($_POST)."\n";
 				$postedEmail = stripQuotes($testEmail);
 				echo "Using testEmail\n";
 		}
-	} 
+	}
 	catch( Exception $e3)
 	{
 		die("\bException $e3 trying to parse email\n");
@@ -130,20 +130,6 @@ if(!(function_exists('json_decode')))
 	}
 
 
-if(function_exists('json_decode') && $postedEmail != null)
-	{
-		$emailObject = json_decode($postedEmail, TRUE);
-		if( $emailObject == null )
-		{
-			die("ERROR at 99: emailObject is null, postedEmail is:\n*".$postedEmail."*\n");
-		}
-
-		if(!($emailObject == json_decode($postedEmail, TRUE)))
-			{
-				// the string is not valid JSON
-				echo " ERROR 132: Not valid JSON. ";
-			}
-	}
 
 // it's easier to access the data when converted to an array
 function objectToArray( $object )
@@ -207,17 +193,10 @@ function decodeQuotedPrintable ($message)
 if($error != 1)
 	{
 		// convert object to an array recursively
-//		  echo "postedEmail is: ".getType($postedEmail)."\n of length ".strlen($postedEmail)."\n";
-
-			$emailObject = json_decode($postedEmail, true);
-			if( $emailObject == null )
-			{
-				die("ERROR: emailObject is null, postedEmail is:\n*".$postedEmail."*\n");
-			}
-//			echo "emailObject is: ".getType($emailObject)."\n";
+		  echo "postedEmail is: ".getType($postedEmail)."\n of length ".strlen($postedEmail)."\n";
 
 //		print_r($emailObject);
-		$emailArray = $emailObject;
+		$emailArray = $postedEmail;
 //		$subject = $emailArray['headers']['subject'];
 
 		if($emailArray['parts'][0]['body'] != null)
