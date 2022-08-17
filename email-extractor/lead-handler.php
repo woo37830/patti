@@ -92,16 +92,21 @@ function stripQuotes($text) {
   return preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $text);
 }
 
-echo "\nPost: ".count($_POST).", Request: ".count($_REQUEST)."\n";
+echo "\nPost: ".count($_POST)."\n";
 if( count($_POST) > 0 )
 {
+	$json = file_get_contents('php://input');
+
+	// decode the json data
+	$data = json_decode($json);
+
 		if( get_magic_quotes_gpc() == 1)
 			{
-				$postedEmail = stripslashes($_POST['email']);
+				$postedEmail = stripslashes($data['email']);
 			}
 		else
 			{
-				$postedEmail = $_POST['email'];
+				$postedEmail = $data['email'];
 			}
 			$postedEmail = stripQuotes($postedEmail);
 }
