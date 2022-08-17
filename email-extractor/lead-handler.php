@@ -83,6 +83,13 @@ $testEmail = '{"headers":{
 
 $data = '{"Coords":[{"Accuracy":"65","Latitude":"53.277720488429026","Longitude":"-9.012038778269686","Timestamp":"Fri Jul 05 2013 11:59:34 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.277720488429026","Longitude":"-9.012038778269686","Timestamp":"Fri Jul 05 2013 11:59:34 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27770755361785","Longitude":"-9.011979642121824","Timestamp":"Fri Jul 05 2013 12:02:09 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27769091555766","Longitude":"-9.012051410095722","Timestamp":"Fri Jul 05 2013 12:02:17 GMT+0100 (IST)"},{"Accuracy":"65","Latitude":"53.27769091555766","Longitude":"-9.012051410095722","Timestamp":"Fri Jul 05 2013 12:02:17 GMT+0100 (IST)"}]}';
 
+$time = time();
+$today = date("D M j G:i:s T Y");
+
+$myFile = "lead-handler-$time.txt";
+$fh = fopen($myFile, 'w') or die("can't open file");
+$email = "\nProcessed on: $today";
+fwrite($fh, $email);
 /**
  * Remove the first and last quote from a quoted string of text
  *
@@ -152,9 +159,6 @@ function decodeQuotedPrintable ($message)
 	}
 // get key variables from $emailArray object if no errors
 echo "\nPost: ".count($_POST)."\n";
-$time = time();
-$myFile = "lead-handler-$time.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
 
 if( count($_POST) == 0 ) {
 	fwrite($fh, "\nNo data in POST\n");
@@ -162,11 +166,11 @@ if( count($_POST) == 0 ) {
 	die("\nNo data in POST\n");
 }
 
-
+try {
 if($error != 1)
 	{
 		$message = $_POST['body'];
-//				echo "STATUS 213: $message\n";
+		fwrite($fh, "\nSTATUS 171: $message\n");
 		$to = $_POST['to'];
 		$from = $_POST['from'];
 		$messageId = $_POST['message-id'];
@@ -200,11 +204,9 @@ if($error != 1)
 ######################################################
 $added = "Starting";
 
-$today = date("D M j G:i:s T Y");
-$logEmailArray = print_r($emailArray, 1);
-$postArray = print_r($_POST, 1);
+//$logEmailArray = print_r($emailArray, 1);
+//$postArray = print_r($_POST, 1);
 
-$email = "\nProcessed on: $today";
 //$email .= "\n------------\n\$_POST array:\n------------\n$postArray";
 
 $email .= "\n****************\n";
@@ -249,6 +251,9 @@ try {
 } catch( exception $e1) {
 	$log .= "An exception $e1 was thrown!";
 	echo "\nException $e1 was thrown";
+}
+} catch( Exception $e5) {
+	$log .= "\nAn exception $e5 was thrown\n";
 }
 fwrite($fh, $log);
 fclose($fh);
