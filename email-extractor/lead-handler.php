@@ -92,10 +92,9 @@ function stripQuotes($text) {
   return preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $text);
 }
 
-
+echo "\nPost: ".count($_POST).", Request: ".count($_REQUEST)."\n";
 if( count($_POST) > 1 )
 {
-	echo "\nThere is a POST argument\n";
 		if( get_magic_quotes_gpc() == 1)
 			{
 				$postedEmail = stripslashes($_POST['email']);
