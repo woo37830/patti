@@ -91,48 +91,11 @@ $data = '{"Coords":[{"Accuracy":"65","Latitude":"53.277720488429026","Longitude"
 function stripQuotes($text) {
   return preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $text);
 }
-if( !$useTestEmail ) {
-	$_POST = array();
-	$_POST['email']= $testEmail;
-}
+
 echo "\nPost: ".count($_POST)."\n";
-	try
-	{
-		if( count($_POST) > 0 )
-		{
-			if( get_magic_quotes_gpc() == 1)
-			{
-				$postedEmail = stripslashes($_POST['email']);
-			}
-			else
-			{
-				$postedEmail = $_POST['email'];
-			}
-		$postedEmail = stripQuotes($postedEmail);
-		}
-		else
-		{
-				$postedEmail = stripQuotes($testEmail);
-				echo "Using testEmail\n";
-		}
-	}
-	catch( Exception $e3)
-	{
-		die("\bException $e3 trying to parse email\n");
-	}
-
-$encoding = mb_detect_encoding($postedEmail);
-
-if($encoding == 'UTF-8') {
-  $postedEmail = preg_replace('/[^(\x20-\x7F)]*/','', $postedEmail);
+if( count($_POST) == 0 ) {
+	die("\nNo data in POST\n");
 }
-
-if(!(function_exists('json_decode')))
-	{
-		echo " ERROR: Missing json_decode function. ";
-	}
-
-
 
 // it's easier to access the data when converted to an array
 function objectToArray( $object )
@@ -195,48 +158,19 @@ function decodeQuotedPrintable ($message)
 // get key variables from $emailArray object if no errors
 if($error != 1)
 	{
-		// convert object to an array recursively
-		  echo "postedEmail is: ".getType($postedEmail)."\n of length ".strlen($postedEmail)."\n";
-
-//		print_r($emailObject);
-	try {
-		$emailArray = json_decode($postedEmail,true);
-//		print_r($emailArray);
-	} catch( Exception $e4) {
-	die("\nException $e4 trying to create array from postedEmail\n");
-}
-//		$subject = $emailArray['headers']['subject'];
-
-
-		if($emailArray['parts'][0]['body'] != null)
-			{
-				$message = $emailArray['parts'][0]['body'];
+		$message = $_POST['body'];
 //				echo "STATUS 213: $message\n";
-			}
-			else
-			{
-				die("ERROR: email array does not contain a body");
-
-			}
-		// if messages comes as both plain and html parts (multipart) treat the plain one as the main one
-
-
-		// look for the message in the event something is attached, since array will be different
-
-
-		// the email could be HTML only, or HTML only with attachment
-
-
-			// Find out if the email has attachments
-//		$from = $emailArray['headers']['from'];
-		$to = $emailArray['headers']['to'];
-		$messageId = $emailArray['headers']['message-id'];
+		$to = $_POST['to'];
+		$from = $_POST['from'];
+		$messageId = $_POST['message-id'];
+		$date = $_POST['date'];
+		$subject = $_POST['subject'];
 
 //		echo "return-path: ".$emailArray['headers']['return-path']."\nto: ".$_POST['to']."\nmessage: ".$emailArray['parts']['body'];
 		// This may be an array
-		$deliveredTo = $emailArray['headers']['delivered-to'];
+		$deliveredTo = $_POST['delivered-to'];
 
-		$returnPath = $emailArray['headers']['return-path'];
+		$returnPath = $_POST['return-path'];
 		if( strpos($returnPath, '<') === 0 ) {
 		$returnPath = substr($returnPath, 1, -1);
 	}
@@ -249,8 +183,8 @@ if($error != 1)
 
 		// $message and $messagehtml are set above
 		// if only an html version exists both $message and $messagehtml with be the same
+}
 
-	}
 
 
 ######################################################
@@ -259,22 +193,22 @@ if($error != 1)
 ######################################################
 $added = "Starting";
 $time = time();
-//$myFile = "lead-handler-$time.txt";
-//$fh = fopen($myFile, 'w') or die("can't open file");
+$myFile = "lead-handler-$time.txt";
+$fh = fopen($myFile, 'w') or die("can't open file");
 
 $today = date("D M j G:i:s T Y");
 $logEmailArray = print_r($emailArray, 1);
 $postArray = print_r($_POST, 1);
 
 $email = "\nProcessed on: $today";
-$email .= "\n------------\n\$_POST array:\n------------\n$postArray";
+//$email .= "\n------------\n\$_POST array:\n------------\n$postArray";
 
 $email .= "\n****************\n";
 $email .= "Decoded values: ";
 $email .= "\n****************";
-$email .= "\n------------\n\$_POST['email'] value (JSON only):\n------------\n$postedEmail";
-$email .= "\n------------\nEmail object (JSON only):\n------------\n$logEmailArray\n";
-//$email .= "\n------------\nfrom:\n------------\n$from\n";
+//$email .= "\n------------\n\$_POST['email'] value (JSON only):\n------------\n$postedEmail";
+//$email .= "\n------------\nEmail object (JSON only):\n------------\n$logEmailArray\n";
+$email .= "\n------------\nfrom:\n------------\n$from\n";
 $email .= "\n------------\nto:\n------------\n$to\n";
 $email .= "\n------------\ndelivered-to:\n------------\n$deliveredTo\n";
 $email .= "\n------------\nreturn-path:\n------------\n$returnPath\n";
@@ -312,8 +246,8 @@ try {
 	$log .= "An exception $e1 was thrown!";
 	echo "\nException $e1 was thrown";
 }
-//fwrite($fh, $log);
-//fclose($fh);
+fwrite($fh, $log);
+fclose($fh);
 
 // return a confirmation to mailnuggets
 //echo "\n#Posted $today#, $log";
