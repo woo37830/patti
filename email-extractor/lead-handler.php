@@ -93,7 +93,7 @@ function stripQuotes($text) {
 }
 
 echo "\nPost: ".count($_POST).", Request: ".count($_REQUEST)."\n";
-if( count($_POST) > 1 )
+if( count($_POST) > 0 )
 {
 		if( get_magic_quotes_gpc() == 1)
 			{
