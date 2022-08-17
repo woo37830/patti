@@ -152,11 +152,12 @@ function decodeQuotedPrintable ($message)
 	}
 // get key variables from $emailArray object if no errors
 echo "\nPost: ".count($_POST)."\n";
+$time = time();
 $myFile = "lead-handler-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 
 if( count($_POST) == 0 ) {
-	fwrite($fh, \nNo data in POST\n");
+	fwrite($fh, "\nNo data in POST\n");
 	fclose($fh);
 	die("\nNo data in POST\n");
 }
@@ -198,7 +199,6 @@ if($error != 1)
 ##	(Make sure directory and/or file is writtable)
 ######################################################
 $added = "Starting";
-$time = time();
 
 $today = date("D M j G:i:s T Y");
 $logEmailArray = print_r($emailArray, 1);
