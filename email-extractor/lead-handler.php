@@ -92,11 +92,6 @@ function stripQuotes($text) {
   return preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $text);
 }
 
-echo "\nPost: ".count($_POST)."\n";
-if( count($_POST) == 0 ) {
-	die("\nNo data in POST\n");
-}
-
 // it's easier to access the data when converted to an array
 function objectToArray( $object )
  	{
@@ -156,6 +151,17 @@ function decodeQuotedPrintable ($message)
 	    return array('total' => $count, 'values' => $values);
 	}
 // get key variables from $emailArray object if no errors
+echo "\nPost: ".count($_POST)."\n";
+$myFile = "lead-handler-$time.txt";
+$fh = fopen($myFile, 'w') or die("can't open file");
+
+if( count($_POST) == 0 ) {
+	fwrite($fh, \nNo data in POST\n");
+	fclose($fh);
+	die("\nNo data in POST\n");
+}
+
+
 if($error != 1)
 	{
 		$message = $_POST['body'];
@@ -172,8 +178,8 @@ if($error != 1)
 
 		$returnPath = $_POST['return-path'];
 		if( strpos($returnPath, '<') === 0 ) {
-		$returnPath = substr($returnPath, 1, -1);
-	}
+			$returnPath = substr($returnPath, 1, -1);
+		}
 //		$replyTo = $emailArray['headers']['reply-to'];
 //		$contentType = $emailArray['headers']['content-type'];
 //		$contentTransferEncoding = $emailArray['headers']['transfer-encoding'];
@@ -193,8 +199,6 @@ if($error != 1)
 ######################################################
 $added = "Starting";
 $time = time();
-$myFile = "lead-handler-$time.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
 
 $today = date("D M j G:i:s T Y");
 $logEmailArray = print_r($emailArray, 1);
