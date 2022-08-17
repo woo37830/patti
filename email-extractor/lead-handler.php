@@ -93,32 +93,30 @@ function stripQuotes($text) {
 }
 
 echo "\nPost: ".count($_POST)."\n";
-if( count($_POST) > 0 )
-{
-	try {
-		$json = file_get_contents('php://input');
-		echo "\njson: ".$json."\n";
-	} catch( Exception $e2) {
-		die( "Exception $e2 on get_contents\n");
-	}
-	// decode the json data
-	$data = json_decode($json);
-	echo "\ndata: ".$data."\n";
-		if( get_magic_quotes_gpc() == 1)
+	try
+	{
+		if( count($_POST) > 0 )
+		{
+			if( get_magic_quotes_gpc() == 1)
 			{
-				$postedEmail = stripslashes($data['email']);
+				$postedEmail = stripslashes($_POST['email']);
 			}
+			else
+			{
+				$postedEmail = $_POST['email'];
+			}
+		$postedEmail = stripQuotes($postedEmail);
+		}
 		else
-			{
-				$postedEmail = $data['email'];
-			}
-			$postedEmail = stripQuotes($postedEmail);
-}
-else
-{
-		$postedEmail = stripQuotes($testEmail);
-		echo "Using testEmail\n";
-}
+		{
+				$postedEmail = stripQuotes($testEmail);
+				echo "Using testEmail\n";
+		}
+	} 
+	catch( Exception $e3)
+	{
+		die("\bException $e3 trying to parse email\n");
+	}
 
 $encoding = mb_detect_encoding($postedEmail);
 
