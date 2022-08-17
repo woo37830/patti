@@ -91,7 +91,10 @@ $data = '{"Coords":[{"Accuracy":"65","Latitude":"53.277720488429026","Longitude"
 function stripQuotes($text) {
   return preg_replace('/^(\'(.*)\'|"(.*)")$/', '$2$3', $text);
 }
-
+if( !$useTestEmail ) {
+	$_POST = array();
+	$_POST['email']= $testEmail;
+}
 echo "\nPost: ".count($_POST)."\n";
 	try
 	{
@@ -196,8 +199,14 @@ if($error != 1)
 		  echo "postedEmail is: ".getType($postedEmail)."\n of length ".strlen($postedEmail)."\n";
 
 //		print_r($emailObject);
-		$emailArray = $postedEmail;
+	try {
+		$emailArray = json_decode($postedEmail,true);
+//		print_r($emailArray);
+	} catch( Exception $e4) {
+	die("\nException $e4 trying to create array from postedEmail\n");
+}
 //		$subject = $emailArray['headers']['subject'];
+
 
 		if($emailArray['parts'][0]['body'] != null)
 			{
