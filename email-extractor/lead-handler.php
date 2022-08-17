@@ -95,11 +95,15 @@ function stripQuotes($text) {
 echo "\nPost: ".count($_POST)."\n";
 if( count($_POST) > 0 )
 {
-	$json = file_get_contents('php://input');
-
+	try {
+		$json = file_get_contents('php://input');
+		echo "\njson: ".$json."\n";
+	} catch( Exception $e2) {
+		die( "Exception $e2 on get_contents\n");
+	}
 	// decode the json data
 	$data = json_decode($json);
-
+	echo "\ndata: ".$data."\n";
 		if( get_magic_quotes_gpc() == 1)
 			{
 				$postedEmail = stripslashes($data['email']);
