@@ -66,6 +66,8 @@ function logit($user, $json, $my_status)
           $stripped_json = serialize($json);
         } catch( Exception $e) {
       echo "An error happended processing serialize(json)";
+      mysqli_close($conn);
+      return;
 //      error_log("An error occurred processing $json");
 //      $stripped_json = $json;
       }
@@ -84,7 +86,7 @@ function logit($user, $json, $my_status)
 
       ) VALUES
       ( '$datetime'
-      , 'jwooten37830@icloud.com'
+      , '$from_email_address'
       , '$stripped_json'
       , '$my_status'
       , '$rev'

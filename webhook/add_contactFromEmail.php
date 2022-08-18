@@ -1,5 +1,5 @@
 <?php
-function addContactFromEmail($today, $from, $to)
+function addContactFromEmail($today, $from, $to, $source)
 {
   require '../webhook/config.ini.php';
   require_once '../webhook/thrivecart_api.php';
@@ -52,7 +52,7 @@ function addContactFromEmail($today, $from, $to)
   $email_address = $names[2];
 
   try {
-  $results_xml = addContact($today, $agentId, $first_name, $last_name, $email_address, 'SOURCE');
+  $results_xml = addContact($today, $agentId, $first_name, $last_name, $email_address, $source);
 } catch (Exception $e3 ) {
   logit($email_address, $results_xml,"FAILURE: Exception $e3");
   return "-1";

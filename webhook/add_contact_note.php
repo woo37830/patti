@@ -131,7 +131,7 @@ try {
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
       //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
-      $contactId = addContactFromEmail($today, $from_email_address, $to_email_address); // Use full to get first and last
+      $contactId = addContactFromEmail($today, $from_email_address, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
       //  echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";

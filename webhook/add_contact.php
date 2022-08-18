@@ -36,7 +36,8 @@ function addContact($today, $agentId, $firstName, $lastName, $email, $source)
 
   if (isset($results_xml->error)) {
     echo "\nFailure: " . $results_xml->error . "\n";
-    logit($email,json_encode($results_xml), "FAILURE: add_contact.php $results_xml->error" );
+    // json_encode($results_xml)
+    logit($email,"Encoded json", "FAILURE: add_contact.php $results_xml->error" );
     return "-1";
   }
   //echo "\nresults_xml: " . $results_xml . "\n";

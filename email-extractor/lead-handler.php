@@ -88,8 +88,7 @@ $today = date("D M j G:i:s T Y");
 
 $myFile = "lead-handler-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
-$email = "\nProcessed on: $today";
-fwrite($fh, $email);
+
 /**
  * Remove the first and last quote from a quoted string of text
  *
@@ -158,6 +157,9 @@ function decodeQuotedPrintable ($message)
 	    return array('total' => $count, 'values' => $values);
 	}
 // get key variables from $emailArray object if no errors
+
+$email = "\nProcessed on: $today";
+fwrite($fh, $email);
 echo "\nPost: ".count($_POST)."\n";
 
 if( count($_POST) == 0 ) {
@@ -228,11 +230,12 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 
 
 echo "Email error=$error\n";
-$log = "Email post log:\n$email \n";
+$log .= "Email post log:\n$email \n";
 try {
 	if( $error !== 1 )
 	{
 		$prospect = new Prospect($returnPath, $message);
+		$log .= "\nprospect created for ".$prospect->get_email()."\n";
 	//	echo "\n---------------------Prospect-----------------\n";
 	//	echo $prospect;
 	//	echo "\n----------------------------------------------\n";
