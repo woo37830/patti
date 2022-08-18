@@ -54,12 +54,12 @@ function logit($user, $json, $my_status)
   $from_email_address = $names[2];
 
 //  error_log("Parsed out: $first_name, $last_name, and $from_email_address");
-
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
+  echo "\n".gettype($my_status).",".gettype($rev)."\n";
 //      echo "user_email = ".$user_email;
  //     $user_email = $from_email_address;
       try {
@@ -107,7 +107,7 @@ function logit($user, $json, $my_status)
               mysqli_close($conn);
               // logging the error
  //             error_log("An error occurred processing $json");
-		echo $user_email;
+//		echo $user_email;
 		echo $my_status;
 		echo $rev;
 

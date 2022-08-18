@@ -230,12 +230,12 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 
 
 echo "Email error=$error\n";
-$log .= "Email post log:\n$email \n";
+$email .= "Email post log:\n$email \n";
 try {
 	if( $error !== 1 )
 	{
 		$prospect = new Prospect($returnPath, $message);
-		$log .= "\nprospect created for ".$prospect->get_email()."\n";
+		$email .= "\nprospect created for ".$prospect->get_email()."\n";
 	//	echo "\n---------------------Prospect-----------------\n";
 	//	echo $prospect;
 	//	echo "\n----------------------------------------------\n";
@@ -243,22 +243,22 @@ try {
 
 			try {
 				$added = addContactNote($today, $returnPath, $prospect->get_email(), $messageId, "Test", "\n------\n".$prospect."\n---------\n", "", "");
-				$log .= "Prospect ".$prospect->get_email()." created for $returnPath at $added \n";
+				$email .= "Prospect ".$prospect->get_email()." created for $returnPath at $added \n";
 				echo "\nProspect ".$prospect->get_email()." created for $returnPath at $added \n";
 			}
 			catch (exception $e) {
-				$log .= "#Posted $today, Exception $e occurred attempting to add ".$prospect->get_email()." for $returnPath";
+				$email .= "#Posted $today, Exception $e occurred attempting to add ".$prospect->get_email()." for $returnPath";
 				echo "\n#Posted $today, Exception $e occurred attempting to add ".$prospect->get_email()." for $returnPath\n";
 			}
 	}
 } catch( exception $e1) {
-	$log .= "An exception $e1 was thrown!";
+	$email .= "An exception $e1 was thrown!";
 	echo "\nException $e1 was thrown";
 }
 } catch( Exception $e5) {
-	$log .= "\nAn exception $e5 was thrown\n";
+	$email .= "\nAn exception $e5 was thrown\n";
 }
-fwrite($fh, $log);
+fwrite($fh, $email);
 fclose($fh);
 
 // return a confirmation to mailnuggets
