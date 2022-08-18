@@ -49,7 +49,7 @@ footer
 <body>
 <center>
   <br />
-  <h1>Add Contact</h1>
+  <h1>Add Contact Using Email</h1>
 <?php
 require '../webhook/add_contactByEmail.php';
 require '../webhook/config.ini.php';
@@ -63,7 +63,7 @@ if(isset($_POST['submit'])){
     $from = trim($_POST['email']);
     $new_contact = trim($_POST['contact']);
     if( strlen($from) > 0 && strlen($new_contact) > 0 && account_exists($from) ) {
-        $result = addContactByEmail($today, $from, $new_contact);
+        $result = addContactByEmail($today, $from, $new_contact, "tests");
         echo "<br />Result addedContact $new_contact to $from: <br />Contact ID: $result <br />\n";
     } else {
         echo "<br />You must provide an account and a contact email!<br />";
@@ -84,7 +84,7 @@ Contact Email: <input type="text" name ="contact"><br /><br />
 <?php
   include '../webhook/git-info.php';
 ?>
-  <p>Last Update: 2020-03-13 11:07    <a href="mailto:jwooten37830@me.com?Subject=EngagemoreCRM%20Problem">webmaster</a>
+  <p>Last Update: 2022-08-18 11:07    <a href="mailto:jwooten37830@me.com?Subject=EngagemoreCRM%20Problem">webmaster</a>
   <!-- Footer end -->
 </footer>
 
