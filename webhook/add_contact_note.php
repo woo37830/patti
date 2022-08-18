@@ -130,14 +130,17 @@ try {
 //  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
+      $source = $subject;  // for now
       //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
       $contactId = addContactFromEmail($today, $from_email_address, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
       //  echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
- //       logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
+        logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
         return false;
       }
+      logit($from_email_address,strip_tags($postArray), "add_contact_note $to_email_address for account $from_email_address for source $source" );
+
       //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
 } catch (Exception $e2) {
