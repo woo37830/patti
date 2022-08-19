@@ -61,7 +61,7 @@ $html2 = <<<EOS2
 First Name: <input type="text" name="first"><br />
 Last Name: <input type="text" name="last"><br />
 Email: <input type="text" name="email"><br />
-Account: <input type="text" name="account"><br />
+Agent: <input type="text" name="agent"><br />
 Source: <input type="text" name="source"><br />
 <input type="submit" name="submit" value="Submit">
 </form>
@@ -77,17 +77,17 @@ require '../webhook/mysql_common.php';
 require '../webhook/utilities.php';
 
 $today = date("D M j G:i:s T Y");
+$agentId = $config['PATTI_CANCEL_CART_USER'];
 
-echo "<center>$today<br /><hr />";
+echo "<center>$today<br />";
+echo "Abandon cart emails added to account: $agentId<br /><hr />";
 if(isset($_POST['submit'])){
-
-    $source = trim($_POST['source']);
+    $source = $config['PATTI_CANCEL_CART_SOURCE'];
     $firstName = trim($_POST['first']);
     $lastName = trim($_POST['last']);
     $email = trim($_POST['email']);
-    $account = trim($_POST['account']);
-    $result = addContact($today, $account, $firstName, $lastName, $email, $source);
-    echo "<br />Result addedContact $email to $account: <br />Contact ID: $result <br />\n";
+    $result = addContact($today, $agentId, $firstName, $lastName, $email, $source);
+    echo "<br />added abandoned cart $email: $result <br />\n";
 
 }
 echo getHTML();
