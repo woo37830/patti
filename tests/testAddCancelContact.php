@@ -49,7 +49,7 @@ footer
 <body>
 <center>
   <br />
-  <h1>Add Contact</h1>
+  <h1>Test Abandon Cart</h1>
 EOS;
 return $html;
 }
@@ -61,8 +61,6 @@ $html2 = <<<EOS2
 First Name: <input type="text" name="first"><br />
 Last Name: <input type="text" name="last"><br />
 Email: <input type="text" name="email"><br />
-Agent: <input type="text" name="agent"><br />
-Source: <input type="text" name="source"><br />
 <input type="submit" name="submit" value="Submit">
 </form>
 <br /><br /><a href='index.php' />Home</a>
