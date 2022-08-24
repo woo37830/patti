@@ -27,6 +27,7 @@ $products = array( "product-9" => "RE - BUZZ ($69)",
                         "product-62" => "RE - IMPACT ($99)",
                         "product-63" => "RE - BUZZ ($69)",
 												"product-64" => "RE - IMPACT ($99)",
-											  "product-65" => "RE - IMPACT ($99)"
+											  "product-65" => "RE - IMPACT ($99)",
+												"product-75" => "Divvy Default"
 											  )
 ?>

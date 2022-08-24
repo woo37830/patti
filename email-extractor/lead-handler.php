@@ -187,6 +187,12 @@ if($error != 1)
 		if( strpos($returnPath, '<') === 0 ) {
 			$returnPath = substr($returnPath, 1, -1);
 		}
+
+		if( strpos( $message, "ACCOUNT=<<") != 0 ) {
+			if( preg_match('/ACCOUNT=\<\<(.*?)/>/>/', $str, $match) == 1) {
+	  		$returnPath = $match[1];
+			}
+		}
 //		$replyTo = $emailArray['headers']['reply-to'];
 //		$contentType = $emailArray['headers']['content-type'];
 //		$contentTransferEncoding = $emailArray['headers']['transfer-encoding'];
