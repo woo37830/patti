@@ -248,7 +248,7 @@ try {
 	$added = "Not activated";
 
 			try {
-				$added = addContactNote($today, $returnPath, $prospect->get_email(), $messageId, "Test", "\n------\n".$prospect."\n---------\n", "", "");
+				$added = addContactNote($today, $returnPath, $prospect->get_email(), $messageId, "Test", "\n------\n".$prospect."\n-------------\n$message\n", "", "");
 				$email .= "Prospect ".$prospect->get_email()." created for $returnPath at $added \n";
 				echo "\nProspect ".$prospect->get_email()." created for $returnPath at $added \n";
 			}
