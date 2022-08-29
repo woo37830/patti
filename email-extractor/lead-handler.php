@@ -188,10 +188,11 @@ if($error != 1)
 			$returnPath = substr($returnPath, 1, -1);
 		}
 
-		if( strpos( $message, "ACCOUNT=<<") != 0 ) {
-			if( preg_match('/ACCOUNT=\<\<(.*?)/>/>/', $str, $match) == 1) {
+		if( strpos( $message, "<<") != 0 ) {
+			if( preg_match('.*\<\<(.*?)/>/>/.*', $str, $match) == 1) {
 	  		$returnPath = $match[1];
-				$message = str_replace("ACCOUNT<<","",$message);
+				echo $returnPath;
+				$message = str_replace("ACCOUNT=<<","",$message);
 				$message = str_replace($returnPath, "", $message);
 				$message = str_replace(">>","", $message);
 			}
