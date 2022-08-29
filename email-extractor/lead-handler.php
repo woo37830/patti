@@ -189,7 +189,7 @@ if($error != 1)
 		}
 
 		if( strpos( $message, "<<") != 0 ) {
-			if( preg_match('/\<\<(.*?)/>/>/', $message, $match) == 1) {
+			if( preg_match('/\<\<(.*?)\>\>/', $message, $match) == 1) {
 	  		$returnPath = $match[1];
 				echo $returnPath;
 				$message = str_replace("ACCOUNT=<<","",$message);
