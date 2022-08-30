@@ -48,8 +48,8 @@ $contact = new Contact($account, "(888) 555-1212 106 Crestview Lane Oak Ridge, T
 print $contact;
 
 print "\n---------------------- Contact with phone before numbered stree address -----------------------\n";
-$contact = new Contact($account, "   ACCOUNT=<<hector.alonso@gmail.com>> (888) 555-1212 106 Crestview Lane Oak Ridge, TN 37830 Ralph Jones charles@testers.com ");
-
+$contact = new Contact("", "   ACCOUNT=<<hector.alonso@gmail.com>> (888) 555-1212 106 Crestview Lane Oak Ridge, TN 37830 Ralph Jones charles@testers.com ");
+$contact->set_source($account);
 //print "Input: ".$contact->get_inputStr()."\n\n";
 print $contact;
 
