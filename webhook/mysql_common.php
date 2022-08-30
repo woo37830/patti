@@ -54,15 +54,25 @@ function logit($user, $json, $my_status)
   $from_email_address = $names[2];
 
 //  error_log("Parsed out: $first_name, $last_name, and $from_email_address");
-
   $dbase = $config['PATTI_DATABASE'];
   if( $conn = connect($dbase) )
     {
       $rev = exec('git rev-parse --short HEAD');
       $branch = exec('git rev-parse --abbrev-ref HEAD');
-
-      $user_email = $from_email_address;
-      $stripped_json = serialize($json);
+  echo "\n".gettype($my_status).",".gettype($rev)."\n";
+//      echo "user_email = ".$user_email;
+ //     $user_email = $from_email_address;
+      try {
+          $stripped_json = serialize($json);
+        } catch( Exception $e) {
+      echo "An error happended processing serialize(json)";
+      mysqli_close($conn);
+      return;
+//      error_log("An error occurred processing $json");
+//      $stripped_json = $json;
+      }
+    //      , '$stripped_json'
+    //      , '$my_status'
 
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_LOG_TABLE'];
@@ -76,13 +86,14 @@ function logit($user, $json, $my_status)
 
       ) VALUES
       ( '$datetime'
-      , '$user_email'
+      , '$from_email_address'
       , '$stripped_json'
       , '$my_status'
       , '$rev'
       , '$branch'
       )";
       $sql = str_replace("\/","_",$sql);
+//      echo "sql = $sql";
       if (!$res = $conn->query($sql))
       {
                  $err
@@ -95,7 +106,10 @@ function logit($user, $json, $my_status)
               ;
               mysqli_close($conn);
               // logging the error
-              error_log("An error occurred processing $user");
+ //             error_log("An error occurred processing $json");
+//		echo $user_email;
+		echo $my_status;
+		echo $rev;
 
               trigger_error($err, E_USER_ERROR);
        }

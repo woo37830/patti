@@ -62,7 +62,10 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $url = $api_endpoint . 'AddContactNote.aspx';
 
   $names = firstAndLastFromEmail($from);
+  $size = sizeof($names);
   //echo "from_email_address: $from_email_address\n";
+//  logit($from, "$to, sizeof names = $size", "LOG: (add_contact_note)-67");
+
   if ( sizeof( $names) < 3 )
   {
     $first_name = $names[0];
@@ -76,6 +79,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   }
 
   $names = firstAndLastFromEmail($to);
+ // logit($from, "$to, sizeof names = $size", "LOG: (add_contact_note)-82");
 
   if ( sizeof( $names) < 3 )
   {
@@ -90,7 +94,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   }
 
   if( $to_email_address == null ) {
-    logit($from_email_address, "from email provided a null to_email_address", "FAILURE: (add_contact_note)");
+  //  logit($from_email_address, "from email provided a null to_email_address", "FAILURE: (add_contact_note)");
     return false;
   }
   //echo "to_email_address: $to_email_address\n";
@@ -102,33 +106,47 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   $email .= "\nsubject:\t$subject\n";
   $email .= "\nmessage:\t$message\n";
   $email .= "\nAttachments:\t$attachmentLog\n";
+//  logit($from, "email = $email", "LOG: (add_contact_note)-109");
 
   // Get the agents engagemorecrm id from the users table
 try {
+  try {
   $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
     echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
-
-    logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
+    die("\n$from_email_address does not have an account\n");
+//    logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     return false;
   }
+} catch (Exception $e1) {
+  return "FAILURE: Exception $e1 in getAccountId add contact note";
+
+}
   // getContact will either return the id of an existing contact OR
   // it will create the contact and return the  new id.
-  $contactId = getContact( $today, $from_email_address, $to );
-//  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
+  try {
+  $contactId = getContact( $today, $from_email_address, $to_email_address );
+  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
+//  die("\nAccount: $agentId has a contactId of $contactId\n");
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
-      //echo "Will try to add $to_email_address as a contact of $from_email_address\n";
-      $contactId = addContactFromEmail($today, $from_email_address, $to_email_address); // Use full to get first and last
+      $source = $subject;  // for now
+//      die( "Will try to add $to_email_address as a contact of $from_email_address\n");
+      $contactId = addContactFromEmail($today, $from_email_address, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
-      //  echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
-        logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
+        echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
+//        logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
         return false;
       }
+//      logit($from_email_address,strip_tags($postArray), "add_contact_note $to_email_address for account $from_email_address for source $source" );
+
       //echo "Added $to_email_address to $from_email_address as contactId: $contactId\n";
   }
+} catch (Exception $e2) {
+  return "FAILURE: Exception $e2 in getAccountId getContact";
+}
 
   $data = array(
   	'apiusername' => $account_id,
@@ -152,20 +170,20 @@ try {
 
   if (isset($results_xml->error) )
   {
-    logit($from_email_address,strip_tags($postArray), "FAILURE: (add_contact_note) $results_xml->error" );
-    return false;
+//    logit($from_email_address,strip_tags($postArray), "FAILURE: (add_contact_note) $results_xml->error" );
+    return "FAILURE: (add_contact_note) $results_xml->error" ;
   }
 
 //  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address, contact of $agentId\n";
-  logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address" );
-  return true;
+//  logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address" );
+  return "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address";
 
 }
 
 catch( exception $e )
 {
-  logit($from_email_address,strip_tags($postArray), "FAILURE: Exception $e");
-  return false;
+//  logit($from_email_address,strip_tags($postArray), "FAILURE: Exception $e");
+  return "FAILURE: Exception $e";
 }
 }
 

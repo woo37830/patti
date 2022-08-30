@@ -49,16 +49,26 @@ function getMode()  {
 }
 
 function getProductId() {
+  if( ! isset($_REQUEST['base_product'])) {
+    $pmf = (int)13;
+  } else {
    $pmf = (int)$_REQUEST['base_product'];
+ }
    $product = "product-$pmf";
    return $product;
 }
 
 function getInvoiceId() {
+  if( ! isset($_REQUEST['invoice_id'])) {
+    return 0;
+  }
   return $_REQUEST['invoice_id'];
 }
 
 function getOrderId() {
+  if( ! isset($_REQUEST['order_id'])) {
+    return 0;
+  }
   return $_REQUEST['order_id'];
 }
 
@@ -91,9 +101,19 @@ function delete_all_between($beginning, $end, $string) {
 //
 function firstAndLastFromEmail($email)
 {
+  try {
   $displayname = trim(get_displayname_from_rfc_email($email));
+} catch( Exception $e) {
+  echo "\n<br />An Exception occurred in firstAndLastFromEmail.php: $e getting display name from rfc email\n<br />";
+  return;
+}
 //  echo "\n$displayname\n";
+  try {
   $email = get_email_from_rfc_email($email);
+} catch ( Exception $e) {
+  echo "\n<br />An Exception occurred in firstAndLastFromEmail.php: $e getting email from rfc email\n<br />";
+  return;
+}
   $pieces = array();
   $surName = explode(",", $displayname);
 //  print_r($surName);
@@ -124,22 +144,22 @@ function firstAndLastFromEmail($email)
 }
 function get_displayname_from_rfc_email($rfc_email_string) {
     // match all words and whitespace, will be terminated by '<'
-    $pos = strstr($rfc_email_string, '<');
+    $pos = strstr($rfc_email_string, "<");
     if( $pos !== false )
     {
-      $name = delete_all_between('<','>', $rfc_email_string);
+      $name = delete_all_between("<",">", $rfc_email_string);
       return $name; // return what's not between < and >
     }
     else
     { // there is no < > in the email string
-      $pos = strstr($rfc_email_string, ' ');
+      $pos = strstr($rfc_email_string, " ");
       if( $pos != false )
       {
         $pieces = explode(" ", $rfc_email_string);
         return $pieces[0];
       }
       $parts = explode("@", $rfc_email_string);
-      $pos = strstr($parts[0], '.');
+      $pos = strstr($parts[0], ".");
       if( $pos != false )
       {
         $pieces = explode(".", $parts[0]);
@@ -154,13 +174,13 @@ function get_displayname_from_rfc_email($rfc_email_string) {
 
 function get_email_from_rfc_email($rfc_email_string) {
     // extract parts between the two angle brackets
-    $pos = strstr($rfc_email_string, '<');
+    $pos = strstr($rfc_email_string, "<");
     if( $pos !== false )
     {
       $mailAddress = preg_match('/(?:<)(.+)(?:>)$/', $rfc_email_string, $matches);
       return $matches[1];
     }
-    $pos = strstr($rfc_email_string, ' ');
+    $pos = strstr($rfc_email_string, " ");
     if( $pos != false )
     {
       $pieces = explode(" ", $rfc_email_string);
@@ -168,4 +188,25 @@ function get_email_from_rfc_email($rfc_email_string) {
     }
     return $rfc_email_string;
 }
+
+
+function generateCallTrace()
+{
+    $e = new Exception();
+    $trace = explode("\n", $e->getTraceAsString());
+    // reverse array to make steps line up chronologically
+    $trace = array_reverse($trace);
+    array_shift($trace); // remove {main}
+    array_pop($trace); // remove call to this method
+    $length = count($trace);
+    $result = array();
+
+    for ($i = 0; $i < $length; $i++)
+    {
+        $result[] = ($i + 1)  . ')' . substr($trace[$i], strpos($trace[$i], ' ')); // replace '#someNum' with '$i)', set the right ordering
+    }
+
+    return "\t" . implode("\n\t", $result);
+}
+
 ?>

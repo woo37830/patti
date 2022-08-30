@@ -71,10 +71,10 @@ switch( $event ) {
     break;
   case 'order.refund':
       logit($email, $json_data, "order.refund");
-      $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
-      logit($email,$json_data, "Subscription_cancelled because of order.refund, result: $result");
-      $theMessage = "Account $email has cancelled!";
-  //    sendNotification($email,'Cancellation Notice',$theMessage);
+  //    $result = change_account_status($api_endpoint,$account_id, $api_key, $email,0);
+      logit($email,$json_data, "order.refund received");
+      $theMessage = "Account $email was issued a refund!";
+      sendNotification($email,'Refund issued to $email',$theMessage);
   //    echo "Received order.refund. result = $result<br />" . $email . " - " . $json_data . "<br />";
       break;
   case 'order.subscription_cancelled':
@@ -149,14 +149,15 @@ switch( $event ) {
   case 'cart.abandoned':
     $arr = json_decode($json_data);
     $viewer_email = $arr->viewer->email;
+    $result = "User exists";
+    if ( getUserByEmail($viewer_email) == null ) {
     $url = 'https://secure.engagemorecrm.com/api/t/wf/r9zo6543z2/18a1ca9de57ecbc02279';
+          $fields = array(
+             'email' => $viewer_email,
+          );
 
-        $fields = array(
-           'email' => $viewer_email,
-        );
-
-      $result = curlPost($url, $fields);
-
+        $result = curlPost($url, $fields);
+      }
       logit($viewer_email, $result, "cart.abandoned");
     break;
   default:
@@ -269,6 +270,7 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
 //  echo "json_data :  " . $json_data . "<br />";
   $product = getProductId($_REQUEST);
 //  echo "product: ". $product . "<br />";
+
   require 'product_data.php';
   if( array_key_exists($product, $products) ) { // Here is where we check that we have the correct product
 
@@ -309,6 +311,12 @@ function handleOrderSuccess($email, $api_endpoint, $account_id, $api_key, $json_
        *
        * Information will be added to your AllClients contacts!
        */
+       if( (strcmp($product,'product-62') == 0) || (strcmp($product,'product-63') == 0) )
+       {
+         logit($from_email_address, $json_data,  "SUCCESS: order.success processed for $product");
+         echo "Products for EAP do not add new accounts";
+         return;
+       }
       $account = array(
           'password'  => 'engage123',
         );

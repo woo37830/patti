@@ -1,5 +1,5 @@
 <?php
-function addContactFromEmail($today, $from, $to)
+function addContactFromEmail($today, $from, $to, $source)
 {
   require '../webhook/config.ini.php';
   require_once '../webhook/thrivecart_api.php';
@@ -51,8 +51,12 @@ function addContactFromEmail($today, $from, $to)
   $last_name = $names[1];
   $email_address = $names[2];
 
-  $results_xml = addContact($today, $agentId, $first_name, $last_name, $email_address);
-
+  try {
+  $results_xml = addContact($today, $agentId, $first_name, $last_name, $email_address, $source);
+} catch (Exception $e3 ) {
+  logit($email_address, $results_xml,"FAILURE: Exception $e3");
+  return "-1";
+}
   /**
    * If an API error has occurred, the results object will contain a child 'error'
    * SimpleXMLElement parsed from the error response:

@@ -40,13 +40,13 @@ $host = 'email-smtp.us-west-2.amazonaws.com';
 $port = 587;
 
 // The subject line of the email
-$subject = $theSubject; 
+$subject = $theSubject;
 
 // The plain-text body of the email
-$bodyText = $theBody . ' User $to_email has cancelled'; 
+$bodyText = $theBody; 
 
 // The HTML-formatted body of the email
-$bodyHtml = $bodyText; 
+$bodyHtml = $bodyText;
 
 $mail = new PHPMailer();
 $retVal = false;
@@ -85,4 +85,3 @@ try {
 //$val = sendNotification('jwooten37830@icloud.com', 'Test notify', 'Test Body');
 //   echo "sendNotification returned $val";
 ?>
-

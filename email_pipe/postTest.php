@@ -377,26 +377,24 @@ $email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
 $email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
 $added = "Starting";
-try {
-	$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
-}
-catch (exception $e) {
-	echo "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
-	return;
-}
 $time = time();
-/*
+
 $myFile = "postTestLog-$time.txt";
 $fh = fopen($myFile, 'w') or die("can't open file");
 $log = "Email post log:\n$email \n";
-
+try {
+	$added = addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray);
 	$log .= "Email added as contact note to $to: $added \n";
+}
+catch (exception $e) {
+	$log .= "#Posted $today#, Exception $e occurred attempting to add note to $to from $from";
+}
 
 fwrite($fh, $log);
 fclose($fh);
-*/
+
 // return a confirmation to mailnuggets
-echo "#Posted $today#, note added to $to: $added";
+echo "#Posted $today#, $log";
 
 
 

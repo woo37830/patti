@@ -5,8 +5,8 @@
   require('fancyAuthentication.php');
 
 
-
-?>
+  function getHTML() {
+  $html = <<<EOS
 <html>
     <head>
           <style type="text/css" media="screen">
@@ -50,7 +50,27 @@ footer
 <center>
   <br />
   <h1>Add Contact</h1>
-<?php
+EOS;
+return $html;
+}
+function getHTML2() {
+$html2 = <<<EOS2
+  <hr />
+  <br />
+<form action="" method="post">
+First Name: <input type="text" name="first"><br />
+Last Name: <input type="text" name="last"><br />
+Email: <input type="text" name="email"><br />
+Account: <input type="text" name="account"><br />
+Source: <input type="text" name="source"><br />
+<input type="submit" name="submit" value="Submit">
+</form>
+<br /><br /><a href='index.php' />Home</a>
+</center>
+EOS2;
+  return $html2;
+}
+
 require '../webhook/add_contact.php';
 require '../webhook/config.ini.php';
 require '../webhook/mysql_common.php';
@@ -60,36 +80,18 @@ $today = date("D M j G:i:s T Y");
 
 echo "<center>$today<br /><hr />";
 if(isset($_POST['submit'])){
-    $agentId = $config['PATTI_CANCEL_CART_USER'];
-    $source = $config['PATTI_CANCEL_CART_SOURCE'];
+
+    $source = trim($_POST['source']);
     $firstName = trim($_POST['first']);
     $lastName = trim($_POST['last']);
     $email = trim($_POST['email']);
-    $result = addContact($today, $agentId, $firstName, $lastName, $email, $source);
-    echo "<br />Result addedContact $email to $agentId: <br />Contact ID: $result <br />\n";
+    $account = trim($_POST['account']);
+    $result = addContact($today, $account, $firstName, $lastName, $email, $source);
+    echo "<br />Result addedContact $email to $account: <br />Contact ID: $result <br />\n";
 
 }
+echo getHTML();
+echo getHTML2();
+include '../webhook/git-info.php';
+echo "</footer></div></body></html>";
 ?>
-  <hr />
-  <br />
-<form action="" method="post">
-First Name: <input type="text" name="first"><br />
-Last Name: <input type="text" name="last"><br />
-Email: <input type="text" name="email"><br />
-Agent: <input type="text" name="agent"><br />
-Source: <input type="text" name="source"><br />
-<input type="submit" name="submit" value="Submit">
-</form>
-<br /><br /><a href='index.php' />Home</a>
-</center>
-<footer>
-  <!-- Footer start -->
-<?php
-  include '../webhook/git-info.php';
-?>
-  <p>Last Update: 2021-04-14 15:47    <a href="mailto:jwooten37830@me.com?Subject=EngagemoreCRM%20Problem">webmaster</a>
-  <!-- Footer end -->
-</footer>
-
-</body>
-</html>
