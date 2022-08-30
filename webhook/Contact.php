@@ -1,13 +1,13 @@
 <?php
 /**
- * Prospect
+ * Contact
  *
- * Extract information about a propsect from a lead providers email
+ * Extract information about a Contact from a lead providers email
  * @package
  * @version $id$
  * @author John Wooten, Ph.D. <http://jwooten37830.com/blog>
  */
-class Prospect
+class Contact
 {
 
 	private $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
@@ -29,11 +29,23 @@ class Prospect
 
 	private $debug = false;
 
-	private $for = "";
+	private $acct = "";
 
-	public function get_for()
+	private $source = "";
+
+	public function get_source()
 	{
-		return $this->for;
+		return $this->source;
+	}
+
+  public function set_source( $val )
+	{
+		$this->source = $val;
+	}
+
+	public function get_acct()
+	{
+		return $this->acct;
 	}
 
   public function get_name()
@@ -58,6 +70,9 @@ class Prospect
 
 	public function get_inputStr()
 	{
+		if( $this->acct != "" ) {
+			$this->inputStr = "ACCOUNT=<<".$this->acct.">>\n".$this->inputStr;
+		}
 		return $this->inputStr;
 	}
 
@@ -65,6 +80,20 @@ class Prospect
 	{
 		$this->debug = $value;
 	}
+
+	private function extractAcctFromText( $data )
+	{
+		if( strpos( $data, "<<") != 0 ) {
+			if( preg_match('/\<\<(.*?)\>\>/', $data, $match) == 1) {
+				$this->acct = $match[1];
+				$data = str_replace("ACCOUNT=<<","",$data);
+				$data = str_replace($this->acct, "", $data);
+				$data = str_replace(">>","", $data);
+				$this->inputStr = $data;
+			}
+		}
+	}
+
   private function extractPatternFromText( $pattern, $data)
 	{
 		$data = strip_tags($data);
@@ -149,7 +178,7 @@ private function extractNameFromText($data)
 
 	public function __construct( $account, $email_body )
 	{
-		$this->for = $account;
+		$this->acct = $account;
 
 		if ( $email_body === "" )
 		{
@@ -161,6 +190,9 @@ private function extractNameFromText($data)
 		if( $this->debug ) {
 			print "\n..........".$this->data;
 		}
+
+		$this->extractAcctFromText( $this->inputStr );
+
 		$temp = $this->extractEmailFromText($this->data);
 		if( count($temp) > 0 )
 		{
@@ -211,7 +243,7 @@ private function extractNameFromText($data)
 
 	public function __toString()
 	{
-		return "Name: ".$this->name."\nAddr: ".$this->addr."\nProspect Email: ".$this->email."\nPhone: ".$this->phone."\nProspect for: ".$this->for."\n";
+		return "\nName: ".$this->name."\nAddr: ".$this->addr."\nEmail: ".$this->email."\nPhone: ".$this->phone."\nSource: ".$this->source."\nAcct: ".$this->acct."\n";
 	}
 }
 ?>

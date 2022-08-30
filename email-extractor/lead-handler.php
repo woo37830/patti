@@ -36,7 +36,7 @@ error_reporting(E_ALL);
 
 require_once '../webhook/add_contact_note.php';
 require_once '../webhook/mysql_common.php';
-require_once 'Prospect.php';
+require_once '../webhook/Contact.php';
 // Set to 1 to Save Attachements
 
 // NOTE: By default, this saves attachments to the same directory as this script.
@@ -244,21 +244,21 @@ $email .= "Email post log:\n$email \n";
 try {
 	if( $error !== 1 )
 	{
-		$prospect = new Prospect($returnPath, $message);
-		$email .= "\nprospect created for ".$prospect->get_email()."\n";
-	//	echo "\n---------------------Prospect-----------------\n";
-	//	echo $prospect;
+		$contact = new Contact($returnPath, $message);
+		$email .= "\nprospect created for ".$contact->get_email()."\n";
+	//	echo "\n---------------------Contact-----------------\n";
+	//	echo $contact;
 	//	echo "\n----------------------------------------------\n";
 	$added = "Not activated";
 
 			try {
-				$added = addContactNote($today, $returnPath, $prospect->get_email(), $messageId, "Test", "\n------\n".$prospect."\n-------------\n$message\n", "", "");
-				$email .= "Prospect ".$prospect->get_email()." created for $returnPath at $added \n";
-				echo "\nProspect ".$prospect->get_email()." created for $returnPath at $added \n";
+				$added = addContactNote($today, $returnPath, $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
+				$email .= "Contact ".$contact->get_email()." created for $returnPath at $added \n";
+				echo "\nContact ".$contact->get_email()." created for $returnPath at $added \n";
 			}
 			catch (exception $e) {
-				$email .= "#Posted $today, Exception $e occurred attempting to add ".$prospect->get_email()." for $returnPath";
-				echo "\n#Posted $today, Exception $e occurred attempting to add ".$prospect->get_email()." for $returnPath\n";
+				$email .= "#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $returnPath";
+				echo "\n#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $returnPath\n";
 			}
 	}
 } catch( exception $e1) {
