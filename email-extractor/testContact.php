@@ -1,5 +1,6 @@
 <?php
 require '../webhook/Contact.php';
+require '../webhook/add_contact.php';
 
 $data = "abcdef jwooten37830@icloud.com 103 Balboa Circle Oak Ridge, TN 37830 (865) 300-4774 John Wooten ";
 $account = "jwooten37830@icloud.com";
@@ -48,7 +49,7 @@ $contact = new Contact($account, "(888) 555-1212 106 Crestview Lane Oak Ridge, T
 print $contact;
 
 print "\n---------------------- Contact with phone before numbered stree address -----------------------\n";
-$contact = new Contact("", "   ACCOUNT=<<hector.alonso@gmail.com>> (888) 555-1212 106 Crestview Lane Oak Ridge, TN 37830 Ralph Jones charles@testers.com ");
+$contact = new Contact("", "   ACCOUNT=<<jwooten37830@icloud.com>> (888) 555-1212 106 Crestview Lane Oak Ridge, TN 37830 Alexander ThePrettyGood alex.pg@testers.com ");
 $contact->set_source($account);
 //print "Input: ".$contact->get_inputStr()."\n\n";
 print $contact;
@@ -61,6 +62,9 @@ print "get_email: ".$contact->get_email()."\n";
 print "get_source: ".$contact->get_source()."\n";
 print "get_acct: ".$contact->get_acct()."\n";
 print "get_inputStr: ".$contact->get_inputStr()."\n";
+
+
+print "result: ".addContactInstance($contact);
 
 print "\n\nEnd of testContact.php\n\n".$contact->get_info()."\n";
 ?>

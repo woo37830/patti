@@ -10,28 +10,28 @@
 class Contact
 {
 
-	private $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
+	protected $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
 
-	private $regexPhone = '/(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}|[2-9]\d{2}[.-]?\d{3}[.-]?\d{4})/';
+	protected $regexPhone = '/(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}|[2-9]\d{2}[.-]?\d{3}[.-]?\d{4})/';
 //	this matches (ddd) ddd-dddd
 
-	private $inputStr;
+	protected $inputStr;
 
-	private $email = "";
+	protected $email = "";
 
-	private $name = "";
+	protected $name = "";
 
-	private $addr = "";
+	protected $addr = "";
 
-	private $phone = "";
+	protected $phone = "";
 
-	private $data = "";
+	protected $data = "";
 
-	private $debug = false;
+	protected $debug = false;
 
-	private $acct = "";
+	protected $acct = "";
 
-	private $source = "";
+	protected $source = "";
 
 	public function get_source()
 	{
@@ -81,7 +81,7 @@ class Contact
 		$this->debug = $value;
 	}
 
-	private function extractAcctFromText( $data )
+	protected function extractAcctFromText( $data )
 	{
 		if( strpos( $data, "<<") != 0 ) {
 			if( preg_match('/\<\<(.*?)\>\>/', $data, $match) == 1) {
@@ -94,7 +94,7 @@ class Contact
 		}
 	}
 
-  private function extractPatternFromText( $pattern, $data)
+  protected function extractPatternFromText( $pattern, $data)
 	{
 		$data = strip_tags($data);
 
@@ -110,12 +110,12 @@ class Contact
 		return array_unique($list);
 
 	}
-	private function extractEmailFromText($data)
+	protected function extractEmailFromText($data)
 	{
 		return $this->extractPatternFromText($this->regexEmail, $data);
 	}
 
-	private function extractPhoneFromText($data)
+	protected function extractPhoneFromText($data)
 	{
 		$temp = $this->extractPatternFromText($this->regexPhone, $data);
 		if( count($temp) > 0 )
@@ -125,7 +125,7 @@ class Contact
 		return "";
 	}
 
-	private function extractAddrFromText($input)
+	protected function extractAddrFromText($input)
 	{
 		preg_match('/
 		(\d++)    # Number (one or more digits) -> $matches[1]
@@ -139,7 +139,7 @@ class Contact
 	return $matches;
 	}
 
-private function extractNameFromText($data)
+protected function extractNameFromText($data)
 {
 	$addr = $this->extractAddrFromText($data);
 	$item = $addr[0];
