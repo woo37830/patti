@@ -11,7 +11,7 @@ function addContactData($data)
 
   $url = $api_endpoint . 'AddContact.aspx';
 
-  if( ! is_int( $data['accountid'] ) )
+  if( FALSE === is_int( $data['accountid'] ) )
   {
     $id = getAccountId($data['accountid']);
     if( $id == -1 )
