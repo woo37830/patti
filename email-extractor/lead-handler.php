@@ -188,15 +188,6 @@ if($error != 1)
 			$returnPath = substr($returnPath, 1, -1);
 		}
 
-		if( strpos( $message, "<<") != 0 ) {
-			if( preg_match('/\<\<(.*?)\>\>/', $message, $match) == 1) {
-	  		$returnPath = $match[1];
-				echo $returnPath;
-				$message = str_replace("ACCOUNT=<<","",$message);
-				$message = str_replace($returnPath, "", $message);
-				$message = str_replace(">>","", $message);
-			}
-		}
 //		$replyTo = $emailArray['headers']['reply-to'];
 //		$contentType = $emailArray['headers']['content-type'];
 //		$contentTransferEncoding = $emailArray['headers']['transfer-encoding'];
@@ -244,7 +235,8 @@ $email .= "Email post log:\n$email \n";
 try {
 	if( $error !== 1 )
 	{
-		$contact = new Contact($returnPath, $message);
+		$contact = new Contact($message);
+
 		$email .= "\nprospect created for ".$contact->get_email()."\n";
 	//	echo "\n---------------------Contact-----------------\n";
 	//	echo $contact;
@@ -252,13 +244,13 @@ try {
 	$added = "Not activated";
 
 			try {
-				$added = addContactNote($today, $returnPath, $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
-				$email .= "Contact ".$contact->get_email()." created for $returnPath at $added \n";
-				echo "\nContact ".$contact->get_email()." created for $returnPath at $added \n";
+				$added = addContactNote($today, $contact->get_acct(), $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
+				$email .= "Contact ".$contact->get_email()." created for $contact->get_acct() at $added \n";
+				echo "\nContact ".$contact->get_email()." created for $contact->get_acct() at $added \n";
 			}
 			catch (exception $e) {
-				$email .= "#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $returnPath";
-				echo "\n#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $returnPath\n";
+				$email .= "#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $contact->get_acct()";
+				echo "\n#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $contact->get_acct()\n";
 			}
 	}
 } catch( exception $e1) {

@@ -82,9 +82,15 @@ function addContactInstance($contact)
   	'apipassword'    => $api_key,
     'email' => $contact->get_email(),
   	'accountid' => $contact->get_acct(),
-    'firstname' => $contact->get_name(),
-    'lastname' => $contact->get_name(),
-    'source'   => $contact->get_source()
+    'firstname' => $contact->get_firstName(),
+    'lastname' => $contact->get_lastName(),
+    'address' => $contact->get_addr(),
+//    'city' => $contact->get_city(),
+//    'state' => $contact->get_state(),
+//    'postalcode' => $contact->get_zip(),
+    'phone1' => $contact->get_phone(),
+    'source'   => $contact->get_source(),
+    'memo' => $contact->get_inputStr()
   );
   return addContactData($data);
 }
