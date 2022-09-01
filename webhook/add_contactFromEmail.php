@@ -1,5 +1,5 @@
 <?php
-function addContactFromEmail($today, $from, $to, $source)
+function addContactFromEmail($today, $agentId, $to, $source)
 {
   require '../webhook/config.ini.php';
   require_once '../webhook/thrivecart_api.php';
@@ -7,34 +7,7 @@ function addContactFromEmail($today, $from, $to, $source)
   require_once '../webhook/mysql_common.php';
   require_once '../webhook/utilities.php';
   require_once '../webhook/add_contact.php';
-  if( ! is_int($from) )
-  {
-  $names = firstAndLastFromEmail($from);
-  //echo "from_email_address: $from_email_address\n";
-  if ( sizeof( $names) < 3 )
-  {
-    $first_name = $names[0];
-    $last_name = "";
-    $from_email_address = $names[1];
-
-  } else {
-    $first_name = $names[0];
-    $last_name = $names[1];
-    $from_email_address = $names[2];
-  }
-  $agentId = getAccountId( $from_email_address );
-  if( $agentId == -1 )
-  {
-    echo "FAILURE: $from does not have an engagemorecrm id\n";
-    logit($email_address,$first_name, "FAILURE: $from_email_address does not have an engagemorecrm id" );
-    return "-1";
-  }
-
-}
-else
-{
-  $agentId = $from;
-}
+  
   $names = firstAndLastFromEmail($to);
   if ( sizeof( $names) < 3 )
   {
