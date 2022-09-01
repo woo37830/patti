@@ -60,7 +60,8 @@ class Contact
       {
         return "";
       }
-      return explode(" ", $this->name )[0];
+      $array = explode(" ", $this->name);
+      return $array[0];
     }
 
     public function get_lastName()
