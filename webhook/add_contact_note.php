@@ -136,7 +136,7 @@ try {
       $source = "Line 135 of add_contact";  // for now
 //      die( "Will try to add $to_email_address as a contact of $from_email_address\n");
       $contact = new Contact($message);
-      $contactId->addContactInstance($contact);
+      $contactId= $contact->addContactInstance($contact);
 //      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
