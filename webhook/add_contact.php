@@ -31,7 +31,7 @@ function addContactData($data)
   }
   //echo "\nresults_xml: " . $results_xml . "\n";
   //logit($email_address, $email_address, "SUCCESS: contact  added with $results_xml->contactid");
-  return $results_xml;
+  return $results_xml->contactid;
 
 }
 // agentId must be an integer and is the acct id of the agent

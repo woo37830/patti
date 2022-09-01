@@ -244,12 +244,12 @@ try {
 
 			try {
 				$added = addContactNote($today, $contact->get_acct(), $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
-				$email .= "Contact ".$contact->get_email()." created for $contact->get_acct() at $added \n";
-				echo "\nContact ".$contact->get_email()." created for $contact->get_acct() at $added \n";
+				$email .= "Contact ".$contact->get_email()." created for ".$contact->get_acct()." at $added \n";
+				echo "\nContact ".$contact->get_email()." created for ".$contact->get_acct()." at $added \n";
 			}
 			catch (exception $e) {
-				$email .= "#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $contact->get_acct()";
-				echo "\n#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for $contact->get_acct()\n";
+				$email .= "#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for ".$contact->get_acct()."\n";
+				echo "\n#Posted $today, Exception $e occurred attempting to add ".$contact->get_email()." for ".$contact->get_acct()."\n";
 			}
 	}
 } catch( exception $e1) {

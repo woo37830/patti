@@ -52,6 +52,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   require_once '../webhook/get_contact.php';
   require_once '../webhook/mysql_common.php';
   require_once '../webhook/utilities.php';
+  require_once '../webhook/Contact.php';
 
   $today = date("D M j G:i:s T Y");
 
@@ -125,15 +126,18 @@ try {
 
 }
   // getContact will either return the id of an existing contact
+  // or it will create one using the data in message
   try {
   $contactId = getContact( $today, $from_email_address, $to_email_address );
   echo "\nResult of getContact with email: $to_email_address in account: $from_email_address for  is: $contactId\n";
 //  die("\nAccount: $agentId has a contactId of $contactId\n");
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
-      $source = $subject;  // for now
+      $source = "Line 135 of add_contact";  // for now
 //      die( "Will try to add $to_email_address as a contact of $from_email_address\n");
-      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
+      $contact = new Contact($message);
+      $contactId->addContactInstance($contact);
+//      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
         echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
