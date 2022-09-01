@@ -230,7 +230,6 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 //$email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
 
-echo "Email error=$error\n";
 $email .= "Email post log:\n$email \n";
 try {
 	if( $error !== 1 )
@@ -244,7 +243,6 @@ try {
 	$added = "Not activated";
 
 			try {
-				echo "Line: 247";
 				$added = addContactNote($today, $contact->get_acct(), $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
 				$email .= "Contact ".$contact->get_email()." created for $contact->get_acct() at $added \n";
 				echo "\nContact ".$contact->get_email()." created for $contact->get_acct() at $added \n";

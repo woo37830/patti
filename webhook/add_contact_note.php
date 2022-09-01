@@ -119,7 +119,7 @@ try {
 //    logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     return false;
   }
-  echo "AgentId: $agentId";
+  //echo "AgentId: $agentId";
 } catch (Exception $e1) {
   return "FAILURE: Exception $e1 in getAccountId add contact note";
 
@@ -133,7 +133,7 @@ try {
   {
       $source = $subject;  // for now
 //      die( "Will try to add $to_email_address as a contact of $from_email_address\n");
-      $contactId = addContactFromEmail($today, $from_email_address, $to_email_address, $source); // Use full to get first and last
+      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
         echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
