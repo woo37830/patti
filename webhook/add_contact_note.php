@@ -119,15 +119,15 @@ try {
 //    logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
     return false;
   }
+  echo "AgentId: $agentId";
 } catch (Exception $e1) {
   return "FAILURE: Exception $e1 in getAccountId add contact note";
 
 }
-  // getContact will either return the id of an existing contact OR
-  // it will create the contact and return the  new id.
+  // getContact will either return the id of an existing contact
   try {
   $contactId = getContact( $today, $from_email_address, $to_email_address );
-  echo "\nResult of getContact of $agentId for $to_email_address is: $contactId\n";
+  echo "\nResult of getContact of $from_email_address for $to_email_address is: $contactId\n";
 //  die("\nAccount: $agentId has a contactId of $contactId\n");
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
