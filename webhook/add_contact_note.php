@@ -50,6 +50,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   require_once '../webhook/thrivecart_api.php';
   require_once '../webhook/add_contactFromEmail.php';
   require_once '../webhook/get_contact.php';
+  require_once '../webhook/add_contact.php';
   require_once '../webhook/mysql_common.php';
   require_once '../webhook/utilities.php';
   require_once '../webhook/Contact.php';
@@ -133,10 +134,11 @@ try {
 //  die("\nAccount: $agentId has a contactId of $contactId\n");
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
-      $source = "Line 135 of add_contact";  // for now
 //      die( "Will try to add $to_email_address as a contact of $from_email_address\n");
       $contact = new Contact($message);
-      $contactId= $contact->addContactInstance($contact);
+      $contact->set_source("realEstate.com");
+
+      $contactId = addContactInstance($contact);
 //      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {
