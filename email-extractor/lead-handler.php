@@ -237,13 +237,14 @@ try {
 	{
 		$contact = new Contact($message);
 
-		$email .= "\nprospect created for ".$contact->get_email()."\n";
+		$email .= "\nContact created for ".$contact->get_email()."\n";
 	//	echo "\n---------------------Contact-----------------\n";
 	//	echo $contact;
 	//	echo "\n----------------------------------------------\n";
 	$added = "Not activated";
 
 			try {
+				echo "\nLooking for $contact->get_acct() to add contact $contact->get_email() to\n");
 				$added = addContactNote($today, $contact->get_acct(), $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
 				$email .= "Contact ".$contact->get_email()." created for $contact->get_acct() at $added \n";
 				echo "\nContact ".$contact->get_email()." created for $contact->get_acct() at $added \n";
