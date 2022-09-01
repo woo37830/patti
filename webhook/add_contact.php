@@ -11,16 +11,6 @@ function addContactData($data)
 
   $url = $api_endpoint . 'AddContact.aspx';
 
-  if( FALSE === is_int( $data['accountid'] ) )
-  {
-    $id = getAccountId($data['accountid']);
-    if( $id == -1 )
-    {
-      die( "\n No account found for ".$data['accountid']."\n");
-    }
-    $data['accountid'] = $id;
-  }
-
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 
   /**
