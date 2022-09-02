@@ -137,8 +137,15 @@ try {
 //      die( "Will try to add $to_email_address as a contact of $from_email_address\n");
       $contact = new Contact($message);
       $contact->set_source("realEstate.com");
-
-      $contactId = addContactInstance($contact);
+      echo "\nadd_contact_note: trying to addContactInstance";
+      $resultXml = addContactInstance($contact);
+      if( isset($resultXml) )
+      {
+        echo "\n142: got resultXml";
+        echo "\n$resultXml";
+      }
+      echo "\nadd_contact_note: ready for contactId";
+      $contactId = $resultXml.contactId;
 //      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
       if( intval($contactId) == -1  )
       {

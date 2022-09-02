@@ -36,7 +36,7 @@ $result_xml_string = post_api_url($url, $data);
  * @var SimpleXMLElement $results_xml
  */
 $results_xml = simplexml_load_string($result_xml_string);
-if ($results_xml === false) {
+if ( !isset($results_xml) ) {
     echo "Failed loading XML\n";
     foreach(libxml_get_errors() as $error) {
         error_log($error->message);

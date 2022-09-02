@@ -12,7 +12,11 @@ function addContactData($data)
   $url = $api_endpoint . 'AddContact.aspx';
 
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
-
+  echo "\nadd_contact: got results_xml";
+  if( !isset($results_xml) )
+  {
+    die( "\nresults_xml is not set!" );
+  }
   /**
    * If an API error has occurred, the results object will contain a child 'error'
    * SimpleXMLElement parsed from the error response:
@@ -24,14 +28,14 @@ function addContactData($data)
    */
 
   if (isset($results_xml->error)) {
-    echo "\nFailure: " . $results_xml->error . "\n";
+    echo "\nFailure: results_xml->error is ".$results_xml->error."!\n";
     // json_encode($results_xml)
     //logit($data->email,json_encode($results_xml), "FAILURE: add_contact.php $data->email $results_xml->error" );
     return "-1";
   }
   //echo "\nresults_xml: " . $results_xml . "\n";
   //logit($email_address, $email_address, "SUCCESS: contact  added with $results_xml->contactid");
-  return $results_xml->contactid;
+  return $results_xml;
 
 }
 // agentId must be an integer and is the acct id of the agent
@@ -68,10 +72,10 @@ function addContactInstance($contact)
   $api_key      = $config['MSG_PASSWORD'];
 
   $data = array(
-  	'apiusername' => $account_id,
-  	'apipassword'    => $api_key,
+    'accountid' => $contact->get_acct(),
+    'apiusername' => $account_id,
+  	'apikey'    => $api_key,
     'email' => $contact->get_email(),
-  	'accountid' => $contact->get_acct(),
     'firstname' => $contact->get_firstName(),
     'lastname' => $contact->get_lastName(),
     'address' => $contact->get_addr(),
@@ -80,6 +84,7 @@ function addContactInstance($contact)
 //    'postalcode' => $contact->get_zip(),
     'phone1' => $contact->get_phone(),
     'source'   => $contact->get_source(),
+    'addednote' => $contact->get_source(),
     'memo' => $contact->get_inputStr()
   );
   return addContactData($data);
