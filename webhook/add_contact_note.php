@@ -142,12 +142,11 @@ try {
       if( isset($resultXml) )
       {
         echo "\n142: got resultXml";
-        echo "\n$resultXml";
       }
       echo "\nadd_contact_note: ready for contactId";
-      $contactId = $resultXml.contactId;
+      $contactId = $resultXml->contactId;
 //      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
-      if( intval($contactId) == -1  )
+      if( $contactId == "-1"  )
       {
         echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
 //        logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
