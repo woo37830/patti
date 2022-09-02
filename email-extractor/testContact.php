@@ -49,7 +49,7 @@ $contact = new Contact( "(888) 555-1212 106 Crestview Lane Oak Ridge, TN 37830 R
 print $contact;
 
 print "\n---------------------- Contact with phone before numbered stree address -----------------------\n";
-$contact = new Contact("   ACCOUNT=<<jwooten37830@icloud.com>> ç ");
+$contact = new Contact("   ACCOUNT=||jwooten37830@icloud.com||  ");
 $contact->set_source("realEstate.com");
 //print "Input: ".$contact->get_inputStr()."\n\n";
 print $contact;
@@ -65,15 +65,24 @@ print "get_source: ".$contact->get_source()."\n";
 print "get_acct: ".$contact->get_acct()."\n";
 print "get_inputStr: ".$contact->get_inputStr()."\n";
 
-$contact = new Contact("   ACCOUNT=<<jwooten37830@icloud.com>> (888) 555-1212 106 Crestview Lane Oak Ridge, TN 37830 Alex PrettyBad alex.pb@testers.com ");
+$contact = new Contact("   ACCOUNT=||jwooten37830@icloud.com|| (888) 555-1212 106 Crestview Lane Oak Ridge, TN 37830 Alex PrettyBad alex.pb@testers.com ");
 $contact->set_source("realEstate.com");
 //print "Input: ".$contact->get_inputStr()."\n\n";
 print $contact;
 print "get_inputStr: ".$contact->get_inputStr()."\n";
-$result = addContactInstance( $contact );
-$xml = simplexml_load_string($result, "SimpleXMLElement", LIBXML_NOCDATA);
-$json = json_encode($xml);
-$array = json_decode($json,TRUE);
-print_r($array);
+
+$contact = new Contact(NULL);
+//$contact->setDebug(TRUE);
+$contact->set_source("realEstate.com");
+$contact->set_inputStr("  ACCOUNT=||jwooten37830@icloud.com||\n Test that (800) 300-4774 Piggly Wiggly 200 North Main Street Oak Ridge, TN 37830 piggly.wiggle@gmail.com \n\n\n");
+print $contact;
+
+//$result = addContactInstance( $contact );
+//echo "\nresult: $result";
+//$xml = simplexml_load_string($result, "SimpleXMLElement", LIBXML_NOCDATA);
+//$json = json_encode($xml);
+//$array = json_decode($json,TRUE);
+//echo "\nPrint array";
+//print_r($array);
 print "\n\nEnd of testContact.php\n\n".$contact->get_info()."\n";
 ?>

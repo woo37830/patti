@@ -12,7 +12,7 @@ function addContactData($data)
   $url = $api_endpoint . 'AddContact.aspx';
 
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
-  echo "\nadd_contact: got results_xml";
+  //echo "\nadd_contact: got results_xml";
   if( !isset($results_xml) )
   {
     die( "\nresults_xml is not set!" );
@@ -28,7 +28,7 @@ function addContactData($data)
    */
 
   if (isset($results_xml->error)) {
-    echo "\nFailure: results_xml->error is ".$results_xml->error."!\n";
+    echo "\nFailure: results_xml->error !\n";
     // json_encode($results_xml)
     //logit($data->email,json_encode($results_xml), "FAILURE: add_contact.php $data->email $results_xml->error" );
     return "-1";

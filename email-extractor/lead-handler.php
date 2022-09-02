@@ -163,9 +163,18 @@ fwrite($fh, $email);
 echo "\nPost: ".count($_POST)."\n";
 
 if( count($_POST) == 0 ) {
-	fwrite($fh, "\nNo data in POST\n");
-	fclose($fh);
-	die("\nNo data in POST\n");
+	fwrite($fh, "\nNo data in POST\nGoing to test mode");
+//	fclose($fh);
+//	die("\nNo data in POST\n");
+	$useTestEmail = TRUE;
+	$_POST['body'] = "ACCOUNT=||jwooten37830@icloud.com||\n Test that (800) 300-4774 for piggly.wiggle@gmail.com Piggly Wiggly 200 North Main Street, Oak Ridge TN 37830 \n\n\n";
+	$_POST['to'] = "wooten.666@gmail.com";
+	$_POST['from'] = "jwooten37830@me.com";
+	$_POST['message-id'] = "123";
+	$_POST['date'] = "20220902";
+	$_POST['subject'] = "TEST-LEAD";
+	$_POST['delivered-to'] = "me";
+	$_POST['return-path'] = "jwooten37830@icloud.com";
 }
 
 try {
@@ -236,13 +245,14 @@ try {
 	{
 		$contact = new Contact($message);
 
-		$email .= "\nContact created for ".$contact->get_email()."\n";
+		$email .= "\nContact instance created for ".$contact."\n";
 	//	echo "\n---------------------Contact-----------------\n";
 	//	echo $contact;
 	//	echo "\n----------------------------------------------\n";
 	$added = "Not activated";
 
 			try {
+//				echo "\n$email";
 				$added = addContactNote($today, $contact->get_acct(), $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
 				$email .= "Contact ".$contact->get_email()." created for ".$contact->get_acct()." at $added \n";
 				echo "\nContact ".$contact->get_email()." created for ".$contact->get_acct()." at $added \n";

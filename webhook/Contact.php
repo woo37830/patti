@@ -95,31 +95,42 @@ class Contact
     public function get_inputStr()
     {
         if ($this->acct != "") {
-            $this->inputStr = "ACCOUNT=<<" . $this->acct . ">>\n" . $this->inputStr;
+            $this->inputStr = "ACCOUNT=||" . $this->acct . "||\n" . $this->inputStr;
         }
         return $this->inputStr;
     }
 
-    protected function setDebug($value)
+    public function setDebug($value)
     {
         $this->debug = $value;
     }
 
+    function isNullOrEmpty($s) {
+        return !isset($s) || trim($s) == '';
+    }
+
     protected function extractAcctFromText($data)
     {
-        if (strpos($data, "<<") != 0) {
-            if (preg_match('/\<\<(.*?)\>\>/', $data, $match) == 1) {
+      if( ! $this->isNullOrEmpty( $data ) )
+      {
+          if (strpos($data, "||") != 0) {
+            if (preg_match('/\|\|(.*?)\|\|/', $data, $match) == 1) {
                 $this->acct = $match[1];
-                $data = str_replace("ACCOUNT=<<", "", $data);
+                $data = str_replace("ACCOUNT=||", "", $data);
                 $data = str_replace($this->acct, "", $data);
-                $data = str_replace(">>", "", $data);
+                $data = str_replace("||", "", $data);
                 $this->inputStr = $data;
             }
         }
+      }
     }
 
     protected function extractPatternFromText($pattern, $data)
     {
+      if( $this->isNullOrEmpty( $data ) )
+      {
+        return "";
+      }
         $data = strip_tags($data);
 
         $list = array();
@@ -174,6 +185,58 @@ class Contact
         return $matches[0];
     }
 
+    public function set_inputStr($email_body)
+    {
+    //  echo "\nset_inputStr";
+      if( ! $this->isNullOrEmpty( $email_body ) )
+      {
+
+      $this->data = strip_tags($email_body);
+      if ($this->debug) {
+          print "\n....email_body......" . $this->data;
+      }
+
+      $this->extractAcctFromText($this->data);
+      if ($this->debug) {
+          print "\n....acctFromText......<$this->acct>  $this->data";
+      }
+
+      $temp = $this->extractEmailFromText($this->inputStr);
+      if ( isset( $temp ) and $temp != "" and  count($temp) > 0) {
+          $this->email = $temp[0];
+          $this->data = str_replace($this->email, "", $this->data);
+      }
+      if ($this->debug) {
+          print "\n...emailFromText.......<" . $this->email . ">" . $this->data;
+      }
+
+      $this->phone = $this->extractPhoneFromText($this->data);
+      // print "\nphone: '".$this->phone."'";
+      $this->data = str_replace($this->phone, "", $this->data);
+      // print "\n..........<".$this->data.">\n";
+      if ($this->debug) {
+          print "\n....phoneFromText........<" . $this->phone . ">" . $this->data;
+      }
+      $temp = $this->extractAddrFromText($this->data);
+      if (count($temp) > 0) {
+          $this->addr = $temp[0];
+      }
+      // print $item."\n";
+      $this->data = preg_replace('/' . $this->addr . '/', "", $this->data);
+      if ($this->debug) {
+          print "\n.....addressFromText.......<" . $this->addr . ">" . $this->data;
+      }
+
+      $temp = preg_match('/([A-Z]\S++) ([A-Z]\S++)/', $this->data, $matches);
+      if (count($matches) > 0) {
+          $this->name = $matches[0];
+      }
+      if ($this->debug) {
+          print "\n.....nameFromText.......<" . $this->name . ">" . $this->data;
+          print "\n";
+      }
+    }
+    }
     /**
      * writeList
      *
@@ -198,54 +261,17 @@ class Contact
     public function __construct($email_body)
     {
       //  $this->acct = $account;
-
-        if ($email_body === "") {
+      if( $this->debug ) {
+        echo "\n-----------constructor----------";
+      }
+        if ( $this->isNullOrEmpty($email_body) ) {
+          //echo "\nNo argument passed";
             return;
-        }
-        $this->inputStr = $email_body;
+        } else {
+        $this->set_inputStr($email_body);
+      }
 
-        $this->data = strip_tags($email_body);
-        if ($this->debug) {
-            print "\n.........." . $this->data;
-        }
-
-        $this->extractAcctFromText($this->inputStr);
-
-        $temp = $this->extractEmailFromText($this->data);
-        if (count($temp) > 0) {
-            $this->email = $temp[0];
-            $this->data = str_replace($this->email, "", $this->data);
-        }
-        if ($this->debug) {
-            print "\n..........<" . $this->email . ">" . $this->data;
-        }
-
-        $this->phone = $this->extractPhoneFromText($this->data);
-        // print "\nphone: '".$this->phone."'";
-        $this->data = str_replace($this->phone, "", $this->data);
-        // print "\n..........<".$this->data.">\n";
-        if ($this->debug) {
-            print "\n............<" . $this->phone . ">" . $this->data;
-        }
-        $temp = $this->extractAddrFromText($this->data);
-        if (count($temp) > 0) {
-            $this->addr = $temp[0];
-        }
-        // print $item."\n";
-        $this->data = preg_replace('/' . $this->addr . '/', "", $this->data);
-        if ($this->debug) {
-            print "\n............<" . $this->addr . ">" . $this->data;
-        }
-
-        $temp = preg_match('/([A-Z]\S++) ([A-Z]\S++)/', $this->data, $matches);
-        if (count($matches) > 0) {
-            $this->name = $matches[0];
-        }
-        if ($this->debug) {
-            print "\n............<" . $this->name . ">" . $this->data;
-            print "\n";
-        }
-    }
+      }
 
     public function get_info()
     {
