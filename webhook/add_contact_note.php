@@ -145,6 +145,7 @@ try {
       }
       echo "\nadd_contact_note: ready for contactId";
       $contactId = $resultXml->contactId;
+      echo "\nadd_contact_note: contactId is $contactId";
 //      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
       if( $contactId == "-1"  )
       {
@@ -160,6 +161,7 @@ try {
   return "FAILURE: Exception $e2 in getAccountId getContact";
 }
 
+  echo "\nAdding note to $to_email_address contact of $agentId";
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
@@ -183,7 +185,7 @@ try {
   if (isset($results_xml->error) )
   {
 //    logit($from_email_address,strip_tags($postArray), "FAILURE: (add_contact_note) $results_xml->error" );
-    return "FAILURE: (add_contact_note) $results_xml->error" ;
+    return "\nFAILURE: (add_contact_note) $results_xml->error" ;
   }
 
 //  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address, contact of $agentId\n";
