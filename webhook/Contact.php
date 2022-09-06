@@ -34,6 +34,27 @@ class Contact
 
     protected $source = "";
 
+    protected $errMessage = ""; // This is set if there is an error
+
+    public static function read( $account, $val )
+    {
+      $contact = new Contact(NULL);
+      $contact.set_acct( $account );
+      $contact->errMessage = "Not yet implemented, contents are: $contact";
+      return $contact;
+    }
+
+    public function write()
+    {
+        $this->errMessage = "Not yet implemented, contents are: $this";
+        return;
+    }
+    
+    public function get_errMessage()
+    {
+      return $errMessage;
+    }
+
     public function get_source()
     {
         return $this->source;
