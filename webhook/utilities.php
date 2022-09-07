@@ -4,6 +4,35 @@
  * A set of functions used in tests and in the main thrivecart.php application
  */
 
+ function isNullOrEmpty($s) {
+     return !isset($s) || trim($s) == '';
+ }
+
+ function get_info()
+ {
+     $last = exec('git log -1 --date=format:"%Y/%m/%d" --format="%ad"');
+     $rev = exec('git rev-parse --short HEAD');
+     $branch = exec('git rev-parse --abbrev-ref HEAD');
+
+     return "\n---------------- $last ---- $rev ------ $branch --------\n";
+ }
+
+
+ /**
+  * writeList
+  *
+  * @param mixed $list
+  * @access protected
+  * @return void
+  */
+ function writeList($list)
+ {
+     foreach ($list as $key => $value) {
+         print $value . "\n";
+     }
+ }
+
+
 function account_exists($thrivecartid) {
   //return $value['account_exists'];
   $acct_id = getAccountId( $thrivecartid );

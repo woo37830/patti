@@ -1,5 +1,7 @@
 <?php
 
+require_once '../utilities.php';
+require 'Associate.php';
 /**
  * Contact
  *
@@ -8,7 +10,7 @@
  * @version $id$
  * @author John Wooten, Ph.D. <http://jwooten37830.com/blog>
  */
-class Contact
+class Contact extends Associate
 {
 
     protected $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
@@ -18,28 +20,18 @@ class Contact
     // this matches (ddd) ddd-dddd
     protected $inputStr;
 
-    protected $email = "";
-
-    protected $name = "";
-
-    protected $addr = "";
-
-    protected $phone = "";
 
     protected $data = "";
-
-    protected $debug = false;
 
     protected $acct = "";
 
     protected $source = "";
 
-    protected $errMessage = ""; // This is set if there is an error
 
     public static function read( $account, $val )
     {
       $contact = new Contact(NULL);
-      $contact.set_acct( $account );
+      $contact->acct = $account;
       $contact->errMessage = "Not yet implemented, contents are: $contact";
       return $contact;
     }
@@ -47,12 +39,6 @@ class Contact
     public function write()
     {
         $this->errMessage = "Not yet implemented, contents are: $this";
-        return;
-    }
-    
-    public function get_errMessage()
-    {
-      return $errMessage;
     }
 
     public function get_source()
@@ -70,48 +56,7 @@ class Contact
         return $this->acct;
     }
 
-    public function get_name()
-    {
-        return $this->name;
-    }
 
-    public function get_firstName()
-    {
-      if( $this->name == "" )
-      {
-        return "";
-      }
-      $array = explode(" ", $this->name);
-      return $array[0];
-    }
-
-    public function get_lastName()
-    {
-      if( $this->name == "" )
-      {
-        return "";
-      }
-      $array = explode(" ", $this->name);
-      if( sizeof($array) > 0 )
-      {
-        return $array[1];
-      }
-      return "";
-    }
-    public function get_addr()
-    {
-        return $this->addr;
-    }
-
-    public function get_phone()
-    {
-        return $this->phone;
-    }
-
-    public function get_email()
-    {
-        return $this->email;
-    }
 
     public function get_inputStr()
     {
@@ -121,18 +66,9 @@ class Contact
         return $this->inputStr;
     }
 
-    public function setDebug($value)
-    {
-        $this->debug = $value;
-    }
-
-    function isNullOrEmpty($s) {
-        return !isset($s) || trim($s) == '';
-    }
-
     protected function extractAcctFromText($data)
     {
-      if( ! $this->isNullOrEmpty( $data ) )
+      if( ! isNullOrEmpty( $data ) )
       {
           if (strpos($data, "||") != 0) {
             if (preg_match('/\|\|(.*?)\|\|/', $data, $match) == 1) {
@@ -148,7 +84,7 @@ class Contact
 
     protected function extractPatternFromText($pattern, $data)
     {
-      if( $this->isNullOrEmpty( $data ) )
+      if( isNullOrEmpty( $data ) )
       {
         return "";
       }
@@ -209,7 +145,7 @@ class Contact
     public function set_inputStr($email_body)
     {
     //  echo "\nset_inputStr";
-      if( ! $this->isNullOrEmpty( $email_body ) )
+      if( ! isNullOrEmpty( $email_body ) )
       {
 
       $this->data = strip_tags($email_body);
@@ -258,19 +194,6 @@ class Contact
       }
     }
     }
-    /**
-     * writeList
-     *
-     * @param mixed $list
-     * @access protected
-     * @return void
-     */
-    protected function writeList($list)
-    {
-        foreach ($list as $key => $value) {
-            print $value . "\n";
-        }
-    }
 
     /**
      * EmailExtract
@@ -285,7 +208,7 @@ class Contact
       if( $this->debug ) {
         echo "\n-----------constructor----------";
       }
-        if ( $this->isNullOrEmpty($email_body) ) {
+        if ( isNullOrEmpty($email_body) ) {
           //echo "\nNo argument passed";
             return;
         } else {
@@ -294,14 +217,6 @@ class Contact
 
       }
 
-    public function get_info()
-    {
-        $last = exec('git log -1 --date=format:"%Y/%m/%d" --format="%ad"');
-        $rev = exec('git rev-parse --short HEAD');
-        $branch = exec('git rev-parse --abbrev-ref HEAD');
-
-        return "\n---------------- $last ---- $rev ------ $branch --------\n";
-    }
 
     public function __toString()
     {

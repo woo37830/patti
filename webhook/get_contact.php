@@ -6,7 +6,6 @@ function getContact($today, $from, $to)
 
   require_once '../webhook/mysql_common.php';
   require_once '../webhook/add_contact.php';
-  require_once '../webhook/utilities.php';
   $account_id   = $config['MSG_USER'];
   $api_key      = $config['MSG_PASSWORD'];
   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';

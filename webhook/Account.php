@@ -1,4 +1,7 @@
 <?php
+
+//require_once '../utilities.php';
+require 'Associate.php';
 /**
  * Account
  *
@@ -9,28 +12,18 @@
  * @version $id$
  * @author John Wooten, Ph.D. <http://jwooten37830.com/blog>
  */
-class Account
+class Account extends Associate
 {
 
-  protected $errMessage = ""; // This is set if there is an error
+  protected $accountid = 0;
+  protected $inputStr = "";
 
 
-  public function get_errMessage()
+  public static function read( $accountid )
   {
-    return $errMessage;
-  }
-
-  public function setDebug($value)
-  {
-      $this->debug = $value;
-  }
-
-  public static function read( $account, $val )
-  {
-    $contact = new Contact(NULL);
-    $contact.set_acct( $account );
-    $contact->errMessage = "Not yet implemented, contents are: $contact";
-    return $contact;
+    $account = new Account($accountid);
+    $account->errMessage = "Not yet implemented, contents are: $account";
+    return $account;
   }
 
   public function write()
@@ -40,53 +33,30 @@ class Account
   }
 
   /**
-   * writeList
-   *
-   * @param mixed $list
-   * @access protected
-   * @return void
-   */
-  protected function writeList($list)
-  {
-      foreach ($list as $key => $value) {
-          print $value . "\n";
-      }
-  }
-
-  /**
    * EmailExtract
    *
    * @param mixed $inFile
    * @access public
    * @return void
    */
-  public function __construct($email_body)
+  public function __construct($result_xml_string)
   {
     //  $this->acct = $account;
     if( $this->debug ) {
       echo "\n-----------constructor----------";
     }
-      if ( $this->isNullOrEmpty($email_body) ) {
-        //echo "\nNo argument passed";
+      if ( isNullOrEmpty($result_xml_string) ) {
+          $this->errMessage = "The result_xml_string is: ";
           return;
       } else {
-      $this->set_inputStr($email_body);
+      $this->inputStr = $result_xml_string;
     }
 
     }
-
-  public function get_info()
-  {
-      $last = exec('git log -1 --date=format:"%Y/%m/%d" --format="%ad"');
-      $rev = exec('git rev-parse --short HEAD');
-      $branch = exec('git rev-parse --abbrev-ref HEAD');
-
-      return "\n---------------- $last ---- $rev ------ $branch --------\n";
-  }
 
   public function __toString()
   {
-      return "\nName: " . $this->name . "\nAddr: " . $this->addr . "\nEmail: " . $this->email . "\nPhone: " . $this->phone . "\nSource: " . $this->source . "\nAcct: " . $this->acct . "\n";
+      return "\nName: " . $this->get_name() . "\nAddr: " . $this->get_addr() . "\nEmail: " . $this->email . "\nPhone: " . $this->phone .  "\nAcct: " . $this->accountid . "\n";
   }
 }
 ?>
