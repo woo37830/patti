@@ -8,7 +8,7 @@ function addContactData($data)
   require_once '../webhook/mysql_common.php';
   require_once '../webhook/utilities.php';
   $api_endpoint = 'https://secure.engagemorecrm.com/api/2/';
-
+  //$api_endpoint = 'https://www.allclients.com/api/2/';
   $url = $api_endpoint . 'AddContact.aspx';
 
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
@@ -29,6 +29,7 @@ function addContactData($data)
 
   if (isset($results_xml->error)) {
     echo "\nFailure: results_xml->error !\n";
+    echo json_encode($data);
     // json_encode($results_xml)
     //logit($data->email,json_encode($results_xml), "FAILURE: add_contact.php $data->email $results_xml->error" );
     return "-1";
@@ -70,23 +71,27 @@ function addContactInstance($contact)
   require_once '../webhook/utilities.php';
   $account_id   = $config['MSG_USER'];
   $api_key      = $config['MSG_PASSWORD'];
+  $api_key      = 'C06EA0D3408C10928D47C8D96F9F8CC4';
 
   $data = array(
-    'accountid' => $contact->get_acct(),
-    'apiusername' => $account_id,
+    'accountid' => $contact->get_acctNumber(),
   	'apikey'    => $api_key,
-    'email' => $contact->get_email(),
     'firstname' => $contact->get_firstName(),
     'lastname' => $contact->get_lastName(),
     'address' => $contact->get_addr(),
 //    'city' => $contact->get_city(),
 //    'state' => $contact->get_state(),
 //    'postalcode' => $contact->get_zip(),
-    'phone1' => $contact->get_phone(),
-    'source'   => $contact->get_source(),
-    'addednote' => $contact->get_source(),
-    'memo' => $contact->get_inputStr()
+//    'phone1' => $contact->get_phone(),
+//    'source'   => $contact->get_source(),
+//    'addednote' => $contact->get_source(),
+//    'memo' => $contact->get_inputStr(),
+    'email' => $contact->get_email()
   );
+//  foreach(array_keys($data) as $key){
+//    echo $key."->".$data[$key]."\n";
+//}
+
   return addContactData($data);
 }
 

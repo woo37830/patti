@@ -37,12 +37,13 @@ $result_xml_string = post_api_url($url, $data);
  */
 //echo "xml_string: $result_xml_string";
 $results_xml = simplexml_load_string($result_xml_string);
-if ( !isset($results_xml) ) {
-    echo "Failed loading XML\n";
+if ( !isset($results_xml) or $results_xml ) {
+//    $results_xml = $result_xml_string;
+	$results_xml = -1;
     foreach(libxml_get_errors() as $error) {
         error_log($error->message);
     }
-		return false;
+//		return false;
 }
 
 return $results_xml;

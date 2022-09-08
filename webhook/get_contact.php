@@ -1,5 +1,5 @@
 <?php
-function getContact($today, $from, $to)
+function getContact($agentId, $contact_email)
 {
   require '../webhook/config.ini.php';
   require_once '../webhook/thrivecart_api.php';
@@ -12,44 +12,13 @@ function getContact($today, $from, $to)
 
   $url = $api_endpoint . 'QuickSearchContacts.aspx';
 
-  $today = date("D M j G:i:s T Y");
-
-  $names = firstAndLastFromEmail($from);
-  $first_name = $names[0];
-  $last_name = $names[1];
-  $from_email_address = $names[2];
-
-
-  $agentId = getAccountId( $from_email_address );
-  if( $agentId == -1 )
-  {
-    echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
-    logit($from_email_address,$to, "FAILURE: $from_email_address does not have an engagemorecrm id in the users table" );
-    exit;
-  }
-  //echo "\nGot agentId = $agentId on lookup of $from_email_address in get_contact.php\n";
-
-  $names = firstAndLastFromEmail($to);
-
-  if ( sizeof( $names) < 3 )
-  {
-    $first_name = $names[0];
-    $last_name = "";
-    $to_email_address = $names[1];
-
-  } else {
-    $first_name = $names[0];
-    $last_name = $names[1];
-    $to_email_address = $names[2];
-  }
-
   //echo "\nGot to_email_address = '$to_email_address' from $to\n";
 
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
-  	'accountid' => $agentId,
-    'searchstring' => $to_email_address
+  	'accountid' => (int)$agentId,
+    'searchstring' => $contact_email
   );
   $results_xml = thrivecart_api($url, $data); // returns simplexml_load_string object representation
 
@@ -65,9 +34,9 @@ function getContact($today, $from, $to)
 
   if (isset($results_xml->error)) {
   //  echo "\nresults_xml: " . $results_xml . "\n";
-    echo "\nFailure: " . $results_xml->error . "\n";
+  //  echo "\nFailure: " . $results_xml->error . "\n";
     logit($from_email_address,$results_xml, "FAILURE: $results_xml->error" );
-    return "-1";
+    return -1;
   }
   if( !isset($results_xml->contacts->contact) )
   {

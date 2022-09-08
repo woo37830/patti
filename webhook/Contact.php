@@ -1,6 +1,8 @@
 <?php
 
-require_once '../utilities.php';
+require_once 'utilities.php';
+require_once 'add_contact.php';
+require_once 'get_contact.php';
 require 'Associate.php';
 /**
  * Contact
@@ -20,6 +22,7 @@ class Contact extends Associate
     // this matches (ddd) ddd-dddd
     protected $inputStr;
 
+    protected $contactid = -1;
 
     protected $data = "";
 
@@ -30,15 +33,29 @@ class Contact extends Associate
 
     public static function read( $account, $val )
     {
+      $contactid = getContact((int)$account, $val);
       $contact = new Contact(NULL);
-      $contact->acct = $account;
-      $contact->errMessage = "Not yet implemented, contents are: $contact";
+      $contact->acct = (int)$account;
+      $contact->contactid = $contactid;
+      $contact->email = $val;
+      if( $contactid == -1 )
+      {
+        $contact->errMessage = "Failure to read. Contents are: $contact";
+      }
       return $contact;
     }
 
     public function write()
     {
-        $this->errMessage = "Not yet implemented, contents are: $this";
+      $contactid = addContactInstance($this);
+      if( isNullOrEmpty($contactid) || $contactid == -1)
+      {
+        $this->errMessage = "Failure to write: $this";
+      }
+      else {
+        echo "Contact: >$contactid<";
+      }
+      return $contactid;
     }
 
     public function get_source()
@@ -56,7 +73,15 @@ class Contact extends Associate
         return $this->acct;
     }
 
-
+    public function get_acctNumber()
+    {
+      return 2607;
+    }
+    
+    public function get_contactid()
+    {
+      return $this->contactid;
+    }
 
     public function get_inputStr()
     {
@@ -220,7 +245,7 @@ class Contact extends Associate
 
     public function __toString()
     {
-        return "\nName: " . $this->name . "\nAddr: " . $this->addr . "\nEmail: " . $this->email . "\nPhone: " . $this->phone . "\nSource: " . $this->source . "\nAcct: " . $this->acct . "\n";
+        return "\nContactid: ".$this->contactid."\nName: " . $this->name . "\nAddr: " . $this->addr . "\nEmail: " . $this->email . "\nPhone: " . $this->phone . "\nSource: " . $this->source . "\nAcct: " . $this->acct . "\n";
     }
 }
 ?>
