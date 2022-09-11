@@ -6,6 +6,27 @@
 
 require 'post_api_url.php';
 
+/**
+ * Remove substring from string
+ *
+ * @param string $subject
+ * @param mixed $remove[optional] If omitted the function will remove whitespaces
+ * @return mixed
+ */
+function rmv($subject, $remove = " ") {
+    $return = $subject;
+
+    if (!is_array($remove)) {
+        $remove = array($remove);
+    }
+
+    for ($i = 0; $i < count($remove); $i++) {
+        $return = str_replace($remove[$i], "", $return);
+    }
+
+    return $return;
+}
+
 function thrivecart_api($url, $data) {
 	$log_file = "./mysql-errors.log";
 
@@ -29,6 +50,11 @@ function thrivecart_api($url, $data) {
  */
 $result_xml_string = post_api_url($url, $data);
 
+$result_xml_string = rmv($result_xml_string,'<?xml version="1.0"?>',$result_xml_string);
+//  $results = simplexml_load_string($result_xml_string);
+//  print_r($results);
+//  echo "\ncontactid: ".$results->contacts->contact->id."\n";
+//echo $result_xml_string;
 /**
  * SimpleXML will create an object representation of the XML API response. If
  * the XML is invalid, simplexml_load_string will return false.
@@ -37,13 +63,14 @@ $result_xml_string = post_api_url($url, $data);
  */
 //echo "xml_string: $result_xml_string";
 $results_xml = simplexml_load_string($result_xml_string);
-if ( !isset($results_xml) or $results_xml ) {
+//print_r($results_xml);
+if ( isset($results_xml->error) ) {
 //    $results_xml = $result_xml_string;
-	$results_xml = -1;
+	//$results_xml = "\nresults_xml is not set or false, result_xml_string: \n".$result_xml_string;
     foreach(libxml_get_errors() as $error) {
         error_log($error->message);
     }
-//		return false;
+		return false;
 }
 
 return $results_xml;

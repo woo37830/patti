@@ -61,6 +61,7 @@ $html2 = <<<EOS2
 First Name: <input type="text" name="first"><br />
 Last Name: <input type="text" name="last"><br />
 Email: <input type="text" name="email"><br />
+Phone: <input type="text" name="phone"><br />
 Account: <input type="text" name="account"><br />
 Source: <input type="text" name="source"><br />
 <input type="submit" name="submit" value="Submit">
@@ -85,9 +86,17 @@ if(isset($_POST['submit'])){
     $firstName = trim($_POST['first']);
     $lastName = trim($_POST['last']);
     $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
     $account = trim($_POST['account']);
-    $result = addContact($today, $account, $firstName, $lastName, $email, $source);
-    echo "<br />Result addedContact $email to $account: <br />Contact ID: $result <br />\n";
+    $result = addContact($today, (int)$account, $firstName, $lastName, $email, $phone, $source);
+    if( $result != "-1" )
+    {
+      echo "<br />Result addedContact $email to $account: <br />Contact ID: $result <br />\n";
+    }
+    else
+    {
+      echo "<br />addContact failed for $email to $account<br />\n";
+    }
 
 }
 echo getHTML();

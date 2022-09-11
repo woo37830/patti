@@ -77,7 +77,7 @@ class Contact extends Associate
     {
       return 2607;
     }
-    
+
     public function get_contactid()
     {
       return $this->contactid;
@@ -167,6 +167,14 @@ class Contact extends Associate
         return $matches[0];
     }
 
+    private function cleanPhone( $phoneString )
+    {
+      $phoneStr =  str_replace('(', '', $phoneStr);
+      $phoneStr = str_replace(')','', $phoneStr);
+      $phoneStr = str_replace('-', '', $phoneStr);
+      return str_replace(' ','', $phoneStr);
+    }
+
     public function set_inputStr($email_body)
     {
     //  echo "\nset_inputStr";
@@ -192,10 +200,12 @@ class Contact extends Associate
           print "\n...emailFromText.......<" . $this->email . ">" . $this->data;
       }
 
-      $this->phone = $this->extractPhoneFromText($this->data);
+      $temp_phone = cleanPhone($this->extractPhoneFromText($this->data));
       // print "\nphone: '".$this->phone."'";
-      $this->data = str_replace($this->phone, "", $this->data);
+      $this->data = str_replace($temp_phone, "", $this->data);
       // print "\n..........<".$this->data.">\n";
+      $this->phone = $temp_phone;
+
       if ($this->debug) {
           print "\n....phoneFromText........<" . $this->phone . ">" . $this->data;
       }

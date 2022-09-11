@@ -129,19 +129,23 @@ try {
   // getContact will either return the id of an existing contact
   // or it will create one using the data in message
   try {
-  $contactId = getContact( $today, $from_email_address, $to_email_address );
-  echo "\nResult of getContact with email: $to_email_address in account: $from_email_address for  is: $contactId\n";
+  $contactId = getContact( $today, $agentId, $to_email_address );
+//  echo "\nResult of getContact with email: $to_email_address in account: $from_email_address for  is: $contactId\n";
 //  die("\nAccount: $agentId has a contactId of $contactId\n");
   if( $contactId == "-1" ) // Contact does not exist in agents list
   {
 //      die( "Will try to add $to_email_address as a contact of $from_email_address\n");
       $contact = new Contact($message);
-      $contact->set_source("realEstate.com");
-      echo "\nadd_contact_note: trying to addContactInstance";
+//      $contact->set_source("realEstate.com");
+//      echo "\nadd_contact_note: trying to addContactInstance";
       $resultXml = addContactInstance($contact);
-      if( isset($resultXml) )
+      if( !isset($resultXml) )
       {
-        echo "\n142: got resultXml";
+        echo "\n144: Did not get resultXml";
+      }
+      if( isNullOrEmpty($resultXml) )
+      {
+        echo "\n148: resultXML is empty or null";
       }
       echo "\nadd_contact_note: ready for contactId";
       $contactId = $resultXml->contactId;
@@ -149,7 +153,7 @@ try {
 //      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
       if( $contactId == "-1"  )
       {
-        echo "Failure adding contact $to_email_address to $from_email_address account - $contactId";
+        echo "Failure adding contact $to_email_address to $agentId account";
 //        logit($from_email_address, strip_tags($postArray), "FAILURE: Attempt to add contact $to_email_address contactId = $contactId");
         return false;
       }
@@ -161,7 +165,7 @@ try {
   return "FAILURE: Exception $e2 in getAccountId getContact";
 }
 
-  echo "\nAdding note to $to_email_address contact of $agentId";
+  //echo "\nAdding note to $to_email_address contact of $agentId";
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
@@ -188,9 +192,18 @@ try {
     return "\nFAILURE: (add_contact_note) $results_xml->error" ;
   }
 
+  if (isset($results_xml->noteid) )
+  {
+    $noteid = $results_xml->noteid;
+    $resultStr = "SUCCESS: email added as noteid ≈ $noteid for $to_email_address for account: $agentId";
+  }
+  else
+  {
+    $resultStr = "FAILURE: note was not added to $to_email_address for account: $agentId";
+  }
 //  echo "\nSUCCESS: email added as note: $results_xml->noteid to $to_email_address, contact of $agentId\n";
 //  logit($from_email_address,strip_tags($postArray), "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address" );
-  return "SUCCESS: email added as noteid $results_xml->noteid for $to_email_address to contact $to_email_address";
+  return $resultStr;
 
 }
 

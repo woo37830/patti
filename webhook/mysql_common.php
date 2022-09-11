@@ -228,10 +228,6 @@ function getStatusFor( $accountid ) {
 function getUserByEmail( $email ) {
   require 'config.ini.php';
 
-  $names = firstAndLastFromEmail($email);
-  $first_name = $names[0];
-  $last_name = $names[1];
-  $from_email_address = $names[2];
 
   $value = -1;
   $dbase = $config['PATTI_DATABASE'];
@@ -241,7 +237,7 @@ function getUserByEmail( $email ) {
       $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_USERS_TABLE'];
 
-      $query = "SELECT * FROM $table WHERE email = '$from_email_address' ";
+      $query = "SELECT * FROM $table WHERE email = '$email' ";
        $results_array = array();
        $result = $conn->query($query);
        while( $row = $result->fetch_assoc() ) {
