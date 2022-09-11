@@ -17,7 +17,7 @@ $to = "wooten.666@gmail.com";
 $non_existent_email = "Joey Jones<jwooten37830@gmail.com>";
 $non_existent_email2 = "pdiddly@gmail.com";
 
-$result = addContact($from, "Ralph", "Snodgrass", "r.snod@testers.com", "8885551212", "testAddContactStriptScript.php", "103 W. North St.", "Tampa", "FL", "33303","testAddContactScript");
+$result = addContact($from, "Patrick", "Chamberlain", "p.chang@testers.com", "8885551212", "Check source", "103 W. North St.", "Tampa", "FL", "33303","Landing Page");
 echo "Result for addContact: $result\n";
 echo "All Done!\n";
 ?>

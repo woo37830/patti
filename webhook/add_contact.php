@@ -77,6 +77,8 @@ function addContact($agentId, $firstName, $lastName, $email, $phone, $memo, $str
   $phone = str_replace('-', '', $phone);
   $phone = str_replace(' ','', $phone);
 
+  $today = date("D M j G:i:s T Y");
+
   $data = array(
   	'apiusername' => $account_id,
   	'apipassword'    => $api_key,
@@ -90,6 +92,8 @@ function addContact($agentId, $firstName, $lastName, $email, $phone, $memo, $str
     'firstname' => $firstName,
     'lastname' => $lastName,
     'memo' => $memo,
+    'addednote' => 'Contact added using add_contact.php',
+    'adddate' => $today,
     'source'   => $source
   );
 //  print_r($data);
