@@ -88,7 +88,7 @@ if(isset($_POST['submit'])){
     $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
     $account = trim($_POST['account']);
-    $result = addContact($account, $firstName, $lastName, $email, $phone, $source);
+    $result = addContact($account, $firstName, $lastName, $email, $phone, $memo, $street, $city, $state, $zip, $source);
     if( $result != "-1" )
     {
       echo "<br />Result addedContact $email to $account: <br />Contact ID: $result <br />\n";
