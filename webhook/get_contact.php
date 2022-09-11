@@ -1,4 +1,7 @@
 <?php
+//
+//  As of develop f243477 this works as tested by tests/testGetContact.php
+//  that includes changes in webhook/thrivecart-api.php and 
 function getContact($agentId, $contact_email)
 {
   require '../webhook/config.ini.php';

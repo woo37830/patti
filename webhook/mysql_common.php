@@ -234,7 +234,6 @@ function getUserByEmail( $email ) {
 
   if( $conn = connect($dbase) )
     {
-      $datetime = date_create()->format('Y-m-d H:i:s');
       $table = $config['PATTI_USERS_TABLE'];
 
       $query = "SELECT * FROM $table WHERE email = '$email' ";

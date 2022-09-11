@@ -44,7 +44,7 @@
  */
 
 
-function addContactNote($today, $from, $to, $messageId, $subject, $message, $attachmentLog, $postArray)
+function addContactNote($from, $to, $messageId, $subject, $message, $attachmentLog, $postArray)
 {
   require '../webhook/config.ini.php';
   require_once '../webhook/thrivecart_api.php';
@@ -63,21 +63,15 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
 
   $url = $api_endpoint . 'AddContactNote.aspx';
 
-  $names = firstAndLastFromEmail($from);
-  $size = sizeof($names);
-  //echo "from_email_address: $from_email_address\n";
-//  logit($from, "$to, sizeof names = $size", "LOG: (add_contact_note)-67");
-
-  if ( sizeof( $names) < 3 )
+  if( strpos($from, '@') != false )
+  { // We have the email of an agent instead of the agents account id
+//      echo "agentId = $agentId";
+      $user = getUserByEmail($agentId);
+      $agentId = $user["engagemoreid"];
+  }
+  else
   {
-    $first_name = $names[0];
-    $last_name = "";
-    $from_email_address = $names[1];
-
-  } else {
-    $first_name = $names[0];
-    $last_name = $names[1];
-    $from_email_address = $names[2];
+    $agentId = (int)$from;
   }
 
   $names = firstAndLastFromEmail($to);
@@ -102,7 +96,7 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
   //echo "to_email_address: $to_email_address\n";
 
 
-  $email = "\nfrom:\t$from_email_address\n";
+  $email = "\nfrom:\t$from\n";
   $email .= "\nto:\t$to_email_address\n";
   $email .= "\nmessage-id:\t$messageId\n";
   $email .= "\nsubject:\t$subject\n";
@@ -112,8 +106,6 @@ function addContactNote($today, $from, $to, $messageId, $subject, $message, $att
 
   // Get the agents engagemorecrm id from the users table
 try {
-  try {
-  $agentId = getAccountId( $from_email_address );
   if( $agentId == -1 )
   {
     echo "FAILURE: $from_email_address does not have an engagemorecrm id\n";
@@ -123,13 +115,13 @@ try {
   }
   //echo "AgentId: $agentId";
 } catch (Exception $e1) {
-  return "FAILURE: Exception $e1 in getAccountId add contact note";
+  return "FAILURE: Exception $e1 in getUserByEmail add contact note for $from";
 
 }
   // getContact will either return the id of an existing contact
   // or it will create one using the data in message
   try {
-  $contactId = getContact( $today, $agentId, $to_email_address );
+  $contactId = getContact( $agentId, $to_email_address );
 //  echo "\nResult of getContact with email: $to_email_address in account: $from_email_address for  is: $contactId\n";
 //  die("\nAccount: $agentId has a contactId of $contactId\n");
   if( $contactId == "-1" ) // Contact does not exist in agents list
