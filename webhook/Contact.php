@@ -75,7 +75,12 @@ class Contact extends Associate
 
     public function get_acctNumber()
     {
-      return 2607;
+      if( strpos($this->get_acct(), '@') != false )
+        { 
+          $user = getUserByEmail($this->get_acct());
+          return $user["engagemoreid"];
+        }
+        return $this->get_acct();
     }
 
     public function get_contactid()
@@ -167,7 +172,7 @@ class Contact extends Associate
         return $matches[0];
     }
 
-    private function cleanPhone( $phoneString )
+    private function cleanPhone( $phoneStr )
     {
       $phoneStr =  str_replace('(', '', $phoneStr);
       $phoneStr = str_replace(')','', $phoneStr);
@@ -200,7 +205,7 @@ class Contact extends Associate
           print "\n...emailFromText.......<" . $this->email . ">" . $this->data;
       }
 
-      $temp_phone = cleanPhone($this->extractPhoneFromText($this->data));
+      $temp_phone = $this->cleanPhone($this->extractPhoneFromText($this->data));
       // print "\nphone: '".$this->phone."'";
       $this->data = str_replace($temp_phone, "", $this->data);
       // print "\n..........<".$this->data.">\n";

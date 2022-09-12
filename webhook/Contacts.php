@@ -21,7 +21,10 @@ if( $contact->get_errMessage() != '' )
 {
   echo "\n".$contact->get_errMessage()."\n";
 }
-echo "Contact ID: ".$contact->get_contactid();
-echo "All Done!";
+if( $contact != null )
+{
+   echo "\nContact ID: ".$contact->get_contactid()."\n";
+}
+echo "\nAll Done!\n";
 
 ?>
