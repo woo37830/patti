@@ -4,6 +4,7 @@ require_once 'utilities.php';
 require_once 'add_contact.php';
 require_once 'get_contact.php';
 require 'Associate.php';
+
 /**
  * Contact
  *
@@ -12,112 +13,91 @@ require 'Associate.php';
  * @version $id$
  * @author John Wooten, Ph.D. <http://jwooten37830.com/blog>
  */
-class Contact extends Associate
-{
+class Contact extends Associate {
 
     protected $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
-
     protected $regexPhone = '/(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}|[2-9]\d{2}[.-]?\d{3}[.-]?\d{4})/';
-
     // this matches (ddd) ddd-dddd
     protected $inputStr;
-
     protected $contactid = -1;
-
     protected $data = "";
-
     protected $acct = "";
-
     protected $source = "";
 
+    public static function read($account, $val) {
+        $result_xml = getContactData((int) $account, $val);
+        $contact = new Contact(NULL);
+        $contact->acct = (int) $account;
+        $contact->email = $val;
 
-    public static function read( $account, $val )
-    {
-      $contactid = getContact((int)$account, $val);
-      $contact = new Contact(NULL);
-      $contact->acct = (int)$account;
-      $contact->contactid = $contactid;
-      $contact->email = $val;
-      if( $contactid == -1 )
-      {
-        $contact->errMessage = "Failure to read. Contents are: $contact";
-      }
-      return $contact;
+        if ($result_xml != "-1") {
+            $contact->contactid = (int) $result_xml->contacts->contact->id;
+            $contact->name = $result_xml->contacts->contact->name;
+        } else {
+            $contact->errMessage = "Failure to read: " . $contact;
+        }
+        return $contact;
     }
 
-    public function write()
-    {
-      $contactid = addContactInstance($this);
-      if( isNullOrEmpty($contactid) || $contactid == -1)
-      {
-        $this->errMessage = "Failure to write: $this";
-      }
-      else {
-        echo "Contact: >$contactid<";
-      }
-      return $contactid;
+    public function write() {
+        $contactid = addContactInstance($this);
+        if (isNullOrEmpty($contactid) || $contactid == -1) {
+            $this->errMessage = "Failure to write: $this";
+        } else {
+            echo "Contact: >$contactid<";
+        }
+        return $contactid;
     }
 
-    public function get_source()
-    {
+    public function get_source() {
         return $this->source;
     }
 
-    public function set_source($val)
-    {
+    public function set_source($val) {
         $this->source = $val;
     }
 
-    public function get_acct()
-    {
+    public function get_acct() {
         return $this->acct;
     }
 
-    public function get_acctNumber()
-    {
-      if( strpos($this->get_acct(), '@') != false )
-        { 
-          $user = getUserByEmail($this->get_acct());
-          return $user["engagemoreid"];
+    public function get_acctNumber() {
+        if (strpos($this->get_acct(), '@') != false) {
+            $user = getUserByEmail($this->get_acct());
+            return $user["engagemoreid"];
         }
         return $this->get_acct();
     }
 
-    public function get_contactid()
-    {
-      return $this->contactid;
+    public function get_contactid() {
+        return $this->contactid;
     }
 
-    public function get_inputStr()
-    {
+    public function get_inputStr() {
         if ($this->acct != "") {
             $this->inputStr = "ACCOUNT=||" . $this->acct . "||\n" . $this->inputStr;
         }
         return $this->inputStr;
     }
 
-    protected function extractAcctFromText($data)
-    {
-      if( ! isNullOrEmpty( $data ) )
-      {
-          if (strpos($data, "||") != 0) {
-            if (preg_match('/\|\|(.*?)\|\|/', $data, $match) == 1) {
-                $this->acct = $match[1];
-                $data = str_replace("ACCOUNT=||", "", $data);
-                $data = str_replace($this->acct, "", $data);
-                $data = str_replace("||", "", $data);
-                $this->inputStr = $data;
+    protected function extractAcctFromText($data) {
+        if (!isNullOrEmpty($data)) {
+            if (strpos($data, "||") != 0) {
+                if (preg_match('/\|\|(.*?)\|\|/', $data, $match) == 1) {
+                    $this->acct = $match[1];
+                    $data = str_replace("ACCOUNT=||", "", $data);
+                    $data = str_replace($this->acct, "", $data);
+                    $data = str_replace("||", "", $data);
+                    $this->inputStr = $data;
+                }
             }
         }
-      }
     }
 
-    protected function extractPatternFromText($pattern, $data)
-    {
-      if( isNullOrEmpty( $data ) )
-      {
-        return "";
-      }
+    protected function extractPatternFromText($pattern, $data) {
+        if (isNullOrEmpty($data)) {
+            return "";
+        }
         $data = strip_tags($data);
 
         $list = array();
@@ -130,13 +110,11 @@ class Contact extends Associate
         return array_unique($list);
     }
 
-    protected function extractEmailFromText($data)
-    {
+    protected function extractEmailFromText($data) {
         return $this->extractPatternFromText($this->regexEmail, $data);
     }
 
-    protected function extractPhoneFromText($data)
-    {
+    protected function extractPhoneFromText($data) {
         $temp = $this->extractPatternFromText($this->regexPhone, $data);
         if (count($temp) > 0) {
             return $temp[0];
@@ -144,8 +122,7 @@ class Contact extends Associate
         return "";
     }
 
-    protected function extractAddrFromText($input)
-    {
+    protected function extractAddrFromText($input) {
         preg_match('/
 		(\d++)    # Number (one or more digits) -> $matches[1]
 		\s++      # Whitespace
@@ -158,8 +135,7 @@ class Contact extends Associate
         return $matches;
     }
 
-    protected function extractNameFromText($data)
-    {
+    protected function extractNameFromText($data) {
         $addr = $this->extractAddrFromText($data);
         $item = $addr[0];
         // print $item."\n";
@@ -172,67 +148,64 @@ class Contact extends Associate
         return $matches[0];
     }
 
-    private function cleanPhone( $phoneStr )
-    {
-      $phoneStr =  str_replace('(', '', $phoneStr);
-      $phoneStr = str_replace(')','', $phoneStr);
-      $phoneStr = str_replace('-', '', $phoneStr);
-      return str_replace(' ','', $phoneStr);
+    private function cleanPhone($phoneStr) {
+        $phoneStr = str_replace('(', '', $phoneStr);
+        $phoneStr = str_replace(')', '', $phoneStr);
+        $phoneStr = str_replace('-', '', $phoneStr);
+        return str_replace(' ', '', $phoneStr);
     }
 
-    public function set_inputStr($email_body)
-    {
-    //  echo "\nset_inputStr";
-      if( ! isNullOrEmpty( $email_body ) )
-      {
+    public function set_inputStr($email_body) {
+        //  echo "\nset_inputStr";
+        if (!isNullOrEmpty($email_body)) {
 
-      $this->data = strip_tags($email_body);
-      if ($this->debug) {
-          print "\n....email_body......" . $this->data;
-      }
+            $this->data = strip_tags($email_body);
+            if ($this->debug) {
+                print "\n....email_body......" . $this->data;
+            }
 
-      $this->extractAcctFromText($this->data);
-      if ($this->debug) {
-          print "\n....acctFromText......<$this->acct>  $this->data";
-      }
+            $this->extractAcctFromText($this->data);
+            if ($this->debug) {
+                print "\n....acctFromText......<$this->acct>  $this->data";
+            }
 
-      $temp = $this->extractEmailFromText($this->inputStr);
-      if ( isset( $temp ) and $temp != "" and  count($temp) > 0) {
-          $this->email = $temp[0];
-          $this->data = str_replace($this->email, "", $this->data);
-      }
-      if ($this->debug) {
-          print "\n...emailFromText.......<" . $this->email . ">" . $this->data;
-      }
+            $temp = $this->extractEmailFromText($this->inputStr);
+            if (isset($temp) and $temp != "" and count($temp) > 0) {
+                $this->email = $temp[0];
+                $this->data = str_replace($this->email, "", $this->data);
+            }
+            if ($this->debug) {
+                print "\n...emailFromText.......<" . $this->email . ">" . $this->data;
+            }
 
-      $temp_phone = $this->cleanPhone($this->extractPhoneFromText($this->data));
-      // print "\nphone: '".$this->phone."'";
-      $this->data = str_replace($temp_phone, "", $this->data);
-      // print "\n..........<".$this->data.">\n";
-      $this->phone = $temp_phone;
+            $temp_phone = $this->cleanPhone($this->extractPhoneFromText($this->data));
+            // print "\nphone: '".$this->phone."'";
+            $this->data = str_replace($temp_phone, "", $this->data);
+            // print "\n..........<".$this->data.">\n";
+            $this->phone = $temp_phone;
 
-      if ($this->debug) {
-          print "\n....phoneFromText........<" . $this->phone . ">" . $this->data;
-      }
-      $temp = $this->extractAddrFromText($this->data);
-      if (count($temp) > 0) {
-          $this->addr = $temp[0];
-      }
-      // print $item."\n";
-      $this->data = preg_replace('/' . $this->addr . '/', "", $this->data);
-      if ($this->debug) {
-          print "\n.....addressFromText.......<" . $this->addr . ">" . $this->data;
-      }
+            if ($this->debug) {
+                print "\n....phoneFromText........<" . $this->phone . ">" . $this->data;
+            }
+            $temp = $this->extractAddrFromText($this->data);
+            if (count($temp) > 0) {
+                $this->addr = $temp[0];
+            }
+            // print $item."\n";
+            $this->data = preg_replace('/' . $this->addr . '/', "", $this->data);
+            if ($this->debug) {
+                print "\n.....addressFromText.......<" . $this->addr . ">" . $this->data;
+            }
 
-      $temp = preg_match('/([A-Z]\S++) ([A-Z]\S++)/', $this->data, $matches);
-      if (count($matches) > 0) {
-          $this->name = $matches[0];
-      }
-      if ($this->debug) {
-          print "\n.....nameFromText.......<" . $this->name . ">" . $this->data;
-          print "\n";
-      }
-    }
+            $temp = preg_match('/([A-Z]\S++) ([A-Z]\S++)/', $this->data, $matches);
+            if (count($matches) > 0) {
+                $this->name = $matches[0];
+            }
+            if ($this->debug) {
+                print "\n.....nameFromText.......<" . $this->name . ">" . $this->data;
+                print "\n";
+            }
+        }
     }
 
     /**
@@ -242,25 +215,26 @@ class Contact extends Associate
      * @access public
      * @return void
      */
-    public function __construct($email_body)
-    {
-      //  $this->acct = $account;
-      if( $this->debug ) {
-        echo "\n-----------constructor----------";
-      }
-        if ( isNullOrEmpty($email_body) ) {
-          //echo "\nNo argument passed";
+    public function __construct($email_body) {
+        //  $this->acct = $account;
+        if ($this->debug) {
+            echo "\n-----------constructor----------";
+        }
+        if (isNullOrEmpty($email_body)) {
+            //echo "\nNo argument passed";
             return;
         } else {
-        $this->set_inputStr($email_body);
-      }
-
-      }
-
-
-    public function __toString()
-    {
-        return "\nContactid: ".$this->contactid."\nName: " . $this->name . "\nAddr: " . $this->addr . "\nEmail: " . $this->email . "\nPhone: " . $this->phone . "\nSource: " . $this->source . "\nAcct: " . $this->acct . "\n";
+            $this->set_inputStr($email_body);
+        }
     }
+
+    public function __toString() {
+        if ($this->errMessage != "") {
+            return $this->errMessage;
+        }
+        return "\nContact: " . $this->contactid .  "\nEmail: " . $this->email . "\nName: " . $this->name . "\n" . $this->name . "\nAddr: " .  $this->addr  . "\nPhone: " . $this->phone . "\nSource: " . $this->source . "\nAcct: " . $this->acct . "\n";
+    }
+
 }
+
 ?>
