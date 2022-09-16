@@ -14,7 +14,7 @@ class Associate
 
   protected $name = "";
 
-  protected $errMessage = ""; // This is set if there is an error
+  public $errMessage = ""; // This is set if there is an error
 
   protected $email = "";
 
