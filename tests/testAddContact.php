@@ -62,6 +62,11 @@ First Name: <input type="text" name="first"><br />
 Last Name: <input type="text" name="last"><br />
 Email: <input type="text" name="email"><br />
 Phone: <input type="text" name="phone"><br />
+Street: <input type="text" name="street" /><br />
+City: <input type="text" name="city" />
+State: <input type="text" name="state" />
+ZipCode: <input type="text" name="zip" /> <br />
+Memo: <input type="text" name="memo" /><br />
 Account: <input type="text" name="account"><br />
 Source: <input type="text" name="source"><br />
 <input type="submit" name="submit" value="Submit">
@@ -88,6 +93,12 @@ if(isset($_POST['submit'])){
     $email = trim($_POST['email']);
     $phone = trim($_POST['phone']);
     $account = trim($_POST['account']);
+    $memo = trim($_POST['memo']);
+    $street = trim($_POST['street']);
+    $city = trim($_POST['city']);
+    $state = trim($_POST['state']);
+    $zip = trim($_POST['zip']);
+    $source = trim($_POST['source']);
     $result = addContact($account, $firstName, $lastName, $email, $phone, $memo, $street, $city, $state, $zip, $source);
     if( $result != "-1" )
     {
