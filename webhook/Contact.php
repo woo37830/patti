@@ -17,27 +17,14 @@ class Contact extends Associate {
 
     protected $regexEmail = '/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z._-]{2,10})/';
     protected $regexPhone = '/(\([2-9]\d{2}\)\s?\d{3}[.-]\d{4}|[2-9]\d{2}[.-]?\d{3}[.-]?\d{4})/';
+    protected static $regexData = '/^.*Message:(.*)View in app.*$/';
+
     // this matches (ddd) ddd-dddd
     protected $inputStr;
     protected $contactid = -1;
     protected $data = "";
     protected $acct = "";
     protected $source = "";
-
-    public static function read($account, $val) {
-        $result_xml = getContactData((int) $account, $val);
-        $contact = new Contact(NULL);
-        $contact->acct = (int) $account;
-        $contact->email = $val;
-
-        if ($result_xml != "-1") {
-            $contact->contactid = (int) $result_xml->contacts->contact->id;
-            $contact->name = $result_xml->contacts->contact->name;
-        } else {
-            $contact->errMessage = "Failure to read: " . $contact;
-        }
-        return $contact;
-    }
 
     public function write() {
         $contactid = addContactInstance($this);
@@ -94,28 +81,13 @@ class Contact extends Associate {
         }
     }
 
-    protected function extractPatternFromText($pattern, $data) {
-        if (isNullOrEmpty($data)) {
-            return "";
-        }
-        $data = strip_tags($data);
-
-        $list = array();
-        preg_match_all($pattern, $data, $matches);
-        if (count($matches) != 0) {
-            foreach ($matches[1] as $item) {
-                array_push($list, $item);
-            }
-        }
-        return array_unique($list);
-    }
 
     protected function extractEmailFromText($data) {
-        return $this->extractPatternFromText($this->regexEmail, $data);
+        return extractPatternFromText($this->regexEmail, $data);
     }
 
     protected function extractPhoneFromText($data) {
-        $temp = $this->extractPatternFromText($this->regexPhone, $data);
+        $temp = extractPatternFromText($this->regexPhone, $data);
         if (count($temp) > 0) {
             return $temp[0];
         }
@@ -233,6 +205,22 @@ class Contact extends Associate {
             return $this->errMessage;
         }
         return "\nContact: " . $this->contactid .  "\nEmail: " . $this->email . "\nName: " . $this->name . "\n" . $this->name . "\nAddr: " .  $this->addr  . "\nPhone: " . $this->phone . "\nSource: " . $this->source . "\nAcct: " . $this->acct . "\n";
+    }
+
+    public static function read($account, $val) {
+        $result_xml = getContactData((int) $account, $val);
+        $contact = new Contact(NULL);
+        $contact->acct = (int) $account;
+        $contact->email = $val;
+        $contact->data = getData($val);
+
+        if ($result_xml != "-1") {
+            $contact->contactid = (int) $result_xml->contacts->contact->id;
+            $contact->name = $result_xml->contacts->contact->name;
+        } else {
+            $contact->errMessage = "Failure to read: " . $contact;
+        }
+        return $contact;
     }
 
 }

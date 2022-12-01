@@ -174,7 +174,9 @@ if( count($_POST) == 0 ) {
 	$_POST['date'] = "20220902";
 	$_POST['subject'] = "TEST-LEAD";
 	$_POST['delivered-to'] = "me";
+        $_POST['reply-to'] = "jwooten37830@icloud.com";
 	$_POST['return-path'] = "jwooten37830@icloud.com";
+        $_POST['body'] = "Body (602) 111-2345 J.W. Wooten";
 }
 
 try {
@@ -184,9 +186,11 @@ if($error != 1)
 		fwrite($fh, "\nSTATUS 171: $message\n");
 		$to = $_POST['to'];
 		$from = $_POST['from'];
+                $replyTo = $_POST['reply-to'];
 		$messageId = $_POST['message-id'];
 		$date = $_POST['date'];
 		$subject = $_POST['subject'];
+		$body = $_POST['body'];
 
 //		echo "return-path: ".$emailArray['headers']['return-path']."\nto: ".$_POST['to']."\nmessage: ".$emailArray['parts']['body'];
 		// This may be an array
@@ -230,6 +234,7 @@ $email .= "\n------------\nfrom:\n------------\n$from\n";
 $email .= "\n------------\nto:\n------------\n$to\n";
 $email .= "\n------------\ndelivered-to:\n------------\n$deliveredTo\n";
 $email .= "\n------------\nreturn-path:\n------------\n$returnPath\n";
+$email .= "\n------------\nreply_to:\n---------------\n$replyTo\n";
 $email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
 //$email .= "\n------------\ncontent-type:\n------------\n$contentType\n";
 //$email .= "\n------------\ncontent-transfer-encoding:\n------------\n$contentTransferEncoding\n";
@@ -238,14 +243,21 @@ $email .= "\n------------\nmessage:\n------------\n$message\n";
 //$email .= "\n------------\nmessagehtml:\n------------\n$messagehtml\n";
 //$email .= "\n------------\nAttachments:\n------------\n$attachmentLog\n";
 
+$email .="\n----------------\nBody:\n------------------\n$body\n";
 
 $email .= "Email post log:\n$email \n";
 try {
-	if( $error !== 1 )
-	{
-		$contact = new Contact($message);
-
+        $replyTo = "jwooten37830@icloud.com";
+	$acctID = getAccountId($replyTo);
+        echo "Located acctID: $acctID\n";
+                $contact = Contact::read($acctID, $message);
+		$contact->set_source($from);
 		$email .= "\nContact instance created for ".$contact."\n";
+                $data = getData($message);
+		$email .= $data;
+
+	if( $acctID !== -1 )
+	{
 	//	echo "\n---------------------Contact-----------------\n";
 	//	echo $contact;
 	//	echo "\n----------------------------------------------\n";
@@ -253,7 +265,7 @@ try {
 
 			try {
 //				echo "\n$email";
-				$added = addContactNote($today, $contact->get_acct(), $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$message\n", "", "");
+				$added = addContactNote($today, $contact->get_acct(), $contact->get_email(), $messageId, "Test", "\n------\n".$contact."\n-------------\n$data\n", "", "");
 				$email .= "Contact ".$contact->get_email()." created for ".$contact->get_acct()." at $added \n";
 				echo "\nContact ".$contact->get_email()." created for ".$contact->get_acct()." at $added \n";
 			}
@@ -273,8 +285,8 @@ fwrite($fh, $email);
 fclose($fh);
 
 // return a confirmation to mailnuggets
-//echo "\n#Posted $today#, $log";
-echo "All Done!\n";
+echo "\n#Posted $today#";
+echo "\nAll Done!\n";
 
 
 

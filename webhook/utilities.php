@@ -3,6 +3,7 @@
 /**
  * A set of functions used in tests and in the main thrivecart.php application
  */
+static $regexData = '/^.*Message:(.*)View in app.*$/';
 
  function isNullOrEmpty($s) {
      return !isset($s) || trim($s) == '';
@@ -16,6 +17,27 @@
 
      return "\n---------------- $last ---- $rev ------ $branch --------\n";
  }
+    
+     function extractPatternFromText($pattern, $data) {
+        if (isNullOrEmpty($data)) {
+            return "";
+        }
+        $data = strip_tags($data);
+
+        $list = array();
+        preg_match_all($pattern, $data, $matches);
+        if (count($matches) != 0) {
+            foreach ($matches[1] as $item) {
+                array_push($list, $item);
+            }
+        }
+        return array_unique($list);
+    }
+
+
+   function getData($val) {
+        return extractPatternFromText('/^.*Message:(.*)Privacy.htm*$/', $val)."Privacy.htm";
+}
 
 
  /**

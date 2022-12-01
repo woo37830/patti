@@ -128,8 +128,9 @@ function addContactNote($from, $to, $messageId, $subject, $message, $attachmentL
                 if (isNullOrEmpty($resultXml)) {
                     echo "\n148: resultXML is empty or null";
                 }
-                echo "\nadd_contact_note: ready for contactId";
-                $contactId = $resultXml->contactId;
+                echo "\nadd_contact_note: ready for contactId, $resultXml";
+                
+                $contactId = $resultXml;
                 echo "\nadd_contact_note: contactId is $contactId";
 //      $contactId = addContactFromEmail($today, $agentId, $to_email_address, $source); // Use full to get first and last
                 if ($contactId == "-1") {
