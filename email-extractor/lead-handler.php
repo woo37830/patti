@@ -187,6 +187,7 @@ if($error != 1)
 		$messageId = $_POST['message-id'];
 		$date = $_POST['date'];
 		$subject = $_POST['subject'];
+		$reply_to = $_POST['reply-to'];
 
 //		echo "return-path: ".$emailArray['headers']['return-path']."\nto: ".$_POST['to']."\nmessage: ".$emailArray['parts']['body'];
 		// This may be an array
@@ -231,6 +232,7 @@ $email .= "\n------------\nto:\n------------\n$to\n";
 $email .= "\n------------\ndelivered-to:\n------------\n$deliveredTo\n";
 $email .= "\n------------\nreturn-path:\n------------\n$returnPath\n";
 $email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
+$email .= "\n------------\nreply-to:\n--------------\n$reply_to\n";
 //$email .= "\n------------\ncontent-type:\n------------\n$contentType\n";
 //$email .= "\n------------\ncontent-transfer-encoding:\n------------\n$contentTransferEncoding\n";
 //$email .= "\n------------\nsubject:\n------------\n$subject\n";
@@ -243,7 +245,7 @@ $email .= "Email post log:\n$email \n";
 try {
 	if( $error !== 1 )
 	{
-		$contact = new Contact($message);
+		$contact = new Contact($reply_to);
 
 		$email .= "\nContact instance created for ".$contact."\n";
 	//	echo "\n---------------------Contact-----------------\n";
