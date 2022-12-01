@@ -84,5 +84,9 @@ print $contact;
 //$array = json_decode($json,TRUE);
 //echo "\nPrint array";
 //print_r($array);
+
+$contact = new Contact("azagent.sampson@gmail.com");
+$contact->set_source('"Zillow Premier Agent" <no-reply@leads.premieragent.com>');
+print $contact;
 print "\n\nEnd of testContact.php\n\n".$contact->get_info()."\n";
 ?>
