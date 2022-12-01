@@ -246,6 +246,7 @@ try {
 	if( $error !== 1 )
 	{
 		$contact = new Contact($reply_to);
+		$contact->set_source($from);
 
 		$email .= "\nContact instance created for ".$contact."\n";
 	//	echo "\n---------------------Contact-----------------\n";
