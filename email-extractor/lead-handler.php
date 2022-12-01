@@ -190,7 +190,11 @@ if($error != 1)
 		$messageId = $_POST['message-id'];
 		$date = $_POST['date'];
 		$subject = $_POST['subject'];
+<<<<<<< HEAD
 		$body = $_POST['body'];
+=======
+		$reply_to = $_POST['reply-to'];
+>>>>>>> 1de5229f502012ec1919344bd18eab52869acb47
 
 //		echo "return-path: ".$emailArray['headers']['return-path']."\nto: ".$_POST['to']."\nmessage: ".$emailArray['parts']['body'];
 		// This may be an array
@@ -236,6 +240,7 @@ $email .= "\n------------\ndelivered-to:\n------------\n$deliveredTo\n";
 $email .= "\n------------\nreturn-path:\n------------\n$returnPath\n";
 $email .= "\n------------\nreply_to:\n---------------\n$replyTo\n";
 $email .= "\n------------\nmessage-id:\n------------\n$messageId\n";
+$email .= "\n------------\nreply-to:\n--------------\n$reply_to\n";
 //$email .= "\n------------\ncontent-type:\n------------\n$contentType\n";
 //$email .= "\n------------\ncontent-transfer-encoding:\n------------\n$contentTransferEncoding\n";
 //$email .= "\n------------\nsubject:\n------------\n$subject\n";
@@ -252,6 +257,7 @@ try {
         echo "Located acctID: $acctID\n";
                 $contact = Contact::read($acctID, $message);
 		$contact->set_source($from);
+
 		$email .= "\nContact instance created for ".$contact."\n";
                 $data = getData($message);
 		$email .= $data;
